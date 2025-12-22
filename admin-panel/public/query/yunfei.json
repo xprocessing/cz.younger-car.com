@@ -1,0 +1,2952 @@
+{
+    "ems": {
+        "results": {
+            "UK||DPD-UK": {
+                "error": {
+                    "code": 10203030,
+                    "message": "重量超过30kg或者最大尺寸限制超过100*60*60cm或者三边之和大于230cm,不提供服务"
+                },
+                "status": "Failure",
+                "channel_code": "DPD-UK",
+                "channel_name": "英国DPD单箱",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||UK-EVRI": {
+                "error": {
+                    "code": 10203030,
+                    "message": "渠道限制：最长边≤120cm,长+2*宽+2*高≤225cm"
+                },
+                "status": "Failure",
+                "channel_code": "UK-EVRI",
+                "channel_name": "英国EVRI",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||FEDEX-LP": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配FEDEX-LP物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-LP",
+                "channel_name": "美国FEDEX经济大包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||FEDEX-SM": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配FEDEX-SM物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-SM",
+                "channel_name": "美国FEDEX经济小包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "USEA||DPD-UK": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配DPD-UK物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DPD-UK",
+                "channel_name": "英国DPD单箱",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USWE||DPD-UK": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配DPD-UK物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DPD-UK",
+                "channel_name": "英国DPD单箱",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "UK||CE-GROUND": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配CE-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "CE-GROUND",
+                "channel_name": "美西CE重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||CE-PARCEL": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配CE-PARCEL物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "CE-PARCEL",
+                "channel_name": "美国CE普货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||DHL-US-BP": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配DHL-US-BP物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DHL-US-BP",
+                "channel_name": "美国DHL本地大包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||DHL-US-SP": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配DHL-US-SP物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DHL-US-SP",
+                "channel_name": "美国DHL本地小包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||DPD-MULTI": {
+                "error": {
+                    "code": null,
+                    "message": ""
+                },
+                "status": "Success",
+                "channel_code": "DPD-MULTI",
+                "channel_name": "英国DPD多箱",
+                "total_fee_cny": 115.70769,
+                "warehouse_code": "UK"
+            },
+            "UK||OT-GROUND": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配OT-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "OT-GROUND",
+                "channel_name": "美国OnTrac重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||UK-EVRI-L": {
+                "error": {
+                    "code": 10203030,
+                    "message": "尺寸限制：最长边≤180cm,长+2*宽+2*高≤420cm"
+                },
+                "status": "Failure",
+                "channel_code": "UK-EVRI-L",
+                "channel_name": "英国EVRI超大渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "USEA||UK-EVRI": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配UK-EVRI物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UK-EVRI",
+                "channel_name": "英国EVRI",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USWE||UK-EVRI": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配UK-EVRI物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UK-EVRI",
+                "channel_name": "英国EVRI",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "UK||DX-EXPRESS": {
+                "error": {
+                    "code": 10203030,
+                    "message": "渠道不可发限制：订单包裹计费重不超过25kg，最长边不超过200cm"
+                },
+                "status": "Failure",
+                "channel_code": "DX-EXPRESS",
+                "channel_name": "英国DX快递渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||INT-PRI-LP": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配INT-PRI-LP物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "INT-PRI-LP",
+                "channel_name": "国际普快大包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||INT-PRI-SP": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配INT-PRI-SP物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "INT-PRI-SP",
+                "channel_name": "国际普快小包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||UPS-GROUND": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配UPS-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND",
+                "channel_name": "美国UPS重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||US-G2G-INT": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配US-G2G-INT物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "US-G2G-INT",
+                "channel_name": "美加G2G国际渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||US-UPS-INT": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配US-UPS-INT物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "US-UPS-INT",
+                "channel_name": "美国UPS国际渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||XDP-EP_A-C": {
+                "error": {
+                    "code": null,
+                    "message": ""
+                },
+                "status": "Success",
+                "channel_code": "XDP-EP_A-C",
+                "channel_name": "XDP-EP(A,B,C区)",
+                "total_fee_cny": 246.7400875,
+                "warehouse_code": "UK"
+            },
+            "UK||YODEL48H-L": {
+                "error": {
+                    "code": 10203030,
+                    "message": "包裹尺寸限制：长≤90cm，长+宽≤150cm,体积≤0.113m³"
+                },
+                "status": "Failure",
+                "channel_code": "YODEL48H-L",
+                "channel_name": "Yodel_48h大包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||YODEL48H-S": {
+                "error": {
+                    "code": 10203030,
+                    "message": "包裹尺寸限制：长≤90cm，体积≤0.0310m³"
+                },
+                "status": "Failure",
+                "channel_code": "YODEL48H-S",
+                "channel_name": "Yodel_48h小包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||YUN-GROUND": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配YUN-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "YUN-GROUND",
+                "channel_name": "美国YUN重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "USEA||FEDEX-LP": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-LP",
+                "channel_name": "美国FEDEX经济大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||FEDEX-SM": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-SM",
+                "channel_name": "美国FEDEX经济小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USWE||FEDEX-LP": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-LP",
+                "channel_name": "美国FEDEX经济大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||FEDEX-SM": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-SM",
+                "channel_name": "美国FEDEX经济小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "UK||UPS-2ND-DAY": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配UPS-2ND-DAY物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-2ND-DAY",
+                "channel_name": "UPS两日达",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "USEA||CE-GROUND": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配CE-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "CE-GROUND",
+                "channel_name": "美西CE重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||CE-PARCEL": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "CE-PARCEL",
+                "channel_name": "美国CE普货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||DHL-US-BP": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "DHL-US-BP",
+                "channel_name": "美国DHL本地大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||DHL-US-SP": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "DHL-US-SP",
+                "channel_name": "美国DHL本地小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||DPD-MULTI": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配DPD-MULTI物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DPD-MULTI",
+                "channel_name": "英国DPD多箱",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||OT-GROUND": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配OT-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "OT-GROUND",
+                "channel_name": "美国OnTrac重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||UK-EVRI-L": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配UK-EVRI-L物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UK-EVRI-L",
+                "channel_name": "英国EVRI超大渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USWE||CE-GROUND": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "CE-GROUND",
+                "channel_name": "美西CE重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||CE-PARCEL": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "CE-PARCEL",
+                "channel_name": "美国CE普货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||DHL-US-BP": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "DHL-US-BP",
+                "channel_name": "美国DHL本地大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||DHL-US-SP": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "DHL-US-SP",
+                "channel_name": "美国DHL本地小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||DPD-MULTI": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配DPD-MULTI物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DPD-MULTI",
+                "channel_name": "英国DPD多箱",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||OT-GROUND": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "OT-GROUND",
+                "channel_name": "美国OnTrac重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||UK-EVRI-L": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配UK-EVRI-L物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UK-EVRI-L",
+                "channel_name": "英国EVRI超大渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "UK||CE-GROUND-EA": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配CE-GROUND-EA物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "CE-GROUND-EA",
+                "channel_name": "美东CE重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||FEDEX-GROUND": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配FEDEX-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-GROUND",
+                "channel_name": "美国FEDEX重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||SS-FEDEX-G-E": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配SS-FEDEX-G-E物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "SS-FEDEX-G-E",
+                "channel_name": "美东FEDEX大货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||SS-FEDEX-G-W": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配SS-FEDEX-G-W物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "SS-FEDEX-G-W",
+                "channel_name": "美西FEDEX大货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||UPS-SUREPOST": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配UPS-SUREPOST物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-SUREPOST",
+                "channel_name": "UPS_SUREPOST",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "USEA||DX-EXPRESS": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配DX-EXPRESS物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DX-EXPRESS",
+                "channel_name": "英国DX快递渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||INT-PRI-LP": {
+                "error": {
+                    "code": 10203030,
+                    "message": "包裹限制：最长边大于或等于75CM，长+2*（宽+高）大于或等于135CM，重量大于或等于31.5KG，不提供服务。"
+                },
+                "status": "Failure",
+                "channel_code": "INT-PRI-LP",
+                "channel_name": "国际普快大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||INT-PRI-SP": {
+                "error": {
+                    "code": 10203030,
+                    "message": "重量小于0.056KG，最长边大于60CM，最长边+次长边+最短边大于91cm，不可发"
+                },
+                "status": "Failure",
+                "channel_code": "INT-PRI-SP",
+                "channel_name": "国际普快小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||UPS-GROUND": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配UPS-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND",
+                "channel_name": "美国UPS重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||US-G2G-INT": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "US-G2G-INT",
+                "channel_name": "美加G2G国际渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||US-UPS-INT": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "US-UPS-INT",
+                "channel_name": "美国UPS国际渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||XDP-EP_A-C": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配XDP-EP_A-C物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "XDP-EP_A-C",
+                "channel_name": "XDP-EP(A,B,C区)",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||YODEL48H-L": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配YODEL48H-L物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "YODEL48H-L",
+                "channel_name": "Yodel_48h大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||YODEL48H-S": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配YODEL48H-S物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "YODEL48H-S",
+                "channel_name": "Yodel_48h小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||YUN-GROUND": {
+                "error": {
+                    "code": 10203026,
+                    "message": "未找到价格方案"
+                },
+                "status": "Failure",
+                "channel_code": "YUN-GROUND",
+                "channel_name": "美国YUN重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USWE||DX-EXPRESS": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配DX-EXPRESS物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DX-EXPRESS",
+                "channel_name": "英国DX快递渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||INT-PRI-LP": {
+                "error": {
+                    "code": 10203030,
+                    "message": "包裹限制：最长边大于或等于75CM，长+2*（宽+高）大于或等于135CM，重量大于或等于31.5KG，不提供服务。"
+                },
+                "status": "Failure",
+                "channel_code": "INT-PRI-LP",
+                "channel_name": "国际普快大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||INT-PRI-SP": {
+                "error": {
+                    "code": 10203030,
+                    "message": "重量小于0.056KG，最长边大于60CM，最长边+次长边+最短边大于91cm，不可发"
+                },
+                "status": "Failure",
+                "channel_code": "INT-PRI-SP",
+                "channel_name": "国际普快小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||UPS-GROUND": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND",
+                "channel_name": "美国UPS重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||US-G2G-INT": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配US-G2G-INT物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "US-G2G-INT",
+                "channel_name": "美加G2G国际渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||US-UPS-INT": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配US-UPS-INT物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "US-UPS-INT",
+                "channel_name": "美国UPS国际渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||XDP-EP_A-C": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配XDP-EP_A-C物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "XDP-EP_A-C",
+                "channel_name": "XDP-EP(A,B,C区)",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||YODEL48H-L": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配YODEL48H-L物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "YODEL48H-L",
+                "channel_name": "Yodel_48h大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||YODEL48H-S": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配YODEL48H-S物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "YODEL48H-S",
+                "channel_name": "Yodel_48h小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||YUN-GROUND": {
+                "error": {
+                    "code": 10203026,
+                    "message": "未找到价格方案"
+                },
+                "status": "Failure",
+                "channel_code": "YUN-GROUND",
+                "channel_name": "美国YUN重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "UK||AMAZON-GROUND": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配AMAZON-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "AMAZON-GROUND",
+                "channel_name": "美国AMAZON重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||UPS-GROUND-EA": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配UPS-GROUND-EA物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND-EA",
+                "channel_name": "美东UPS重货",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||USPS-PRIORITY": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配USPS-PRIORITY物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "USPS-PRIORITY",
+                "channel_name": "美国USPS大包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "USEA||UPS-2ND-DAY": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-2ND-DAY",
+                "channel_name": "UPS两日达",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USWE||UPS-2ND-DAY": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-2ND-DAY",
+                "channel_name": "UPS两日达",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USEA||CE-GROUND-EA": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "CE-GROUND-EA",
+                "channel_name": "美东CE重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||FEDEX-GROUND": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配FEDEX-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-GROUND",
+                "channel_name": "美国FEDEX重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||SS-FEDEX-G-E": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "SS-FEDEX-G-E",
+                "channel_name": "美东FEDEX大货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||SS-FEDEX-G-W": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配SS-FEDEX-G-W物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "SS-FEDEX-G-W",
+                "channel_name": "美西FEDEX大货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||UPS-SUREPOST": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-SUREPOST",
+                "channel_name": "UPS_SUREPOST",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USWE||CE-GROUND-EA": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配CE-GROUND-EA物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "CE-GROUND-EA",
+                "channel_name": "美东CE重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||FEDEX-GROUND": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-GROUND",
+                "channel_name": "美国FEDEX重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||SS-FEDEX-G-E": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配SS-FEDEX-G-E物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "SS-FEDEX-G-E",
+                "channel_name": "美东FEDEX大货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||SS-FEDEX-G-W": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "SS-FEDEX-G-W",
+                "channel_name": "美西FEDEX大货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||UPS-SUREPOST": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-SUREPOST",
+                "channel_name": "UPS_SUREPOST",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "UK||FEDEX-GROUND-EA": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配FEDEX-GROUND-EA物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-GROUND-EA",
+                "channel_name": "美东FedEx重货",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||UPS-GROUND-MULT": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配UPS-GROUND-MULT物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND-MULT",
+                "channel_name": "美国UPS一票多箱",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "USEA||AMAZON-GROUND": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "AMAZON-GROUND",
+                "channel_name": "美国AMAZON重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||UPS-GROUND-EA": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND-EA",
+                "channel_name": "美东UPS重货",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||USPS-PRIORITY": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "USPS-PRIORITY",
+                "channel_name": "美国USPS大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USWE||AMAZON-GROUND": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "AMAZON-GROUND",
+                "channel_name": "美国AMAZON重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||UPS-GROUND-EA": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配UPS-GROUND-EA物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND-EA",
+                "channel_name": "美东UPS重货",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||USPS-PRIORITY": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "USPS-PRIORITY",
+                "channel_name": "美国USPS大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "UK||IPA-INT-ECONOMIC": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配IPA-INT-ECONOMIC物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "IPA-INT-ECONOMIC",
+                "channel_name": "国际经济小包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "UK||USPS-FIRST-CLASS": {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配USPS-FIRST-CLASS物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "USPS-FIRST-CLASS",
+                "channel_name": "美国USPS小包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            "USEA||FEDEX-GROUND-EA": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-GROUND-EA",
+                "channel_name": "美东FedEx重货",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||UPS-GROUND-MULT": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND-MULT",
+                "channel_name": "美国UPS一票多箱",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USWE||FEDEX-GROUND-EA": {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配FEDEX-GROUND-EA物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-GROUND-EA",
+                "channel_name": "美东FedEx重货",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||UPS-GROUND-MULT": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND-MULT",
+                "channel_name": "美国UPS一票多箱",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USEA||IPA-INT-ECONOMIC": {
+                "error": {
+                    "code": 10203030,
+                    "message": "包裹限制：重量大于1.984KG 或小于0.05KG,或 最长边大于60cm 或长+宽+高大于91cm，不提供服务"
+                },
+                "status": "Failure",
+                "channel_code": "IPA-INT-ECONOMIC",
+                "channel_name": "国际经济小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USEA||USPS-FIRST-CLASS": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "USPS-FIRST-CLASS",
+                "channel_name": "美国USPS小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            "USWE||IPA-INT-ECONOMIC": {
+                "error": {
+                    "code": 10203030,
+                    "message": "包裹限制：重量大于1.984KG 或小于0.05KG,或 最长边大于60cm 或长+宽+高大于91cm，不提供服务"
+                },
+                "status": "Failure",
+                "channel_code": "IPA-INT-ECONOMIC",
+                "channel_name": "国际经济小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            "USWE||USPS-FIRST-CLASS": {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "USPS-FIRST-CLASS",
+                "channel_name": "美国USPS小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            }
+        },
+        "sorted_results": [
+            {
+                "error": {
+                    "code": null,
+                    "message": ""
+                },
+                "status": "Success",
+                "channel_code": "DPD-MULTI",
+                "channel_name": "英国DPD多箱",
+                "total_fee_cny": 115.70769,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": null,
+                    "message": ""
+                },
+                "status": "Success",
+                "channel_code": "XDP-EP_A-C",
+                "channel_name": "XDP-EP(A,B,C区)",
+                "total_fee_cny": 246.7400875,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配FEDEX-GROUND-EA物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-GROUND-EA",
+                "channel_name": "美东FedEx重货",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配USPS-FIRST-CLASS物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "USPS-FIRST-CLASS",
+                "channel_name": "美国USPS小包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配AMAZON-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "AMAZON-GROUND",
+                "channel_name": "美国AMAZON重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配FEDEX-LP物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-LP",
+                "channel_name": "美国FEDEX经济大包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配FEDEX-SM物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-SM",
+                "channel_name": "美国FEDEX经济小包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配SS-FEDEX-G-E物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "SS-FEDEX-G-E",
+                "channel_name": "美东FEDEX大货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配FEDEX-GROUND-EA物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-GROUND-EA",
+                "channel_name": "美东FedEx重货",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配OT-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "OT-GROUND",
+                "channel_name": "美国OnTrac重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配UPS-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND",
+                "channel_name": "美国UPS重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配CE-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "CE-GROUND",
+                "channel_name": "美西CE重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配SS-FEDEX-G-W物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "SS-FEDEX-G-W",
+                "channel_name": "美西FEDEX大货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配DHL-US-SP物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DHL-US-SP",
+                "channel_name": "美国DHL本地小包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配FEDEX-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-GROUND",
+                "channel_name": "美国FEDEX重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "US-UPS-INT",
+                "channel_name": "美国UPS国际渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "US-G2G-INT",
+                "channel_name": "美加G2G国际渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203030,
+                    "message": "包裹限制：重量大于1.984KG 或小于0.05KG,或 最长边大于60cm 或长+宽+高大于91cm，不提供服务"
+                },
+                "status": "Failure",
+                "channel_code": "IPA-INT-ECONOMIC",
+                "channel_name": "国际经济小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203030,
+                    "message": "包裹限制：最长边大于或等于75CM，长+2*（宽+高）大于或等于135CM，重量大于或等于31.5KG，不提供服务。"
+                },
+                "status": "Failure",
+                "channel_code": "INT-PRI-LP",
+                "channel_name": "国际普快大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203030,
+                    "message": "重量小于0.056KG，最长边大于60CM，最长边+次长边+最短边大于91cm，不可发"
+                },
+                "status": "Failure",
+                "channel_code": "INT-PRI-SP",
+                "channel_name": "国际普快小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配UK-EVRI-L物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UK-EVRI-L",
+                "channel_name": "英国EVRI超大渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配UK-EVRI物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UK-EVRI",
+                "channel_name": "英国EVRI",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配XDP-EP_A-C物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "XDP-EP_A-C",
+                "channel_name": "XDP-EP(A,B,C区)",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配YODEL48H-L物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "YODEL48H-L",
+                "channel_name": "Yodel_48h大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配USPS-PRIORITY物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "USPS-PRIORITY",
+                "channel_name": "美国USPS大包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配YUN-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "YUN-GROUND",
+                "channel_name": "美国YUN重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配DHL-US-BP物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DHL-US-BP",
+                "channel_name": "美国DHL本地大包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10203030,
+                    "message": "尺寸限制：最长边≤180cm,长+2*宽+2*高≤420cm"
+                },
+                "status": "Failure",
+                "channel_code": "UK-EVRI-L",
+                "channel_name": "英国EVRI超大渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配UPS-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND",
+                "channel_name": "美国UPS重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配CE-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "CE-GROUND",
+                "channel_name": "美西CE重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配SS-FEDEX-G-W物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "SS-FEDEX-G-W",
+                "channel_name": "美西FEDEX大货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配FEDEX-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-GROUND",
+                "channel_name": "美国FEDEX重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配US-UPS-INT物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "US-UPS-INT",
+                "channel_name": "美国UPS国际渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配US-G2G-INT物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "US-G2G-INT",
+                "channel_name": "美加G2G国际渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配IPA-INT-ECONOMIC物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "IPA-INT-ECONOMIC",
+                "channel_name": "国际经济小包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配INT-PRI-LP物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "INT-PRI-LP",
+                "channel_name": "国际普快大包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配INT-PRI-SP物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "INT-PRI-SP",
+                "channel_name": "国际普快小包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10203030,
+                    "message": "渠道限制：最长边≤120cm,长+2*宽+2*高≤225cm"
+                },
+                "status": "Failure",
+                "channel_code": "UK-EVRI",
+                "channel_name": "英国EVRI",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配DPD-MULTI物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DPD-MULTI",
+                "channel_name": "英国DPD多箱",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203030,
+                    "message": "包裹尺寸限制：长≤90cm，长+宽≤150cm,体积≤0.113m³"
+                },
+                "status": "Failure",
+                "channel_code": "YODEL48H-L",
+                "channel_name": "Yodel_48h大包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10203030,
+                    "message": "包裹尺寸限制：长≤90cm，体积≤0.0310m³"
+                },
+                "status": "Failure",
+                "channel_code": "YODEL48H-S",
+                "channel_name": "Yodel_48h小包",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10203030,
+                    "message": "重量超过30kg或者最大尺寸限制超过100*60*60cm或者三边之和大于230cm,不提供服务"
+                },
+                "status": "Failure",
+                "channel_code": "DPD-UK",
+                "channel_name": "英国DPD单箱",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10203030,
+                    "message": "渠道不可发限制：订单包裹计费重不超过25kg，最长边不超过200cm"
+                },
+                "status": "Failure",
+                "channel_code": "DX-EXPRESS",
+                "channel_name": "英国DX快递渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配UPS-2ND-DAY物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-2ND-DAY",
+                "channel_name": "UPS两日达",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配UPS-SUREPOST物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-SUREPOST",
+                "channel_name": "UPS_SUREPOST",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配UPS-GROUND-MULT物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND-MULT",
+                "channel_name": "美国UPS一票多箱",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配UPS-GROUND-EA物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND-EA",
+                "channel_name": "美东UPS重货",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配CE-GROUND-EA物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "CE-GROUND-EA",
+                "channel_name": "美东CE重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配CE-PARCEL物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "CE-PARCEL",
+                "channel_name": "美国CE普货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配YODEL48H-S物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "YODEL48H-S",
+                "channel_name": "Yodel_48h小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配DPD-UK物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DPD-UK",
+                "channel_name": "英国DPD单箱",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配SS-FEDEX-G-E物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "SS-FEDEX-G-E",
+                "channel_name": "美东FEDEX大货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND-MULT",
+                "channel_name": "美国UPS一票多箱",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配UK-EVRI-L物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UK-EVRI-L",
+                "channel_name": "英国EVRI超大渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配UK-EVRI物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UK-EVRI",
+                "channel_name": "英国EVRI",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配XDP-EP_A-C物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "XDP-EP_A-C",
+                "channel_name": "XDP-EP(A,B,C区)",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配YODEL48H-L物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "YODEL48H-L",
+                "channel_name": "Yodel_48h大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配YODEL48H-S物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "YODEL48H-S",
+                "channel_name": "Yodel_48h小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配DPD-MULTI物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DPD-MULTI",
+                "channel_name": "英国DPD多箱",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配DPD-UK物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DPD-UK",
+                "channel_name": "英国DPD单箱",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配DX-EXPRESS物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DX-EXPRESS",
+                "channel_name": "英国DX快递渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-2ND-DAY",
+                "channel_name": "UPS两日达",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-SUREPOST",
+                "channel_name": "UPS_SUREPOST",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配UPS-GROUND-EA物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND-EA",
+                "channel_name": "美东UPS重货",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203030,
+                    "message": "包裹限制：最长边大于或等于75CM，长+2*（宽+高）大于或等于135CM，重量大于或等于31.5KG，不提供服务。"
+                },
+                "status": "Failure",
+                "channel_code": "INT-PRI-LP",
+                "channel_name": "国际普快大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配CE-GROUND-EA物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "CE-GROUND-EA",
+                "channel_name": "美东CE重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "CE-PARCEL",
+                "channel_name": "美国CE普货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203026,
+                    "message": "未找到价格方案"
+                },
+                "status": "Failure",
+                "channel_code": "YUN-GROUND",
+                "channel_name": "美国YUN重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "DHL-US-BP",
+                "channel_name": "美国DHL本地大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "DHL-US-SP",
+                "channel_name": "美国DHL本地小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "USPS-PRIORITY",
+                "channel_name": "美国USPS大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "USPS-FIRST-CLASS",
+                "channel_name": "美国USPS小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "AMAZON-GROUND",
+                "channel_name": "美国AMAZON重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-LP",
+                "channel_name": "美国FEDEX经济大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-SM",
+                "channel_name": "美国FEDEX经济小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203030,
+                    "message": "重量小于0.056KG，最长边大于60CM，最长边+次长边+最短边大于91cm，不可发"
+                },
+                "status": "Failure",
+                "channel_code": "INT-PRI-SP",
+                "channel_name": "国际普快小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203030,
+                    "message": "包裹限制：重量大于1.984KG 或小于0.05KG,或 最长边大于60cm 或长+宽+高大于91cm，不提供服务"
+                },
+                "status": "Failure",
+                "channel_code": "IPA-INT-ECONOMIC",
+                "channel_name": "国际经济小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USEA仓库未分配DX-EXPRESS物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "DX-EXPRESS",
+                "channel_name": "英国DX快递渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "USPS-FIRST-CLASS",
+                "channel_name": "美国USPS小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-2ND-DAY",
+                "channel_name": "UPS两日达",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-SUREPOST",
+                "channel_name": "UPS_SUREPOST",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND-MULT",
+                "channel_name": "美国UPS一票多箱",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND-EA",
+                "channel_name": "美东UPS重货",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "CE-GROUND-EA",
+                "channel_name": "美东CE重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "CE-PARCEL",
+                "channel_name": "美国CE普货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203026,
+                    "message": "未找到价格方案"
+                },
+                "status": "Failure",
+                "channel_code": "YUN-GROUND",
+                "channel_name": "美国YUN重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "DHL-US-BP",
+                "channel_name": "美国DHL本地大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "DHL-US-SP",
+                "channel_name": "美国DHL本地小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "USPS-PRIORITY",
+                "channel_name": "美国USPS大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "AMAZON-GROUND",
+                "channel_name": "美国AMAZON重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配US-G2G-INT物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "US-G2G-INT",
+                "channel_name": "美加G2G国际渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-LP",
+                "channel_name": "美国FEDEX经济大包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-SM",
+                "channel_name": "美国FEDEX经济小包",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "SS-FEDEX-G-E",
+                "channel_name": "美东FEDEX大货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-GROUND-EA",
+                "channel_name": "美东FedEx重货",
+                "total_fee_cny": null,
+                "warehouse_code": "USEA"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "OT-GROUND",
+                "channel_name": "美国OnTrac重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "UPS-GROUND",
+                "channel_name": "美国UPS重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "CE-GROUND",
+                "channel_name": "美西CE重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "SS-FEDEX-G-W",
+                "channel_name": "美西FEDEX大货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10203027,
+                    "message": "该派送方式不支持该国家"
+                },
+                "status": "Failure",
+                "channel_code": "FEDEX-GROUND",
+                "channel_name": "美国FEDEX重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "USWE仓库未分配US-UPS-INT物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "US-UPS-INT",
+                "channel_name": "美国UPS国际渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "USWE"
+            },
+            {
+                "error": {
+                    "code": 10103095,
+                    "message": "UK仓库未分配OT-GROUND物流方式"
+                },
+                "status": "Failure",
+                "channel_code": "OT-GROUND",
+                "channel_name": "美国OnTrac重货渠道",
+                "total_fee_cny": null,
+                "warehouse_code": "UK"
+            }
+        ],
+        "request_time_ms": 6690.23
+    },
+    "meta": {
+        "error": null,
+        "order_number": "103648304839269726",
+        "request_params": {
+            "city": "pickering",
+            "postcode": "yo188lx",
+            "weight_kg": 27.8616,
+            "dimensions_cm": {
+                "width": 57,
+                "height": 13,
+                "length": 188
+            },
+            "receiver_country_code": "GB"
+        },
+        "total_execution_time_ms": 13034.63
+    },
+    "wedo": {
+        "results": {
+            "AMGD": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东Amazon Ground】重量上限50 LB]"
+                    ],
+                    "recordCode": "0F65929A-96A2-EADC-1BF8-91DDDCECB62D"
+                },
+                "channel_code": "AMGD",
+                "channel_name": "美东Amazon Ground",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "CAGLS": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20099] 未启用的运输方式"
+                    ],
+                    "recordCode": "468FED94-5E57-EA0E-F0C3-B37423F2B55F"
+                },
+                "channel_code": "CAGLS",
+                "channel_name": "美西GLS",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "UPSGW": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "EACDD3BB-96AB-67E4-6CEF-D8429559EA08"
+                },
+                "channel_code": "UPSGW",
+                "channel_name": "美西UPS Ground",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "AMGDCA": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美西Amazon Ground】重量上限50 LB]"
+                    ],
+                    "recordCode": "10CF5A5B-7C6D-77C6-7E20-E14D4FF6253A"
+                },
+                "channel_code": "AMGDCA",
+                "channel_name": "美西Amazon Ground",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "FDXSPE": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东FedEx SmartPost】重量上限20 LB]"
+                    ],
+                    "recordCode": "D4818E4A-7018-2E8C-B502-7DB201EB8852"
+                },
+                "channel_code": "FDXSPE",
+                "channel_name": "美东FedEx SmartPost",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "FEDHDE": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "AB5D3A19-1EFE-CF93-7385-9B89AB5162CE"
+                },
+                "channel_code": "FEDHDE",
+                "channel_name": "美东FedEx HomeDelivery",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "FEDHDW": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "0A55FC3C-792E-A761-ABF1-211FE76BB137"
+                },
+                "channel_code": "FEDHDW",
+                "channel_name": "美西FedEx HomeDelivery",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "FEDSPW": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美西FedEx SmartPost】重量上限20 LB]"
+                    ],
+                    "recordCode": "DD304E7F-6272-2413-D081-83470BD8A97B"
+                },
+                "channel_code": "FEDSPW",
+                "channel_name": "美西FedEx SmartPost",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "GOFOCA": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美西GOFO Express】重量上限20 LB]"
+                    ],
+                    "recordCode": "0A110850-A8B1-A81D-C894-F2D783A4C6D2"
+                },
+                "channel_code": "GOFOCA",
+                "channel_name": "美西GOFO Express",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "GOFONJ": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东GOFO Express】重量上限20 LB]"
+                    ],
+                    "recordCode": "C8C04E7C-64EF-12BA-998D-B6E8E7DB4EBC"
+                },
+                "channel_code": "GOFONJ",
+                "channel_name": "美东GOFO Express",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "UPSGDE": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "2857D3C0-E292-DF89-9006-BE6ED8C8B1DB"
+                },
+                "channel_code": "UPSGDE",
+                "channel_name": "美东UPS Ground",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "FEDIGCA": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20099] 未启用的运输方式"
+                    ],
+                    "recordCode": "A82577D7-638D-C900-378D-296CB9DCC9D7"
+                },
+                "channel_code": "FEDIGCA",
+                "channel_name": "美西FedEx International Ground-美发加",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "GFYUNCA": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美西GOFO YunExpress】重量上限20 LB]"
+                    ],
+                    "recordCode": "7E43AD6F-532B-4179-B960-DC9854935E01"
+                },
+                "channel_code": "GFYUNCA",
+                "channel_name": "美西GOFO YunExpress",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "GFYUNNJ": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东GOFO YunExpress】重量上限20 LB]"
+                    ],
+                    "recordCode": "284C0759-64F0-8B72-DEC5-DAD9014C7B70"
+                },
+                "channel_code": "GFYUNNJ",
+                "channel_name": "美东GOFO YunExpress",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "USPSPME": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东USPS Priority Mail】重量上限20 LB]"
+                    ],
+                    "recordCode": "D0157B5E-D1D5-DF4E-026E-1B9CC7D8039A"
+                },
+                "channel_code": "USPSPME",
+                "channel_name": "美东USPS Priority Mail",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "USPSPMW": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "42A7330A-5CFC-72C6-74D7-FF66F4CB0D8D"
+                },
+                "channel_code": "USPSPMW",
+                "channel_name": "美西USPS Priority Mail",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "CAUSPSGA": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "78890862-279A-41F8-1828-BA16CBFCBCB5"
+                },
+                "channel_code": "CAUSPSGA",
+                "channel_name": "美西USPS Ground（磅内磅上）",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "FEDHDEMP": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "62CAA82C-25AC-50FA-8E5D-68ABA2138F38"
+                },
+                "channel_code": "FEDHDEMP",
+                "channel_name": "美东FedEx HD Multiple子母单",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "FEDHDWMP": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "1C651384-2EA9-5D2B-82DA-804F306BF4EA"
+                },
+                "channel_code": "FEDHDWMP",
+                "channel_name": "美西FedEx HD Multiple子母单",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "NJUSPSGA": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "2CC639BF-62F8-77EE-239E-652EC33CD8A2"
+                },
+                "channel_code": "NJUSPSGA",
+                "channel_name": "美东USPS Ground（磅内磅上）",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "SPEEDXCA": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美西SpeedX(磅内磅上)】重量上限25 LB]"
+                    ],
+                    "recordCode": "31F57AD5-9D64-390C-676C-D9667CB428B8"
+                },
+                "channel_code": "SPEEDXCA",
+                "channel_name": "美西SpeedX(磅内磅上)",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "SPEEDXNJ": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东SpeedX(磅内磅上)】重量上限25 LB]"
+                    ],
+                    "recordCode": "1BD1C8E9-89E7-3FBC-DF0B-BA8C91C93150"
+                },
+                "channel_code": "SPEEDXNJ",
+                "channel_name": "美东SpeedX(磅内磅上)",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "UNIUNICA": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美西UniUni(磅内磅上)】重量上限20 LB]"
+                    ],
+                    "recordCode": "54A992B9-1A89-B45D-BE3B-C83FA01CCA82"
+                },
+                "channel_code": "UNIUNICA",
+                "channel_name": "美西UniUni(磅内磅上)",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "UNIUNINJ": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东UniUni(磅内磅上)】重量上限20 LB]"
+                    ],
+                    "recordCode": "8F05A3AD-861F-2E34-F057-A15EE768E096"
+                },
+                "channel_code": "UNIUNINJ",
+                "channel_name": "美东UniUni(磅内磅上)",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "UPSGWFBA": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [21001-费用计算失败，400-渠道返回异常,The requested service is unavailable between the selected locations.]"
+                    ],
+                    "recordCode": "7BB20828-29A7-1091-DFFA-83DE2E548E59"
+                },
+                "channel_code": "UPSGWFBA",
+                "channel_name": "美西UPS Ground FBA",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            "USPSGACASG": {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "FF8C1DF3-6ED4-5EA5-7484-866C1478D1ED"
+                },
+                "channel_code": "USPSGACASG",
+                "channel_name": "美西USPS Ground（磅内磅上）签名",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            }
+        },
+        "sorted_results": [
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东Amazon Ground】重量上限50 LB]"
+                    ],
+                    "recordCode": "0F65929A-96A2-EADC-1BF8-91DDDCECB62D"
+                },
+                "channel_code": "AMGD",
+                "channel_name": "美东Amazon Ground",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "42A7330A-5CFC-72C6-74D7-FF66F4CB0D8D"
+                },
+                "channel_code": "USPSPMW",
+                "channel_name": "美西USPS Priority Mail",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美西GOFO YunExpress】重量上限20 LB]"
+                    ],
+                    "recordCode": "7E43AD6F-532B-4179-B960-DC9854935E01"
+                },
+                "channel_code": "GFYUNCA",
+                "channel_name": "美西GOFO YunExpress",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美西GOFO Express】重量上限20 LB]"
+                    ],
+                    "recordCode": "0A110850-A8B1-A81D-C894-F2D783A4C6D2"
+                },
+                "channel_code": "GOFOCA",
+                "channel_name": "美西GOFO Express",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美西UniUni(磅内磅上)】重量上限20 LB]"
+                    ],
+                    "recordCode": "54A992B9-1A89-B45D-BE3B-C83FA01CCA82"
+                },
+                "channel_code": "UNIUNICA",
+                "channel_name": "美西UniUni(磅内磅上)",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美西FedEx SmartPost】重量上限20 LB]"
+                    ],
+                    "recordCode": "DD304E7F-6272-2413-D081-83470BD8A97B"
+                },
+                "channel_code": "FEDSPW",
+                "channel_name": "美西FedEx SmartPost",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20099] 未启用的运输方式"
+                    ],
+                    "recordCode": "468FED94-5E57-EA0E-F0C3-B37423F2B55F"
+                },
+                "channel_code": "CAGLS",
+                "channel_name": "美西GLS",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美西SpeedX(磅内磅上)】重量上限25 LB]"
+                    ],
+                    "recordCode": "31F57AD5-9D64-390C-676C-D9667CB428B8"
+                },
+                "channel_code": "SPEEDXCA",
+                "channel_name": "美西SpeedX(磅内磅上)",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [21001-费用计算失败，400-渠道返回异常,The requested service is unavailable between the selected locations.]"
+                    ],
+                    "recordCode": "7BB20828-29A7-1091-DFFA-83DE2E548E59"
+                },
+                "channel_code": "UPSGWFBA",
+                "channel_name": "美西UPS Ground FBA",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "1C651384-2EA9-5D2B-82DA-804F306BF4EA"
+                },
+                "channel_code": "FEDHDWMP",
+                "channel_name": "美西FedEx HD Multiple子母单",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "0A55FC3C-792E-A761-ABF1-211FE76BB137"
+                },
+                "channel_code": "FEDHDW",
+                "channel_name": "美西FedEx HomeDelivery",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "FF8C1DF3-6ED4-5EA5-7484-866C1478D1ED"
+                },
+                "channel_code": "USPSGACASG",
+                "channel_name": "美西USPS Ground（磅内磅上）签名",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "78890862-279A-41F8-1828-BA16CBFCBCB5"
+                },
+                "channel_code": "CAUSPSGA",
+                "channel_name": "美西USPS Ground（磅内磅上）",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "AB5D3A19-1EFE-CF93-7385-9B89AB5162CE"
+                },
+                "channel_code": "FEDHDE",
+                "channel_name": "美东FedEx HomeDelivery",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "EACDD3BB-96AB-67E4-6CEF-D8429559EA08"
+                },
+                "channel_code": "UPSGW",
+                "channel_name": "美西UPS Ground",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美西Amazon Ground】重量上限50 LB]"
+                    ],
+                    "recordCode": "10CF5A5B-7C6D-77C6-7E20-E14D4FF6253A"
+                },
+                "channel_code": "AMGDCA",
+                "channel_name": "美西Amazon Ground",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东GOFO YunExpress】重量上限20 LB]"
+                    ],
+                    "recordCode": "284C0759-64F0-8B72-DEC5-DAD9014C7B70"
+                },
+                "channel_code": "GFYUNNJ",
+                "channel_name": "美东GOFO YunExpress",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东GOFO Express】重量上限20 LB]"
+                    ],
+                    "recordCode": "C8C04E7C-64EF-12BA-998D-B6E8E7DB4EBC"
+                },
+                "channel_code": "GOFONJ",
+                "channel_name": "美东GOFO Express",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东UniUni(磅内磅上)】重量上限20 LB]"
+                    ],
+                    "recordCode": "8F05A3AD-861F-2E34-F057-A15EE768E096"
+                },
+                "channel_code": "UNIUNINJ",
+                "channel_name": "美东UniUni(磅内磅上)",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东FedEx SmartPost】重量上限20 LB]"
+                    ],
+                    "recordCode": "D4818E4A-7018-2E8C-B502-7DB201EB8852"
+                },
+                "channel_code": "FDXSPE",
+                "channel_name": "美东FedEx SmartPost",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东SpeedX(磅内磅上)】重量上限25 LB]"
+                    ],
+                    "recordCode": "1BD1C8E9-89E7-3FBC-DF0B-BA8C91C93150"
+                },
+                "channel_code": "SPEEDXNJ",
+                "channel_name": "美东SpeedX(磅内磅上)",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20081] 重量不符合要求，[计费重61.4252 LB 大于【美东USPS Priority Mail】重量上限20 LB]"
+                    ],
+                    "recordCode": "D0157B5E-D1D5-DF4E-026E-1B9CC7D8039A"
+                },
+                "channel_code": "USPSPME",
+                "channel_name": "美东USPS Priority Mail",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "2CC639BF-62F8-77EE-239E-652EC33CD8A2"
+                },
+                "channel_code": "NJUSPSGA",
+                "channel_name": "美东USPS Ground（磅内磅上）",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "2857D3C0-E292-DF89-9006-BE6ED8C8B1DB"
+                },
+                "channel_code": "UPSGDE",
+                "channel_name": "美东UPS Ground",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20079] [计算运费失败，请检查包裹信息！]"
+                    ],
+                    "recordCode": "62CAA82C-25AC-50FA-8E5D-68ABA2138F38"
+                },
+                "channel_code": "FEDHDEMP",
+                "channel_name": "美东FedEx HD Multiple子母单",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            },
+            {
+                "currency": "USD",
+                "raw_data": {
+                    "error": [
+                        "[20099] 未启用的运输方式"
+                    ],
+                    "recordCode": "A82577D7-638D-C900-378D-296CB9DCC9D7"
+                },
+                "channel_code": "FEDIGCA",
+                "channel_name": "美西FedEx International Ground-美发加",
+                "ship_fee_cny": null,
+                "ship_fee_original": null
+            }
+        ],
+        "request_time_ms": 6343.87
+    }
+}

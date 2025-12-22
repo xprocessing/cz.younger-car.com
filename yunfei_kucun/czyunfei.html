@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cz美国仓物流费用查询</title>
+    <!-- 引入 Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 30px;
+            max-width: 800px;
+        }
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        .btn-submit {
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="form-title">📦cz美国仓物流费用查询</h2>
+        
+        <form action="https://cz.younger-car.com/chayunfei.php" method="get" target="_blank">
+            <div class="row g-3">
+              
+
+               
+
+                <!-- 城市 -->
+                <div class="col-md-6">
+                    <label for="city" class="form-label">城市 <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="city" name="city" 
+                           value="Los Angeles"   required  >
+                </div>
+                 <!-- 邮编 -->
+                <div class="col-md-6">
+                    <label for="postcode" class="form-label">邮编 <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="postcode" name="postcode" 
+                           value="90001" required >
+                </div>
+
+                <!-- 重量 -->
+                <div class="col-md-12">
+                    <label for="weight" class="form-label">重量（kg）<span class="text-danger">*</span></label>
+                    <input type="number" step="0.01" class="form-control" id="weight" name="weight" 
+                           value="" required >
+                </div>
+
+                <!-- 长度 -->
+                <div class="col-md-4">
+                    <label for="length" class="form-label">长度（cm）<span class="text-danger">*</span></label>
+                    <input type="number" step="0.01" class="form-control" id="length" name="length" 
+                           value="" required >
+                </div>
+
+                <!-- 宽度 -->
+                <div class="col-md-4">
+                    <label for="width" class="form-label">宽度（cm）<span class="text-danger">*</span></label>
+                    <input type="number" step="0.01" class="form-control" id="width" name="width" 
+                           value="" required >
+                </div>
+
+                <!-- 高度 -->
+                <div class="col-md-4">
+                    <label for="height" class="form-label">高度（cm）<span class="text-danger">*</span></label>
+                    <input type="number" step="0.01" class="form-control" id="height" name="height" 
+                           value="" required >
+                </div>
+
+                <!-- 提交按钮 -->
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary btn-submit btn-lg">
+                        发起查询 🚀
+                    </button>
+                </div>
+            </div>
+
+            <!-- 备注信息 -->
+            <div class="mt-4 alert alert-info">
+                <h6>📋 备注：</h6>
+                <ul class="mb-0">
+                    <li>带 <span class="text-danger">*</span> 为必填项，默认值已按查询地址填充</li>
+                    <li>尺寸单位：厘米（cm），重量单位：千克（kg）</li>
+                    <li>提交后将跳转至物流费用查询结果页面</li>
+                </ul>
+            </div>
+        </form>
+    </div>
+
+    <!-- 引入 Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

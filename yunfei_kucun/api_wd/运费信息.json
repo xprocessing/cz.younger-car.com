@@ -1,0 +1,271 @@
+{
+    "errCode": 200,
+    "errMsg": "执行成功",
+    "status": true,
+    "data": {
+        "AMGDCA": {
+            "mainRecordCode": "IF-58B086DC-E311-333F-CADA-D092627A0AB7",
+            "recordCode": "CD54AF8C-75B9-423E-AB97-72ACB68F6739",
+            "shipFee": "9.8170",
+            "currency": "USD",
+            "calculateDetail": [
+                {
+                    "feeName": "旺季临时附加费",
+                    "feeCode": "busyTemporaryFee",
+                    "discount": 1,
+                    "volWeightParam": "190.0000",
+                    "fuelRate": "0.2075",
+                    "fuelFee": 0.1245,
+                    "dealFee": 0,
+                    "fee": 0.6,
+                    "feeCNY": "5.1313",
+                    "currencyO": "USD",
+                    "feeExCur": "USD\/CNY",
+                    "priceId": "7848",
+                    "detailId": "496713",
+                    "note": "",
+                    "actualCalculate": "(0.6) * discount * (1 + fuelRate)",
+                    "baseCalculate": "0.6",
+                    "extend": {
+                        "receiver": {
+                            "username": "ONT8",
+                            "address1": "24300 Nandina Ave",
+                            "address2": "",
+                            "address3": "",
+                            "city": "San Diego",
+                            "state": "",
+                            "postCode": "92113-3931",
+                            "countryCode": "US",
+                            "country": "",
+                            "phone": "00000000000"
+                        },
+                        "declaredValue": 0,
+                        "declaredCurrency": "",
+                        "insuredValue": 0,
+                        "insuredCurrency": "USD",
+                        "skuList": {
+                            "sku0001": 1
+                        },
+                        "omOrderId": "SYSCreate-1764042922",
+                        "city": "San Diego",
+                        "orderInfo": {
+                            "signatureService": "0"
+                        },
+                        "multiPackage": "0",
+                        "feeInfo": {
+                            "496713": {
+                                "discount1": 1,
+                                "discount2": 1,
+                                "Fee:496713": 0.6
+                            }
+                        }
+                    }
+                },
+                {
+                    "feeName": "基础运费",
+                    "feeCode": "basicFee",
+                    "discount": 1,
+                    "volWeightParam": "190.0000",
+                    "fuelRate": "0.2075",
+                    "fuelFee": 1.562475,
+                    "dealFee": 0,
+                    "fee": 7.53,
+                    "feeCNY": "69.5297",
+                    "currencyO": "USD",
+                    "feeExCur": "USD\/CNY",
+                    "priceId": "7843",
+                    "detailId": "496353",
+                    "note": "",
+                    "actualCalculate": "(7.53) * discount * (1 + fuelRate)",
+                    "baseCalculate": "7.53",
+                    "extend": {
+                        "receiver": {
+                            "username": "ONT8",
+                            "address1": "24300 Nandina Ave",
+                            "address2": "",
+                            "address3": "",
+                            "city": "San Diego",
+                            "state": "",
+                            "postCode": "92113-3931",
+                            "countryCode": "US",
+                            "country": "",
+                            "phone": "00000000000"
+                        },
+                        "declaredValue": 0,
+                        "declaredCurrency": "",
+                        "insuredValue": 0,
+                        "insuredCurrency": "USD",
+                        "skuList": {
+                            "sku0001": 1
+                        },
+                        "omOrderId": "SYSCreate-1764042922",
+                        "city": "San Diego",
+                        "orderInfo": {
+                            "signatureService": "0"
+                        },
+                        "multiPackage": "0",
+                        "feeInfo": {
+                            "496353": {
+                                "discount1": 1,
+                                "discount2": 1,
+                                "Fee:496353": 7.53
+                            }
+                        }
+                    }
+                },
+                {
+                    "feeName": "燃油费",
+                    "feeCode": "fuelFee",
+                    "fee": "1.6870",
+                    "currencyO": "USD"
+                }
+            ],
+            "zone": "2"
+        },
+        "CAUSPSGA": {
+            "mainRecordCode": "IF-616C9D61-BA3F-D8E4-0A29-D72600C7C639",
+            "recordCode": "6D0394FB-2EE7-9A52-D601-5FEB52D01819",
+            "shipFee": "21.7600",
+            "currency": "USD",
+            "calculateDetail": [
+                {
+                    "feeName": "超限附加费",
+                    "feeCode": "overLimitFee",
+                    "discount": 1,
+                    "volWeightParam": "166.0000",
+                    "fuelRate": "0.0000",
+                    "fuelFee": 0,
+                    "dealFee": 0,
+                    "fee": 5.5,
+                    "feeCNY": "38.9543",
+                    "currencyO": "USD",
+                    "feeExCur": "USD\/CNY",
+                    "priceId": "4111",
+                    "detailId": "338649,338650",
+                    "note": "长度不合规附加费,超长附加费-A",
+                    "actualCalculate": "(1.5+4) * discount * (1 + fuelRate)",
+                    "baseCalculate": "1.5+4",
+                    "extend": {
+                        "feeInfo": {
+                            "338649": {
+                                "discount1": 1,
+                                "discount2": 1,
+                                "Fee:338649": 1.5
+                            },
+                            "338650": {
+                                "discount1": 1,
+                                "discount2": 1,
+                                "Fee:338650": 4
+                            }
+                        }
+                    }
+                },
+                {
+                    "feeName": "旺季临时附加费",
+                    "feeCode": "busyTemporaryFee",
+                    "discount": 1,
+                    "volWeightParam": "166.0000",
+                    "fuelRate": "0.0000",
+                    "fuelFee": 0,
+                    "dealFee": 0,
+                    "fee": 0.75,
+                    "feeCNY": "44.2663",
+                    "currencyO": "USD",
+                    "feeExCur": "USD\/CNY",
+                    "priceId": "4113",
+                    "detailId": "338688",
+                    "note": "",
+                    "actualCalculate": "(0.75) * discount * (1 + fuelRate)",
+                    "baseCalculate": "0.75",
+                    "extend": {
+                        "receiver": {
+                            "username": "ONT8",
+                            "address1": "24300 Nandina Ave",
+                            "address2": "",
+                            "address3": "",
+                            "city": "San Diego",
+                            "state": "",
+                            "postCode": "92113-3931",
+                            "countryCode": "US",
+                            "country": "",
+                            "phone": "00000000000"
+                        },
+                        "declaredValue": 0,
+                        "declaredCurrency": "",
+                        "insuredValue": 0,
+                        "insuredCurrency": "USD",
+                        "skuList": {
+                            "sku0001": 1
+                        },
+                        "omOrderId": "SYSCreate-1764042923",
+                        "city": "San Diego",
+                        "orderInfo": {
+                            "signatureService": "0"
+                        },
+                        "multiPackage": "0",
+                        "feeInfo": {
+                            "338688": {
+                                "discount1": 1,
+                                "discount2": 1,
+                                "Fee:338688": 0.75
+                            }
+                        }
+                    }
+                },
+                {
+                    "feeName": "基础运费",
+                    "feeCode": "basicFee",
+                    "discount": 1,
+                    "volWeightParam": "166.0000",
+                    "fuelRate": "0.0000",
+                    "fuelFee": 0,
+                    "dealFee": 0,
+                    "fee": 15.51,
+                    "feeCNY": "154.1174",
+                    "currencyO": "USD",
+                    "feeExCur": "USD\/CNY",
+                    "priceId": "4110",
+                    "detailId": "337964",
+                    "note": "",
+                    "actualCalculate": "(15.51) * discount * (1 + fuelRate)",
+                    "baseCalculate": "15.51",
+                    "extend": {
+                        "receiver": {
+                            "username": "ONT8",
+                            "address1": "24300 Nandina Ave",
+                            "address2": "",
+                            "address3": "",
+                            "city": "San Diego",
+                            "state": "",
+                            "postCode": "92113-3931",
+                            "countryCode": "US",
+                            "country": "",
+                            "phone": "00000000000"
+                        },
+                        "declaredValue": 0,
+                        "declaredCurrency": "",
+                        "insuredValue": 0,
+                        "insuredCurrency": "USD",
+                        "skuList": {
+                            "sku0001": 1
+                        },
+                        "omOrderId": "SYSCreate-1764042923",
+                        "city": "San Diego",
+                        "orderInfo": {
+                            "signatureService": "0"
+                        },
+                        "multiPackage": "0",
+                        "feeInfo": {
+                            "337964": {
+                                "discount1": 1,
+                                "discount2": 1,
+                                "Fee:337964": 15.51
+                            }
+                        }
+                    }
+                }
+            ],
+            "zone": "2"
+        }
+    }
+}

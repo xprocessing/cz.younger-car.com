@@ -1,0 +1,2841 @@
+
+{
+    "success": true,
+    "query_time": "2025-11-24 09:40:08",
+    "postcode": "48451-9189",
+    "weight_kg": 3.6456,
+    "dimensions": {
+        "length": 62,
+        "width": 49,
+        "height": 6
+    },
+    "warehouses": [
+        {
+            "warehouse_code": "USEA",
+            "channels": [
+                {
+                    "code": "FEDEX-GROUND-FBA",
+                    "name": "美国FBA联邦重货渠道",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-GROUND-FBA",
+                    "name": "美国FBA联邦重货渠道",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "WH-FEDEX-GROUND",
+                    "name": "美国WH-FEDEX重货渠道",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "WH-GOFO-STANDARD",
+                    "name": "美国WH-GOFO标准渠道",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "CE-GROUND-EA",
+                    "name": "美东CE重货渠道",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "USPS-FIRST-CLASS",
+                    "name": "美国USPS小包",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "USPS-PRIORITY",
+                    "name": "美国USPS大包",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-LP",
+                    "name": "美国FEDEX经济大包",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "UPS-GROUND-MULT",
+                    "name": "美国UPS一票多箱",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "DHL-US-BP",
+                    "name": "美国DHL本地大包",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "AMAZON-GROUND",
+                    "name": "美国AMAZON重货渠道",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "UPS-2ND-DAY",
+                    "name": "UPS两日达",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "AMAZON-GROUND",
+                    "name": "美国AMAZON重货渠道",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "WH-USPS-FIRST-CLASS",
+                    "name": "美国WH-USPS小包",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "WH-FEDEX-GROUND",
+                    "name": "美国WH-FEDEX重货渠道",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "WH-GOFO-STANDARD",
+                    "name": "美国WH-GOFO标准渠道",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "USPS-FIRST-CLASS",
+                    "name": "美国USPS小包",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-LP",
+                    "name": "美国FEDEX经济大包",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-GROUND-FBA",
+                    "name": "美国FBA联邦重货渠道",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "WH-USPS-FIRST-CLASS",
+                    "name": "美国WH-USPS小包",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-LP",
+                    "name": "美国FEDEX经济大包",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "USPS-PRIORITY",
+                    "name": "美国USPS大包",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "UPS-2ND-DAY",
+                    "name": "UPS两日达",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-GROUND-EA",
+                    "name": "美东FedEx重货",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "UPS-GROUND-EA",
+                    "name": "美东UPS重货",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "UPS-GROUND-MULT",
+                    "name": "美国UPS一票多箱",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-GROUND-FBA",
+                    "name": "美国FBA联邦重货渠道",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "DHL-US-BP",
+                    "name": "美国DHL本地大包",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-LP",
+                    "name": "美国FEDEX经济大包",
+                    "success": true,
+                    "fee": null,
+                    "estimated_days": "",
+                    "message": ""
+                },
+                {
+                    "code": "US-UPS-INT",
+                    "name": "美国UPS国际渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203027,\"errMessage\":\"该派送方式不支持该国家\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "UK-PALLETWAYS",
+                    "name": "英国PALLETWAYS托盘",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UK-PALLETWAYS物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UK-PALLETWAYS物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UK-PALLETWAYS物流方式"
+                },
+                {
+                    "code": "CE-PARCEL-NU-SCCE",
+                    "name": "美南美中CE-NU普货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配CE-PARCEL-NU-SCCE物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配CE-PARCEL-NU-SCCE物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配CE-PARCEL-NU-SCCE物流方式"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "USPS-FIRST-CLASS-SC",
+                    "name": "美南USPS小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配USPS-FIRST-CLASS-SC物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配USPS-FIRST-CLASS-SC物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配USPS-FIRST-CLASS-SC物流方式"
+                },
+                {
+                    "code": "CE-PARCEL-NU-BAT",
+                    "name": "美国CE-NU电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"尺寸限制：最长边不能超55cm，次长边不能超40cm，计费重不能超11.25kg，长*宽*高不能超0.056m³\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "DPD-UK-AGE-VERIFY",
+                    "name": "DPD英国本土-年龄检测",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配DPD-UK-AGE-VERIFY物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配DPD-UK-AGE-VERIFY物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配DPD-UK-AGE-VERIFY物流方式"
+                },
+                {
+                    "code": "CE-PARCEL-BAT",
+                    "name": "美国CE电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"渠道可发尺寸重量限制：包裹最长边不可超过55cm，次长边不可超40cm，最短边不可超40cm，包裹体积不可超过0.056m³，计费重不可超过11.25kg\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "CE-PARCEL-NU",
+                    "name": "美国CE-NU普货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"尺寸限制规则：最长边大于55cm或第二边长大于40cm或最短边大于40cm或计费重大于11.25kg或体积大于56000\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "FBA-LTL",
+                    "name": "美国FBA卡派专线",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配FBA-LTL物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配FBA-LTL物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配FBA-LTL物流方式"
+                },
+                {
+                    "code": "WH-YUN-GROUND",
+                    "name": "美国WH-YUN重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203029,\"errMessage\":\"渠道不支持此订单邮编的派送服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "NW-CBT",
+                    "name": "美国NW-CBT渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配NW-CBT物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配NW-CBT物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配NW-CBT物流方式"
+                },
+                {
+                    "code": "YODEL48H-S",
+                    "name": "Yodel_48h小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配YODEL48H-S物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配YODEL48H-S物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配YODEL48H-S物流方式"
+                },
+                {
+                    "code": "FEDEX-GROUND",
+                    "name": "美国FEDEX重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配FEDEX-GROUND物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配FEDEX-GROUND物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配FEDEX-GROUND物流方式"
+                },
+                {
+                    "code": "UK-EVRI",
+                    "name": "英国EVRI",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UK-EVRI物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UK-EVRI物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UK-EVRI物流方式"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "JP-TAK-KYUUBIN",
+                    "name": "JP-黑猫宅急便",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配JP-TAK-KYUUBIN物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配JP-TAK-KYUUBIN物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配JP-TAK-KYUUBIN物流方式"
+                },
+                {
+                    "code": "DHL-US-SP",
+                    "name": "美国DHL本地小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"包裹尺寸限制：长+（宽+高）*2小于127cm；最长边大于68cm；第二长边大于55cm;体积大于56000cm³;实重大于0.448kg，不支持服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-SM",
+                    "name": "美国FEDEX经济小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"3.646不在分区重量段内\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "CE-PARCEL",
+                    "name": "美国CE普货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"渠道可发尺寸重量限制：包裹最长边不可超过55cm，次长边不可超40cm，最短边不可超40cm，包裹体积不可超过0.056m³，计费重不可超过11.25kg\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-ROADMAP",
+                    "name": "美国FEDEX-RM渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203029,\"errMessage\":\"渠道不支持此订单邮编的派送服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-SM",
+                    "name": "美国FEDEX经济小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"3.646不在分区重量段内\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "IPA-INT-ECONOMIC",
+                    "name": "国际经济小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203027,\"errMessage\":\"该派送方式不支持该国家\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "CA-FDX-SS",
+                    "name": "加拿大Fedex大货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配CA-FDX-SS物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配CA-FDX-SS物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配CA-FDX-SS物流方式"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "UPS-UK-MT",
+                    "name": "UPS-英国多箱",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-UK-MT物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-UK-MT物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-UK-MT物流方式"
+                },
+                {
+                    "code": "UPS-GROUND",
+                    "name": "美国UPS重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-GROUND物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-GROUND物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-GROUND物流方式"
+                },
+                {
+                    "code": "YODEL-24H",
+                    "name": "Yodel_24h大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配YODEL-24H物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配YODEL-24H物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配YODEL-24H物流方式"
+                },
+                {
+                    "code": "INT-PRI-LP",
+                    "name": "国际普快大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203027,\"errMessage\":\"该派送方式不支持该国家\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "ROY-PARCEL-48H-S",
+                    "name": "ROY-48H包裹-签名",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配ROY-PARCEL-48H-S物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配ROY-PARCEL-48H-S物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配ROY-PARCEL-48H-S物流方式"
+                },
+                {
+                    "code": "UPS-SUREPOST",
+                    "name": "UPS-SUREPOST",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"包裹不可发限制：订单包裹计费重大于4.05kg，实重小于0.447kg,最小尺寸不低于：15*10*2cm\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "EVRI-EU",
+                    "name": "EVRI-欧洲件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配EVRI-EU物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配EVRI-EU物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配EVRI-EU物流方式"
+                },
+                {
+                    "code": "UPS-MI-R",
+                    "name": "美国UPS-MI普货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "OT-GROUND",
+                    "name": "美国OnTrac重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配OT-GROUND物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配OT-GROUND物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配OT-GROUND物流方式"
+                },
+                {
+                    "code": "JP-FBA-LOCAL",
+                    "name": "日本FBA专线派送",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配JP-FBA-LOCAL物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配JP-FBA-LOCAL物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配JP-FBA-LOCAL物流方式"
+                },
+                {
+                    "code": "UPS-MI-BAT",
+                    "name": "美国UPS-MI电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "YUN-GROUND",
+                    "name": "美国YUN重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203029,\"errMessage\":\"渠道不支持此订单邮编的派送服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "UPS-MI-R",
+                    "name": "美国UPS-MI普货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "UPS-GROUND-SC",
+                    "name": "美南UPS重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-GROUND-SC物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-GROUND-SC物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-GROUND-SC物流方式"
+                },
+                {
+                    "code": "UPS-MI-BAT",
+                    "name": "美国UPS-MI电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-ROADMAP",
+                    "name": "美国FEDEX-RM渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203029,\"errMessage\":\"渠道不支持此订单邮编的派送服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "DHL-US-SP",
+                    "name": "美国DHL本地小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"包裹尺寸限制：长+（宽+高）*2小于127cm；最长边大于68cm；第二长边大于55cm;体积大于56000cm³;实重大于0.448kg，不支持服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "US-G2G-INT",
+                    "name": "美加G2G国际渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203027,\"errMessage\":\"该派送方式不支持该国家\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "FBA-LTL",
+                    "name": "美国FBA卡派专线",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配FBA-LTL物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配FBA-LTL物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配FBA-LTL物流方式"
+                },
+                {
+                    "code": "CA-EXPED",
+                    "name": "加邮Expedited包裹",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配CA-EXPED物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配CA-EXPED物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配CA-EXPED物流方式"
+                },
+                {
+                    "code": "UPS-MI-R",
+                    "name": "美国UPS-MI普货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-SM",
+                    "name": "美国FEDEX经济小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"3.646不在分区重量段内\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "INT-PRI-SP",
+                    "name": "国际普快小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203027,\"errMessage\":\"该派送方式不支持该国家\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "DPD-MULTI",
+                    "name": "英国DPD多箱",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配DPD-MULTI物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配DPD-MULTI物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配DPD-MULTI物流方式"
+                },
+                {
+                    "code": "FBA-LTL-PALLET",
+                    "name": "美国FBA卡派专线-托盘",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203029,\"errMessage\":\"渠道不支持此订单邮编的派送服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "XDP-TM-MU_A-C",
+                    "name": "XDP重货多箱渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配XDP-TM-MU_A-C物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配XDP-TM-MU_A-C物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配XDP-TM-MU_A-C物流方式"
+                },
+                {
+                    "code": "US-UPS-INT",
+                    "name": "美国UPS国际渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203027,\"errMessage\":\"该派送方式不支持该国家\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "SS-FEDEX-G-W",
+                    "name": "美西FEDEX大货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配SS-FEDEX-G-W物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配SS-FEDEX-G-W物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配SS-FEDEX-G-W物流方式"
+                },
+                {
+                    "code": "YODEL48H-L",
+                    "name": "Yodel_48h大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配YODEL48H-L物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配YODEL48H-L物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配YODEL48H-L物流方式"
+                },
+                {
+                    "code": "SS-FEDEX-G-E",
+                    "name": "美东FEDEX大货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"不满足超尺寸包裹发货要求，请更换其他渠道发货\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "ROY-PARCEL-24H-S",
+                    "name": "ROY-24H包裹-签名",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配ROY-PARCEL-24H-S物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配ROY-PARCEL-24H-S物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配ROY-PARCEL-24H-S物流方式"
+                },
+                {
+                    "code": "YUN-GROUND",
+                    "name": "美国YUN重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203029,\"errMessage\":\"渠道不支持此订单邮编的派送服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "DX-EXPRESS",
+                    "name": "英国DX快递渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配DX-EXPRESS物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配DX-EXPRESS物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配DX-EXPRESS物流方式"
+                },
+                {
+                    "code": "CE-PARCEL",
+                    "name": "美国CE普货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"渠道可发尺寸重量限制：包裹最长边不可超过55cm，次长边不可超40cm，最短边不可超40cm，包裹体积不可超过0.056m³，计费重不可超过11.25kg\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "UK-EVRI-L",
+                    "name": "英国EVRI超大渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UK-EVRI-L物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UK-EVRI-L物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UK-EVRI-L物流方式"
+                },
+                {
+                    "code": "CE-PARCEL-BAT",
+                    "name": "美国CE电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"渠道可发尺寸重量限制：包裹最长边不可超过55cm，次长边不可超40cm，最短边不可超40cm，包裹体积不可超过0.056m³，计费重不可超过11.25kg\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "UK-CE-PARCEL",
+                    "name": "英国CE本地派送",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UK-CE-PARCEL物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UK-CE-PARCEL物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UK-CE-PARCEL物流方式"
+                },
+                {
+                    "code": "UPS-SUREPOST",
+                    "name": "UPS-SUREPOST",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"包裹不可发限制：订单包裹计费重大于4.05kg，实重小于0.447kg,最小尺寸不低于：15*10*2cm\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "INT-PRI-LP",
+                    "name": "国际普快大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203027,\"errMessage\":\"该派送方式不支持该国家\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "JP-NEKO-POSU",
+                    "name": "JP-黑猫本地小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配JP-NEKO-POSU物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配JP-NEKO-POSU物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配JP-NEKO-POSU物流方式"
+                },
+                {
+                    "code": "FEDEX-ROADMAP",
+                    "name": "美国FEDEX-RM渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203029,\"errMessage\":\"渠道不支持此订单邮编的派送服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "JP-SAGAWA-KYUUBIN",
+                    "name": "JP-佐川急便",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配JP-SAGAWA-KYUUBIN物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配JP-SAGAWA-KYUUBIN物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配JP-SAGAWA-KYUUBIN物流方式"
+                },
+                {
+                    "code": "NW-CBT",
+                    "name": "美国NW-CBT渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配NW-CBT物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配NW-CBT物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配NW-CBT物流方式"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "WH-YUN-GROUND",
+                    "name": "美国WH-YUN重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203029,\"errMessage\":\"渠道不支持此订单邮编的派送服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "UPS-MI-R-SC",
+                    "name": "美南UPS-MI普货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-MI-R-SC物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-MI-R-SC物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-MI-R-SC物流方式"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-SM",
+                    "name": "美国FEDEX经济小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"3.646不在分区重量段内\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "FBA-LTL",
+                    "name": "美国FBA卡派专线",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配FBA-LTL物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配FBA-LTL物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配FBA-LTL物流方式"
+                },
+                {
+                    "code": "FEDEX-GROUND-SC",
+                    "name": "美南FEDEX重货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配FEDEX-GROUND-SC物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配FEDEX-GROUND-SC物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配FEDEX-GROUND-SC物流方式"
+                },
+                {
+                    "code": "FBA-LTL-PALLET",
+                    "name": "美国FBA卡派专线-托盘",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203029,\"errMessage\":\"渠道不支持此订单邮编的派送服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "USPS-PRIORITY-SC",
+                    "name": "美南USPS大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配USPS-PRIORITY-SC物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配USPS-PRIORITY-SC物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配USPS-PRIORITY-SC物流方式"
+                },
+                {
+                    "code": "UPS-MI-BAT-SC",
+                    "name": "美南UPS-MI电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-MI-BAT-SC物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-MI-BAT-SC物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-MI-BAT-SC物流方式"
+                },
+                {
+                    "code": "UPS-SUREPOST-SC",
+                    "name": "美南UPS-SUREPOST",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-SUREPOST-SC物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-SUREPOST-SC物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-SUREPOST-SC物流方式"
+                },
+                {
+                    "code": "INT-PRI-SP",
+                    "name": "国际普快小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203027,\"errMessage\":\"该派送方式不支持该国家\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "UPS-GROUND-MU-SC",
+                    "name": "美南UPS一票多箱",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-GROUND-MU-SC物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-GROUND-MU-SC物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-GROUND-MU-SC物流方式"
+                },
+                {
+                    "code": "CE-GROUND",
+                    "name": "美西CE重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配CE-GROUND物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配CE-GROUND物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配CE-GROUND物流方式"
+                },
+                {
+                    "code": "CE-PARCEL-NU",
+                    "name": "美国CE-NU普货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"尺寸限制规则：最长边大于55cm或第二边长大于40cm或最短边大于40cm或计费重大于11.25kg或体积大于56000\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "CE-PARCEL-NU-BAT",
+                    "name": "美国CE-NU电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203030,\"errMessage\":\"尺寸限制：最长边不能超55cm，次长边不能超40cm，计费重不能超11.25kg，长*宽*高不能超0.056m³\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "UPS-2ND-DAY-SC",
+                    "name": "美南UPS两日达",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-2ND-DAY-SC物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-2ND-DAY-SC物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-2ND-DAY-SC物流方式"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "UPS-INT-SC",
+                    "name": "美南UPS国际渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-INT-SC物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-INT-SC物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-INT-SC物流方式"
+                },
+                {
+                    "code": "UPS-GROUND-CE",
+                    "name": "美中UPS重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-GROUND-CE物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-GROUND-CE物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-GROUND-CE物流方式"
+                },
+                {
+                    "code": "AMAZON-GROUND-SC",
+                    "name": "美南AMAZON重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配AMAZON-GROUND-SC物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配AMAZON-GROUND-SC物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配AMAZON-GROUND-SC物流方式"
+                },
+                {
+                    "code": "USPS-FIRST-CLASS-CE",
+                    "name": "美中USPS小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配USPS-FIRST-CLASS-CE物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配USPS-FIRST-CLASS-CE物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配USPS-FIRST-CLASS-CE物流方式"
+                },
+                {
+                    "code": "CE-GROUND-SC",
+                    "name": "美南CE重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配CE-GROUND-SC物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配CE-GROUND-SC物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配CE-GROUND-SC物流方式"
+                },
+                {
+                    "code": "UPS-INT-CE",
+                    "name": "美中UPS国际渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-INT-CE物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-INT-CE物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-INT-CE物流方式"
+                },
+                {
+                    "code": "CE-P-NU-BAT-SCCE",
+                    "name": "美南美中CE-NU电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配CE-P-NU-BAT-SCCE物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配CE-P-NU-BAT-SCCE物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配CE-P-NU-BAT-SCCE物流方式"
+                },
+                {
+                    "code": "CE-PARCEL-NU-SCCE",
+                    "name": "美南美中CE-NU普货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配CE-PARCEL-NU-SCCE物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配CE-PARCEL-NU-SCCE物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配CE-PARCEL-NU-SCCE物流方式"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "IPA-INT-ECONOMIC",
+                    "name": "国际经济小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203027,\"errMessage\":\"该派送方式不支持该国家\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "XDP-EP_A-C",
+                    "name": "XDP-EP(A,B,C区)",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配XDP-EP_A-C物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配XDP-EP_A-C物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配XDP-EP_A-C物流方式"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "XDP-ECON-MULTI_A-C",
+                    "name": "XDP经济多箱(A,B,C区)",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配XDP-ECON-MULTI_A-C物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配XDP-ECON-MULTI_A-C物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配XDP-ECON-MULTI_A-C物流方式"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "XDP-TM_A-C",
+                    "name": "XDP-TM(A,B,C区)",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配XDP-TM_A-C物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配XDP-TM_A-C物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配XDP-TM_A-C物流方式"
+                },
+                {
+                    "code": "CA-UPS-S",
+                    "name": "加拿大UPS-Strandrad大货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配CA-UPS-S物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配CA-UPS-S物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配CA-UPS-S物流方式"
+                },
+                {
+                    "code": "DPD-UK",
+                    "name": "英国DPD单箱",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配DPD-UK物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配DPD-UK物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配DPD-UK物流方式"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "DPD-EU",
+                    "name": "DPD-欧洲单箱",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配DPD-EU物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配DPD-EU物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配DPD-EU物流方式"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "FBA-LTL-PALLET",
+                    "name": "美国FBA卡派专线-托盘",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203029,\"errMessage\":\"渠道不支持此订单邮编的派送服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "ROY-PARCEL-24H",
+                    "name": "ROY-24H包裹",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配ROY-PARCEL-24H物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配ROY-PARCEL-24H物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配ROY-PARCEL-24H物流方式"
+                },
+                {
+                    "code": "UPS-SUREPOST-CE",
+                    "name": "美中UPS-SUREPOST",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-SUREPOST-CE物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-SUREPOST-CE物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-SUREPOST-CE物流方式"
+                },
+                {
+                    "code": "ROY-PARCEL-48H",
+                    "name": "ROY-48H包裹",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配ROY-PARCEL-48H物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配ROY-PARCEL-48H物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配ROY-PARCEL-48H物流方式"
+                },
+                {
+                    "code": "USPS-PRIORITY-CE",
+                    "name": "美中USPS大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配USPS-PRIORITY-CE物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配USPS-PRIORITY-CE物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配USPS-PRIORITY-CE物流方式"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "FEDEX-ROADMAP",
+                    "name": "美国FEDEX-RM渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203029,\"errMessage\":\"渠道不支持此订单邮编的派送服务\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                },
+                {
+                    "code": "UPS-STANDARD-UK",
+                    "name": "UPS-standard-uk",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配UPS-STANDARD-UK物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配UPS-STANDARD-UK物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配UPS-STANDARD-UK物流方式"
+                },
+                {
+                    "code": "CE-P-NU-BAT-SCCE",
+                    "name": "美南美中CE-NU电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEA仓库未分配CE-P-NU-BAT-SCCE物流方式\",\"data\":[],\"Error\":{\"errMessage\":\"USEA仓库未分配CE-P-NU-BAT-SCCE物流方式\",\"errCode\":10103095}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEA仓库未分配CE-P-NU-BAT-SCCE物流方式"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"\",\"data\":{\"aging\":\"\"},\"Error\":{\"errCode\":10203026,\"errMessage\":\"未找到价格方案\"}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": ""
+                }
+            ],
+            "error": ""
+        },
+        {
+            "warehouse_code": "USEE",
+            "channels": [
+                {
+                    "code": "UPS-MI-R-SC",
+                    "name": "美南UPS-MI普货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "JP-TAK-KYUUBIN",
+                    "name": "JP-黑猫宅急便",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-SM",
+                    "name": "美国FEDEX经济小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UK-PALLETWAYS",
+                    "name": "英国PALLETWAYS托盘",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UK-EVRI",
+                    "name": "英国EVRI",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CA-FDX-SS",
+                    "name": "加拿大Fedex大货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "XDP-EP_A-C",
+                    "name": "XDP-EP(A,B,C区)",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-SUREPOST",
+                    "name": "UPS-SUREPOST",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-GROUND-EA",
+                    "name": "美东FedEx重货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-LP",
+                    "name": "美国FEDEX经济大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "INT-PRI-LP",
+                    "name": "国际普快大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "IPA-INT-ECONOMIC",
+                    "name": "国际经济小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-SM",
+                    "name": "美国FEDEX经济小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "USPS-PRIORITY",
+                    "name": "美国USPS大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-MI-BAT-SC",
+                    "name": "美南UPS-MI电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-MI-R",
+                    "name": "美国UPS-MI普货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-GROUND-EA",
+                    "name": "美东UPS重货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "USPS-FIRST-CLASS-CE",
+                    "name": "美中USPS小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-MI-BAT",
+                    "name": "美国UPS-MI电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "DPD-EU",
+                    "name": "DPD-欧洲单箱",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-GROUND-MULT",
+                    "name": "美国UPS一票多箱",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "YODEL48H-S",
+                    "name": "Yodel_48h小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "DPD-UK-AGE-VERIFY",
+                    "name": "DPD英国本土-年龄检测",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-GROUND-FBA",
+                    "name": "美国FBA联邦重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "DHL-US-SP",
+                    "name": "美国DHL本地小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "USPS-FIRST-CLASS-SC",
+                    "name": "美南USPS小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "DHL-US-BP",
+                    "name": "美国DHL本地大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FBA-LTL",
+                    "name": "美国FBA卡派专线",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FBA-LTL",
+                    "name": "美国FBA卡派专线",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-PARCEL-NU-SCCE",
+                    "name": "美南美中CE-NU普货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-2ND-DAY",
+                    "name": "UPS两日达",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "INT-PRI-SP",
+                    "name": "国际普快小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "US-G2G-INT",
+                    "name": "美加G2G国际渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-PARCEL-NU-SCCE",
+                    "name": "美南美中CE-NU普货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FBA-LTL-PALLET",
+                    "name": "美国FBA卡派专线-托盘",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "XDP-TM_A-C",
+                    "name": "XDP-TM(A,B,C区)",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "US-UPS-INT",
+                    "name": "美国UPS国际渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-UK-MT",
+                    "name": "UPS-英国多箱",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "SS-FEDEX-G-E",
+                    "name": "美东FEDEX大货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "YODEL-24H",
+                    "name": "Yodel_24h大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "AMAZON-GROUND",
+                    "name": "美国AMAZON重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "ROY-PARCEL-48H-S",
+                    "name": "ROY-48H包裹-签名",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "YUN-GROUND",
+                    "name": "美国YUN重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "EVRI-EU",
+                    "name": "EVRI-欧洲件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-PARCEL",
+                    "name": "美国CE普货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-PARCEL-BAT",
+                    "name": "美国CE电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "JP-FBA-LOCAL",
+                    "name": "日本FBA专线派送",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "WH-USPS-FIRST-CLASS",
+                    "name": "美国WH-USPS小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "WH-FEDEX-GROUND",
+                    "name": "美国WH-FEDEX重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-MI-R",
+                    "name": "美国UPS-MI普货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-ROADMAP",
+                    "name": "美国FEDEX-RM渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-GROUND-SC",
+                    "name": "美南UPS重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "NW-CBT",
+                    "name": "美国NW-CBT渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "WH-YUN-GROUND",
+                    "name": "美国WH-YUN重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FBA-LTL-PALLET",
+                    "name": "美国FBA卡派专线-托盘",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "WH-GOFO-STANDARD",
+                    "name": "美国WH-GOFO标准渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-ROADMAP",
+                    "name": "美国FEDEX-RM渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-GROUND-EA",
+                    "name": "美东CE重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-PARCEL-NU",
+                    "name": "美国CE-NU普货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-PARCEL-NU-BAT",
+                    "name": "美国CE-NU电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CA-EXPED",
+                    "name": "加邮Expedited包裹",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-GROUND",
+                    "name": "美国FEDEX重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-SM",
+                    "name": "美国FEDEX经济小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-GROUND-CE",
+                    "name": "美中UPS重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "USPS-FIRST-CLASS",
+                    "name": "美国USPS小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-INT-CE",
+                    "name": "美中UPS国际渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "USPS-PRIORITY",
+                    "name": "美国USPS大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "USPS-FIRST-CLASS",
+                    "name": "美国USPS小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-SM",
+                    "name": "美国FEDEX经济小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "XDP-ECON-MULTI_A-C",
+                    "name": "XDP经济多箱(A,B,C区)",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "IPA-INT-ECONOMIC",
+                    "name": "国际经济小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "DPD-UK",
+                    "name": "英国DPD单箱",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-LP",
+                    "name": "美国FEDEX经济大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "DPD-MULTI",
+                    "name": "英国DPD多箱",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-GROUND",
+                    "name": "美国UPS重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "XDP-TM-MU_A-C",
+                    "name": "XDP重货多箱渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "INT-PRI-LP",
+                    "name": "国际普快大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-SUREPOST",
+                    "name": "UPS-SUREPOST",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "YODEL48H-L",
+                    "name": "Yodel_48h大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-MI-R",
+                    "name": "美国UPS-MI普货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "ROY-PARCEL-24H-S",
+                    "name": "ROY-24H包裹-签名",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "OT-GROUND",
+                    "name": "美国OnTrac重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "DX-EXPRESS",
+                    "name": "英国DX快递渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-MI-BAT",
+                    "name": "美国UPS-MI电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UK-EVRI-L",
+                    "name": "英国EVRI超大渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-GROUND-MULT",
+                    "name": "美国UPS一票多箱",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UK-CE-PARCEL",
+                    "name": "英国CE本地派送",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-GROUND-FBA",
+                    "name": "美国FBA联邦重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "JP-NEKO-POSU",
+                    "name": "JP-黑猫本地小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "DHL-US-SP",
+                    "name": "美国DHL本地小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "JP-SAGAWA-KYUUBIN",
+                    "name": "JP-佐川急便",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "DHL-US-BP",
+                    "name": "美国DHL本地大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FBA-LTL",
+                    "name": "美国FBA卡派专线",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-2ND-DAY",
+                    "name": "UPS两日达",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "INT-PRI-SP",
+                    "name": "国际普快小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-LP",
+                    "name": "美国FEDEX经济大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FBA-LTL-PALLET",
+                    "name": "美国FBA卡派专线-托盘",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-GROUND-SC",
+                    "name": "美南FEDEX重货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "US-UPS-INT",
+                    "name": "美国UPS国际渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "USPS-PRIORITY-SC",
+                    "name": "美南USPS大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "SS-FEDEX-G-W",
+                    "name": "美西FEDEX大货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-SUREPOST-SC",
+                    "name": "美南UPS-SUREPOST",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "AMAZON-GROUND",
+                    "name": "美国AMAZON重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-GROUND-MU-SC",
+                    "name": "美南UPS一票多箱",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "YUN-GROUND",
+                    "name": "美国YUN重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-GROUND-FBA",
+                    "name": "美国FBA联邦重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-PARCEL",
+                    "name": "美国CE普货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-2ND-DAY-SC",
+                    "name": "美南UPS两日达",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-PARCEL-BAT",
+                    "name": "美国CE电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-INT-SC",
+                    "name": "美南UPS国际渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "WH-USPS-FIRST-CLASS",
+                    "name": "美国WH-USPS小包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "AMAZON-GROUND-SC",
+                    "name": "美南AMAZON重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "WH-FEDEX-GROUND",
+                    "name": "美国WH-FEDEX重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-GROUND-SC",
+                    "name": "美南CE重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-ROADMAP",
+                    "name": "美国FEDEX-RM渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-P-NU-BAT-SCCE",
+                    "name": "美南美中CE-NU电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "NW-CBT",
+                    "name": "美国NW-CBT渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "WH-YUN-GROUND",
+                    "name": "美国WH-YUN重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "WH-GOFO-STANDARD",
+                    "name": "美国WH-GOFO标准渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-GROUND",
+                    "name": "美西CE重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-PARCEL-NU",
+                    "name": "美国CE-NU普货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CA-UPS-S",
+                    "name": "加拿大UPS-Strandrad大货",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-PARCEL-NU-BAT",
+                    "name": "美国CE-NU电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-LP",
+                    "name": "美国FEDEX经济大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "RETURN-NO",
+                    "name": "未预报退件",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-GROUND-FBA",
+                    "name": "美国FBA联邦重货渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "ROY-PARCEL-24H",
+                    "name": "ROY-24H包裹",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-SUREPOST-CE",
+                    "name": "美中UPS-SUREPOST",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "ROY-PARCEL-48H",
+                    "name": "ROY-48H包裹",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "USPS-PRIORITY-CE",
+                    "name": "美中USPS大包",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "FEDEX-ROADMAP",
+                    "name": "美国FEDEX-RM渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "UPS-STANDARD-UK",
+                    "name": "UPS-standard-uk",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "CE-P-NU-BAT-SCCE",
+                    "name": "美南美中CE-NU电池渠道",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                },
+                {
+                    "code": "TUIJIAN",
+                    "name": "客户退件-自选",
+                    "raw_response": "{\"ask\":\"Failure\",\"message\":\"USEE 仓库代码错误\",\"data\":[],\"Error\":{\"errMessage\":\"USEE 仓库代码错误\",\"errCode\":10105009}}",
+                    "success": false,
+                    "fee": null,
+                    "estimated_days": null,
+                    "message": "USEE 仓库代码错误"
+                }
+            ],
+            "error": ""
+        }
+    ]
+}

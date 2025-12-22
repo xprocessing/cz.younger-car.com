@@ -1,0 +1,180 @@
+{
+    "root": {
+        "data": {
+            "id": "debfxm3mpzk0",
+            "created": 1763430478408,
+            "text": "运费插件"
+        },
+        "children": [
+            {
+                "data": {
+                    "id": "dehfc8cnfio0",
+                    "created": 1764038162571,
+                    "text": "单次查询",
+                    "layout_right_offset": {
+                        "x": 82,
+                        "y": -30
+                    }
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "debfxs1sqtk0",
+                            "created": 1763430491358,
+                            "text": "抓取订单数据",
+                            "layout_right_offset": {
+                                "x": 44,
+                                "y": 0
+                            }
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "dee00jtxyo80",
+                                    "created": 1763690250673,
+                                    "text": "查询运费"
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "dee00sm0vko0",
+                                            "created": 1763690269785,
+                                            "text": "传入服务器数据库"
+                                        },
+                                        "children": [
+                                            {
+                                                "data": {
+                                                    "id": "dee0148spy00",
+                                                    "created": 1763690295106,
+                                                    "text": "浏览器标签js查询数据"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "data": {
+                                                            "id": "dee01t0095s0",
+                                                            "created": 1763690348994,
+                                                            "text": "在订单列表展示运费建议"
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "data": {
+                                                    "id": "dee02nitx400",
+                                                    "created": 1763690415436,
+                                                    "text": "刷新订单"
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "debfxtcw1lc0",
+                    "created": 1763430494205,
+                    "text": "整合查询",
+                    "layout_right_offset": {
+                        "x": 49,
+                        "y": 49
+                    }
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "degq2nmdwkw0",
+                            "created": 1763966884422,
+                            "text": "发起查询"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "dehfae1uzr40",
+                                    "created": 1764038018251,
+                                    "text": "整合查询多个仓库"
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "dehfasaft880",
+                                            "created": 1764038049245,
+                                            "text": "topic"
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "dehfb1qp2zk0",
+                    "created": 1764038069819,
+                    "text": "订单推送形式+app提醒",
+                    "layout_right_offset": {
+                        "x": 66,
+                        "y": 119
+                    }
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "dehfbbek1000",
+                            "created": 1764038090852,
+                            "text": "新订单产生触发查询"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "dehfbll2za80",
+                                    "created": 1764038113015,
+                                    "text": "查询后进行提示 发货并提示选快递类型"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "dehfhas6i8g0",
+                                    "created": 1764038559684,
+                                    "text": ""
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "dehfhcu9fbc0",
+                            "created": 1764038564164,
+                            "text": "js+本地python服务器通信方式"
+                        },
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "dehfdgj5zcg0",
+                    "created": 1764038258743,
+                    "text": "本地服务器路由",
+                    "layout_right_offset": {
+                        "x": 86,
+                        "y": 157
+                    }
+                },
+                "children": []
+            }
+        ]
+    },
+    "template": "right",
+    "theme": "fresh-pink-compat",
+    "version": "1.4.43"
+}
