@@ -9,7 +9,7 @@ header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: text/html; charset=utf-8");
 
-require_once 'key.php'; // 必须包含：EMS_TOKEN, EMS_KEY, WD_APP_ID, WD_APP_TOKEN
+require_once 'config.php'; // 必须包含：EMS_TOKEN, EMS_KEY, WD_APP_ID, WD_APP_TOKEN
 $channelsDict = [
     'AMGD' => '美东Amazon Ground',
     'FEDHDE' => '美东FedEx HomeDelivery',
