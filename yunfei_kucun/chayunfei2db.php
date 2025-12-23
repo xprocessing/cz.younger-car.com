@@ -11,7 +11,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=utf-8"); // 改为JSON输出
 
 // ========== 依赖引入 ==========
-require_once 'key.php'; // 必须包含：EMS_TOKEN, EMS_KEY, WD_APP_ID, WD_APP_TOKEN
+require_once 'config.php'; // 必须包含：EMS_TOKEN, EMS_KEY, WD_APP_ID, WD_APP_TOKEN
 
 // ========== 常量定义 ==========
 $channelsDict = [
@@ -445,7 +445,7 @@ $shisuanyunfei = json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
 $global_order_no = $orderNumber;
 
 //将$shisuanyunfei $global_order_no，存入yunfei数据表
-include 'admin-panel/config/config.php';
+include '../admin-panel/config/config.php';
 /*
 try {
     $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
