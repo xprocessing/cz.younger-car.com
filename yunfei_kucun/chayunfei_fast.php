@@ -11,7 +11,7 @@ if (empty($_GET['global_order_no'])) {
 $globalOrderNo = trim($_GET['global_order_no']);
 
 // 数据库配置引入
-require_once 'admin-panel/config/config.php';
+require_once '../admin-panel/config/config.php';
 
 // 初始化变量
 $emsData = [];
