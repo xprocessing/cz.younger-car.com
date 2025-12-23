@@ -112,7 +112,7 @@ function getOrderInfo(global_order_no) {
             let weight_kg = parseFloat(pre_fee_weight.replace(' g', '')) / 1000;
 
             // 构建运费查询URL并打开新窗口
-            const url2 = `https://cz.younger-car.com/yunfei_kucun/chayunfei.php?global_order_no=${global_order_no}&receiver_country_code=${receiver_country_code}&postcode=${postal_code}&weight=${weight_kg}&length=${length}&width=${width}&height=${height}&city=${encodeURIComponent(city)}`;
+            const url2 = `https://cz.younger-car.com/yunfei_kucun/chayunfei.latest.php?global_order_no=${global_order_no}&receiver_country_code=${receiver_country_code}&postcode=${postal_code}&weight=${weight_kg}&length=${length}&width=${width}&height=${height}&city=${encodeURIComponent(city)}`;
             console.log(url2);
             window.open(url2, '_blank');
         })
