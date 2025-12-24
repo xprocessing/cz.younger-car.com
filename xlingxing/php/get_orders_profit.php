@@ -22,7 +22,7 @@ try {
     // 调用POST接口示例
     $orderParams = [
         'offset' => 0,
-        'length' => 100,
+        'length' => 10,
         'order_status' => 6,
         'date_type' => 'global_purchase_time',
         'start_time' => $nDaysAgoTimestamp,
@@ -35,6 +35,52 @@ try {
 } catch (\Exception $e) {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
+
+
+include '../../admin-panel/config/config.php';
+//将订单列表每条，数据插入到数据库中，若存在则更新
+
+
+try {
+    // 初始化PDO连接
+    $pdo = new PDO(
+        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", // 建议指定字符集
+        DB_USER,
+        DB_PASS,
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ]
+    );
+
+    // 核心SQL：INSERT + ON DUPLICATE KEY UPDATE（依赖global_order_no的唯一索引）
+    $sql = "INSERT INTO yunfei (global_order_no, shisuanyunfei) 
+            VALUES (:global_order_no, :shisuanyunfei) 
+            ON DUPLICATE KEY UPDATE 
+                shisuanyunfei = VALUES(shisuanyunfei)"; // VALUES() 引用插入时的参数值
+
+    // 预处理语句
+    $stmt = $pdo->prepare($sql);
+    
+    // 绑定参数（支持字符串/数字等类型，PDO自动处理）
+    $stmt->bindParam(':global_order_no', $global_order_no);
+    $stmt->bindParam(':shisuanyunfei', $shisuanyunfei);
+    
+    // 执行语句
+    $stmt->execute();
+
+    // 可选：获取受影响的行数（插入=1，更新=2）
+    // $affectedRows = $stmt->rowCount();
+
+} catch (PDOException $e) {
+    // 错误处理（可选：记录日志/输出调试信息）
+    // error_log("运费数据操作失败：" . $e->getMessage());
+    // die("数据库错误：" . $e->getMessage()); // 调试时启用，生产环境注释
+} finally {
+    // 可选：关闭连接（PHP会自动回收，高并发场景建议手动关闭）
+    // $pdo = null;
+}
+
 
 
 
