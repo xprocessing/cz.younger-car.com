@@ -22,7 +22,7 @@
                 <input type="text" name="keyword" class="form-control" placeholder="搜索订单号、SKU..." 
                        value="<?php echo $_GET['keyword'] ?? ''; ?>">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label for="store_id" class="form-label">店铺筛选</label>
                 <select name="store_id" class="form-select">
                     <option value="">全部店铺</option>
@@ -37,6 +37,24 @@
                 </select>
             </div>
             <div class="col-md-2">
+                <label for="rate_min" class="form-label">
+                    <i class="fa fa-percent text-success"></i> 最小利润率(%)
+                </label>
+                <input type="number" name="rate_min" class="form-control" placeholder="0.00" step="0.01"
+                       value="<?php echo $_GET['rate_min'] ?? ''; ?>"
+                       title="输入最小利润率，用于筛选利润率大于等于此值的订单">
+                <div class="form-text">≥ 此值%</div>
+            </div>
+            <div class="col-md-2">
+                <label for="rate_max" class="form-label">
+                    <i class="fa fa-percent text-danger"></i> 最大利润率(%)
+                </label>
+                <input type="number" name="rate_max" class="form-control" placeholder="100.00" step="0.01"
+                       value="<?php echo $_GET['rate_max'] ?? ''; ?>"
+                       title="输入最大利润率，用于筛选利润率小于等于此值的订单">
+                <div class="form-text">≤ 此值%</div>
+            </div>
+            <div class="col-md-1">
                 <label for="action_search" class="form-label">&nbsp;</label>
                 <div>
                     <button type="submit" name="action" value="search" class="btn btn-outline-primary">
@@ -50,6 +68,70 @@
         </form>
     </div>
 </div>
+
+<!-- 利润率快捷筛选 -->
+<div class="card mb-3">
+    <div class="card-body">
+        <h6 class="card-title mb-3">
+            <i class="fa fa-filter me-2"></i>利润率快捷筛选
+        </h6>
+        <div class="row g-2">
+            <div class="col-auto">
+                <a href="<?php echo APP_URL; ?>/order_profit.php?rate_min=0&rate_max=10" class="btn btn-sm btn-outline-primary">
+                    0% - 10%
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="<?php echo APP_URL; ?>/order_profit.php?rate_min=10&rate_max=20" class="btn btn-sm btn-outline-success">
+                    10% - 20%
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="<?php echo APP_URL; ?>/order_profit.php?rate_min=20&rate_max=30" class="btn btn-sm btn-outline-info">
+                    20% - 30%
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="<?php echo APP_URL; ?>/order_profit.php?rate_min=30&rate_max=50" class="btn btn-sm btn-outline-warning">
+                    30% - 50%
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="<?php echo APP_URL; ?>/order_profit.php?rate_min=50" class="btn btn-sm btn-outline-danger">
+                    > 50%
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="<?php echo APP_URL; ?>/order_profit.php?rate_min=-100&rate_max=0" class="btn btn-sm btn-outline-secondary">
+                    亏损订单 (< 0%)
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 当前筛选条件 -->
+<?php 
+$hasFilters = !empty($_GET['keyword']) || !empty($_GET['store_id']) || !empty($_GET['rate_min']) || !empty($_GET['rate_max']);
+if ($hasFilters): ?>
+<div class="alert alert-info d-flex align-items-center" role="alert">
+    <i class="fa fa-filter me-2"></i>
+    <div class="me-auto">
+        <strong>当前筛选条件：</strong>
+        <?php 
+        $filters = [];
+        if (!empty($_GET['keyword'])) $filters[] = "关键词: " . htmlspecialchars($_GET['keyword']);
+        if (!empty($_GET['store_id'])) $filters[] = "店铺: " . htmlspecialchars($_GET['store_id']);
+        if (!empty($_GET['rate_min'])) $filters[] = "最小利润率: " . htmlspecialchars($_GET['rate_min']) . "%";
+        if (!empty($_GET['rate_max'])) $filters[] = "最大利润率: " . htmlspecialchars($_GET['rate_max']) . "%";
+        echo implode(' | ', $filters);
+        ?>
+    </div>
+    <a href="<?php echo APP_URL; ?>/order_profit.php" class="btn btn-sm btn-outline-secondary">
+        <i class="fa fa-times"></i> 清除筛选
+    </a>
+</div>
+<?php endif; ?>
 
 <!-- 数据表格 -->
 <div class="card">

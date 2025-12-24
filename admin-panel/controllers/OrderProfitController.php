@@ -22,13 +22,12 @@ class OrderProfitController {
         
         $keyword = $_GET['keyword'] ?? '';
         $storeId = $_GET['store_id'] ?? '';
+        $rateMin = $_GET['rate_min'] ?? '';
+        $rateMax = $_GET['rate_max'] ?? '';
         
-        if ($keyword) {
-            $profits = $this->orderProfitModel->search($keyword, $limit, $offset);
-            $totalCount = $this->orderProfitModel->getSearchCount($keyword);
-        } elseif ($storeId) {
-            $profits = $this->orderProfitModel->getByStoreId($storeId, $limit, $offset);
-            $totalCount = $this->orderProfitModel->getCount();
+        if ($keyword || $storeId || $rateMin || $rateMax) {
+            $profits = $this->orderProfitModel->searchWithFilters($keyword, $storeId, $rateMin, $rateMax, $limit, $offset);
+            $totalCount = $this->orderProfitModel->getSearchWithFiltersCount($keyword, $storeId, $rateMin, $rateMax);
         } else {
             $profits = $this->orderProfitModel->getAll($limit, $offset);
             $totalCount = $this->orderProfitModel->getCount();

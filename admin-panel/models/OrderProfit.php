@@ -191,7 +191,132 @@ class OrderProfit {
         }
         
         $stmt = $this->db->query($sql, $params);
-        return $stmt->fetchAll();
+        $data = $stmt->fetchAll();
+        
+        // 转换每条记录的货币字段
+        if (is_array($data)) {
+            foreach ($data as &$row) {
+                $row = $this->convertCurrencyFields($row);
+            }
+        }
+        
+        return $data;
+    }
+    
+    // 支持多条件搜索的订单利润
+    public function searchWithFilters($keyword = '', $storeId = '', $rateMin = '', $rateMax = '', $limit = null, $offset = 0) {
+        $sql = "SELECT * FROM order_profit WHERE 1=1";
+        $params = [];
+        
+        // 关键词搜索
+        if ($keyword) {
+            $sql .= " AND (global_order_no LIKE ? OR store_id LIKE ? OR local_sku LIKE ? OR receiver_country LIKE ?)";
+            $params = array_merge($params, ["%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%"]);
+        }
+        
+        // 店铺筛选
+        if ($storeId) {
+            $sql .= " AND store_id = ?";
+            $params[] = $storeId;
+        }
+        
+        // 利润率区间筛选 - 由于利润率字段是字符串格式，需要特殊处理
+        if ($rateMin !== '') {
+            // 由于数据库中存储的是字符串，这里获取所有数据后在PHP中过滤
+        }
+        
+        if ($rateMax !== '') {
+            // 同上，在PHP中处理
+        }
+        
+        $sql .= " ORDER BY id DESC";
+        
+        if ($limit) {
+            $sql .= " LIMIT ? OFFSET ?";
+            $params[] = $limit;
+            $params[] = $offset;
+        }
+        
+        $stmt = $this->db->query($sql, $params);
+        $data = $stmt->fetchAll();
+        
+        // 转换货币字段并进行利润率区间过滤
+        $filteredData = [];
+        if (is_array($data)) {
+            foreach ($data as $row) {
+                $convertedRow = $this->convertCurrencyFields($row);
+                
+                // 利润率区间过滤
+                $profitRate = $convertedRow['profit_rate'];
+                $include = true;
+                
+                if ($rateMin !== '' && $profitRate < (float)$rateMin) {
+                    $include = false;
+                }
+                
+                if ($rateMax !== '' && $profitRate > (float)$rateMax) {
+                    $include = false;
+                }
+                
+                if ($include) {
+                    $filteredData[] = $convertedRow;
+                }
+            }
+        }
+        
+        // 如果需要分页，手动处理分页逻辑
+        if ($limit && ($rateMin !== '' || $rateMax !== '')) {
+            $filteredData = array_slice($filteredData, $offset, $limit);
+        }
+        
+        return $filteredData;
+    }
+    
+    // 支持多条件搜索的结果数量
+    public function getSearchWithFiltersCount($keyword = '', $storeId = '', $rateMin = '', $rateMax = '') {
+        $sql = "SELECT * FROM order_profit WHERE 1=1";
+        $params = [];
+        
+        // 关键词搜索
+        if ($keyword) {
+            $sql .= " AND (global_order_no LIKE ? OR store_id LIKE ? OR local_sku LIKE ? OR receiver_country LIKE ?)";
+            $params = array_merge($params, ["%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%"]);
+        }
+        
+        // 店铺筛选
+        if ($storeId) {
+            $sql .= " AND store_id = ?";
+            $params[] = $storeId;
+        }
+        
+        $stmt = $this->db->query($sql, $params);
+        $data = $stmt->fetchAll();
+        
+        // 转换货币字段并进行利润率区间过滤
+        $count = 0;
+        if (is_array($data)) {
+            foreach ($data as $row) {
+                $convertedRow = $this->convertCurrencyFields($row);
+                
+                // 利润率区间过滤
+                $profitRate = $convertedRow['profit_rate'];
+                $include = true;
+                
+                if ($rateMin !== '' && $profitRate < (float)$rateMin) {
+                    $include = false;
+                }
+                
+                if ($rateMax !== '' && $profitRate > (float)$rateMax) {
+                    $include = false;
+                }
+                
+                if ($include) {
+                    $count++;
+                }
+            }
+        }
+        
+        return $count;
     }
     
     // 获取利润统计
