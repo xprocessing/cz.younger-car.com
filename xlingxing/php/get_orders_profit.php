@@ -31,7 +31,8 @@ try {
     $orders = $apiClient->post('/pb/mp/order/v2/list', $orderParams);
     //print_r("已发货订单数据：" . PHP_EOL);
     //json格式化输出
-    echo json_encode($orders, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    //echo json_encode($orders, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
 } catch (\Exception $e) {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
@@ -53,24 +54,88 @@ try {
         ]
     );
 
-    // 核心SQL：INSERT + ON DUPLICATE KEY UPDATE（依赖global_order_no的唯一索引）
-    $sql = "INSERT INTO yunfei (global_order_no, shisuanyunfei) 
-            VALUES (:global_order_no, :shisuanyunfei) 
-            ON DUPLICATE KEY UPDATE 
-                shisuanyunfei = VALUES(shisuanyunfei)"; // VALUES() 引用插入时的参数值
+    $orders = $orders['data']['list'] ?? [];
+    echo json_encode($orders, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    // 遍历每个订单
+    foreach ($orders as $order) {
+        // 字段映射：根据orders.json结构调整键名对应关系
+        $data = [
+            'store_id' => $order['store_id'] ?? '',
+            'global_order_no' => $order['global_order_no'] ?? '',
+            'receiver_country' => $order['receiver_country'] ?? '',
+            'global_purchase_time' => $order['global_purchase_time'] ?? '',
+            'local_sku' => $order['local_sku'] ?? '',
+            'order_total_amount' => $order['order_total_amount'] ?? '',
+            'outbound_cost_amount' => $order['outbound_cost_amount'] ?? '',
+            'profit_amount' => $order['profit_amount'] ?? '',
+            'profit_rate' => $order['profit_rate'] ?? '',
+            'wms_outbound_cost_amount' => $order['wms_outbound_cost_amount'] ?? '',
+            'wms_shipping_price_amount' => $order['wms_shipping_price_amount'] ?? '',
+            'update_time' => date('Y-m-d H:i:s') // 当前时间
+        ];
 
-    // 预处理语句
-    $stmt = $pdo->prepare($sql);
-    
-    // 绑定参数（支持字符串/数字等类型，PDO自动处理）
-    $stmt->bindParam(':global_order_no', $global_order_no);
-    $stmt->bindParam(':shisuanyunfei', $shisuanyunfei);
-    
-    // 执行语句
-    $stmt->execute();
+        // 检查订单是否已存在
+        $checkStmt = $pdo->prepare("SELECT id FROM order_profit WHERE global_order_no = :global_order_no");
+        $checkStmt->execute([':global_order_no' => $data['global_order_no']]);
+        $existingId = $checkStmt->fetchColumn();
 
-    // 可选：获取受影响的行数（插入=1，更新=2）
-    // $affectedRows = $stmt->rowCount();
+        if ($existingId) {
+            // 订单存在，执行更新操作
+            $updateSql = "UPDATE order_profit SET
+                store_id = :store_id,
+                receiver_country = :receiver_country,
+                global_purchase_time = :global_purchase_time,
+                local_sku = :local_sku,
+                order_total_amount = :order_total_amount,
+                outbound_cost_amount = :outbound_cost_amount,
+                profit_amount = :profit_amount,
+                profit_rate = :profit_rate,
+                wms_outbound_cost_amount = :wms_outbound_cost_amount,
+                wms_shipping_price_amount = :wms_shipping_price_amount,
+                update_time = :update_time
+                WHERE global_order_no = :global_order_no";
+            
+            $updateStmt = $pdo->prepare($updateSql);
+            $updateStmt->execute($data);
+            echo "更新订单 {$data['global_order_no']} 成功\n";
+        } else {
+            // 订单不存在，执行插入操作
+            $insertSql = "INSERT INTO order_profit (
+                store_id,
+                global_order_no,
+                receiver_country,
+                global_purchase_time,
+                local_sku,
+                order_total_amount,
+                outbound_cost_amount,
+                profit_amount,
+                profit_rate,
+                wms_outbound_cost_amount,
+                wms_shipping_price_amount,
+                update_time
+            ) VALUES (
+                :store_id,
+                :global_order_no,
+                :receiver_country,
+                :global_purchase_time,
+                :local_sku,
+                :order_total_amount,
+                :outbound_cost_amount,
+                :profit_amount,
+                :profit_rate,
+                :wms_outbound_cost_amount,
+                :wms_shipping_price_amount,
+                :update_time
+            )";
+            
+            $insertStmt = $pdo->prepare($insertSql);
+            $insertStmt->execute($data);
+            echo "插入新订单 {$data['global_order_no']} 成功\n";
+        }
+    }
+
+    // 关闭连接
+    $pdo = null;
 
 } catch (PDOException $e) {
     // 错误处理（可选：记录日志/输出调试信息）
