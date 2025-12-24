@@ -83,20 +83,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="outbound_cost_amount" class="form-label">出库成本（元）</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">¥</span>
-                                    <input type="number" step="0.01" class="form-control" id="outbound_cost_amount" 
-                                           name="outbound_cost_amount" placeholder="0.00"
-                                           value="<?php echo htmlspecialchars($profit['outbound_cost_amount'] ?? '0.00'); ?>">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
                                 <label for="profit_amount" class="form-label">毛利润</label>
                                 <div class="input-group">
                                     <span class="input-group-text">¥</span>
@@ -104,9 +90,12 @@
                                            name="profit_amount" placeholder="0.00"
                                            value="<?php echo htmlspecialchars($profit['profit_amount'] ?? '0.00'); ?>">
                                 </div>
-                                <div class="form-text">可手动修改或自动计算</div>
+                                <div class="form-text">手动输入毛利润金额</div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="profit_rate" class="form-label">利润率</label>
@@ -116,7 +105,7 @@
                                            value="<?php echo htmlspecialchars($profit['profit_rate'] ?? '0.00'); ?>">
                                     <span class="input-group-text">%</span>
                                 </div>
-                                <div class="form-text">可手动修改或自动计算</div>
+                                <div class="form-text">手动输入或自动计算利润率</div>
                             </div>
                         </div>
                     </div>
@@ -158,7 +147,7 @@
                         <a href="<?php echo APP_URL; ?>/order_profit.php" class="btn btn-secondary me-md-2">
                             <i class="fa fa-times"></i> 取消
                         </a>
-                        <button type="button" class="btn btn-outline-info me-md-2" onclick="recalculateProfit()">
+                        <button type="button" class="btn btn-outline-info me-md-2" onclick="recalculateProfitRate()">
                             <i class="fa fa-calculator"></i> 重新计算
                         </button>
                         <button type="submit" class="btn btn-primary">
@@ -212,12 +201,7 @@
                         <strong class="text-success">¥<?php echo number_format($profit['order_total_amount'] ?? 0, 2); ?></strong>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between">
-                        <span>出库成本:</span>
-                        <strong class="text-danger">¥<?php echo number_format($profit['outbound_cost_amount'] ?? 0, 2); ?></strong>
-                    </div>
-                </div>
+
                 <div class="mb-3">
                     <div class="d-flex justify-content-between">
                         <span>毛利润:</span>
@@ -257,10 +241,6 @@
             <div class="card-body">
                 <h6>利润计算公式：</h6>
                 <div class="bg-light p-2 rounded mb-2">
-                    <small><code>毛利润 = 订单总额 - 出库成本</code></small>
-                </div>
-                
-                <div class="bg-light p-2 rounded mb-2">
                     <small><code>利润率 = 毛利润 / 订单总额 × 100%</code></small>
                 </div>
 
@@ -273,28 +253,26 @@
 </div>
 
 <script>
-// 重新计算利润和利润率
-function recalculateProfit() {
+// 重新计算利润率
+function recalculateProfitRate() {
     const totalAmount = parseFloat(document.getElementById('order_total_amount').value) || 0;
-    const costAmount = parseFloat(document.getElementById('outbound_cost_amount').value) || 0;
+    const profitAmount = parseFloat(document.getElementById('profit_amount').value) || 0;
     
-    const profit = totalAmount - costAmount;
-    const profitRate = totalAmount > 0 ? (profit / totalAmount * 100) : 0;
+    const profitRate = totalAmount > 0 ? (profitAmount / totalAmount * 100) : 0;
     
-    document.getElementById('profit_amount').value = profit.toFixed(2);
     document.getElementById('profit_rate').value = profitRate.toFixed(2);
 }
 
 // 监听金额输入变化（可选自动计算）
 document.getElementById('order_total_amount').addEventListener('input', function() {
-    if (confirm('是否自动重新计算利润和利润率？')) {
-        recalculateProfit();
+    if (confirm('是否自动重新计算利润率？')) {
+        recalculateProfitRate();
     }
 });
 
-document.getElementById('outbound_cost_amount').addEventListener('input', function() {
-    if (confirm('是否自动重新计算利润和利润率？')) {
-        recalculateProfit();
+document.getElementById('profit_amount').addEventListener('input', function() {
+    if (confirm('是否自动重新计算利润率？')) {
+        recalculateProfitRate();
     }
 });
 

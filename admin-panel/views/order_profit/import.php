@@ -79,7 +79,6 @@
                     <li><strong>下单时间</strong> - global_purchase_time</li>
                     <li><strong>SKU</strong> - local_sku</li>
                     <li><strong>订单总额</strong> - order_total_amount</li>
-                    <li><strong>出库成本</strong> - outbound_cost_amount</li>
                     <li><strong>毛利润</strong> - profit_amount</li>
                     <li><strong>利润率</strong> - profit_rate</li>
                     <li><strong>实际出库成本</strong> - wms_outbound_cost_amount</li>
@@ -94,9 +93,9 @@
             </div>
             <div class="card-body">
                 <h6>CSV示例：</h6>
-                <pre class="bg-light p-2 rounded small"><code>STORE001,ORDER2024001,美国,2024-01-15 10:30:00,SKU001,299.00,150.00,149.00,49.83,145.00,25.00
-STORE002,ORDER2024002,英国,2024-01-15 11:45:00,SKU002,199.00,80.00,119.00,59.80,78.00,18.00
-STORE001,ORDER2024003,美国,2024-01-15 14:20:00,SKU003,599.00,320.00,279.00,46.58,315.00,45.00</code></pre>
+                <pre class="bg-light p-2 rounded small"><code>STORE001,ORDER2024001,美国,2024-01-15 10:30:00,SKU001,299.00,149.00,49.83,145.00,25.00
+STORE002,ORDER2024002,英国,2024-01-15 11:45:00,SKU002,199.00,119.00,59.80,78.00,18.00
+STORE001,ORDER2024003,美国,2024-01-15 14:20:00,SKU003,599.00,279.00,46.58,315.00,45.00</code></pre>
                 
                 <div class="mt-3">
                     <button class="btn btn-sm btn-outline-primary w-100" onclick="downloadTemplate()">
@@ -134,9 +133,9 @@ STORE001,ORDER2024003,美国,2024-01-15 14:20:00,SKU003,599.00,320.00,279.00,46.
 <script>
 // 下载模板文件
 function downloadTemplate() {
-    const csvContent = `store_id,global_order_no,receiver_country,global_purchase_time,local_sku,order_total_amount,outbound_cost_amount,profit_amount,profit_rate,wms_outbound_cost_amount,wms_shipping_price_amount
-STORE001,ORDER2024001,美国,2024-01-15 10:30:00,SKU001,299.00,150.00,149.00,49.83,145.00,25.00
-STORE002,ORDER2024002,英国,2024-01-15 11:45:00,SKU002,199.00,80.00,119.00,59.80,78.00,18.00`;
+    const csvContent = `store_id,global_order_no,receiver_country,global_purchase_time,local_sku,order_total_amount,profit_amount,profit_rate,wms_outbound_cost_amount,wms_shipping_price_amount
+STORE001,ORDER2024001,美国,2024-01-15 10:30:00,SKU001,299.00,149.00,49.83,145.00,25.00
+STORE002,ORDER2024002,英国,2024-01-15 11:45:00,SKU002,199.00,119.00,59.80,78.00,18.00`;
     
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');

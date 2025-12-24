@@ -65,7 +65,6 @@
                         <th>下单时间</th>
                         <th>SKU</th>
                         <th>订单总额</th>
-                        <th>出库成本</th>
                         <th>毛利润</th>
                         <th>利润率</th>
                         <th>实际成本</th>
@@ -103,11 +102,6 @@
                                 <td>
                                     <span class="text-success fw-bold">
                                         ¥<?php echo number_format($profit['order_total_amount'] ?? 0, 2); ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="text-danger">
-                                        ¥<?php echo number_format($profit['outbound_cost_amount'] ?? 0, 2); ?>
                                     </span>
                                 </td>
                                 <td>

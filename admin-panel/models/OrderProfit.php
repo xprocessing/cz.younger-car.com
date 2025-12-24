@@ -46,9 +46,9 @@ class OrderProfit {
     public function create($data) {
         $sql = "INSERT INTO order_profit (
                     store_id, global_order_no, receiver_country, global_purchase_time, 
-                    local_sku, order_total_amount, outbound_cost_amount, profit_amount, 
+                    local_sku, order_total_amount, profit_amount, 
                     profit_rate, wms_outbound_cost_amount, wms_shipping_price_amount, update_time
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $params = [
             $data['store_id'] ?? '',
             $data['global_order_no'] ?? '',
@@ -56,7 +56,6 @@ class OrderProfit {
             $data['global_purchase_time'] ?? '',
             $data['local_sku'] ?? '',
             $data['order_total_amount'] ?? '0.00',
-            $data['outbound_cost_amount'] ?? '0.00',
             $data['profit_amount'] ?? '0.00',
             $data['profit_rate'] ?? '0.00',
             $data['wms_outbound_cost_amount'] ?? '0.00',
@@ -76,7 +75,6 @@ class OrderProfit {
                     global_purchase_time = ?, 
                     local_sku = ?, 
                     order_total_amount = ?, 
-                    outbound_cost_amount = ?, 
                     profit_amount = ?, 
                     profit_rate = ?, 
                     wms_outbound_cost_amount = ?, 
@@ -90,7 +88,6 @@ class OrderProfit {
             $data['global_purchase_time'] ?? '',
             $data['local_sku'] ?? '',
             $data['order_total_amount'] ?? '0.00',
-            $data['outbound_cost_amount'] ?? '0.00',
             $data['profit_amount'] ?? '0.00',
             $data['profit_rate'] ?? '0.00',
             $data['wms_outbound_cost_amount'] ?? '0.00',
@@ -159,7 +156,6 @@ class OrderProfit {
         $sql = "SELECT 
                     COUNT(*) as order_count,
                     SUM(CAST(order_total_amount AS DECIMAL(10,2))) as total_amount,
-                    SUM(CAST(outbound_cost_amount AS DECIMAL(10,2))) as total_cost,
                     SUM(CAST(profit_amount AS DECIMAL(10,2))) as total_profit,
                     AVG(CAST(profit_rate AS DECIMAL(10,2))) as avg_profit_rate,
                     SUM(CAST(wms_outbound_cost_amount AS DECIMAL(10,2))) as wms_cost,
@@ -202,7 +198,7 @@ class OrderProfit {
         
         $sql = "INSERT INTO order_profit (
                     store_id, global_order_no, receiver_country, global_purchase_time, 
-                    local_sku, order_total_amount, outbound_cost_amount, profit_amount, 
+                    local_sku, order_total_amount, profit_amount, 
                     profit_rate, wms_outbound_cost_amount, wms_shipping_price_amount, update_time
                 ) VALUES ";
         
@@ -210,7 +206,7 @@ class OrderProfit {
         $params = [];
         
         foreach ($data as $item) {
-            $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = array_merge($params, [
                 $item['store_id'] ?? '',
                 $item['global_order_no'] ?? '',
@@ -218,7 +214,6 @@ class OrderProfit {
                 $item['global_purchase_time'] ?? '',
                 $item['local_sku'] ?? '',
                 $item['order_total_amount'] ?? '0.00',
-                $item['outbound_cost_amount'] ?? '0.00',
                 $item['profit_amount'] ?? '0.00',
                 $item['profit_rate'] ?? '0.00',
                 $item['wms_outbound_cost_amount'] ?? '0.00',

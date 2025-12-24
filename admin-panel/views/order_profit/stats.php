@@ -83,10 +83,13 @@
     </div>
     
     <div class="col-md-3">
-        <div class="card text-center border-info">
+        <div class="card text-center border-secondary">
             <div class="card-body">
-                <h5 class="card-title text-info">
-                    ¥<?php echo number_format($stats['total_cost'] ?? 0, 2); ?>
+                <h5 class="card-title text-secondary">
+                    ¥<?php 
+                    $totalCost = ($stats['wms_cost'] ?? 0) + ($stats['wms_shipping'] ?? 0);
+                    echo number_format($totalCost, 2); 
+                    ?>
                 </h5>
                 <p class="card-text">总成本</p>
             </div>
@@ -105,7 +108,7 @@
     </div>
 </div>
 
-<div class="row mb-4">
+                <div class="row mb-4">
     <div class="col-md-6">
         <div class="card text-center border-warning">
             <div class="card-body">
@@ -118,10 +121,13 @@
     </div>
     
     <div class="col-md-6">
-        <div class="card text-center border-secondary">
+        <div class="card text-center border-info">
             <div class="card-body">
-                <h5 class="card-title text-secondary">
-                    ¥<?php echo number_format($stats['wms_cost'] ?? 0, 2); ?>
+                <h5 class="card-title text-info">
+                    ¥<?php 
+                    $totalWmsCost = ($stats['wms_cost'] ?? 0) + ($stats['wms_shipping'] ?? 0);
+                    echo number_format($totalWmsCost, 2); 
+                    ?>
                 </h5>
                 <p class="card-text">WMS总成本</p>
             </div>
@@ -149,10 +155,6 @@
             <div class="col-md-6">
                 <h6>成本构成分析</h6>
                 <table class="table table-sm">
-                    <tr>
-                        <td>订单总成本:</td>
-                        <td><strong>¥<?php echo number_format($stats['total_cost'] ?? 0, 2); ?></strong></td>
-                    </tr>
                     <tr>
                         <td>WMS出库成本:</td>
                         <td><strong>¥<?php echo number_format($stats['wms_cost'] ?? 0, 2); ?></strong></td>

@@ -86,7 +86,6 @@ class OrderProfitController {
             'global_purchase_time' => $_POST['global_purchase_time'] ?? '',
             'local_sku' => $_POST['local_sku'] ?? '',
             'order_total_amount' => $_POST['order_total_amount'] ?? '0.00',
-            'outbound_cost_amount' => $_POST['outbound_cost_amount'] ?? '0.00',
             'profit_amount' => $_POST['profit_amount'] ?? '0.00',
             'profit_rate' => $_POST['profit_rate'] ?? '0.00',
             'wms_outbound_cost_amount' => $_POST['wms_outbound_cost_amount'] ?? '0.00',
@@ -164,7 +163,6 @@ class OrderProfitController {
             'global_purchase_time' => $_POST['global_purchase_time'] ?? '',
             'local_sku' => $_POST['local_sku'] ?? '',
             'order_total_amount' => $_POST['order_total_amount'] ?? '0.00',
-            'outbound_cost_amount' => $_POST['outbound_cost_amount'] ?? '0.00',
             'profit_amount' => $_POST['profit_amount'] ?? '0.00',
             'profit_rate' => $_POST['profit_rate'] ?? '0.00',
             'wms_outbound_cost_amount' => $_POST['wms_outbound_cost_amount'] ?? '0.00',
@@ -313,11 +311,10 @@ class OrderProfitController {
                 'global_purchase_time' => $row[3] ?? '',
                 'local_sku' => $row[4] ?? '',
                 'order_total_amount' => $row[5] ?? '0.00',
-                'outbound_cost_amount' => $row[6] ?? '0.00',
-                'profit_amount' => $row[7] ?? '0.00',
-                'profit_rate' => $row[8] ?? '0.00',
-                'wms_outbound_cost_amount' => $row[9] ?? '0.00',
-                'wms_shipping_price_amount' => $row[10] ?? '0.00',
+                'profit_amount' => $row[6] ?? '0.00',
+                'profit_rate' => $row[7] ?? '0.00',
+                'wms_outbound_cost_amount' => $row[8] ?? '0.00',
+                'wms_shipping_price_amount' => $row[9] ?? '0.00',
                 'update_time' => date('Y-m-d H:i:s')
             ];
             $rowCount++;

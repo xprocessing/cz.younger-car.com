@@ -47,7 +47,7 @@ try {
     // 调用API获取订单数据
     $apiResult = $apiClient->post('/pb/mp/order/v2/list', $orderParams);
     $orders = $apiResult['data']['list'] ?? [];
-    echo json_encode($orders, JSON_UNESCAPED_UNICODE);
+    //echo json_encode($orders, JSON_UNESCAPED_UNICODE);
    
     $response['data']['api_orders_count'] = count($orders);
 

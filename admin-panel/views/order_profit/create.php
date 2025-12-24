@@ -75,12 +75,13 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="outbound_cost_amount" class="form-label">出库成本（元）</label>
+                                <label for="profit_amount" class="form-label">毛利润</label>
                                 <div class="input-group">
                                     <span class="input-group-text">¥</span>
-                                    <input type="number" step="0.01" class="form-control" id="outbound_cost_amount" 
-                                           name="outbound_cost_amount" placeholder="0.00">
+                                    <input type="number" step="0.01" class="form-control" id="profit_amount" 
+                                           name="profit_amount" placeholder="0.00">
                                 </div>
+                                <div class="form-text">手动输入毛利润金额</div>
                             </div>
                         </div>
                     </div>
@@ -88,24 +89,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="profit_amount" class="form-label">毛利润</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">¥</span>
-                                    <input type="number" step="0.01" class="form-control" id="profit_amount" 
-                                           name="profit_amount" placeholder="0.00" readonly>
-                                </div>
-                                <div class="form-text">自动计算：订单总额 - 出库成本</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
                                 <label for="profit_rate" class="form-label">利润率</label>
                                 <div class="input-group">
                                     <input type="number" step="0.01" class="form-control" id="profit_rate" 
-                                           name="profit_rate" placeholder="0.00" readonly>
+                                           name="profit_rate" placeholder="0.00">
                                     <span class="input-group-text">%</span>
                                 </div>
-                                <div class="form-text">自动计算：毛利润 / 订单总额 × 100%</div>
+                                <div class="form-text">手动输入或自动计算利润率</div>
                             </div>
                         </div>
                     </div>
@@ -154,18 +144,13 @@
             <div class="card-body">
                 <h6>利润计算公式：</h6>
                 <div class="bg-light p-3 rounded mb-3">
-                    <code>毛利润 = 订单总额 - 出库成本</code>
-                </div>
-                
-                <div class="bg-light p-3 rounded mb-3">
                     <code>利润率 = 毛利润 / 订单总额 × 100%</code>
                 </div>
 
                 <h6 class="mt-3">字段说明：</h6>
                 <ul class="list-unstyled">
                     <li><strong>订单总额</strong>: 客户支付的总金额</li>
-                    <li><strong>出库成本</strong>: 商品成本等</li>
-                    <li><strong>毛利润</strong>: 订单毛利</li>
+                    <li><strong>毛利润</strong>: 订单毛利（手动输入）</li>
                     <li><strong>利润率</strong>: 毛利率百分比</li>
                     <li><strong>实际出库成本</strong>: WMS系统记录的实际成本</li>
                     <li><strong>实际运费</strong>: WMS系统记录的实际运费</li>
@@ -199,21 +184,19 @@
 </div>
 
 <script>
-// 自动计算利润和利润率
-function calculateProfit() {
+// 自动计算利润率
+function calculateProfitRate() {
     const totalAmount = parseFloat(document.getElementById('order_total_amount').value) || 0;
-    const costAmount = parseFloat(document.getElementById('outbound_cost_amount').value) || 0;
+    const profitAmount = parseFloat(document.getElementById('profit_amount').value) || 0;
     
-    const profit = totalAmount - costAmount;
-    const profitRate = totalAmount > 0 ? (profit / totalAmount * 100) : 0;
+    const profitRate = totalAmount > 0 ? (profitAmount / totalAmount * 100) : 0;
     
-    document.getElementById('profit_amount').value = profit.toFixed(2);
     document.getElementById('profit_rate').value = profitRate.toFixed(2);
 }
 
 // 监听金额输入变化
-document.getElementById('order_total_amount').addEventListener('input', calculateProfit);
-document.getElementById('outbound_cost_amount').addEventListener('input', calculateProfit);
+document.getElementById('order_total_amount').addEventListener('input', calculateProfitRate);
+document.getElementById('profit_amount').addEventListener('input', calculateProfitRate);
 
 // 设置示例数据
 function setSampleData() {
@@ -223,10 +206,10 @@ function setSampleData() {
     document.getElementById('global_purchase_time').value = new Date().toISOString().slice(0, 19).replace('T', ' ');
     document.getElementById('local_sku').value = 'SKU001';
     document.getElementById('order_total_amount').value = '299.00';
-    document.getElementById('outbound_cost_amount').value = '150.00';
+    document.getElementById('profit_amount').value = '149.00';
     document.getElementById('wms_outbound_cost_amount').value = '145.00';
     document.getElementById('wms_shipping_price_amount').value = '25.00';
-    calculateProfit();
+    calculateProfitRate();
 }
 
 // 清空表单
@@ -234,7 +217,6 @@ function clearForm() {
     document.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
         input.value = '';
     });
-    calculateProfit();
 }
 
 // 表单验证
