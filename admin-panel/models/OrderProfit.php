@@ -88,13 +88,14 @@ class OrderProfit {
     // 创建订单利润
     public function create($data) {
         $sql = "INSERT INTO order_profit (
-                    store_id, global_order_no, receiver_country, global_purchase_time, 
+                    store_id, global_order_no, warehouse_name, receiver_country, global_purchase_time, 
                     local_sku, order_total_amount, profit_amount, 
                     profit_rate, wms_outbound_cost_amount, wms_shipping_price_amount, update_time
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $params = [
             $data['store_id'] ?? '',
             $data['global_order_no'] ?? '',
+            $data['warehouse_name'] ?? '',
             $data['receiver_country'] ?? '',
             $data['global_purchase_time'] ?? '',
             $data['local_sku'] ?? '',
@@ -114,6 +115,7 @@ class OrderProfit {
         $sql = "UPDATE order_profit SET 
                     store_id = ?, 
                     global_order_no = ?, 
+                    warehouse_name = ?, 
                     receiver_country = ?, 
                     global_purchase_time = ?, 
                     local_sku = ?, 
@@ -127,6 +129,7 @@ class OrderProfit {
         $params = [
             $data['store_id'] ?? '',
             $data['global_order_no'] ?? '',
+            $data['warehouse_name'] ?? '',
             $data['receiver_country'] ?? '',
             $data['global_purchase_time'] ?? '',
             $data['local_sku'] ?? '',
@@ -154,8 +157,9 @@ class OrderProfit {
                 OR store_id LIKE ? 
                 OR local_sku LIKE ? 
                 OR receiver_country LIKE ? 
+                OR warehouse_name LIKE ? 
                 ORDER BY id DESC";
-        $params = ["%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%"];
+        $params = ["%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%"];
         
         if ($limit) {
             $sql .= " LIMIT ? OFFSET ?";
@@ -219,8 +223,8 @@ class OrderProfit {
         
         // 关键词搜索
         if ($keyword) {
-            $sql .= " AND (global_order_no LIKE ? OR store_id LIKE ? OR local_sku LIKE ? OR receiver_country LIKE ?)";
-            $params = array_merge($params, ["%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%"]);
+            $sql .= " AND (global_order_no LIKE ? OR store_id LIKE ? OR local_sku LIKE ? OR receiver_country LIKE ? OR warehouse_name LIKE ?)";
+            $params = array_merge($params, ["%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%"]);
         }
         
         // 店铺筛选
@@ -427,7 +431,7 @@ class OrderProfit {
         }
         
         $sql = "INSERT INTO order_profit (
-                    store_id, global_order_no, receiver_country, global_purchase_time, 
+                    store_id, global_order_no, receiver_country, warehouse_name, global_purchase_time, 
                     local_sku, order_total_amount, profit_amount, 
                     profit_rate, wms_outbound_cost_amount, wms_shipping_price_amount, update_time
                 ) VALUES ";
@@ -436,11 +440,12 @@ class OrderProfit {
         $params = [];
         
         foreach ($data as $item) {
-            $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = array_merge($params, [
                 $item['store_id'] ?? '',
                 $item['global_order_no'] ?? '',
                 $item['receiver_country'] ?? '',
+                $item['warehouse_name'] ?? '',
                 $item['global_purchase_time'] ?? '',
                 $item['local_sku'] ?? '',
                 $item['order_total_amount'] ?? '0.00',

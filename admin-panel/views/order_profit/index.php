@@ -153,6 +153,7 @@ if ($hasFilters): ?>
                         <th>ID</th>
                         <th>店铺ID</th>
                         <th>订单号</th>
+                        <th>发货仓库</th>
                         <th>收货国家</th>
                         <th>下单时间</th>
                         <th>SKU</th>
@@ -192,6 +193,11 @@ if ($hasFilters): ?>
                                 </td>
                                 <td>
                                     <code><?php echo htmlspecialchars($profit['local_sku'] ?? ''); ?></code>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary">
+                                        <?php echo htmlspecialchars($profit['warehouse_name'] ?? ''); ?>
+                                    </span>
                                 </td>
                                 <td>
                                     <span class="text-success fw-bold">

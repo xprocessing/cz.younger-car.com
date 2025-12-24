@@ -29,10 +29,11 @@ try {
     require_once $apiPath;
 
     // ========== 领星API调用逻辑 ==========
+    $nDaysAgo=$_GET['nDaysAgo'] ?? 1;
     $apiClient = new LingXingApiClient();
     $currentTimestamp = time();
-    $oneDaysAgoTimestamp = $currentTimestamp - (1 * 24 * 60 * 60);
-    $nDaysAgoTimestamp = $currentTimestamp - (3 * 24 * 60 * 60);
+    $oneDaysAgoTimestamp = $currentTimestamp - ($nDaysAgo * 24 * 60 * 60);
+    $nDaysAgoTimestamp = $currentTimestamp - (($nDaysAgo+2) * 24 * 60 * 60);
 
     // 构造请求参数
     $orderParams = [

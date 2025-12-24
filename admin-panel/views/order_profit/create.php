@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="receiver_country" class="form-label">收货国家</label>
                                 <input type="text" class="form-control" id="receiver_country" name="receiver_country"
@@ -43,7 +43,15 @@
                                 <div class="form-text">如：美国、英国等</div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="warehouse_name" class="form-label">发货仓库</label>
+                                <input type="text" class="form-control" id="warehouse_name" name="warehouse_name"
+                                       placeholder="请输入发货仓库名称" maxlength="50">
+                                <div class="form-text">如：中国仓库、美国仓库等</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="global_purchase_time" class="form-label">下单时间</label>
                                 <input type="text" class="form-control" id="global_purchase_time" name="global_purchase_time"
