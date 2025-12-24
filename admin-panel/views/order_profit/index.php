@@ -206,7 +206,7 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title text-success">
-                            ¥<?php echo number_format(array_sum(array_column($profits, 'order_total_amount'))); ?>
+                            ¥<?php echo number_format(array_sum(array_column($profits, 'order_total_amount')), 2); ?>
                         </h5>
                         <p class="card-text">总订单金额</p>
                     </div>
@@ -216,7 +216,7 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title text-info">
-                            ¥<?php echo number_format(array_sum(array_column($profits, 'profit_amount'))); ?>
+                            ¥<?php echo number_format(array_sum(array_column($profits, 'profit_amount')), 2); ?>
                         </h5>
                         <p class="card-text">总毛利润</p>
                     </div>

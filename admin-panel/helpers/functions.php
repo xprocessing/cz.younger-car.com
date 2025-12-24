@@ -117,4 +117,19 @@ function renderLayout($layout, $content, $data = []) {
         die("布局文件不存在: $layoutPath");
     }
 }
+
+// 解析带货币符号的字符串为浮点数
+function parseCurrencyAmount($amountString) {
+    if (empty($amountString)) {
+        return 0.0;
+    }
+    
+    // 移除货币符号（$、¥、€等）和空格
+    $cleanAmount = preg_replace('/[^\d\.-]/', '', (string)$amountString);
+    
+    // 转换为浮点数
+    $amount = (float)$cleanAmount;
+    
+    return $amount;
+}
 ?>

@@ -1,5 +1,6 @@
 <?php
 require_once APP_ROOT . '/includes/database.php';
+require_once APP_ROOT . '/helpers/functions.php';
 
 class OrderProfit {
     private $db;
@@ -8,18 +9,51 @@ class OrderProfit {
         $this->db = Database::getInstance();
     }
     
+    // 转换货币字段为数值
+    private function convertCurrencyFields($data) {
+        if (!is_array($data)) {
+            return $data;
+        }
+        
+        $currencyFields = [
+            'order_total_amount',
+            'wms_outbound_cost_amount', 
+            'wms_shipping_price_amount',
+            'profit_amount'
+        ];
+        
+        foreach ($currencyFields as $field) {
+            if (isset($data[$field])) {
+                $originalValue = $data[$field];
+                $data[$field] = parseCurrencyAmount($data[$field]);
+                $data[$field . '_original'] = $originalValue; // 保留原始值
+            }
+        }
+        
+        // 转换利润率字段
+        if (isset($data['profit_rate'])) {
+            $originalRate = $data['profit_rate'];
+            $data['profit_rate'] = parseCurrencyAmount($data['profit_rate']);
+            $data['profit_rate_original'] = $originalRate;
+        }
+        
+        return $data;
+    }
+    
     // 根据ID获取订单利润
     public function getById($id) {
         $sql = "SELECT * FROM order_profit WHERE id = ?";
         $stmt = $this->db->query($sql, [$id]);
-        return $stmt->fetch();
+        $data = $stmt->fetch();
+        return $this->convertCurrencyFields($data);
     }
     
     // 根据订单号获取订单利润
     public function getByOrderNo($globalOrderNo) {
         $sql = "SELECT * FROM order_profit WHERE global_order_no = ?";
         $stmt = $this->db->query($sql, [$globalOrderNo]);
-        return $stmt->fetch();
+        $data = $stmt->fetch();
+        return $this->convertCurrencyFields($data);
     }
     
     // 获取所有订单利润
@@ -31,7 +65,16 @@ class OrderProfit {
         } else {
             $stmt = $this->db->query($sql);
         }
-        return $stmt->fetchAll();
+        $data = $stmt->fetchAll();
+        
+        // 转换每条记录的货币字段
+        if (is_array($data)) {
+            foreach ($data as &$row) {
+                $row = $this->convertCurrencyFields($row);
+            }
+        }
+        
+        return $data;
     }
     
     // 获取总数
@@ -153,14 +196,7 @@ class OrderProfit {
     
     // 获取利润统计
     public function getProfitStats($startDate = null, $endDate = null, $storeId = null) {
-        $sql = "SELECT 
-                    COUNT(*) as order_count,
-                    SUM(CAST(order_total_amount AS DECIMAL(10,2))) as total_amount,
-                    SUM(CAST(profit_amount AS DECIMAL(10,2))) as total_profit,
-                    AVG(CAST(profit_rate AS DECIMAL(10,2))) as avg_profit_rate,
-                    SUM(CAST(wms_outbound_cost_amount AS DECIMAL(10,2))) as wms_cost,
-                    SUM(CAST(wms_shipping_price_amount AS DECIMAL(10,2))) as wms_shipping
-                FROM order_profit WHERE 1=1";
+        $sql = "SELECT * FROM order_profit WHERE 1=1";
         
         $params = [];
         
@@ -180,7 +216,41 @@ class OrderProfit {
         }
         
         $stmt = $this->db->query($sql, $params);
-        return $stmt->fetch();
+        $data = $stmt->fetchAll();
+        
+        // 手动计算统计数据
+        $stats = [
+            'order_count' => 0,
+            'total_amount' => 0,
+            'total_profit' => 0,
+            'avg_profit_rate' => 0,
+            'wms_cost' => 0,
+            'wms_shipping' => 0
+        ];
+        
+        if (is_array($data) && count($data) > 0) {
+            $stats['order_count'] = count($data);
+            $totalRate = 0;
+            $rateCount = 0;
+            
+            foreach ($data as $row) {
+                $convertedRow = $this->convertCurrencyFields($row);
+                
+                $stats['total_amount'] += $convertedRow['order_total_amount'];
+                $stats['total_profit'] += $convertedRow['profit_amount'];
+                $stats['wms_cost'] += $convertedRow['wms_outbound_cost_amount'];
+                $stats['wms_shipping'] += $convertedRow['wms_shipping_price_amount'];
+                
+                if ($convertedRow['profit_rate'] !== 0) {
+                    $totalRate += $convertedRow['profit_rate'];
+                    $rateCount++;
+                }
+            }
+            
+            $stats['avg_profit_rate'] = $rateCount > 0 ? ($totalRate / $rateCount) : 0;
+        }
+        
+        return $stats;
     }
     
     // 获取店铺列表
