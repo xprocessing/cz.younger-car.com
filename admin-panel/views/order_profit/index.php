@@ -77,13 +77,11 @@
         </h6>
         <div class="row g-2">
             <?php 
-            // 构建基础URL，保持现有的筛选条件
+            // 构建基础URL，保持现有的筛选条件，但排除rate_min和rate_max，因为这些会被快捷筛选覆盖
             $baseUrl = APP_URL . '/order_profit.php?';
             $params = [];
             if (!empty($_GET['keyword'])) $params[] = 'keyword=' . urlencode($_GET['keyword']);
             if (!empty($_GET['store_id'])) $params[] = 'store_id=' . urlencode($_GET['store_id']);
-            if (isset($_GET['rate_min'])) $params[] = 'rate_min=' . urlencode($_GET['rate_min']);
-            if (isset($_GET['rate_max'])) $params[] = 'rate_max=' . urlencode($_GET['rate_max']);
             $baseQuery = implode('&', $params);
             if ($baseQuery) $baseQuery .= '&';
             ?>
