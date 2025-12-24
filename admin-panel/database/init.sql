@@ -148,3 +148,20 @@ CREATE TABLE IF NOT EXISTS yunfei (
     create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY unique_order_no (global_order_no)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- 新品开发及进度表
+CREATE TABLE IF NOT EXISTS `new_products` (
+	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
+	`require_no` CHAR(50) NOT NULL COMMENT '需求编号',
+	`img_url` VARCHAR(255),
+	`require_title` VARCHAR(255) COMMENT '需求名称',
+	`npdId` CHAR(50) COMMENT '新产品id
+',
+	`sku` CHAR(50),
+	`remark` VARCHAR(255) COMMENT '备注',
+	`create_time` DATE,
+	`current_step` INTEGER COMMENT '当前进度',
+	`process_list` JSON COMMENT '进度明细',
+	PRIMARY KEY(`id`)
+);
+
+

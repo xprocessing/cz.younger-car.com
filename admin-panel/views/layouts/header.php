@@ -102,6 +102,14 @@
             </div>
             <?php endif; ?>
             
+            <?php if (isLoggedIn()): ?>
+            <div class="nav-item">
+                <a href="<?php echo APP_URL; ?>/new_products.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'new_products.php' ? 'active' : ''; ?>">
+                    <i class="fa fa-cube"></i> 新产品管理
+                </a>
+            </div>
+            <?php endif; ?>
+            
             <?php if (hasPermission('yunfei.view')): ?>
             <div class="nav-item">
                 <a href="<?php echo APP_URL; ?>/yunfei.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'yunfei.php' ? 'active' : ''; ?>">
