@@ -186,9 +186,9 @@ if ($hasFilters): ?>
                             <tr>
                                 <td><?php echo $profit['id']; ?></td>
                                 <td>
-                                    <span class="badge bg-info">
+                                  
                                         <?php echo htmlspecialchars(($profit['platform_name'] ?? '') . '-' . ($profit['store_name'] ?? '')); ?>
-                                    </span>
+                                  
                                 </td>
                                 <td>
                                     <a href="https://erp.lingxing.com/erp/mmulti/mpOrderDetail?orderSn=<?php echo htmlspecialchars($profit['global_order_no'] ?? ''); ?>" target="_blank">
@@ -196,9 +196,9 @@ if ($hasFilters): ?>
                                     </a>
                                 </td>
                                  <td>
-                                    <span class="badge bg-primary">
+                                   
                                         <?php echo htmlspecialchars($profit['warehouse_name'] ?? ''); ?>
-                                    </span>
+                                    
                                 </td>
                                 <td>
                                     <?php echo htmlspecialchars($profit['receiver_country'] ?? ''); ?>
