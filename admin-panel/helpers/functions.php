@@ -124,7 +124,7 @@ function parseCurrencyAmount($amountString) {
         return 0.0;
     }
     
-    // 移除货币符号（$、¥、€等）和空格
+    // 移除货币符号（$、¥、€等）、百分号和空格，但保留负号和小数点
     $cleanAmount = preg_replace('/[^\d\.-]/', '', (string)$amountString);
     
     // 转换为浮点数

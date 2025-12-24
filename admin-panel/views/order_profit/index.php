@@ -76,39 +76,58 @@
             <i class="fa fa-filter me-2"></i>利润率快捷筛选
         </h6>
         <div class="row g-2">
+            <?php 
+            // 构建基础URL，保持现有的筛选条件
+            $baseUrl = APP_URL . '/order_profit.php?';
+            $params = [];
+            if (!empty($_GET['keyword'])) $params[] = 'keyword=' . urlencode($_GET['keyword']);
+            if (!empty($_GET['store_id'])) $params[] = 'store_id=' . urlencode($_GET['store_id']);
+            $baseQuery = implode('&', $params);
+            if ($baseQuery) $baseQuery .= '&';
+            ?>
+            
             <div class="col-auto">
-                <a href="<?php echo APP_URL; ?>/order_profit.php?rate_min=0&rate_max=10" class="btn btn-sm btn-outline-primary">
+                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=0&rate_max=10" class="btn btn-sm btn-outline-primary">
                     0% - 10%
                 </a>
             </div>
             <div class="col-auto">
-                <a href="<?php echo APP_URL; ?>/order_profit.php?rate_min=10&rate_max=20" class="btn btn-sm btn-outline-success">
+                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=10&rate_max=20" class="btn btn-sm btn-outline-success">
                     10% - 20%
                 </a>
             </div>
             <div class="col-auto">
-                <a href="<?php echo APP_URL; ?>/order_profit.php?rate_min=20&rate_max=30" class="btn btn-sm btn-outline-info">
+                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=20&rate_max=30" class="btn btn-sm btn-outline-info">
                     20% - 30%
                 </a>
             </div>
             <div class="col-auto">
-                <a href="<?php echo APP_URL; ?>/order_profit.php?rate_min=30&rate_max=50" class="btn btn-sm btn-outline-warning">
+                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=30&rate_max=50" class="btn btn-sm btn-outline-warning">
                     30% - 50%
                 </a>
             </div>
             <div class="col-auto">
-                <a href="<?php echo APP_URL; ?>/order_profit.php?rate_min=50" class="btn btn-sm btn-outline-danger">
+                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=50" class="btn btn-sm btn-outline-danger">
                     > 50%
                 </a>
             </div>
             <div class="col-auto">
-                <a href="<?php echo APP_URL; ?>/order_profit.php?rate_min=-100&rate_max=0" class="btn btn-sm btn-outline-secondary">
+                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=-100&rate_max=0" class="btn btn-sm btn-outline-secondary">
                     亏损订单 (< 0%)
                 </a>
             </div>
         </div>
     </div>
 </div>
+
+<!-- 调试信息 -->
+<?php if (!empty($_GET['rate_min']) || !empty($_GET['rate_max'])): ?>
+<div class="alert alert-warning" role="alert">
+    <strong>调试信息：</strong>
+    筛选参数: rate_min="<?php echo htmlspecialchars($_GET['rate_min'] ?? ''); ?>", 
+    rate_max="<?php echo htmlspecialchars($_GET['rate_max'] ?? ''); ?>"
+</div>
+<?php endif; ?>
 
 <!-- 当前筛选条件 -->
 <?php 
