@@ -60,19 +60,27 @@ try {
     foreach ($orders as $order) {
         // 字段映射：根据orders.json结构调整键名对应关系
         $data = [
-            'store_id' => $order['store_id'] ?? '',
-            'global_order_no' => $order['global_order_no'] ?? '',
-            'receiver_country' => $order['receiver_country'] ?? '',
-            'global_purchase_time' => $order['global_purchase_time'] ?? '',
-            'local_sku' => $order['local_sku'] ?? '',
-            'order_total_amount' => $order['order_total_amount'] ?? '',
-            'outbound_cost_amount' => $order['outbound_cost_amount'] ?? '',
-            'profit_amount' => $order['profit_amount'] ?? '',
-            'profit_rate' => $order['profit_rate'] ?? '',
-            'wms_outbound_cost_amount' => $order['wms_outbound_cost_amount'] ?? '',
-            'wms_shipping_price_amount' => $order['wms_shipping_price_amount'] ?? '',
-            'update_time' => date('Y-m-d H:i:s') // 当前时间
-        ];
+        'store_id' => $order['store_id'] ?? '',
+        'global_order_no' => $order['global_order_no'] ?? '',
+        // 收货国家对应address_info中的receiver_country_code
+        'receiver_country' => $order['address_info']['receiver_country_code'] ?? '',
+        'global_purchase_time' => $order['global_purchase_time'] ?? '',
+        // local_sku在item_info数组的第一个元素中
+        'local_sku' => ($order['item_info'][0]['local_sku'] ?? '') ?: '',
+        // 订单总金额在transaction_info数组的第一个元素中
+        'order_total_amount' => ($order['transaction_info'][0]['order_total_amount'] ?? '') ?: '',
+        // 出库成本在item_info数组的第一个元素中
+        'outbound_cost_amount' => ($order['item_info'][0]['outbound_cost_amount'] ?? '') ?: '',
+        // 利润金额在transaction_info数组的第一个元素中
+        'profit_amount' => ($order['transaction_info'][0]['profit_amount'] ?? '') ?: '',
+        // 原数据中无profit_rate字段，保持默认空值
+        'profit_rate' => $order['profit_rate'] ?? '',
+        // wms出库成本在item_info数组的第一个元素中
+        'wms_outbound_cost_amount' => ($order['item_info'][0]['wms_outbound_cost_amount'] ?? '') ?: '',
+        // wms运费在item_info数组的第一个元素中
+        'wms_shipping_price_amount' => ($order['item_info'][0]['wms_shipping_price_amount'] ?? '') ?: '',
+        'update_time' => date('Y-m-d H:i:s') // 当前时间
+    ];
 
         // 检查订单是否已存在
         $checkStmt = $pdo->prepare("SELECT id FROM order_profit WHERE global_order_no = :global_order_no");
