@@ -270,7 +270,7 @@ if ($hasFilters): ?>
             <ul class="pagination justify-content-center">
                 <?php if ($page > 1): ?>
                     <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo !empty($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo !empty($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
                             <i class="fa fa-chevron-left"></i>
                         </a>
                     </li>
@@ -278,7 +278,7 @@ if ($hasFilters): ?>
                 
                 <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
                     <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo !empty($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo !empty($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
                             <?php echo $i; ?>
                         </a>
                     </li>
@@ -286,7 +286,7 @@ if ($hasFilters): ?>
                 
                 <?php if ($page < $totalPages): ?>
                     <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo !empty($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo !empty($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
                             <i class="fa fa-chevron-right"></i>
                         </a>
                     </li>
