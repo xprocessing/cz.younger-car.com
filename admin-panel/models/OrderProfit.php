@@ -229,43 +229,50 @@ class OrderProfit {
             $params[] = $storeId;
         }
         
-        // 利润率区间筛选 - 使用SQL的字符串处理函数提取数值进行比较
-        if ($rateMin !== '') {
-            // 使用REGEXP_REPLACE提取数值部分进行比较
-            $sql .= " AND CAST(REGEXP_REPLACE(profit_rate, '[^\d.-]', '') AS DECIMAL(10,2)) >= ?";
-            $params[] = $rateMin;
-        }
-        
-        if ($rateMax !== '') {
-            // 使用REGEXP_REPLACE提取数值部分进行比较
-            $sql .= " AND CAST(REGEXP_REPLACE(profit_rate, '[^\d.-]', '') AS DECIMAL(10,2)) <= ?";
-            $params[] = $rateMax;
-        }
-        
         $sql .= " ORDER BY id DESC";
         
-        if ($limit) {
-            $sql .= " LIMIT ? OFFSET ?";
-            $params[] = $limit;
-            $params[] = $offset;
-        }
-        
+        // 先获取所有符合条件的记录，不应用分页
         $stmt = $this->db->query($sql, $params);
-        $data = $stmt->fetchAll();
+        $allData = $stmt->fetchAll();
         
         // 转换每条记录的货币字段
-        if (is_array($data)) {
-            foreach ($data as &$row) {
-                $row = $this->convertCurrencyFields($row);
+        $convertedData = [];
+        if (is_array($allData)) {
+            foreach ($allData as $row) {
+                $convertedRow = $this->convertCurrencyFields($row);
+                $convertedData[] = $convertedRow;
             }
         }
         
-        return $data;
+        // 利润率区间筛选
+        $filteredData = [];
+        foreach ($convertedData as $row) {
+            $include = true;
+            
+            if ($rateMin !== '' && $row['profit_rate'] < (float)$rateMin) {
+                $include = false;
+            }
+            
+            if ($rateMax !== '' && $row['profit_rate'] > (float)$rateMax) {
+                $include = false;
+            }
+            
+            if ($include) {
+                $filteredData[] = $row;
+            }
+        }
+        
+        // 应用分页
+        if ($limit !== null) {
+            $filteredData = array_slice($filteredData, $offset, $limit);
+        }
+        
+        return $filteredData;
     }
     
     // 支持多条件搜索的结果数量
     public function getSearchWithFiltersCount($keyword = '', $storeId = '', $rateMin = '', $rateMax = '') {
-        $sql = "SELECT COUNT(*) as count FROM order_profit WHERE 1=1";
+        $sql = "SELECT * FROM order_profit WHERE 1=1";
         $params = [];
         
         // 关键词搜索
@@ -280,22 +287,34 @@ class OrderProfit {
             $params[] = $storeId;
         }
         
-        // 利润率区间筛选 - 使用SQL的字符串处理函数提取数值进行比较
-        if ($rateMin !== '') {
-            // 使用REGEXP_REPLACE提取数值部分进行比较
-            $sql .= " AND CAST(REGEXP_REPLACE(profit_rate, '[^\\d.-]', '') AS DECIMAL(10,2)) >= ?";
-            $params[] = $rateMin;
-        }
-        
-        if ($rateMax !== '') {
-            // 使用REGEXP_REPLACE提取数值部分进行比较
-            $sql .= " AND CAST(REGEXP_REPLACE(profit_rate, '[^\\d.-]', '') AS DECIMAL(10,2)) <= ?";
-            $params[] = $rateMax;
-        }
-        
         $stmt = $this->db->query($sql, $params);
-        $result = $stmt->fetch();
-        return $result['count'];
+        $data = $stmt->fetchAll();
+        
+        // 转换货币字段并进行利润率区间过滤
+        $count = 0;
+        if (is_array($data)) {
+            foreach ($data as $row) {
+                $convertedRow = $this->convertCurrencyFields($row);
+                
+                // 利润率区间过滤
+                $profitRate = $convertedRow['profit_rate'];
+                $include = true;
+                
+                if ($rateMin !== '' && $profitRate < (float)$rateMin) {
+                    $include = false;
+                }
+                
+                if ($rateMax !== '' && $profitRate > (float)$rateMax) {
+                    $include = false;
+                }
+                
+                if ($include) {
+                    $count++;
+                }
+            }
+        }
+        
+        return $count;
     }
     
     // 获取利润统计
