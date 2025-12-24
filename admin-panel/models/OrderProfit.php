@@ -42,7 +42,10 @@ class OrderProfit {
     
     // 根据ID获取订单利润
     public function getById($id) {
-        $sql = "SELECT * FROM order_profit WHERE id = ?";
+        $sql = "SELECT op.*, s.platform_name, s.store_name 
+                FROM order_profit op 
+                LEFT JOIN store s ON op.store_id = s.store_id 
+                WHERE op.id = ?";
         $stmt = $this->db->query($sql, [$id]);
         $data = $stmt->fetch();
         return $this->convertCurrencyFields($data);
@@ -50,7 +53,10 @@ class OrderProfit {
     
     // 根据订单号获取订单利润
     public function getByOrderNo($globalOrderNo) {
-        $sql = "SELECT * FROM order_profit WHERE global_order_no = ?";
+        $sql = "SELECT op.*, s.platform_name, s.store_name 
+                FROM order_profit op 
+                LEFT JOIN store s ON op.store_id = s.store_id 
+                WHERE op.global_order_no = ?";
         $stmt = $this->db->query($sql, [$globalOrderNo]);
         $data = $stmt->fetch();
         return $this->convertCurrencyFields($data);
@@ -58,7 +64,10 @@ class OrderProfit {
     
     // 获取所有订单利润
     public function getAll($limit = null, $offset = 0) {
-        $sql = "SELECT * FROM order_profit ORDER BY id DESC";
+        $sql = "SELECT op.*, s.platform_name, s.store_name 
+                FROM order_profit op 
+                LEFT JOIN store s ON op.store_id = s.store_id 
+                ORDER BY op.id DESC";
         if ($limit) {
             $sql .= " LIMIT ? OFFSET ?";
             $stmt = $this->db->query($sql, [$limit, $offset]);
@@ -152,13 +161,15 @@ class OrderProfit {
     
     // 搜索订单利润
     public function search($keyword, $limit = null, $offset = 0) {
-        $sql = "SELECT * FROM order_profit 
-                WHERE global_order_no LIKE ? 
-                OR store_id LIKE ? 
-                OR local_sku LIKE ? 
-                OR receiver_country LIKE ? 
-                OR warehouse_name LIKE ? 
-                ORDER BY id DESC";
+        $sql = "SELECT op.*, s.platform_name, s.store_name 
+                FROM order_profit op 
+                LEFT JOIN store s ON op.store_id = s.store_id 
+                WHERE op.global_order_no LIKE ? 
+                OR op.store_id LIKE ? 
+                OR op.local_sku LIKE ? 
+                OR op.receiver_country LIKE ? 
+                OR op.warehouse_name LIKE ? 
+                ORDER BY op.id DESC";
         $params = ["%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%"];
         
         if ($limit) {
@@ -194,7 +205,11 @@ class OrderProfit {
     
     // 根据店铺ID获取订单利润
     public function getByStoreId($storeId, $limit = null, $offset = 0) {
-        $sql = "SELECT * FROM order_profit WHERE store_id = ? ORDER BY id DESC";
+        $sql = "SELECT op.*, s.platform_name, s.store_name 
+                FROM order_profit op 
+                LEFT JOIN store s ON op.store_id = s.store_id 
+                WHERE op.store_id = ? 
+                ORDER BY op.id DESC";
         $params = [$storeId];
         
         if ($limit) {
@@ -218,22 +233,25 @@ class OrderProfit {
     
     // 支持多条件搜索的订单利润
     public function searchWithFilters($keyword = '', $storeId = '', $rateMin = '', $rateMax = '', $limit = null, $offset = 0) {
-        $sql = "SELECT * FROM order_profit WHERE 1=1";
+        $sql = "SELECT op.*, s.platform_name, s.store_name 
+                FROM order_profit op 
+                LEFT JOIN store s ON op.store_id = s.store_id 
+                WHERE 1=1";
         $params = [];
         
         // 关键词搜索
         if ($keyword) {
-            $sql .= " AND (global_order_no LIKE ? OR store_id LIKE ? OR local_sku LIKE ? OR receiver_country LIKE ? OR warehouse_name LIKE ?)";
+            $sql .= " AND (op.global_order_no LIKE ? OR op.store_id LIKE ? OR op.local_sku LIKE ? OR op.receiver_country LIKE ? OR op.warehouse_name LIKE ?)";
             $params = array_merge($params, ["%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%"]);
         }
         
         // 店铺筛选
         if ($storeId) {
-            $sql .= " AND store_id = ?";
+            $sql .= " AND op.store_id = ?";
             $params[] = $storeId;
         }
         
-        $sql .= " ORDER BY id DESC";
+        $sql .= " ORDER BY op.id DESC";
         
         // 先获取所有符合条件的记录，不应用分页
         $stmt = $this->db->query($sql, $params);
@@ -419,9 +437,16 @@ class OrderProfit {
     
     // 获取店铺列表
     public function getStoreList() {
-        $sql = "SELECT DISTINCT store_id FROM order_profit WHERE store_id IS NOT NULL AND store_id != '' ORDER BY store_id";
+        $sql = "SELECT store_id, platform_name, store_name FROM store ORDER BY platform_name, store_name";
         $stmt = $this->db->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    // 根据store_id获取店铺详细信息
+    public function getStoreInfo($storeId) {
+        $sql = "SELECT platform_name, store_name FROM store WHERE store_id = ?";
+        $stmt = $this->db->query($sql, [$storeId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
     // 批量导入数据

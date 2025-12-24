@@ -28,9 +28,9 @@
                     <option value="">全部店铺</option>
                     <?php if (!empty($storeList)): ?>
                         <?php foreach ($storeList as $store): ?>
-                            <option value="<?php echo htmlspecialchars($store); ?>" 
-                                    <?php echo (($_GET['store_id'] ?? '') == $store ? 'selected' : ''); ?>>
-                                <?php echo htmlspecialchars($store); ?>
+                            <option value="<?php echo htmlspecialchars($store['store_id']); ?>" 
+                                    <?php echo (($_GET['store_id'] ?? '') == $store['store_id'] ? 'selected' : ''); ?>>
+                                <?php echo htmlspecialchars($store['platform_name'] . ' - ' . $store['store_name']); ?>
                             </option>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -131,7 +131,17 @@ if ($hasFilters): ?>
         <?php 
         $filters = [];
         if (!empty($_GET['keyword'])) $filters[] = "关键词: " . htmlspecialchars($_GET['keyword']);
-        if (!empty($_GET['store_id'])) $filters[] = "店铺: " . htmlspecialchars($_GET['store_id']);
+        if (!empty($_GET['store_id'])) {
+            // 查找对应的店铺名称
+            $storeName = $_GET['store_id'];
+            foreach ($storeList as $store) {
+                if ($store['store_id'] == $_GET['store_id']) {
+                    $storeName = $store['platform_name'] . '-' . $store['store_name'];
+                    break;
+                }
+            }
+            $filters[] = "店铺: " . htmlspecialchars($storeName);
+        }
         if (!empty($_GET['rate_min'])) $filters[] = "最小利润率: " . htmlspecialchars($_GET['rate_min']) . "%";
         if (!empty($_GET['rate_max'])) $filters[] = "最大利润率: " . htmlspecialchars($_GET['rate_max']) . "%";
         echo implode(' | ', $filters);
@@ -177,7 +187,7 @@ if ($hasFilters): ?>
                                 <td><?php echo $profit['id']; ?></td>
                                 <td>
                                     <span class="badge bg-info">
-                                        <?php echo htmlspecialchars($profit['store_id'] ?? ''); ?>
+                                        <?php echo htmlspecialchars(($profit['platform_name'] ?? '') . '-' . ($profit['store_name'] ?? '')); ?>
                                     </span>
                                 </td>
                                 <td>

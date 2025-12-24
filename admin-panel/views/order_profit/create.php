@@ -18,10 +18,18 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="store_id" class="form-label">店铺ID</label>
-                                <input type="text" class="form-control" id="store_id" name="store_id"
-                                       placeholder="请输入店铺ID" maxlength="50">
-                                <div class="form-text">店铺的唯一标识</div>
+                                <label for="store_id" class="form-label">店铺</label>
+                                <select class="form-control" id="store_id" name="store_id">
+                                    <option value="">请选择店铺</option>
+                                    <?php if (!empty($storeList)): ?>
+                                        <?php foreach ($storeList as $store): ?>
+                                            <option value="<?php echo htmlspecialchars($store['store_id']); ?>">
+                                                <?php echo htmlspecialchars($store['platform_name'] . ' - ' . $store['store_name']); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                                <div class="form-text">选择对应的店铺</div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -208,7 +216,11 @@ document.getElementById('profit_amount').addEventListener('input', calculateProf
 
 // 设置示例数据
 function setSampleData() {
-    document.getElementById('store_id').value = 'STORE001';
+    // 如果有店铺列表，选择第一个店铺
+    const storeSelect = document.getElementById('store_id');
+    if (storeSelect.options.length > 1) {
+        storeSelect.selectedIndex = 1;
+    }
     document.getElementById('global_order_no').value = 'ORDER' + Date.now();
     document.getElementById('receiver_country').value = '美国';
     document.getElementById('global_purchase_time').value = new Date().toISOString().slice(0, 19).replace('T', ' ');

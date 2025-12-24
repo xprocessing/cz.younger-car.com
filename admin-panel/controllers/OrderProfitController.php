@@ -49,6 +49,7 @@ class OrderProfitController {
         }
         
         $title = '创建订单利润';
+        $storeList = $this->orderProfitModel->getStoreList();
         
         include VIEWS_DIR . '/layouts/header.php';
         include VIEWS_DIR . '/order_profit/create.php';
@@ -120,6 +121,7 @@ class OrderProfitController {
         }
         
         $title = '编辑订单利润';
+        $storeList = $this->orderProfitModel->getStoreList();
         
         include VIEWS_DIR . '/layouts/header.php';
         include VIEWS_DIR . '/order_profit/edit.php';

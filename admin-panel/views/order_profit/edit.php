@@ -20,11 +20,19 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="store_id" class="form-label">店铺ID</label>
-                                <input type="text" class="form-control" id="store_id" name="store_id"
-                                       value="<?php echo htmlspecialchars($profit['store_id'] ?? ''); ?>"
-                                       placeholder="请输入店铺ID" maxlength="50">
-                                <div class="form-text">店铺的唯一标识</div>
+                                <label for="store_id" class="form-label">店铺</label>
+                                <select class="form-control" id="store_id" name="store_id">
+                                    <option value="">请选择店铺</option>
+                                    <?php if (!empty($storeList)): ?>
+                                        <?php foreach ($storeList as $store): ?>
+                                            <option value="<?php echo htmlspecialchars($store['store_id']); ?>"
+                                                    <?php echo ($store['store_id'] == ($profit['store_id'] ?? '')) ? 'selected' : ''; ?>>
+                                                <?php echo htmlspecialchars($store['platform_name'] . ' - ' . $store['store_name']); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                                <div class="form-text">选择对应的店铺</div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -181,8 +189,8 @@
                     </tr>
                     <?php if (!empty($profit['store_id'])): ?>
                     <tr>
-                        <td><strong>店铺ID:</strong></td>
-                        <td><?php echo htmlspecialchars($profit['store_id']); ?></td>
+                        <td><strong>店铺:</strong></td>
+                        <td><?php echo htmlspecialchars(($profit['platform_name'] ?? '') . ' - ' . ($profit['store_name'] ?? $profit['store_id'])); ?></td>
                     </tr>
                     <?php endif; ?>
                     <?php if (!empty($profit['local_sku'])): ?>
