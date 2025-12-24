@@ -88,7 +88,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="https://erp.lingxing.com/erp/mmulti/mpOrderDetail?orderSn=<?php echo htmlspecialchars($profit['global_order_no'] ?? ''); ?>">
+                                    <a href="https://erp.lingxing.com/erp/mmulti/mpOrderDetail?orderSn=<?php echo htmlspecialchars($profit['global_order_no'] ?? ''); ?>" target="_blank">
                                         <strong><?php echo htmlspecialchars($profit['global_order_no'] ?? ''); ?></strong>
                                     </a>
                                 </td>
