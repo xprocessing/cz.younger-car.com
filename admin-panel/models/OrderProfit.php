@@ -281,8 +281,8 @@ class OrderProfit {
         
         // 关键词搜索
         if ($keyword) {
-            $sql .= " AND (global_order_no LIKE ? OR store_id LIKE ? OR local_sku LIKE ? OR receiver_country LIKE ?)";
-            $params = array_merge($params, ["%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%"]);
+            $sql .= " AND (global_order_no LIKE ? OR store_id LIKE ? OR local_sku LIKE ? OR receiver_country LIKE ? OR warehouse_name LIKE ?)";
+            $params = array_merge($params, ["%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%"]);
         }
         
         // 店铺筛选

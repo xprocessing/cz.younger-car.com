@@ -183,3 +183,17 @@ CREATE TABLE IF NOT EXISTS `order_profit` (
 );
 
 
+-- 创建店铺信息表
+CREATE TABLE `store` (
+  `store_id` varchar(64) NOT NULL COMMENT '店铺ID',
+  `sid` varchar(50) DEFAULT NULL COMMENT '店铺编号',
+  `store_name` varchar(100) NOT NULL COMMENT '店铺名称',
+  `platform_code` varchar(20) NOT NULL COMMENT '平台编码',
+  `platform_name` varchar(50) NOT NULL COMMENT '平台名称',
+  `currency` varchar(10) NOT NULL COMMENT '货币类型',
+  `is_sync` tinyint NOT NULL COMMENT '是否同步（1：是，0：否）',
+  `status` tinyint NOT NULL COMMENT '状态（1：正常，其他：异常）',
+  `country_code` varchar(20) DEFAULT NULL COMMENT '国家/地区编码',
+  PRIMARY KEY (`store_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺信息表';
+
