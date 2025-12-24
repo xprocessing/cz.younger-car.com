@@ -87,7 +87,7 @@
             ?>
             
             <div class="col-auto">
-                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=0&rate_max=10" class="btn btn-sm btn-outline-primary">
+                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=0&rate_max=10" class="btn btn-sm btn-outline-danger">
                     0% - 10%
                 </a>
             </div>
@@ -107,12 +107,12 @@
                 </a>
             </div>
             <div class="col-auto">
-                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=50" class="btn btn-sm btn-outline-danger">
+                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=50" class="btn btn-sm btn-outline-warning">
                     > 50%
                 </a>
             </div>
             <div class="col-auto">
-                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=-100&rate_max=0" class="btn btn-sm btn-outline-danger text-danger">
+                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=-100&rate_max=0" class="btn btn-sm btn-outline-danger">
                     亏损订单 (< 0%)
                 </a>
             </div>
