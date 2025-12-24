@@ -185,6 +185,11 @@ if ($hasFilters): ?>
                                         <strong><?php echo htmlspecialchars($profit['global_order_no'] ?? ''); ?></strong>
                                     </a>
                                 </td>
+                                 <td>
+                                    <span class="badge bg-primary">
+                                        <?php echo htmlspecialchars($profit['warehouse_name'] ?? ''); ?>
+                                    </span>
+                                </td>
                                 <td>
                                     <?php echo htmlspecialchars($profit['receiver_country'] ?? ''); ?>
                                 </td>
@@ -194,11 +199,7 @@ if ($hasFilters): ?>
                                 <td>
                                     <code><?php echo htmlspecialchars($profit['local_sku'] ?? ''); ?></code>
                                 </td>
-                                <td>
-                                    <span class="badge bg-primary">
-                                        <?php echo htmlspecialchars($profit['warehouse_name'] ?? ''); ?>
-                                    </span>
-                                </td>
+                               
                                 <td>
                                     <span class="text-success fw-bold">
                                         <?php echo htmlspecialchars($profit['order_total_amount'] ?? ''); ?>
