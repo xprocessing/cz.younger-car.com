@@ -37,7 +37,7 @@ try {
     // 构造请求参数
     $orderParams = [
         'offset' => 0,
-        'length' => 20,
+        'length' => 200,
         'order_status' => 6,
         'date_type' => 'global_purchase_time',
         'start_time' => $nDaysAgoTimestamp,
