@@ -20,7 +20,7 @@
                     <div class="mb-3">
                         <label for="require_no" class="form-label">需求编号 <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="require_no" name="require_no" required
-                               value="<?php echo htmlspecialchars($product['require_no']); ?>"
+                               value="<?php echo htmlspecialchars($product['require_no'] ?? ''); ?>"
                                placeholder="请输入需求编号" maxlength="50">
                         <div class="form-text">唯一标识一个需求</div>
                     </div>
@@ -28,19 +28,19 @@
                     <div class="mb-3">
                         <label for="require_title" class="form-label">需求名称</label>
                         <input type="text" class="form-control" id="require_title" name="require_title"
-                               value="<?php echo htmlspecialchars($product['require_title']); ?>"
+                               value="<?php echo htmlspecialchars($product['require_title'] ?? ''); ?>"
                                placeholder="请输入需求名称" maxlength="255">
                     </div>
 
                     <div class="mb-3">
                         <label for="img_url" class="form-label">图片URL</label>
                         <input type="url" class="form-control" id="img_url" name="img_url"
-                               value="<?php echo htmlspecialchars($product['img_url']); ?>"
+                               value="<?php echo htmlspecialchars($product['img_url'] ?? ''); ?>"
                                placeholder="请输入图片URL" maxlength="255">
                         <div class="form-text">支持HTTP/HTTPS链接</div>
                         <?php if (!empty($product['img_url'])): ?>
                         <div class="mt-2">
-                            <img src="<?php echo htmlspecialchars($product['img_url']); ?>" 
+                            <img src="<?php echo htmlspecialchars($product['img_url'] ?? ''); ?>" 
                                  alt="当前图片" style="max-width: 200px; max-height: 100px; object-fit: cover;" class="border">
                         </div>
                         <?php endif; ?>
@@ -51,7 +51,7 @@
                             <div class="mb-3">
                                 <label for="npdId" class="form-label">新产品ID</label>
                                 <input type="text" class="form-control" id="npdId" name="npdId"
-                                       value="<?php echo htmlspecialchars($product['npdId']); ?>"
+                                       value="<?php echo htmlspecialchars($product['npdId'] ?? ''); ?>"
                                        placeholder="请输入新产品ID" maxlength="50">
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                             <div class="mb-3">
                                 <label for="sku" class="form-label">SKU</label>
                                 <input type="text" class="form-control" id="sku" name="sku"
-                                       value="<?php echo htmlspecialchars($product['sku']); ?>"
+                                       value="<?php echo htmlspecialchars($product['sku'] ?? ''); ?>"
                                        placeholder="请输入SKU" maxlength="50">
                             </div>
                         </div>
@@ -68,15 +68,15 @@
                     <div class="mb-3">
                         <label for="create_time" class="form-label">创建时间</label>
                         <input type="date" class="form-control" id="create_time" name="create_time"
-                               value="<?php echo $product['create_time']; ?>">
+                               value="<?php echo $product['create_time'] ?? ''; ?>">
                     </div>
 
                     <div class="mb-3">
                         <label for="current_step" class="form-label">当前进度</label>
                         <select class="form-control" id="current_step" name="current_step">
-                            <option value="0" <?php echo $product['current_step'] == 0 ? 'selected' : ''; ?>>未开始</option>
+                            <option value="0" <?php echo ($product['current_step'] ?? 0) == 0 ? 'selected' : ''; ?>>未开始</option>
                             <?php for ($i = 1; $i <= 10; $i++): ?>
-                                <option value="<?php echo $i; ?>" <?php echo $product['current_step'] == $i ? 'selected' : ''; ?>>
+                                <option value="<?php echo $i; ?>" <?php echo ($product['current_step'] ?? 0) == $i ? 'selected' : ''; ?>>
                                     步骤 <?php echo $i; ?>
                                 </option>
                             <?php endfor; ?>
@@ -86,7 +86,7 @@
                     <div class="mb-3">
                         <label for="remark" class="form-label">备注</label>
                         <textarea class="form-control" id="remark" name="remark" rows="3"
-                                  placeholder="请输入备注信息" maxlength="255"><?php echo htmlspecialchars($product['remark']); ?></textarea>
+                                  placeholder="请输入备注信息" maxlength="255"><?php echo htmlspecialchars($product['remark'] ?? ''); ?></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -135,11 +135,11 @@
                                         </div>
                                     </div>
                                     <div class="flex-grow-1 ms-3">
-                                        <h6><?php echo htmlspecialchars($step['name']); ?></h6>
+                                        <h6><?php echo htmlspecialchars($step['name'] ?? '未命名步骤'); ?></h6>
                                         <p class="mb-0"><?php echo htmlspecialchars($step['description'] ?? '暂无描述'); ?></p>
                                         <small class="text-muted">状态: <?php 
-                                            echo $step['status'] == 'completed' ? '已完成' : 
-                                                 ($step['status'] == 'in_progress' ? '进行中' : '待处理'); 
+                                            echo ($step['status'] ?? 'pending') == 'completed' ? '已完成' : 
+                                                 (($step['status'] ?? 'pending') == 'in_progress' ? '进行中' : '待处理'); 
                                         ?></small>
                                     </div>
                                 </div>
@@ -246,23 +246,23 @@
                     </tr>
                     <tr>
                         <td><strong>需求编号:</strong></td>
-                        <td><?php echo htmlspecialchars($product['require_no']); ?></td>
+                        <td><?php echo htmlspecialchars($product['require_no'] ?? ''); ?></td>
                     </tr>
                     <?php if (!empty($product['npdId'])): ?>
                     <tr>
                         <td><strong>新产品ID:</strong></td>
-                        <td><?php echo htmlspecialchars($product['npdId']); ?></td>
+                        <td><?php echo htmlspecialchars($product['npdId'] ?? ''); ?></td>
                     </tr>
                     <?php endif; ?>
                     <?php if (!empty($product['sku'])): ?>
                     <tr>
                         <td><strong>SKU:</strong></td>
-                        <td><?php echo htmlspecialchars($product['sku']); ?></td>
+                        <td><?php echo htmlspecialchars($product['sku'] ?? ''); ?></td>
                     </tr>
                     <?php endif; ?>
                     <tr>
                         <td><strong>当前步骤:</strong></td>
-                        <td><span class="badge bg-info">步骤 <?php echo $product['current_step']; ?></span></td>
+                        <td><span class="badge bg-info">步骤 <?php echo $product['current_step'] ?? 0; ?></span></td>
                     </tr>
                 </table>
             </div>

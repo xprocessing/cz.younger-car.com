@@ -55,31 +55,31 @@
                             <tr>
                                 <td><?php echo $product['id']; ?></td>
                                 <td>
-                                    <strong><?php echo htmlspecialchars($product['require_no']); ?></strong>
+                                    <strong><?php echo htmlspecialchars($product['require_no'] ?? ''); ?></strong>
                                 </td>
                                 <td>
                                     <?php if (!empty($product['img_url'])): ?>
-                                        <img src="<?php echo htmlspecialchars($product['img_url']); ?>" 
+                                        <img src="<?php echo htmlspecialchars($product['img_url'] ?? ''); ?>" 
                                              alt="图片" style="max-width: 50px; max-height: 50px; object-fit: cover;">
                                     <?php else: ?>
                                         <span class="text-muted">无图片</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <?php echo htmlspecialchars($product['require_title']); ?>
+                                    <?php echo htmlspecialchars($product['require_title'] ?? ''); ?>
                                 </td>
                                 <td>
-                                    <?php echo htmlspecialchars($product['npdId']); ?>
+                                    <?php echo htmlspecialchars($product['npdId'] ?? ''); ?>
                                 </td>
                                 <td>
-                                    <code><?php echo htmlspecialchars($product['sku']); ?></code>
+                                    <code><?php echo htmlspecialchars($product['sku'] ?? ''); ?></code>
                                 </td>
                                 <td>
-                                    <?php echo $product['create_time']; ?>
+                                    <?php echo $product['create_time'] ?? ''; ?>
                                 </td>
                                 <td>
                                     <span class="badge bg-info">
-                                        步骤 <?php echo $product['current_step']; ?>
+                                        步骤 <?php echo $product['current_step'] ?? 0; ?>
                                     </span>
                                 </td>
                                 <td>
@@ -102,7 +102,7 @@
                             <tr>
                                 <td colspan="9">
                                     <small class="text-muted">
-                                        <strong>备注：</strong><?php echo htmlspecialchars($product['remark']); ?>
+                                        <strong>备注：</strong><?php echo htmlspecialchars($product['remark'] ?? ''); ?>
                                     </small>
                                 </td>
                             </tr>
