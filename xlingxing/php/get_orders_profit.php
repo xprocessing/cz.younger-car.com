@@ -123,7 +123,7 @@ try {
 
         // 计算利润利率（避免除以0），order_total_amount和profit_amount字符串前面均有货币符号，需去掉货币符号，转换为浮点数
         $orderTotal = floatval(preg_replace('/[^0-9.]/', '', $transactionInfo['order_total_amount'] ?? 0));
-        $profit = floatval(preg_replace('/[^0-9.]/', '', $transactionInfo['profit_amount'] ?? 0));  
+        $profit = floatval(preg_replace('/[^0-9.-]/', '', $transactionInfo['profit_amount'] ?? 0));  
         $profitRate = $orderTotal > 0 ? round(($profit / $orderTotal) * 100, 2) : 0;
 
         // 构造数据数组
