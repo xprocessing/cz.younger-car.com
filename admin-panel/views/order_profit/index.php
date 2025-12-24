@@ -160,7 +160,7 @@ if ($hasFilters): ?>
                         <th>订单总额</th>
                         <th>毛利润</th>
                         <th>利润率</th>
-                        <th>实际成本</th>
+                        <th>出库成本</th>
                         <th>实际运费</th>
                         <th>更新时间</th>
                         <th>操作</th>
