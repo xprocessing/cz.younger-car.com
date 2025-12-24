@@ -139,7 +139,7 @@ try {
 
 } catch (PDOException $e) {
     // 错误处理（可选：记录日志/输出调试信息）
-    // error_log("运费数据操作失败：" . $e->getMessage());
+     error_log("运费数据操作失败：" . $e->getMessage());
     // die("数据库错误：" . $e->getMessage()); // 调试时启用，生产环境注释
 } finally {
     // 可选：关闭连接（PHP会自动回收，高并发场景建议手动关闭）
