@@ -17,7 +17,7 @@ class OrderProfitController {
         }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
-        $limit = 20;
+        $limit = 50;
         $offset = ($page - 1) * $limit;
         
         $keyword = $_GET['keyword'] ?? '';
@@ -217,7 +217,7 @@ class OrderProfitController {
         $endDate = $_GET['end_date'] ?? '';
         
         $page = max(1, (int)($_GET['page'] ?? 1));
-        $limit = 20;
+        $limit = 50;
         $offset = ($page - 1) * $limit;
         
         if ($keyword) {
