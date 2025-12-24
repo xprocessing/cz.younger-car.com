@@ -164,4 +164,23 @@ CREATE TABLE IF NOT EXISTS `new_products` (
 	PRIMARY KEY(`id`)
 );
 
+---订单利润表
+CREATE TABLE IF NOT EXISTS `order_profit` (
+	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
+	`store_id` CHAR(50) COMMENT '店铺id',
+	`global_order_no` CHAR(50) COMMENT '订单号
+',
+	` receiver_country` CHAR(10) COMMENT '收货国家',
+	`global_purchase_time` CHAR(30) COMMENT '下单时间',
+	`local_sku` CHAR(50) COMMENT 'sku',
+	`order_total_amount` CHAR(20) COMMENT '订单总额',
+	`outbound_cost_amount` CHAR(20) COMMENT '出库成本（元）',
+	`profit_amount` CHAR(20) COMMENT '毛利润',
+	` profit_rate` CHAR(20) COMMENT '利润率',
+	`wms_outbound_cost_amount` CHAR(20) COMMENT '实际出库成本，币种CNY',
+	`wms_shipping_price_amount` CHAR(20) COMMENT '实际运费，币种CNY',
+	`update_time` DATETIME COMMENT '数据更新时间',
+	PRIMARY KEY(`id`)
+);
+
 
