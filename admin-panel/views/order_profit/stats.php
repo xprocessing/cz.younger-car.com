@@ -75,7 +75,7 @@
         <div class="card text-center border-success">
             <div class="card-body">
                 <h5 class="card-title text-success">
-                    ¥<?php echo number_format($stats['total_amount'] ?? 0, 2); ?>
+                    多种货币
                 </h5>
                 <p class="card-text">总订单金额</p>
             </div>
@@ -97,12 +97,13 @@
     </div>
     
     <div class="col-md-3">
-        <div class="card text-center <?php echo ($stats['total_profit'] ?? 0) >= 0 ? 'border-success' : 'border-danger'; ?>">
+        <div class="card text-center border-info">
             <div class="card-body">
-                <h5 class="card-title <?php echo ($stats['total_profit'] ?? 0) >= 0 ? 'text-success' : 'text-danger'; ?>">
-                    ¥<?php echo number_format($stats['total_profit'] ?? 0, 2); ?>
+                <h5 class="card-title text-info">
+                    盈亏统计
                 </h5>
-                <p class="card-text">总毛利润</p>
+                <p class="card-text">盈利: <?php echo $stats['positive_orders'] ?? 0; ?> 单</p>
+                <p class="card-text">亏损: <?php echo $stats['negative_orders'] ?? 0; ?> 单</p>
             </div>
         </div>
     </div>

@@ -172,10 +172,10 @@ CREATE TABLE IF NOT EXISTS `order_profit` (
 	`receiver_country` CHAR(10) COMMENT '收货国家',
 	`global_purchase_time` CHAR(30) COMMENT '下单时间',
 	`local_sku` CHAR(50) COMMENT 'sku',
-	`order_total_amount` CHAR(20) COMMENT '订单总额，为字符串带有货币符号',
+	`order_total_amount` CHAR(20) COMMENT '订单总额，为字符串带有不同国家货币符号',
     `wms_outbound_cost_amount` CHAR(20) COMMENT '实际出库成本，币种CNY',
 	`wms_shipping_price_amount` CHAR(20) COMMENT '实际运费，币种CNY',	
-	`profit_amount` CHAR(20) COMMENT '毛利润，为字符串带有货币符号',
+	`profit_amount` CHAR(20) COMMENT '毛利润，为字符串带有不同国家货币符号',
 	`profit_rate` CHAR(20) COMMENT '利润率，为profit_amount/order_total_amount',	
 	`update_time` DATETIME COMMENT '数据更新时间',
 	PRIMARY KEY(`id`)

@@ -9,32 +9,32 @@ class OrderProfit {
         $this->db = Database::getInstance();
     }
     
-    // 转换货币字段为数值
+    // 转换字段为数值（用于筛选和计算）
     private function convertCurrencyFields($data) {
         if (!is_array($data)) {
             return $data;
         }
         
-        $currencyFields = [
-            'order_total_amount',
+        // CNY成本字段：需要转换为数值（没有货币符号）
+        $cnyFields = [
             'wms_outbound_cost_amount', 
-            'wms_shipping_price_amount',
-            'profit_amount'
+            'wms_shipping_price_amount'
         ];
         
-        foreach ($currencyFields as $field) {
+        foreach ($cnyFields as $field) {
             if (isset($data[$field])) {
-                $originalValue = $data[$field];
-                $data[$field] = parseCurrencyAmount($data[$field]);
-                $data[$field . '_original'] = $originalValue; // 保留原始值
+                $data[$field] = (float)($data[$field] ?? 0);
             }
         }
         
-        // 转换利润率字段
+        // 带不同国家货币符号的字段：不转换，直接展示原始值
+        // order_total_amount, profit_amount 保持原始字符串格式
+        
+        // 利润率字段：转换为数值用于筛选比较，同时保留原始值用于显示
         if (isset($data['profit_rate'])) {
             $originalRate = $data['profit_rate'];
-            $data['profit_rate'] = parseCurrencyAmount($data['profit_rate']);
-            $data['profit_rate_original'] = $originalRate;
+            $data['profit_rate'] = parseCurrencyAmount($originalRate); // 用于筛选
+            $data['profit_rate_original'] = $originalRate; // 用于显示
         }
         
         return $data;
@@ -357,12 +357,14 @@ class OrderProfit {
             $stats['order_count'] = count($data);
             $totalRate = 0;
             $rateCount = 0;
+            $positiveOrders = 0;
+            $negativeOrders = 0;
             
             foreach ($data as $row) {
                 $convertedRow = $this->convertCurrencyFields($row);
                 
-                $stats['total_amount'] += $convertedRow['order_total_amount'];
-                $stats['total_profit'] += $convertedRow['profit_amount'];
+                // 由于 order_total_amount 和 profit_amount 是不同货币的字符串，不能直接相加
+                // 这里改为计算正负订单数量和平均利润率
                 $stats['wms_cost'] += $convertedRow['wms_outbound_cost_amount'];
                 $stats['wms_shipping'] += $convertedRow['wms_shipping_price_amount'];
                 
@@ -370,9 +372,21 @@ class OrderProfit {
                     $totalRate += $convertedRow['profit_rate'];
                     $rateCount++;
                 }
+                
+                if ($convertedRow['profit_rate'] > 0) {
+                    $positiveOrders++;
+                } elseif ($convertedRow['profit_rate'] < 0) {
+                    $negativeOrders++;
+                }
             }
             
             $stats['avg_profit_rate'] = $rateCount > 0 ? ($totalRate / $rateCount) : 0;
+            $stats['positive_orders'] = $positiveOrders;
+            $stats['negative_orders'] = $negativeOrders;
+            
+            // total_amount 和 total_profit 设为0，因为不能混合货币计算
+            $stats['total_amount'] = 0;
+            $stats['total_profit'] = 0;
         }
         
         return $stats;

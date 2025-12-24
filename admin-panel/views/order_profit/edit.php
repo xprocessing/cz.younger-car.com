@@ -198,7 +198,7 @@
                 <div class="mb-3">
                     <div class="d-flex justify-content-between">
                         <span>订单总额:</span>
-                        <strong class="text-success">¥<?php echo number_format($profit['order_total_amount'] ?? 0, 2); ?></strong>
+                        <strong class="text-success"><?php echo htmlspecialchars($profit['order_total_amount'] ?? ''); ?></strong>
                     </div>
                 </div>
 
@@ -206,7 +206,7 @@
                     <div class="d-flex justify-content-between">
                         <span>毛利润:</span>
                         <strong class="<?php echo ($profit['profit_amount'] ?? 0) >= 0 ? 'text-success' : 'text-danger'; ?>">
-                            ¥<?php echo number_format($profit['profit_amount'] ?? 0, 2); ?>
+                            <?php echo htmlspecialchars($profit['profit_amount'] ?? ''); ?>
                         </strong>
                     </div>
                 </div>

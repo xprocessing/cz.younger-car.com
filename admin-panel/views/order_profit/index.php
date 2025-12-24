@@ -120,15 +120,6 @@
     </div>
 </div>
 
-<!-- 调试信息 -->
-<?php if (!empty($_GET['rate_min']) || !empty($_GET['rate_max'])): ?>
-<div class="alert alert-warning" role="alert">
-    <strong>调试信息：</strong>
-    筛选参数: rate_min="<?php echo htmlspecialchars($_GET['rate_min'] ?? ''); ?>", 
-    rate_max="<?php echo htmlspecialchars($_GET['rate_max'] ?? ''); ?>"
-</div>
-<?php endif; ?>
-
 <!-- 当前筛选条件 -->
 <?php 
 $hasFilters = !empty($_GET['keyword']) || !empty($_GET['store_id']) || !empty($_GET['rate_min']) || !empty($_GET['rate_max']);
@@ -204,13 +195,13 @@ if ($hasFilters): ?>
                                 </td>
                                 <td>
                                     <span class="text-success fw-bold">
-                                        ¥<?php echo number_format($profit['order_total_amount'] ?? 0, 2); ?>
+                                        <?php echo htmlspecialchars($profit['order_total_amount'] ?? ''); ?>
                                     </span>
                                 </td>
                                 <td>
-                                    <?php $profitAmount = $profit['profit_amount'] ?? 0; ?>
-                                    <span class="<?php echo $profitAmount >= 0 ? 'text-success' : 'text-danger'; ?> fw-bold">
-                                        ¥<?php echo number_format($profitAmount, 2); ?>
+                                    <?php $profitAmount = $profit['profit_amount'] ?? ''; ?>
+                                    <span class="<?php echo ($profit['profit_rate'] ?? 0) >= 0 ? 'text-success' : 'text-danger'; ?> fw-bold">
+                                        <?php echo htmlspecialchars($profitAmount); ?>
                                     </span>
                                 </td>
                                 <td>
@@ -309,7 +300,8 @@ if ($hasFilters): ?>
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title text-success">
-                            ¥<?php echo number_format(array_sum(array_column($profits, 'order_total_amount')), 2); ?>
+                            <!-- 由于订单总额是不同货币的字符串，这里显示为占位符 -->
+                            多种货币
                         </h5>
                         <p class="card-text">总订单金额</p>
                     </div>
@@ -319,7 +311,8 @@ if ($hasFilters): ?>
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title text-info">
-                            ¥<?php echo number_format(array_sum(array_column($profits, 'profit_amount')), 2); ?>
+                            <!-- 由于利润是不同货币的字符串，这里显示为占位符 -->
+                            多种货币
                         </h5>
                         <p class="card-text">总毛利润</p>
                     </div>
