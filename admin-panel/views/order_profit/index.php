@@ -224,7 +224,7 @@ if ($hasFilters): ?>
                                 </td>
                                 <td>
                                     <span class="text-danger">
-                                        ¥<?php echo number_format($profit['wms_shipping_price_amount'] ?? 0, 2); ?>
+                                        <?php echo number_format($profit['wms_shipping_price_amount'] ?? 0, 2); ?>
                                     </span>
                                 </td>
                                 <td>
