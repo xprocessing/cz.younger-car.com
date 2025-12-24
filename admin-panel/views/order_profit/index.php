@@ -82,6 +82,8 @@
             $params = [];
             if (!empty($_GET['keyword'])) $params[] = 'keyword=' . urlencode($_GET['keyword']);
             if (!empty($_GET['store_id'])) $params[] = 'store_id=' . urlencode($_GET['store_id']);
+            if (isset($_GET['rate_min'])) $params[] = 'rate_min=' . urlencode($_GET['rate_min']);
+            if (isset($_GET['rate_max'])) $params[] = 'rate_max=' . urlencode($_GET['rate_max']);
             $baseQuery = implode('&', $params);
             if ($baseQuery) $baseQuery .= '&';
             ?>
@@ -122,7 +124,7 @@
 
 <!-- 当前筛选条件 -->
 <?php 
-$hasFilters = !empty($_GET['keyword']) || !empty($_GET['store_id']) || !empty($_GET['rate_min']) || !empty($_GET['rate_max']);
+$hasFilters = !empty($_GET['keyword']) || !empty($_GET['store_id']) || isset($_GET['rate_min']) || isset($_GET['rate_max']);
 if ($hasFilters): ?>
 <div class="alert alert-info d-flex align-items-center" role="alert">
     <i class="fa fa-filter me-2"></i>
@@ -142,8 +144,8 @@ if ($hasFilters): ?>
             }
             $filters[] = "店铺: " . htmlspecialchars($storeName);
         }
-        if (!empty($_GET['rate_min'])) $filters[] = "最小利润率: " . htmlspecialchars($_GET['rate_min']) . "%";
-        if (!empty($_GET['rate_max'])) $filters[] = "最大利润率: " . htmlspecialchars($_GET['rate_max']) . "%";
+        if (isset($_GET['rate_min'])) $filters[] = "最小利润率: " . htmlspecialchars($_GET['rate_min']) . "%";
+        if (isset($_GET['rate_max'])) $filters[] = "最大利润率: " . htmlspecialchars($_GET['rate_max']) . "%";
         echo implode(' | ', $filters);
         ?>
     </div>
@@ -270,7 +272,7 @@ if ($hasFilters): ?>
             <ul class="pagination justify-content-center">
                 <?php if ($page > 1): ?>
                     <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo !empty($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo !empty($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
                             <i class="fa fa-chevron-left"></i>
                         </a>
                     </li>
@@ -278,7 +280,7 @@ if ($hasFilters): ?>
                 
                 <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
                     <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo !empty($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo !empty($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
                             <?php echo $i; ?>
                         </a>
                     </li>
@@ -286,7 +288,7 @@ if ($hasFilters): ?>
                 
                 <?php if ($page < $totalPages): ?>
                     <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo !empty($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo !empty($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
                             <i class="fa fa-chevron-right"></i>
                         </a>
                     </li>
