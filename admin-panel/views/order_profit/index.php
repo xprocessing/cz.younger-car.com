@@ -40,7 +40,7 @@
                 <label for="rate_min" class="form-label">
                     <i class="fa fa-percent text-success"></i> 最小利润率(%)
                 </label>
-                <input type="number" name="rate_min" class="form-control" placeholder="0.00" step="0.01"
+                <input type="number" name="rate_min" class="form-control" placeholder="-100" step="0.01"
                        value="<?php echo $_GET['rate_min'] ?? ''; ?>"
                        title="输入最小利润率，用于筛选利润率大于等于此值的订单">
                 <div class="form-text">≥ 此值%</div>
@@ -112,7 +112,7 @@
                 </a>
             </div>
             <div class="col-auto">
-                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=-100&rate_max=0" class="btn btn-sm btn-outline-secondary">
+                <a href="<?php echo $baseUrl . $baseQuery; ?>rate_min=-100&rate_max=0" class="btn btn-sm btn-outline-danger text-danger">
                     亏损订单 (< 0%)
                 </a>
             </div>
