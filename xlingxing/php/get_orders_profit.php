@@ -1,160 +1,166 @@
 <?php
-// ========== 响应头配置 ==========
+// ========== 响应头配置（必须在所有输出前） ==========
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
-header("Content-Type: application/json; charset=utf-8"); // 改为JSON输出
-//引入lx_api.php
+header("Content-Type: application/json; charset=utf-8");
 
-require_once __DIR__ . '/lx_api.php';
+// ========== 初始化响应数据 ==========
+$response = [
+    'code' => 200,
+    'msg' => '操作成功',
+    'data' => [],
+    'logs' => []
+];
+
 try {
-    // 初始化API客户端
-    $apiClient = new LingXingApiClient();
-    //当前时间戳，按秒
-    $currentTimestamp = time();
-    //24小时之前的订单时间戳，按秒
-    $oneDaysAgoTimestamp = $currentTimestamp - (1 * 24 * 60 * 60);
-    //N天的时间戳，按秒
-    $nDaysAgoTimestamp = $currentTimestamp - (3 * 24 * 60 * 60);
-    //格式化为日期时间字符串
+    // ========== 引入配置文件（提前引入，避免后续依赖） ==========
+    $configPath = __DIR__ . '/../../admin-panel/config/config.php';
+    if (!file_exists($configPath)) {
+        throw new Exception("配置文件不存在：{$configPath}");
+    }
+    require_once $configPath;
 
-   
-    // 调用POST接口示例
+    // ========== 引入领星API客户端 ==========
+    $apiPath = __DIR__ . '/lx_api.php';
+    if (!file_exists($apiPath)) {
+        throw new Exception("领星API文件不存在：{$apiPath}");
+    }
+    require_once $apiPath;
+
+    // ========== 领星API调用逻辑 ==========
+    $apiClient = new LingXingApiClient();
+    $currentTimestamp = time();
+    $oneDaysAgoTimestamp = $currentTimestamp - (1 * 24 * 60 * 60);
+    $nDaysAgoTimestamp = $currentTimestamp - (3 * 24 * 60 * 60);
+
+    // 构造请求参数
     $orderParams = [
         'offset' => 0,
         'length' => 20,
         'order_status' => 6,
         'date_type' => 'global_purchase_time',
         'start_time' => $nDaysAgoTimestamp,
-        'end_time' => $oneDaysAgoTimestamp 
+        'end_time' => $oneDaysAgoTimestamp
     ];
-    $orders = $apiClient->post('/pb/mp/order/v2/list', $orderParams);
-    //print_r("已发货订单数据：" . PHP_EOL);
-    //json格式化输出
-    //echo json_encode($orders, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
-} catch (\Exception $e) {
-    echo "错误：" . $e->getMessage() . PHP_EOL;
-}
+    // 调用API获取订单数据
+    $apiResult = $apiClient->post('/pb/mp/order/v2/list', $orderParams);
+    $orders = $apiResult['data']['list'] ?? [];
+    $response['data']['api_orders_count'] = count($orders);
 
+    if (empty($orders)) {
+        $response['msg'] = '未获取到订单数据';
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        exit;
+    }
 
-include '../../admin-panel/config/config.php';
-//将订单列表每条，数据插入到数据库中，若存在则更新
-
-
-try {
+    // ========== 数据库操作逻辑 ==========
     // 初始化PDO连接
     $pdo = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", // 建议指定字符集
+        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
         DB_PASS,
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES => false // 禁用模拟预处理，提升安全性
         ]
     );
 
-    $orders = $orders['data']['list'] ?? [];
-    echo json_encode($orders, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-    // 遍历每个订单
+    // 使用INSERT ... ON DUPLICATE KEY UPDATE优化（需为global_order_no创建唯一索引）
+    $sql = "INSERT INTO order_profit (
+        store_id,
+        global_order_no,
+        receiver_country,
+        global_purchase_time,
+        local_sku,
+        order_total_amount,
+        outbound_cost_amount,
+        profit_amount,
+        profit_rate,
+        wms_outbound_cost_amount,
+        wms_shipping_price_amount,
+        update_time
+    ) VALUES (
+        :store_id,
+        :global_order_no,
+        :receiver_country,
+        :global_purchase_time,
+        :local_sku,
+        :order_total_amount,
+        :outbound_cost_amount,
+        :profit_amount,
+        :profit_rate,
+        :wms_outbound_cost_amount,
+        :wms_shipping_price_amount,
+        :update_time
+    ) ON DUPLICATE KEY UPDATE
+        store_id = VALUES(store_id),
+        receiver_country = VALUES(receiver_country),
+        global_purchase_time = VALUES(global_purchase_time),
+        local_sku = VALUES(local_sku),
+        order_total_amount = VALUES(order_total_amount),
+        outbound_cost_amount = VALUES(outbound_cost_amount),
+        profit_amount = VALUES(profit_amount),
+        profit_rate = VALUES(profit_rate),
+        wms_outbound_cost_amount = VALUES(wms_outbound_cost_amount),
+        wms_shipping_price_amount = VALUES(wms_shipping_price_amount),
+        update_time = VALUES(update_time)";
+
+    $stmt = $pdo->prepare($sql);
+    $syncCount = 0;
+
+    // 遍历订单数据并处理
     foreach ($orders as $order) {
-        // 字段映射：根据orders.json结构调整键名对应关系
+        // 安全取值：避免数组索引未定义错误
+        $addressInfo = $order['address_info'] ?? [];
+        $itemInfo = $order['item_info'][0] ?? [];
+        $transactionInfo = $order['transaction_info'][0] ?? [];
+
+        // 处理时间格式：将时间戳转为数据库datetime格式
+        $purchaseTime = $order['global_purchase_time'] ?? 0;
+        $purchaseTime = $purchaseTime ? date('Y-m-d H:i:s', $purchaseTime) : null;
+
+        // 计算利润利率（避免除以0）
+        $orderTotal = floatval($transactionInfo['order_total_amount'] ?? 0);
+        $profit = floatval($transactionInfo['profit_amount'] ?? 0);
+        $profitRate = $orderTotal > 0 ? round(($profit / $orderTotal) * 100, 2) : 0;
+
+        // 构造数据数组
         $data = [
-        'store_id' => $order['store_id'] ?? '',
-        'global_order_no' => $order['global_order_no'] ?? '',
-        // 收货国家对应address_info中的receiver_country_code
-        'receiver_country' => $order['address_info']['receiver_country_code'] ?? '',
-        'global_purchase_time' => $order['global_purchase_time'] ?? '',
-        // local_sku在item_info数组的第一个元素中
-        'local_sku' => ($order['item_info'][0]['local_sku'] ?? '') ?: '',
-        // 订单总金额在transaction_info数组的第一个元素中
-        'order_total_amount' => ($order['transaction_info'][0]['order_total_amount'] ?? '') ?: '',
-        // 出库成本在item_info数组的第一个元素中
-        'outbound_cost_amount' => ($order['item_info'][0]['outbound_cost_amount'] ?? '') ?: '',
-        // 利润金额在transaction_info数组的第一个元素中
-        'profit_amount' => ($order['transaction_info'][0]['profit_amount'] ?? '') ?: '',
-        // 原数据中无profit_rate字段，保持默认空值
-        'profit_rate' => $order['profit_rate'] ?? '',
-        // wms出库成本在item_info数组的第一个元素中
-        'wms_outbound_cost_amount' => ($order['item_info'][0]['wms_outbound_cost_amount'] ?? '') ?: '',
-        // wms运费在item_info数组的第一个元素中
-        'wms_shipping_price_amount' => ($order['item_info'][0]['wms_shipping_price_amount'] ?? '') ?: '',
-        'update_time' => date('Y-m-d H:i:s') // 当前时间
-    ];
+            ':store_id' => $order['store_id'] ?? '',
+            ':global_order_no' => $order['global_order_no'] ?? '',
+            ':receiver_country' => $addressInfo['receiver_country_code'] ?? '',
+            ':global_purchase_time' => $purchaseTime,
+            ':local_sku' => $itemInfo['local_sku'] ?? '',
+            ':order_total_amount' => $transactionInfo['order_total_amount'] ?? 0,
+            ':outbound_cost_amount' => $itemInfo['outbound_cost_amount'] ?? 0,
+            ':profit_amount' => $transactionInfo['profit_amount'] ?? 0,
+            ':profit_rate' => $profitRate,
+            ':wms_outbound_cost_amount' => $itemInfo['wms_outbound_cost_amount'] ?? 0,
+            ':wms_shipping_price_amount' => $itemInfo['wms_shipping_price_amount'] ?? 0,
+            ':update_time' => date('Y-m-d H:i:s')
+        ];
 
-        // 检查订单是否已存在
-        $checkStmt = $pdo->prepare("SELECT id FROM order_profit WHERE global_order_no = :global_order_no");
-        $checkStmt->execute([':global_order_no' => $data['global_order_no']]);
-        $existingId = $checkStmt->fetchColumn();
-
-        if ($existingId) {
-            // 订单存在，执行更新操作
-            $updateSql = "UPDATE order_profit SET
-                store_id = :store_id,
-                receiver_country = :receiver_country,
-                global_purchase_time = :global_purchase_time,
-                local_sku = :local_sku,
-                order_total_amount = :order_total_amount,
-                outbound_cost_amount = :outbound_cost_amount,
-                profit_amount = :profit_amount,
-                profit_rate = :profit_rate,
-                wms_outbound_cost_amount = :wms_outbound_cost_amount,
-                wms_shipping_price_amount = :wms_shipping_price_amount,
-                update_time = :update_time
-                WHERE global_order_no = :global_order_no";
-            
-            $updateStmt = $pdo->prepare($updateSql);
-            $updateStmt->execute($data);
-            echo "更新订单 {$data['global_order_no']} 成功\n";
-        } else {
-            // 订单不存在，执行插入操作
-            $insertSql = "INSERT INTO order_profit (
-                store_id,
-                global_order_no,
-                receiver_country,
-                global_purchase_time,
-                local_sku,
-                order_total_amount,
-                outbound_cost_amount,
-                profit_amount,
-                profit_rate,
-                wms_outbound_cost_amount,
-                wms_shipping_price_amount,
-                update_time
-            ) VALUES (
-                :store_id,
-                :global_order_no,
-                :receiver_country,
-                :global_purchase_time,
-                :local_sku,
-                :order_total_amount,
-                :outbound_cost_amount,
-                :profit_amount,
-                :profit_rate,
-                :wms_outbound_cost_amount,
-                :wms_shipping_price_amount,
-                :update_time
-            )";
-            
-            $insertStmt = $pdo->prepare($insertSql);
-            $insertStmt->execute($data);
-            echo "插入新订单 {$data['global_order_no']} 成功\n";
-        }
+        // 执行SQL
+        $stmt->execute($data);
+        $syncCount++;
+        $response['logs'][] = "订单【{$data[':global_order_no']}】同步成功";
     }
 
-    // 关闭连接
-    $pdo = null;
+    $response['data']['synced_count'] = $syncCount;
+    $pdo = null; // 关闭连接
 
-} catch (PDOException $e) {
-    // 错误处理（可选：记录日志/输出调试信息）
-     error_log("运费数据操作失败：" . $e->getMessage());
-    // die("数据库错误：" . $e->getMessage()); // 调试时启用，生产环境注释
-} finally {
-    // 可选：关闭连接（PHP会自动回收，高并发场景建议手动关闭）
-    // $pdo = null;
+} catch (Exception $e) {
+    // 统一异常处理
+    $response['code'] = 500;
+    $response['msg'] = '操作失败：' . $e->getMessage();
+    $response['logs'] = [];
+    // 记录错误日志（生产环境建议开启）
+    error_log("[订单同步错误] " . date('Y-m-d H:i:s') . "：" . $e->getMessage() . " 行号：" . $e->getLine());
 }
 
-
-
-
+// 输出最终JSON响应
+echo json_encode($response, JSON_UNESCAPED_UNICODE);
 ?>
