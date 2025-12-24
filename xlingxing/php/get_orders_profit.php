@@ -22,7 +22,7 @@ try {
     // 调用POST接口示例
     $orderParams = [
         'offset' => 0,
-        'length' => 10,
+        'length' => 20,
         'order_status' => 6,
         'date_type' => 'global_purchase_time',
         'start_time' => $nDaysAgoTimestamp,
