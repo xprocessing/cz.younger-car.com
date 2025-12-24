@@ -289,6 +289,14 @@ class OrderProfitController {
             redirect(APP_URL . '/order_profit.php?action=import');
         }
         
+        // 验证文件类型
+        $allowedExtensions = ['csv'];
+        $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            showError('只允许导入CSV格式的文件');
+            redirect(APP_URL . '/order_profit.php?action=import');
+        }
+        
         // 简单的CSV处理示例
         $filePath = $file['tmp_name'];
         $handle = fopen($filePath, 'r');
@@ -301,8 +309,41 @@ class OrderProfitController {
         $data = [];
         $header = fgetcsv($handle); // 读取表头
         $rowCount = 0;
+        $successCount = 0;
+        $errorCount = 0;
+        $errors = [];
         
         while (($row = fgetcsv($handle)) !== false && $rowCount < 1000) { // 限制最多1000条
+            $rowCount++;
+            
+            // 验证必填字段
+            if (empty($row[1]) || trim($row[1]) === '') { // global_order_no 是必填字段
+                $errors[] = "第 {$rowCount} 行：订单号不能为空";
+                $errorCount++;
+                continue;
+            }
+            
+            // 检查订单号是否已存在
+            $existingProfit = $this->orderProfitModel->getByOrderNo(trim($row[1]));
+            if ($existingProfit) {
+                $errors[] = "第 {$rowCount} 行：订单号 '{$row[1]}' 已存在";
+                $errorCount++;
+                continue;
+            }
+            
+            // 验证数值字段
+            if (isset($row[8]) && trim($row[8]) !== '' && !is_numeric(preg_replace('/[^\d.-]/', '', $row[8]))) {
+                $errors[] = "第 {$rowCount} 行：WMS出库成本不是有效的数字";
+                $errorCount++;
+                continue;
+            }
+            
+            if (isset($row[9]) && trim($row[9]) !== '' && !is_numeric(preg_replace('/[^\d.-]/', '', $row[9]))) {
+                $errors[] = "第 {$rowCount} 行：WMS运费不是有效的数字";
+                $errorCount++;
+                continue;
+            }
+            
             $data[] = [
                 'store_id' => $row[0] ?? '',
                 'global_order_no' => $row[1] ?? '',
@@ -316,19 +357,28 @@ class OrderProfitController {
                 'wms_shipping_price_amount' => $row[9] ?? '0.00',
                 'update_time' => date('Y-m-d H:i:s')
             ];
-            $rowCount++;
+            $successCount++;
         }
         
         fclose($handle);
         
         if (empty($data)) {
             showError('文件中没有有效数据');
+            // 如果有错误信息，显示错误
+            if (!empty($errors)) {
+                $_SESSION['import_errors'] = $errors;
+            }
             redirect(APP_URL . '/order_profit.php?action=import');
         }
         
         try {
             $result = $this->orderProfitModel->batchInsert($data);
-            showSuccess("成功导入 {$rowCount} 条记录");
+            showSuccess("成功导入 {$successCount} 条记录，跳过 {$errorCount} 条记录");
+            
+            // 如果有错误信息，显示错误
+            if (!empty($errors)) {
+                $_SESSION['import_errors'] = $errors;
+            }
         } catch (Exception $e) {
             showError('导入失败：' . $e->getMessage());
         }

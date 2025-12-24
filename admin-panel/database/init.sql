@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `order_profit` (
     `wms_outbound_cost_amount` CHAR(20) COMMENT '实际出库成本，币种CNY',
 	`wms_shipping_price_amount` CHAR(20) COMMENT '实际运费，币种CNY',	
 	`profit_amount` CHAR(20) COMMENT '毛利润，为字符串带有不同国家货币符号',
-	`profit_rate` CHAR(20) COMMENT '利润率，为profit_amount/order_total_amount',	
+	`profit_rate` CHAR(20) COMMENT '利润率（已经计算过，数据库中有正有负）',	
 	`update_time` DATETIME COMMENT '数据更新时间',
 	PRIMARY KEY(`id`)
 );
