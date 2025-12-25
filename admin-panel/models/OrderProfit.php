@@ -232,7 +232,7 @@ class OrderProfit {
     }
     
     // 支持多条件搜索的订单利润
-    public function searchWithFilters($keyword = '', $platformName = '', $storeId = '', $rateMin = '', $rateMax = '', $limit = null, $offset = 0) {
+    public function searchWithFilters($keyword = '', $platformName = '', $storeId = '', $startDate = '', $endDate = '', $rateMin = '', $rateMax = '', $limit = null, $offset = 0) {
         $sql = "SELECT op.*, s.platform_name, s.store_name 
                 FROM order_profit op 
                 LEFT JOIN store s ON op.store_id = s.store_id 
@@ -255,6 +255,18 @@ class OrderProfit {
         if ($storeId) {
             $sql .= " AND op.store_id = ?";
             $params[] = $storeId;
+        }
+        
+        // 下单时间起始筛选
+        if ($startDate) {
+            $sql .= " AND DATE(op.global_purchase_time) >= ?";
+            $params[] = $startDate;
+        }
+        
+        // 下单时间结束筛选
+        if ($endDate) {
+            $sql .= " AND DATE(op.global_purchase_time) <= ?";
+            $params[] = $endDate;
         }
         
         $sql .= " ORDER BY op.id DESC";
@@ -299,7 +311,7 @@ class OrderProfit {
     }
     
     // 支持多条件搜索的结果数量
-    public function getSearchWithFiltersCount($keyword = '', $platformName = '', $storeId = '', $rateMin = '', $rateMax = '') {
+    public function getSearchWithFiltersCount($keyword = '', $platformName = '', $storeId = '', $startDate = '', $endDate = '', $rateMin = '', $rateMax = '') {
         $sql = "SELECT op.* FROM order_profit op 
                 LEFT JOIN store s ON op.store_id = s.store_id 
                 WHERE 1=1";
@@ -321,6 +333,18 @@ class OrderProfit {
         if ($storeId) {
             $sql .= " AND op.store_id = ?";
             $params[] = $storeId;
+        }
+        
+        // 下单时间起始筛选
+        if ($startDate) {
+            $sql .= " AND DATE(op.global_purchase_time) >= ?";
+            $params[] = $startDate;
+        }
+        
+        // 下单时间结束筛选
+        if ($endDate) {
+            $sql .= " AND DATE(op.global_purchase_time) <= ?";
+            $params[] = $endDate;
         }
         
         $stmt = $this->db->query($sql, $params);

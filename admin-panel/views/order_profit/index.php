@@ -71,6 +71,16 @@
                 </select>
             </div>
             <div class="col-md-2">
+                <label for="start_date" class="form-label">下单时间起始</label>
+                <input type="date" name="start_date" class="form-control"
+                       value="<?php echo $_GET['start_date'] ?? ''; ?>">
+            </div>
+            <div class="col-md-2">
+                <label for="end_date" class="form-label">下单时间结束</label>
+                <input type="date" name="end_date" class="form-control"
+                       value="<?php echo $_GET['end_date'] ?? ''; ?>">
+            </div>
+            <div class="col-md-2">
                 <label for="rate_min" class="form-label">
                     <i class="fa fa-percent text-success"></i> 最小利润率(%)
                 </label>
@@ -117,6 +127,8 @@
             if (!empty($_GET['keyword'])) $params[] = 'keyword=' . urlencode($_GET['keyword']);
             if (!empty($_GET['platform_name'])) $params[] = 'platform_name=' . urlencode($_GET['platform_name']);
             if (!empty($_GET['store_id'])) $params[] = 'store_id=' . urlencode($_GET['store_id']);
+            if (!empty($_GET['start_date'])) $params[] = 'start_date=' . urlencode($_GET['start_date']);
+            if (!empty($_GET['end_date'])) $params[] = 'end_date=' . urlencode($_GET['end_date']);
             $baseQuery = implode('&', $params);
             if ($baseQuery) $baseQuery .= '&';
             ?>
@@ -157,7 +169,7 @@
 
 <!-- 当前筛选条件 -->
 <?php 
-$hasFilters = !empty($_GET['keyword']) || !empty($_GET['store_id']) || isset($_GET['rate_min']) || isset($_GET['rate_max']);
+$hasFilters = !empty($_GET['keyword']) || !empty($_GET['platform_name']) || !empty($_GET['store_id']) || !empty($_GET['start_date']) || !empty($_GET['end_date']) || isset($_GET['rate_min']) || isset($_GET['rate_max']);
 if ($hasFilters): ?>
 <div class="alert alert-info d-flex align-items-center" role="alert">
     <i class="fa fa-filter me-2"></i>
@@ -177,6 +189,20 @@ if ($hasFilters): ?>
                 }
             }
             $filters[] = "店铺: " . htmlspecialchars($storeName);
+        }
+        // 添加下单时间筛选条件显示
+        if (!empty($_GET['start_date']) || !empty($_GET['end_date'])) {
+            $dateFilter = "下单时间: ";
+            if (!empty($_GET['start_date'])) {
+                $dateFilter .= htmlspecialchars($_GET['start_date']);
+            }
+            if (!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
+                $dateFilter .= " - ";
+            }
+            if (!empty($_GET['end_date'])) {
+                $dateFilter .= htmlspecialchars($_GET['end_date']);
+            }
+            $filters[] = $dateFilter;
         }
         if (isset($_GET['rate_min'])) $filters[] = "最小利润率: " . htmlspecialchars($_GET['rate_min']) . "%";
         if (isset($_GET['rate_max'])) $filters[] = "最大利润率: " . htmlspecialchars($_GET['rate_max']) . "%";
@@ -306,7 +332,7 @@ if ($hasFilters): ?>
             <ul class="pagination justify-content-center">
                 <?php if ($page > 1): ?>
                     <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['platform_name']) ? '&platform_name=' . urlencode($_GET['platform_name']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['platform_name']) ? '&platform_name=' . urlencode($_GET['platform_name']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo !empty($_GET['start_date']) ? '&start_date=' . urlencode($_GET['start_date']) : ''; ?><?php echo !empty($_GET['end_date']) ? '&end_date=' . urlencode($_GET['end_date']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
                             <i class="fa fa-chevron-left"></i>
                         </a>
                     </li>
@@ -314,7 +340,7 @@ if ($hasFilters): ?>
                 
                 <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
                     <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['platform_name']) ? '&platform_name=' . urlencode($_GET['platform_name']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['platform_name']) ? '&platform_name=' . urlencode($_GET['platform_name']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo !empty($_GET['start_date']) ? '&start_date=' . urlencode($_GET['start_date']) : ''; ?><?php echo !empty($_GET['end_date']) ? '&end_date=' . urlencode($_GET['end_date']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
                             <?php echo $i; ?>
                         </a>
                     </li>
@@ -322,7 +348,7 @@ if ($hasFilters): ?>
                 
                 <?php if ($page < $totalPages): ?>
                     <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['platform_name']) ? '&platform_name=' . urlencode($_GET['platform_name']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['platform_name']) ? '&platform_name=' . urlencode($_GET['platform_name']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo !empty($_GET['start_date']) ? '&start_date=' . urlencode($_GET['start_date']) : ''; ?><?php echo !empty($_GET['end_date']) ? '&end_date=' . urlencode($_GET['end_date']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
                             <i class="fa fa-chevron-right"></i>
                         </a>
                     </li>

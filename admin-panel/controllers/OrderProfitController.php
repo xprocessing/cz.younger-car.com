@@ -23,12 +23,14 @@ class OrderProfitController {
         $keyword = $_GET['keyword'] ?? '';
         $platformName = $_GET['platform_name'] ?? '';
         $storeId = $_GET['store_id'] ?? '';
+        $startDate = $_GET['start_date'] ?? '';
+        $endDate = $_GET['end_date'] ?? '';
         $rateMin = $_GET['rate_min'] ?? '';
         $rateMax = $_GET['rate_max'] ?? '';
         
-        if ($keyword || $platformName || $storeId || $rateMin || $rateMax) {
-            $profits = $this->orderProfitModel->searchWithFilters($keyword, $platformName, $storeId, $rateMin, $rateMax, $limit, $offset);
-            $totalCount = $this->orderProfitModel->getSearchWithFiltersCount($keyword, $platformName, $storeId, $rateMin, $rateMax);
+        if ($keyword || $platformName || $storeId || $startDate || $endDate || $rateMin || $rateMax) {
+            $profits = $this->orderProfitModel->searchWithFilters($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax, $limit, $offset);
+            $totalCount = $this->orderProfitModel->getSearchWithFiltersCount($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax);
         } else {
             $profits = $this->orderProfitModel->getAll($limit, $offset);
             $totalCount = $this->orderProfitModel->getCount();
@@ -221,12 +223,14 @@ class OrderProfitController {
         $keyword = $_GET['keyword'] ?? '';
         $platformName = $_GET['platform_name'] ?? '';
         $storeId = $_GET['store_id'] ?? '';
+        $startDate = $_GET['start_date'] ?? '';
+        $endDate = $_GET['end_date'] ?? '';
         $rateMin = $_GET['rate_min'] ?? '';
         $rateMax = $_GET['rate_max'] ?? '';
         
-        // 重用searchWithFilters方法来处理所有筛选条件，包括平台名称
-        $profits = $this->orderProfitModel->searchWithFilters($keyword, $platformName, $storeId, $rateMin, $rateMax, $limit, $offset);
-        $totalCount = $this->orderProfitModel->getSearchWithFiltersCount($keyword, $platformName, $storeId, $rateMin, $rateMax);
+        // 重用searchWithFilters方法来处理所有筛选条件，包括平台名称和日期范围
+        $profits = $this->orderProfitModel->searchWithFilters($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax, $limit, $offset);
+        $totalCount = $this->orderProfitModel->getSearchWithFiltersCount($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax);
         
         $totalPages = ceil($totalCount / $limit);
         $storeList = $this->orderProfitModel->getStoreList();
