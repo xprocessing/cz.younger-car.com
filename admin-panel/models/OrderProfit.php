@@ -384,12 +384,12 @@ class OrderProfit {
         $params = [];
         
         if ($startDate) {
-            $sql .= " AND update_time >= ?";
+            $sql .= " AND DATE(global_purchase_time) >= ?";
             $params[] = $startDate;
         }
         
         if ($endDate) {
-            $sql .= " AND update_time <= ?";
+            $sql .= " AND DATE(global_purchase_time) <= ?";
             $params[] = $endDate;
         }
         
