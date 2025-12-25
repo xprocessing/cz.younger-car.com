@@ -9,7 +9,7 @@
 
 <!-- 统计概览 -->
 <div class="row mb-4">
-    <div class="col-md-1">
+    <div class="col-md-2">
         <div class="card text-center border-primary">
             <div class="card-body">
                 <h5 class="card-title text-primary">
@@ -20,7 +20,7 @@
         </div>
     </div>
     
-    <div class="col-md-1">
+    <div class="col-md-2">
         <div class="card text-center border-success">
             <div class="card-body">
                 <h5 class="card-title text-success">
@@ -31,7 +31,7 @@
         </div>
     </div>
     
-    <div class="col-md-1">
+    <div class="col-md-2">
         <div class="card text-center border-secondary">
             <div class="card-body">
                 <h5 class="card-title text-secondary">
