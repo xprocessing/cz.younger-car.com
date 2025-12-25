@@ -35,7 +35,7 @@
         <div class="card text-center border-secondary">
             <div class="card-body">
                 <h5 class="card-title text-secondary">
-                    ¥<?php 
+                    $<?php 
                     $totalCost = ($stats['wms_cost'] ?? 0) + ($stats['wms_shipping'] ?? 0);
                     echo number_format($totalCost, 2); 
                     ?>
@@ -70,7 +70,7 @@
         <div class="card text-center border-info">
             <div class="card-body">
                 <h5 class="card-title text-info">
-                    ¥<?php 
+                    $<?php 
                     $totalWmsCost = ($stats['wms_cost'] ?? 0) + ($stats['wms_shipping'] ?? 0);
                     echo number_format($totalWmsCost, 2); 
                     ?>
@@ -107,15 +107,15 @@
                 <table class="table table-sm">
                     <tr>
                         <td>WMS出库成本:</td>
-                        <td><strong>¥<?php echo number_format($stats['wms_cost'] ?? 0, 2); ?></strong></td>
+                        <td><strong>$<?php echo number_format($stats['wms_cost'] ?? 0, 2); ?></strong></td>
                     </tr>
                     <tr>
                         <td>WMS运费成本:</td>
-                        <td><strong>¥<?php echo number_format($stats['wms_shipping'] ?? 0, 2); ?></strong></td>
+                        <td><strong>$<?php echo number_format($stats['wms_shipping'] ?? 0, 2); ?></strong></td>
                     </tr>
                     <tr class="table-primary">
                         <td>WMS总成本:</td>
-                        <td><strong>¥<?php 
+                        <td><strong>$<?php 
                             $wmsTotal = ($stats['wms_cost'] ?? 0) + ($stats['wms_shipping'] ?? 0);
                             echo number_format($wmsTotal, 2); 
                         ?></strong></td>
@@ -128,14 +128,14 @@
                 <table class="table table-sm">
                     <tr>
                         <td>平均订单金额:</td>
-                        <td><strong>¥<?php 
+                        <td><strong>$<?php 
                             $avgOrderAmount = ($stats['order_count'] ?? 0) > 0 ? (($stats['total_amount'] ?? 0) / ($stats['order_count'] ?? 1)) : 0;
                             echo number_format($avgOrderAmount, 2); 
                         ?></strong></td>
                     </tr>
                     <tr>
                         <td>平均毛利润:</td>
-                        <td><strong>¥<?php 
+                        <td><strong>$<?php 
                             $avgProfit = ($stats['order_count'] ?? 0) > 0 ? (($stats['total_profit'] ?? 0) / ($stats['order_count'] ?? 1)) : 0;
                             echo number_format($avgProfit, 2); 
                         ?></strong></td>
@@ -181,7 +181,7 @@
                     <tr>
                         <td><?php echo htmlspecialchars($platform['platform_name']); ?></td>
                         <td><?php echo number_format($platform['order_count']); ?></td>
-                        <td><strong>¥<?php echo number_format($platform['total_profit'], 2); ?></strong></td>
+                        <td><strong><?php echo number_format($platform['total_profit'], 2); ?></strong></td>
                         <td><strong
                                 class="<?php echo $platform['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
                                 <?php echo number_format($platform['avg_profit_rate'], 2); ?>%
@@ -223,7 +223,7 @@
                         <td><?php echo htmlspecialchars($store['platform_name']); ?></td>
                         <td><?php echo htmlspecialchars($store['store_name']); ?></td>
                         <td><?php echo number_format($store['order_count']); ?></td>
-                        <td><strong>¥<?php echo number_format($store['total_profit'], 2); ?></strong></td>
+                        <td><strong>$<?php echo number_format($store['total_profit'], 2); ?></strong></td>
                         <td><strong
                                 class="<?php echo $store['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
                                 <?php echo number_format($store['avg_profit_rate'], 2); ?>%
