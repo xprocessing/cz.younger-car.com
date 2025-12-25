@@ -7,57 +7,6 @@
     </div>
 </div>
 
-<!-- 筛选条件 -->
-<div class="card mb-3">
-    <div class="card-header">
-        <h5 class="mb-0">筛选条件</h5>
-    </div>
-    <div class="card-body">
-        <form method="GET" action="<?php echo APP_URL; ?>/order_profit.php" class="row g-3">
-            <input type="hidden" name="action" value="stats">
-            
-            <div class="col-md-3">
-                <label for="start_date" class="form-label">开始日期</label>
-                <input type="date" class="form-control" id="start_date" name="start_date"
-                       value="<?php echo $_GET['start_date'] ?? ''; ?>">
-            </div>
-            
-            <div class="col-md-3">
-                <label for="end_date" class="form-label">结束日期</label>
-                <input type="date" class="form-control" id="end_date" name="end_date"
-                       value="<?php echo $_GET['end_date'] ?? ''; ?>">
-            </div>
-            
-            <div class="col-md-3">
-                <label for="store_id" class="form-label">店铺</label>
-                <select name="store_id" class="form-select">
-                    <option value="">全部店铺</option>
-                    <?php if (!empty($storeList)): ?>
-                        <?php foreach ($storeList as $store): ?>
-                            <option value="<?php echo htmlspecialchars($store); ?>" 
-                                    <?php echo (($_GET['store_id'] ?? '') == $store ? 'selected' : ''); ?>>
-                                <?php echo htmlspecialchars($store); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </select>
-            </div>
-            
-            <div class="col-md-3">
-                <label class="form-label">&nbsp;</label>
-                <div>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-filter"></i> 筛选
-                    </button>
-                    <a href="?action=stats" class="btn btn-outline-secondary">
-                        <i class="fa fa-refresh"></i> 重置
-                    </a>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
 <!-- 统计概览 -->
 <div class="row mb-4">
     <div class="col-md-3">
