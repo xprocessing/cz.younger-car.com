@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-2">
         <div class="card text-center border-success">
             <div class="card-body">
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-2">
         <div class="card text-center border-secondary">
             <div class="card-body">
@@ -44,7 +44,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-2">
         <div class="card text-center border-info">
             <div class="card-body">
@@ -56,10 +56,7 @@
             </div>
         </div>
     </div>
-</div>
-
-                <div class="row mb-4">
-    <div class="col-md-2">
+  <div class="col-md-2">
         <div class="card text-center border-warning">
             <div class="card-body">
                 <h5 class="card-title text-warning">
@@ -69,8 +66,7 @@
             </div>
         </div>
     </div>
-    
-    <div class="col-md-2">
+<div class="col-md-2">
         <div class="card text-center border-info">
             <div class="card-body">
                 <h5 class="card-title text-info">
@@ -83,7 +79,11 @@
             </div>
         </div>
     </div>
+
+
 </div>
+
+
 
 <!-- 利润率分布 -->
 <div class="card mb-4">
@@ -91,7 +91,7 @@
         <h5 class="mb-0">利润率分布</h5>
     </div>
     <div class="card-body">
-        <canvas id="profitRateChart" width="400" height="200"></canvas>
+        <canvas id="profitRateChart" width="600" height="200"></canvas>
     </div>
 </div>
 
@@ -122,7 +122,7 @@
                     </tr>
                 </table>
             </div>
-            
+
             <div class="col-md-6">
                 <h6>关键指标</h6>
                 <table class="table table-sm">
@@ -142,7 +142,9 @@
                     </tr>
                     <tr>
                         <td>最高利润率:</td>
-                        <td><strong class="text-success"><?php echo number_format($stats['avg_profit_rate'] ?? 0, 2); ?>%</strong></td>
+                        <td><strong
+                                class="text-success"><?php echo number_format($stats['avg_profit_rate'] ?? 0, 2); ?>%</strong>
+                        </td>
                     </tr>
                     <tr>
                         <td>利润有效率:</td>
@@ -175,20 +177,21 @@
                 </thead>
                 <tbody>
                     <?php if (!empty($platformStats)): ?>
-                        <?php foreach ($platformStats as $platform): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($platform['platform_name']); ?></td>
-                                <td><?php echo number_format($platform['order_count']); ?></td>
-                                <td><strong>¥<?php echo number_format($platform['total_profit'], 2); ?></strong></td>
-                                <td><strong class="<?php echo $platform['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
-                                    <?php echo number_format($platform['avg_profit_rate'], 2); ?>%
-                                </strong></td>
-                            </tr>
-                        <?php endforeach; ?>
+                    <?php foreach ($platformStats as $platform): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($platform['platform_name']); ?></td>
+                        <td><?php echo number_format($platform['order_count']); ?></td>
+                        <td><strong>¥<?php echo number_format($platform['total_profit'], 2); ?></strong></td>
+                        <td><strong
+                                class="<?php echo $platform['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
+                                <?php echo number_format($platform['avg_profit_rate'], 2); ?>%
+                            </strong></td>
+                    </tr>
+                    <?php endforeach; ?>
                     <?php else: ?>
-                        <tr>
-                            <td colspan="4" class="text-center">暂无数据</td>
-                        </tr>
+                    <tr>
+                        <td colspan="4" class="text-center">暂无数据</td>
+                    </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
@@ -215,21 +218,22 @@
                 </thead>
                 <tbody>
                     <?php if (!empty($storeStats)): ?>
-                        <?php foreach ($storeStats as $store): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($store['platform_name']); ?></td>
-                                <td><?php echo htmlspecialchars($store['store_name']); ?></td>
-                                <td><?php echo number_format($store['order_count']); ?></td>
-                                <td><strong>¥<?php echo number_format($store['total_profit'], 2); ?></strong></td>
-                                <td><strong class="<?php echo $store['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
-                                    <?php echo number_format($store['avg_profit_rate'], 2); ?>%
-                                </strong></td>
-                            </tr>
-                        <?php endforeach; ?>
+                    <?php foreach ($storeStats as $store): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($store['platform_name']); ?></td>
+                        <td><?php echo htmlspecialchars($store['store_name']); ?></td>
+                        <td><?php echo number_format($store['order_count']); ?></td>
+                        <td><strong>¥<?php echo number_format($store['total_profit'], 2); ?></strong></td>
+                        <td><strong
+                                class="<?php echo $store['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
+                                <?php echo number_format($store['avg_profit_rate'], 2); ?>%
+                            </strong></td>
+                    </tr>
+                    <?php endforeach; ?>
                     <?php else: ?>
-                        <tr>
-                            <td colspan="5" class="text-center">暂无数据</td>
-                        </tr>
+                    <tr>
+                        <td colspan="5" class="text-center">暂无数据</td>
+                    </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
@@ -245,11 +249,11 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Canvas element not found');
         return;
     }
-    
+
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
     const height = canvas.height;
-    
+
     // 使用真实的利润率分布数据
     const data = {
         labels: ['亏损 (<0%)', '低利润 (0-5%)', '正常利润 (5-15%)', '高利润 (>15%)'],
@@ -266,37 +270,37 @@ document.addEventListener('DOMContentLoaded', function() {
             'rgba(75, 192, 192, 0.6)'
         ]
     };
-    
+
     console.log('Canvas data:', data);
-    
+
     // 清空画布
     ctx.clearRect(0, 0, width, height);
-    
+
     // 绘制背景
     ctx.fillStyle = '#f8f9fa';
     ctx.fillRect(0, 0, width, height);
-    
+
     const barWidth = width / data.labels.length;
     const maxValue = Math.max(...data.values);
     console.log('Max value:', maxValue);
-    
+
     data.values.forEach((value, index) => {
         const barHeight = maxValue > 0 ? (value / maxValue) * (height - 60) : 0;
         const x = index * barWidth + barWidth * 0.15;
         const y = height - barHeight - 40;
-        
+
         console.log(`Bar ${index}: value=${value}, barHeight=${barHeight}, x=${x}, y=${y}`);
-        
+
         // 绘制柱状图
         ctx.fillStyle = data.colors[index];
         ctx.fillRect(x, y, barWidth * 0.7, barHeight);
-        
+
         // 绘制数值
         ctx.fillStyle = '#333';
         ctx.font = 'bold 14px Arial';
         ctx.textAlign = 'center';
         ctx.fillText(value, x + barWidth * 0.35, y - 5);
-        
+
         // 绘制标签
         ctx.font = '12px Arial';
         const labelParts = data.labels[index].split(' ');
@@ -305,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.fillText(labelParts[1], x + barWidth * 0.35, height - 10);
         }
     });
-    
+
     console.log('Chart drawing completed');
 });
 </script>
