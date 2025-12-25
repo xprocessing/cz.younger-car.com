@@ -97,11 +97,12 @@ echo "<div class='card mt-4'>
                 <tbody>";
 if (!empty($platformStats)) {
     foreach ($platformStats as $platform) {
+        $profitClass = $platform['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger';
         echo "<tr>
             <td>" . htmlspecialchars($platform['platform_name']) . "</td>
             <td>" . number_format($platform['order_count']) . "</td>
             <td><strong>¥" . number_format($platform['total_profit'], 2) . "</strong></td>
-            <td><strong class='{$platform['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'}'>
+            <td><strong class='{$profitClass}'>
                 " . number_format($platform['avg_profit_rate'], 2) . "%
             </strong></td>
         </tr>";
@@ -137,12 +138,13 @@ echo "<div class='card mt-4'>
                 <tbody>";
 if (!empty($storeStats)) {
     foreach ($storeStats as $store) {
+        $profitClass = $store['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger';
         echo "<tr>
             <td>" . htmlspecialchars($store['platform_name']) . "</td>
             <td>" . htmlspecialchars($store['store_name']) . "</td>
             <td>" . number_format($store['order_count']) . "</td>
             <td><strong>¥" . number_format($store['total_profit'], 2) . "</strong></td>
-            <td><strong class='{$store['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'}'>
+            <td><strong class='{$profitClass}'>
                 " . number_format($store['avg_profit_rate'], 2) . "%
             </strong></td>
         </tr>";
