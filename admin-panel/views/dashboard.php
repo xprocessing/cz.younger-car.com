@@ -43,6 +43,24 @@
                             </div>
                         </div>
                     </div>
+                     <div class="col-md-3">
+                        <div class="card text-white bg-danger mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">订单利润管理</h5>
+                                <p class="card-text">订单利润数据</p>
+                                <a href="<?php echo APP_URL; ?>/order_profit.php" class="btn btn-light">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-md-3">
+                        <div class="card text-white bg-danger mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">运费管理</h5>
+                                <p class="card-text">运费数据</p>
+                                <a href="<?php echo APP_URL; ?>/yunfei.php" class="btn btn-light">进入</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
