@@ -23,15 +23,49 @@
                        value="<?php echo $_GET['keyword'] ?? ''; ?>">
             </div>
             <div class="col-md-2">
+                <label for="platform_name" class="form-label">平台名称</label>
+                <select name="platform_name" class="form-select">
+                    <option value="">全部平台</option>
+                    <?php 
+                    // 提取唯一的平台名称
+                    $platformNames = [];
+                    if (!empty($storeList)) {
+                        foreach ($storeList as $store) {
+                            if (!in_array($store['platform_name'], $platformNames)) {
+                                $platformNames[] = $store['platform_name'];
+                            }
+                        }
+                        sort($platformNames);
+                    }
+                    ?>
+                    <?php foreach ($platformNames as $platform): ?>
+                        <option value="<?php echo htmlspecialchars($platform); ?>" 
+                                <?php echo (($_GET['platform_name'] ?? '') == $platform ? 'selected' : ''); ?>>
+                            <?php echo htmlspecialchars($platform); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-md-2">
                 <label for="store_id" class="form-label">店铺筛选</label>
                 <select name="store_id" class="form-select">
                     <option value="">全部店铺</option>
                     <?php if (!empty($storeList)): ?>
                         <?php foreach ($storeList as $store): ?>
-                            <option value="<?php echo htmlspecialchars($store['store_id']); ?>" 
-                                    <?php echo (($_GET['store_id'] ?? '') == $store['store_id'] ? 'selected' : ''); ?>>
-                                <?php echo htmlspecialchars($store['platform_name'] . ' - ' . $store['store_name']); ?>
-                            </option>
+                            <?php 
+                            // 根据平台筛选店铺
+                            $showStore = true;
+                            if (isset($_GET['platform_name']) && !empty($_GET['platform_name'])) {
+                                if ($store['platform_name'] != $_GET['platform_name']) {
+                                    $showStore = false;
+                                }
+                            }
+                            if ($showStore): ?>
+                                <option value="<?php echo htmlspecialchars($store['store_id']); ?>" 
+                                        <?php echo (($_GET['store_id'] ?? '') == $store['store_id'] ? 'selected' : ''); ?>>
+                                    <?php echo htmlspecialchars($store['platform_name'] . ' - ' . $store['store_name']); ?>
+                                </option>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </select>
@@ -81,6 +115,7 @@
             $baseUrl = APP_URL . '/order_profit.php?';
             $params = [];
             if (!empty($_GET['keyword'])) $params[] = 'keyword=' . urlencode($_GET['keyword']);
+            if (!empty($_GET['platform_name'])) $params[] = 'platform_name=' . urlencode($_GET['platform_name']);
             if (!empty($_GET['store_id'])) $params[] = 'store_id=' . urlencode($_GET['store_id']);
             $baseQuery = implode('&', $params);
             if ($baseQuery) $baseQuery .= '&';
@@ -131,6 +166,7 @@ if ($hasFilters): ?>
         <?php 
         $filters = [];
         if (!empty($_GET['keyword'])) $filters[] = "关键词: " . htmlspecialchars($_GET['keyword']);
+        if (!empty($_GET['platform_name'])) $filters[] = "平台: " . htmlspecialchars($_GET['platform_name']);
         if (!empty($_GET['store_id'])) {
             // 查找对应的店铺名称
             $storeName = $_GET['store_id'];
@@ -270,7 +306,7 @@ if ($hasFilters): ?>
             <ul class="pagination justify-content-center">
                 <?php if ($page > 1): ?>
                     <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['platform_name']) ? '&platform_name=' . urlencode($_GET['platform_name']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
                             <i class="fa fa-chevron-left"></i>
                         </a>
                     </li>
@@ -278,7 +314,7 @@ if ($hasFilters): ?>
                 
                 <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
                     <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['platform_name']) ? '&platform_name=' . urlencode($_GET['platform_name']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
                             <?php echo $i; ?>
                         </a>
                     </li>
@@ -286,7 +322,7 @@ if ($hasFilters): ?>
                 
                 <?php if ($page < $totalPages): ?>
                     <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($_GET['keyword']) ? '&keyword=' . urlencode($_GET['keyword']) : ''; ?><?php echo !empty($_GET['platform_name']) ? '&platform_name=' . urlencode($_GET['platform_name']) : ''; ?><?php echo !empty($_GET['store_id']) ? '&store_id=' . urlencode($_GET['store_id']) : ''; ?><?php echo isset($_GET['rate_min']) ? '&rate_min=' . urlencode($_GET['rate_min']) : ''; ?><?php echo isset($_GET['rate_max']) ? '&rate_max=' . urlencode($_GET['rate_max']) : ''; ?>">
                             <i class="fa fa-chevron-right"></i>
                         </a>
                     </li>

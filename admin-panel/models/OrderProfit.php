@@ -232,7 +232,7 @@ class OrderProfit {
     }
     
     // 支持多条件搜索的订单利润
-    public function searchWithFilters($keyword = '', $storeId = '', $rateMin = '', $rateMax = '', $limit = null, $offset = 0) {
+    public function searchWithFilters($keyword = '', $platformName = '', $storeId = '', $rateMin = '', $rateMax = '', $limit = null, $offset = 0) {
         $sql = "SELECT op.*, s.platform_name, s.store_name 
                 FROM order_profit op 
                 LEFT JOIN store s ON op.store_id = s.store_id 
@@ -243,6 +243,12 @@ class OrderProfit {
         if ($keyword) {
             $sql .= " AND (op.global_order_no LIKE ? OR op.store_id LIKE ? OR op.local_sku LIKE ? OR op.receiver_country LIKE ? OR op.warehouse_name LIKE ?)";
             $params = array_merge($params, ["%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%"]);
+        }
+        
+        // 平台名称筛选
+        if ($platformName) {
+            $sql .= " AND s.platform_name = ?";
+            $params[] = $platformName;
         }
         
         // 店铺筛选
@@ -293,19 +299,27 @@ class OrderProfit {
     }
     
     // 支持多条件搜索的结果数量
-    public function getSearchWithFiltersCount($keyword = '', $storeId = '', $rateMin = '', $rateMax = '') {
-        $sql = "SELECT * FROM order_profit WHERE 1=1";
+    public function getSearchWithFiltersCount($keyword = '', $platformName = '', $storeId = '', $rateMin = '', $rateMax = '') {
+        $sql = "SELECT op.* FROM order_profit op 
+                LEFT JOIN store s ON op.store_id = s.store_id 
+                WHERE 1=1";
         $params = [];
         
         // 关键词搜索
         if ($keyword) {
-            $sql .= " AND (global_order_no LIKE ? OR store_id LIKE ? OR local_sku LIKE ? OR receiver_country LIKE ? OR warehouse_name LIKE ?)";
+            $sql .= " AND (op.global_order_no LIKE ? OR op.store_id LIKE ? OR op.local_sku LIKE ? OR op.receiver_country LIKE ? OR op.warehouse_name LIKE ?)";
             $params = array_merge($params, ["%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%", "%$keyword%"]);
+        }
+        
+        // 平台名称筛选
+        if ($platformName) {
+            $sql .= " AND s.platform_name = ?";
+            $params[] = $platformName;
         }
         
         // 店铺筛选
         if ($storeId) {
-            $sql .= " AND store_id = ?";
+            $sql .= " AND op.store_id = ?";
             $params[] = $storeId;
         }
         

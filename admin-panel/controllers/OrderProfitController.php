@@ -21,13 +21,14 @@ class OrderProfitController {
         $offset = ($page - 1) * $limit;
         
         $keyword = $_GET['keyword'] ?? '';
+        $platformName = $_GET['platform_name'] ?? '';
         $storeId = $_GET['store_id'] ?? '';
         $rateMin = $_GET['rate_min'] ?? '';
         $rateMax = $_GET['rate_max'] ?? '';
         
-        if ($keyword || $storeId || $rateMin || $rateMax) {
-            $profits = $this->orderProfitModel->searchWithFilters($keyword, $storeId, $rateMin, $rateMax, $limit, $offset);
-            $totalCount = $this->orderProfitModel->getSearchWithFiltersCount($keyword, $storeId, $rateMin, $rateMax);
+        if ($keyword || $platformName || $storeId || $rateMin || $rateMax) {
+            $profits = $this->orderProfitModel->searchWithFilters($keyword, $platformName, $storeId, $rateMin, $rateMax, $limit, $offset);
+            $totalCount = $this->orderProfitModel->getSearchWithFiltersCount($keyword, $platformName, $storeId, $rateMin, $rateMax);
         } else {
             $profits = $this->orderProfitModel->getAll($limit, $offset);
             $totalCount = $this->orderProfitModel->getCount();
