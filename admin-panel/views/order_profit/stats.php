@@ -45,7 +45,7 @@
         </div>
     </div>
     
-    <div class="col-md-1">
+    <div class="col-md-2">
         <div class="card text-center border-info">
             <div class="card-body">
                 <h5 class="card-title text-info">
@@ -58,7 +58,7 @@
     </div>
 </div>
 
-                <div class="row mb-2">
+                <div class="row mb-4">
     <div class="col-md-2">
         <div class="card text-center border-warning">
             <div class="card-body">
