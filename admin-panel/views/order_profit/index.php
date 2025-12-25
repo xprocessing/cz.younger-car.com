@@ -17,12 +17,12 @@
 <div class="card mb-3">
     <div class="card-body">
         <form method="GET" action="<?php echo APP_URL; ?>/order_profit.php" class="row g-3">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label for="keyword" class="form-label">关键词搜索</label>
                 <input type="text" name="keyword" class="form-control" placeholder="搜索订单号、SKU..." 
                        value="<?php echo $_GET['keyword'] ?? ''; ?>">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label for="platform_name" class="form-label">平台名称</label>
                 <select name="platform_name" class="form-select">
                     <option value="">全部平台</option>
@@ -80,7 +80,7 @@
                 <input type="date" name="end_date" class="form-control"
                        value="<?php echo $_GET['end_date'] ?? ''; ?>">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label for="rate_min" class="form-label">
                     <i class="fa fa-percent text-success"></i> 最小利润率(%)
                 </label>
@@ -89,7 +89,7 @@
                        title="输入最小利润率，用于筛选利润率大于等于此值的订单">
                 <div class="form-text">≥ 此值%</div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label for="rate_max" class="form-label">
                     <i class="fa fa-percent text-danger"></i> 最大利润率(%)
                 </label>
