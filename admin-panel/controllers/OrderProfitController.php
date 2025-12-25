@@ -386,4 +386,77 @@ class OrderProfitController {
         
         redirect(APP_URL . '/order_profit.php');
     }
+    
+    // 批量导出
+    public function export() {
+        if (!isLoggedIn()) {
+            redirect(APP_URL . '/login.php');
+        }
+        
+        // 获取所有筛选参数
+        $keyword = $_GET['keyword'] ?? '';
+        $platformName = $_GET['platform_name'] ?? '';
+        $storeId = $_GET['store_id'] ?? '';
+        $startDate = $_GET['start_date'] ?? '';
+        $endDate = $_GET['end_date'] ?? '';
+        $rateMin = $_GET['rate_min'] ?? '';
+        $rateMax = $_GET['rate_max'] ?? '';
+        
+        // 获取所有符合条件的数据（不限制数量）
+        $profits = $this->orderProfitModel->getAllWithFilters($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax);
+        
+        // 设置CSV文件头
+        $filename = 'order_profit_export_' . date('YmdHis') . '.csv';
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=' . $filename);
+        header('Pragma: no-cache');
+        header('Expires: 0');
+        
+        // 创建文件指针
+        $output = fopen('php://output', 'w');
+        
+        // 写入BOM以支持Excel中文显示
+        fwrite($output, chr(0xEF) . chr(0xBB) . chr(0xBF));
+        
+        // 写入CSV表头
+        $header = [
+            'ID',
+            '店铺ID',
+            '订单号',
+            '发货仓库',
+            '收货国家',
+            '下单时间',
+            'SKU',
+            '订单总额',
+            '毛利润',
+            '利润率(%)',
+            '出库成本',
+            '实际运费',
+            '更新时间'
+        ];
+        fputcsv($output, $header);
+        
+        // 写入数据行
+        foreach ($profits as $profit) {
+            $row = [
+                $profit['id'],
+                $profit['store_id'],
+                $profit['global_order_no'],
+                $profit['warehouse_name'],
+                $profit['receiver_country'],
+                $profit['global_purchase_time'],
+                $profit['local_sku'],
+                $profit['order_total_amount'],
+                $profit['profit_amount'],
+                $profit['profit_rate'],
+                $profit['wms_outbound_cost_amount'],
+                $profit['wms_shipping_price_amount'],
+                $profit['update_time']
+            ];
+            fputcsv($output, $row);
+        }
+        
+        fclose($output);
+        exit;
+    }
 }

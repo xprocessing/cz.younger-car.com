@@ -524,4 +524,10 @@ class OrderProfit {
         $this->db->query($sql, $params);
         return $this->db->lastInsertId();
     }
+    
+    // 获取所有符合筛选条件的数据（用于导出）
+    public function getAllWithFilters($keyword = '', $platformName = '', $storeId = '', $startDate = '', $endDate = '', $rateMin = '', $rateMax = '') {
+        // 直接调用searchWithFilters方法，但不限制数量
+        return $this->searchWithFilters($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax, null, 0);
+    }
 }

@@ -4,6 +4,19 @@
         <a href="<?php echo APP_URL; ?>/order_profit.php?action=import" class="btn btn-outline-success me-2">
             <i class="fa fa-upload"></i> 批量导入
         </a>
+        <a href="<?php echo APP_URL; ?>/order_profit.php?action=export<?php 
+            $exportParams = [];
+            if (!empty($_GET['keyword'])) $exportParams[] = 'keyword=' . urlencode($_GET['keyword']);
+            if (!empty($_GET['platform_name'])) $exportParams[] = 'platform_name=' . urlencode($_GET['platform_name']);
+            if (!empty($_GET['store_id'])) $exportParams[] = 'store_id=' . urlencode($_GET['store_id']);
+            if (!empty($_GET['start_date'])) $exportParams[] = 'start_date=' . urlencode($_GET['start_date']);
+            if (!empty($_GET['end_date'])) $exportParams[] = 'end_date=' . urlencode($_GET['end_date']);
+            if (isset($_GET['rate_min'])) $exportParams[] = 'rate_min=' . urlencode($_GET['rate_min']);
+            if (isset($_GET['rate_max'])) $exportParams[] = 'rate_max=' . urlencode($_GET['rate_max']);
+            if (!empty($exportParams)) echo '&' . implode('&', $exportParams);
+        ?>" class="btn btn-outline-primary me-2">
+            <i class="fa fa-download"></i> 批量导出
+        </a>
         <a href="<?php echo APP_URL; ?>/order_profit.php?action=stats" class="btn btn-outline-info me-2">
             <i class="fa fa-bar-chart"></i> 利润统计
         </a>
