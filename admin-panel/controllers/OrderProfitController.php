@@ -251,13 +251,10 @@ class OrderProfitController {
         $endDate = $_GET['end_date'] ?? date('Y-m-d'); // 默认今天
         $storeId = $_GET['store_id'] ?? '';
         
-        // 计算最近30天的起始日期
-        $last30DaysStart = date('Y-m-d', strtotime('-30 days'));
-        
+        // 使用用户选择的日期范围
+        $platformStats = $this->orderProfitModel->getPlatformStats($startDate, $endDate);
+        $storeStats = $this->orderProfitModel->getStoreStats($startDate, $endDate);
         $stats = $this->orderProfitModel->getProfitStats($startDate, $endDate, $storeId);
-        // 获取最近30天的平台和店铺统计数据
-        $platformStats = $this->orderProfitModel->getPlatformStats($last30DaysStart, $endDate);
-        $storeStats = $this->orderProfitModel->getStoreStats($last30DaysStart, $endDate);
         
         $storeList = $this->orderProfitModel->getStoreList();
         $title = '利润统计';
