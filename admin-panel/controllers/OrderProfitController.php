@@ -247,11 +247,11 @@ class OrderProfitController {
             redirect(APP_URL . '/login.php');
         }
         
-        $startDate = $_GET['start_date'] ?? date('Y-m-01'); // 默认当月第一天
-        $endDate = $_GET['end_date'] ?? date('Y-m-d'); // 默认今天
-        $storeId = $_GET['store_id'] ?? '';
+        $endDate = date('Y-m-d');
+        $startDate = date('Y-m-d', strtotime('-30 days'));
         
-        // 使用用户选择的日期范围
+        $storeId = '';
+        
         $platformStats = $this->orderProfitModel->getPlatformStats($startDate, $endDate);
         $storeStats = $this->orderProfitModel->getStoreStats($startDate, $endDate);
         $stats = $this->orderProfitModel->getProfitStats($startDate, $endDate, $storeId);
