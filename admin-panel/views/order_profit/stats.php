@@ -238,60 +238,74 @@
 </div>
 
 <script>
-// 简单的利润率分布图表
-const ctx = document.getElementById('profitRateChart').getContext('2d');
-
-// 使用真实的利润率分布数据
-const data = {
-    labels: ['亏损 (<0%)', '低利润 (0-5%)', '正常利润 (5-15%)', '高利润 (>15%)'],
-    datasets: [{
-        label: '订单数量',
-        data: [
+// 等待DOM加载完成
+document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('profitRateChart');
+    if (!canvas) {
+        console.error('Canvas element not found');
+        return;
+    }
+    
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    // 使用真实的利润率分布数据
+    const data = {
+        labels: ['亏损 (<0%)', '低利润 (0-5%)', '正常利润 (5-15%)', '高利润 (>15%)'],
+        values: [
             <?php echo $profitRateDistribution['negative'] ?? 0; ?>,
             <?php echo $profitRateDistribution['low'] ?? 0; ?>,
             <?php echo $profitRateDistribution['normal'] ?? 0; ?>,
             <?php echo $profitRateDistribution['high'] ?? 0; ?>
         ],
-        backgroundColor: [
+        colors: [
             'rgba(255, 99, 132, 0.6)',
             'rgba(255, 206, 86, 0.6)',
             'rgba(54, 162, 235, 0.6)',
             'rgba(75, 192, 192, 0.6)'
-        ],
-        borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(75, 192, 192, 1)'
-        ],
-        borderWidth: 1
-    }]
-};
-
-// 简单的条形图绘制（没有Chart.js时的降级方案）
-if (typeof Chart === 'undefined') {
-    const canvas = ctx.canvas;
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width;
-    const height = canvas.height;
-    const barWidth = width / data.labels.length;
+        ]
+    };
     
+    console.log('Canvas data:', data);
+    
+    // 清空画布
     ctx.clearRect(0, 0, width, height);
     
-    data.datasets[0].data.forEach((value, index) => {
-        const maxValue = Math.max(...data.datasets[0].data);
-        const barHeight = maxValue > 0 ? (value / maxValue) * (height - 40) : 0;
-        const x = index * barWidth + barWidth * 0.2;
-        const y = height - barHeight - 20;
+    // 绘制背景
+    ctx.fillStyle = '#f8f9fa';
+    ctx.fillRect(0, 0, width, height);
+    
+    const barWidth = width / data.labels.length;
+    const maxValue = Math.max(...data.values);
+    console.log('Max value:', maxValue);
+    
+    data.values.forEach((value, index) => {
+        const barHeight = maxValue > 0 ? (value / maxValue) * (height - 60) : 0;
+        const x = index * barWidth + barWidth * 0.15;
+        const y = height - barHeight - 40;
         
-        ctx.fillStyle = data.datasets[0].backgroundColor[index];
-        ctx.fillRect(x, y, barWidth * 0.6, barHeight);
+        console.log(`Bar ${index}: value=${value}, barHeight=${barHeight}, x=${x}, y=${y}`);
         
+        // 绘制柱状图
+        ctx.fillStyle = data.colors[index];
+        ctx.fillRect(x, y, barWidth * 0.7, barHeight);
+        
+        // 绘制数值
         ctx.fillStyle = '#333';
-        ctx.font = '12px Arial';
+        ctx.font = 'bold 14px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText(value, x + barWidth * 0.3, y - 5);
-        ctx.fillText(data.labels[index].split(' ')[0], x + barWidth * 0.3, height - 5);
+        ctx.fillText(value, x + barWidth * 0.35, y - 5);
+        
+        // 绘制标签
+        ctx.font = '12px Arial';
+        const labelParts = data.labels[index].split(' ');
+        ctx.fillText(labelParts[0], x + barWidth * 0.35, height - 25);
+        if (labelParts[1]) {
+            ctx.fillText(labelParts[1], x + barWidth * 0.35, height - 10);
+        }
     });
-}
+    
+    console.log('Chart drawing completed');
+});
 </script>
