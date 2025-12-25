@@ -214,29 +214,23 @@ class OrderProfitController {
             redirect(APP_URL . '/login.php');
         }
         
-        $keyword = $_GET['keyword'] ?? '';
-        $storeId = $_GET['store_id'] ?? '';
-        $startDate = $_GET['start_date'] ?? '';
-        $endDate = $_GET['end_date'] ?? '';
-        
         $page = max(1, (int)($_GET['page'] ?? 1));
         $limit = 50;
         $offset = ($page - 1) * $limit;
         
-        if ($keyword) {
-            $profits = $this->orderProfitModel->search($keyword, $limit, $offset);
-            $totalCount = $this->orderProfitModel->getSearchCount($keyword);
-        } elseif ($storeId) {
-            $profits = $this->orderProfitModel->getByStoreId($storeId, $limit, $offset);
-            $totalCount = $this->orderProfitModel->getCount();
-        } else {
-            $profits = $this->orderProfitModel->getAll($limit, $offset);
-            $totalCount = $this->orderProfitModel->getCount();
-        }
+        $keyword = $_GET['keyword'] ?? '';
+        $platformName = $_GET['platform_name'] ?? '';
+        $storeId = $_GET['store_id'] ?? '';
+        $rateMin = $_GET['rate_min'] ?? '';
+        $rateMax = $_GET['rate_max'] ?? '';
+        
+        // 重用searchWithFilters方法来处理所有筛选条件，包括平台名称
+        $profits = $this->orderProfitModel->searchWithFilters($keyword, $platformName, $storeId, $rateMin, $rateMax, $limit, $offset);
+        $totalCount = $this->orderProfitModel->getSearchWithFiltersCount($keyword, $platformName, $storeId, $rateMin, $rateMax);
         
         $totalPages = ceil($totalCount / $limit);
         $storeList = $this->orderProfitModel->getStoreList();
-        $title = '搜索结果: ' . ($keyword ?: '按店铺筛选');
+        $title = '搜索结果';
         
         include VIEWS_DIR . '/layouts/header.php';
         include VIEWS_DIR . '/order_profit/index.php';
