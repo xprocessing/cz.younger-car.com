@@ -530,4 +530,104 @@ class OrderProfit {
         // 限制最多100条数据
         return $this->searchWithFilters($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax, 100, 0);
     }
+    
+    // 按平台统计最近30天的利润和利润率
+    public function getPlatformStats($last30DaysStart, $endDate) {
+        $sql = "SELECT op.*, s.platform_name
+                FROM order_profit op
+                LEFT JOIN store s ON op.store_id = s.store_id
+                WHERE DATE(op.global_purchase_time) >= ? AND DATE(op.global_purchase_time) <= ?
+                ORDER BY s.platform_name";
+        
+        $params = [$last30DaysStart, $endDate];
+        $stmt = $this->db->query($sql, $params);
+        $data = $stmt->fetchAll();
+        
+        // 按平台分组统计
+        $platformStats = [];
+        
+        if (is_array($data) && count($data) > 0) {
+            foreach ($data as $row) {
+                $platformName = $row['platform_name'] ?? '未知平台';
+                
+                // 确保该平台的统计数组存在
+                if (!isset($platformStats[$platformName])) {
+                    $platformStats[$platformName] = [
+                        'platform_name' => $platformName,
+                        'order_count' => 0,
+                        'total_profit' => 0,
+                        'total_profit_rate' => 0,
+                        'avg_profit_rate' => 0
+                    ];
+                }
+                
+                // 解析数值并累加
+                $profit = parseCurrencyAmount($row['profit_amount'] ?? '0');
+                $profitRate = parseCurrencyAmount($row['profit_rate'] ?? '0');
+                
+                $platformStats[$platformName]['order_count']++;
+                $platformStats[$platformName]['total_profit'] += $profit;
+                $platformStats[$platformName]['total_profit_rate'] += $profitRate;
+            }
+            
+            // 计算平均利润率
+            foreach ($platformStats as &$stat) {
+                $stat['avg_profit_rate'] = $stat['order_count'] > 0 ? ($stat['total_profit_rate'] / $stat['order_count']) : 0;
+            }
+        }
+        
+        return array_values($platformStats);
+    }
+    
+    // 按店铺统计最近30天的利润和利润率
+    public function getStoreStats($last30DaysStart, $endDate) {
+        $sql = "SELECT op.*, s.platform_name, s.store_name
+                FROM order_profit op
+                LEFT JOIN store s ON op.store_id = s.store_id
+                WHERE DATE(op.global_purchase_time) >= ? AND DATE(op.global_purchase_time) <= ?
+                ORDER BY s.platform_name, s.store_name";
+        
+        $params = [$last30DaysStart, $endDate];
+        $stmt = $this->db->query($sql, $params);
+        $data = $stmt->fetchAll();
+        
+        // 按店铺分组统计
+        $storeStats = [];
+        
+        if (is_array($data) && count($data) > 0) {
+            foreach ($data as $row) {
+                $storeId = $row['store_id'] ?? '未知店铺';
+                $platformName = $row['platform_name'] ?? '未知平台';
+                $storeName = $row['store_name'] ?? '未知店铺名称';
+                
+                // 确保该店铺的统计数组存在
+                if (!isset($storeStats[$storeId])) {
+                    $storeStats[$storeId] = [
+                        'store_id' => $storeId,
+                        'platform_name' => $platformName,
+                        'store_name' => $storeName,
+                        'order_count' => 0,
+                        'total_profit' => 0,
+                        'total_profit_rate' => 0,
+                        'avg_profit_rate' => 0
+                    ];
+                }
+                
+                // 解析数值并累加
+                $profit = parseCurrencyAmount($row['profit_amount'] ?? '0');
+                $profitRate = parseCurrencyAmount($row['profit_rate'] ?? '0');
+                
+                $storeStats[$storeId]['order_count']++;
+                $storeStats[$storeId]['total_profit'] += $profit;
+                $storeStats[$storeId]['total_profit_rate'] += $profitRate;
+            }
+            
+            // 计算平均利润率
+            foreach ($storeStats as &$stat) {
+                $stat['avg_profit_rate'] = $stat['order_count'] > 0 ? ($stat['total_profit_rate'] / $stat['order_count']) : 0;
+            }
+        }
+        
+        return array_values($storeStats);
+    }
 }

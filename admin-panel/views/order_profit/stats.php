@@ -208,6 +208,86 @@
     </div>
 </div>
 
+<!-- 最近30天按平台统计 -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">最近30天按平台统计</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>平台名称</th>
+                        <th>订单数量</th>
+                        <th>总利润</th>
+                        <th>平均利润率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($platformStats)): ?>
+                        <?php foreach ($platformStats as $platform): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($platform['platform_name']); ?></td>
+                                <td><?php echo number_format($platform['order_count']); ?></td>
+                                <td><strong>¥<?php echo number_format($platform['total_profit'], 2); ?></strong></td>
+                                <td><strong class="<?php echo $platform['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
+                                    <?php echo number_format($platform['avg_profit_rate'], 2); ?>%
+                                </strong></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="4" class="text-center">暂无数据</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 最近30天按店铺统计 -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">最近30天按店铺统计</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>平台名称</th>
+                        <th>店铺名称</th>
+                        <th>订单数量</th>
+                        <th>总利润</th>
+                        <th>平均利润率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($storeStats)): ?>
+                        <?php foreach ($storeStats as $store): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($store['platform_name']); ?></td>
+                                <td><?php echo htmlspecialchars($store['store_name']); ?></td>
+                                <td><?php echo number_format($store['order_count']); ?></td>
+                                <td><strong>¥<?php echo number_format($store['total_profit'], 2); ?></strong></td>
+                                <td><strong class="<?php echo $store['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
+                                    <?php echo number_format($store['avg_profit_rate'], 2); ?>%
+                                </strong></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="5" class="text-center">暂无数据</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <script>
 // 简单的利润率分布图表
 const ctx = document.getElementById('profitRateChart').getContext('2d');
