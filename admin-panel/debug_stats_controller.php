@@ -1,7 +1,7 @@
 <?php
-require_once APP_ROOT . '/config/config.php';
-require_once APP_ROOT . '/models/OrderProfit.php';
-require_once APP_ROOT . '/helpers/functions.php';
+require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/models/OrderProfit.php';
+require_once __DIR__ . '/helpers/functions.php';
 
 $last30DaysStart = date('Y-m-d', strtotime('-30 days'));
 $today = date('Y-m-d');
