@@ -255,6 +255,7 @@ class OrderProfitController {
         $platformStats = $this->orderProfitModel->getPlatformStats($startDate, $endDate);
         $storeStats = $this->orderProfitModel->getStoreStats($startDate, $endDate);
         $stats = $this->orderProfitModel->getProfitStats($startDate, $endDate, $storeId);
+        $profitRateDistribution = $this->orderProfitModel->getProfitRateDistribution($startDate, $endDate);
         
         $storeList = $this->orderProfitModel->getStoreList();
         $title = '利润统计';

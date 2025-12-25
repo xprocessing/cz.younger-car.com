@@ -240,18 +240,17 @@
 <script>
 // 简单的利润率分布图表
 const ctx = document.getElementById('profitRateChart').getContext('2d');
-const profitRate = <?php echo $stats['avg_profit_rate'] ?? 0; ?>;
 
-// 模拟数据（实际项目中应该从后端获取详细数据）
+// 使用真实的利润率分布数据
 const data = {
     labels: ['亏损 (<0%)', '低利润 (0-5%)', '正常利润 (5-15%)', '高利润 (>15%)'],
     datasets: [{
         label: '订单数量',
         data: [
-            Math.max(0, Math.floor(Math.random() * 10)),
-            Math.max(0, Math.floor(Math.random() * 20)),
-            Math.max(0, Math.floor(Math.random() * 50)),
-            Math.max(0, Math.floor(Math.random() * 30))
+            <?php echo $profitRateDistribution['negative'] ?? 0; ?>,
+            <?php echo $profitRateDistribution['low'] ?? 0; ?>,
+            <?php echo $profitRateDistribution['normal'] ?? 0; ?>,
+            <?php echo $profitRateDistribution['high'] ?? 0; ?>
         ],
         backgroundColor: [
             'rgba(255, 99, 132, 0.6)',
@@ -280,7 +279,8 @@ if (typeof Chart === 'undefined') {
     ctx.clearRect(0, 0, width, height);
     
     data.datasets[0].data.forEach((value, index) => {
-        const barHeight = (value / Math.max(...data.datasets[0].data)) * (height - 40);
+        const maxValue = Math.max(...data.datasets[0].data);
+        const barHeight = maxValue > 0 ? (value / maxValue) * (height - 40) : 0;
         const x = index * barWidth + barWidth * 0.2;
         const y = height - barHeight - 20;
         

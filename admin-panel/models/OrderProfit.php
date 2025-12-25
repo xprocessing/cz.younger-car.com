@@ -630,4 +630,41 @@ class OrderProfit {
         
         return array_values($storeStats);
     }
+    
+    // 获取利润率分布数据
+    public function getProfitRateDistribution($startDate, $endDate) {
+        $sql = "SELECT profit_rate
+                FROM order_profit
+                WHERE DATE(global_purchase_time) >= ? AND DATE(global_purchase_time) <= ?";
+        
+        $params = [$startDate, $endDate];
+        $stmt = $this->db->query($sql, $params);
+        $data = $stmt->fetchAll();
+        
+        // 初始化四个区间的计数
+        $distribution = [
+            'negative' => 0,      // 亏损 (<0%)
+            'low' => 0,           // 低利润 (0-5%)
+            'normal' => 0,        // 正常利润 (5-15%)
+            'high' => 0           // 高利润 (>15%)
+        ];
+        
+        if (is_array($data) && count($data) > 0) {
+            foreach ($data as $row) {
+                $profitRate = parseCurrencyAmount($row['profit_rate'] ?? '0');
+                
+                if ($profitRate < 0) {
+                    $distribution['negative']++;
+                } elseif ($profitRate >= 0 && $profitRate < 5) {
+                    $distribution['low']++;
+                } elseif ($profitRate >= 5 && $profitRate <= 15) {
+                    $distribution['normal']++;
+                } else {
+                    $distribution['high']++;
+                }
+            }
+        }
+        
+        return $distribution;
+    }
 }
