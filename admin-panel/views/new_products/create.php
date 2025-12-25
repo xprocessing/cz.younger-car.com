@@ -84,13 +84,13 @@
                     <div class="mb-3">
                         <label for="process_list" class="form-label">进度明细（JSON格式）</label>
                         <textarea class="form-control" id="process_list" name="process_list" rows="8"
-                                  placeholder='[{"step": 1, "name": "需求分析", "status": "completed", "description": "完成需求分析"}, {"step": 2, "name": "设计", "status": "in_progress", "description": "进行中"}]'></textarea>
+                                  placeholder='[{"flowNodeName": "创建", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []}, {"flowNodeName": "提交", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []}]'></textarea>
                         <div class="form-text">
                             <small>
                                 JSON格式示例：<br>
-                                [{"step": 1, "name": "需求分析", "status": "completed", "description": "完成需求分析"},<br>
-                                &nbsp;&nbsp;{"step": 2, "name": "设计", "status": "in_progress", "description": "进行中"}]<br>
-                                status值: pending(待处理), in_progress(进行中), completed(已完成)
+                                [{"flowNodeName": "创建", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},<br>
+                                &nbsp;&nbsp;{"flowNodeName": "提交", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []}]<br>
+                                请按照提供的完整格式填写所有流程节点
                             </small>
                         </div>
                     </div>
@@ -117,32 +117,47 @@
                 <h6>进度明细格式：</h6>
                 <pre class="bg-light p-3 rounded"><code>[
   {
-    "step": 1,
-    "name": "需求分析",
-    "status": "completed",
-    "description": "完成需求分析"
+    "flowNodeName": "创建",
+    "auditStatus": null,
+    "defaultAuditUserId": 10846285,
+    "defaultAuditUserName": "王荣",
+    "defaultTime": "",
+    "auditUserList": []
   },
   {
-    "step": 2,
-    "name": "设计",
-    "status": "in_progress",
-    "description": "进行中"
+    "flowNodeName": "提交",
+    "auditStatus": null,
+    "defaultAuditUserId": 10846285,
+    "defaultAuditUserName": "王荣",
+    "defaultTime": "",
+    "auditUserList": []
   }
 ]</code></pre>
 
                 <h6 class="mt-3">字段说明：</h6>
                 <ul class="list-unstyled">
-                    <li><strong>step</strong>: 步骤编号（数字）</li>
-                    <li><strong>name</strong>: 步骤名称</li>
-                    <li><strong>status</strong>: 状态</li>
-                    <li><strong>description</strong>: 描述</li>
+                    <li><strong>flowNodeName</strong>: 流程节点名称</li>
+                    <li><strong>auditStatus</strong>: 审核状态（null: 未开始, 121: 进行中, 123: 已完成）</li>
+                    <li><strong>defaultAuditUserId</strong>: 默认审核人ID</li>
+                    <li><strong>defaultAuditUserName</strong>: 默认审核人名称</li>
+                    <li><strong>defaultTime</strong>: 默认时间</li>
+                    <li><strong>auditUserList</strong>: 审核用户列表（数组）</li>
+                </ul>
+
+                <h6 class="mt-3">auditUserList字段说明：</h6>
+                <ul class="list-unstyled">
+                    <li><strong>auditUserId</strong>: 审核人ID</li>
+                    <li><strong>auditUserName</strong>: 审核人名称</li>
+                    <li><strong>auditComments</strong>: 审核备注</li>
+                    <li><strong>auditStatus</strong>: 审核状态</li>
+                    <li><strong>auditTime</strong>: 审核时间</li>
                 </ul>
 
                 <h6 class="mt-3">状态值：</h6>
                 <ul class="list-unstyled">
-                    <li><span class="badge bg-secondary">pending</span> 待处理</li>
-                    <li><span class="badge bg-warning">in_progress</span> 进行中</li>
-                    <li><span class="badge bg-success">completed</span> 已完成</li>
+                    <li><span class="badge bg-secondary">null</span> 未开始</li>
+                    <li><span class="badge bg-warning">121</span> 进行中</li>
+                    <li><span class="badge bg-success">123</span> 已完成</li>
                 </ul>
             </div>
         </div>
@@ -179,25 +194,25 @@ function fillTemplate(type) {
     switch(type) {
         case 'simple':
             processList.value = JSON.stringify([
-                {"step": 1, "name": "需求分析", "status": "pending", "description": ""},
-                {"step": 2, "name": "设计", "status": "pending", "description": ""},
-                {"step": 3, "name": "开发", "status": "pending", "description": ""},
-                {"step": 4, "name": "测试", "status": "pending", "description": ""},
-                {"step": 5, "name": "发布", "status": "pending", "description": ""}
+                {"flowNodeName": "需求分析", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "设计", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "开发", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "测试", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "发布", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []}
             ], null, 2);
             break;
         case 'detailed':
             processList.value = JSON.stringify([
-                {"step": 1, "name": "需求收集", "status": "pending", "description": "收集和整理用户需求"},
-                {"step": 2, "name": "需求分析", "status": "pending", "description": "分析需求可行性和技术方案"},
-                {"step": 3, "name": "产品设计", "status": "pending", "description": "产品设计和技术设计"},
-                {"step": 4, "name": "开发实现", "status": "pending", "description": "编码实现功能"},
-                {"step": 5, "name": "单元测试", "status": "pending", "description": "开发和测试团队进行测试"},
-                {"step": 6, "name": "集成测试", "status": "pending", "description": "系统集成测试"},
-                {"step": 7, "name": "用户验收", "status": "pending", "description": "用户验收测试"},
-                {"step": 8, "name": "部署准备", "status": "pending", "description": "准备生产环境部署"},
-                {"step": 9, "name": "正式发布", "status": "pending", "description": "正式上线发布"},
-                {"step": 10, "name": "运维支持", "status": "pending", "description": "后续运维和支持"}
+                {"flowNodeName": "需求收集", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "需求分析", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "产品设计", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "开发实现", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "单元测试", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "集成测试", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "用户验收", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "部署准备", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "正式发布", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []},
+                {"flowNodeName": "运维支持", "auditStatus": null, "defaultAuditUserId": 10846285, "defaultAuditUserName": "王荣", "defaultTime": "", "auditUserList": []}
             ], null, 2);
             break;
         case 'empty':
