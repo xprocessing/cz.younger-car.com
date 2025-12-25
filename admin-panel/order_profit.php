@@ -37,6 +37,9 @@ switch ($action) {
     case 'import_post':
         $orderProfitController->importPost();
         break;
+    case 'export':
+        $orderProfitController->export();
+        break;
     default:
         $orderProfitController->index();
         break;

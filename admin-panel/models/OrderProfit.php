@@ -527,7 +527,7 @@ class OrderProfit {
     
     // 获取所有符合筛选条件的数据（用于导出）
     public function getAllWithFilters($keyword = '', $platformName = '', $storeId = '', $startDate = '', $endDate = '', $rateMin = '', $rateMax = '') {
-        // 直接调用searchWithFilters方法，但不限制数量
-        return $this->searchWithFilters($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax, null, 0);
+        // 限制最多100条数据
+        return $this->searchWithFilters($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax, 100, 0);
     }
 }
