@@ -166,4 +166,6 @@ try {
 
 // 输出最终JSON响应
 echo json_encode($response, JSON_UNESCAPED_UNICODE);
+
+//请求参考链接：https://cz.younger-car.com/xlingxing/php/get_orders_profit2db.php&nDaysAgo=1
 ?>
