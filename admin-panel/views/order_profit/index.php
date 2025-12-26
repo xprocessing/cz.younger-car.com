@@ -60,7 +60,7 @@
                     <?php endforeach; ?>
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label for="store_id" class="form-label">店铺筛选</label>
                 <select name="store_id" class="form-select">
                     <option value="">全部店铺</option>
@@ -98,12 +98,12 @@
                     <?php endif; ?>
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label for="start_date" class="form-label">下单时间起始</label>
                 <input type="date" name="start_date" class="form-control"
                        value="<?php echo $_GET['start_date'] ?? ''; ?>">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label for="end_date" class="form-label">下单时间结束</label>
                 <input type="date" name="end_date" class="form-control"
                        value="<?php echo $_GET['end_date'] ?? ''; ?>">
