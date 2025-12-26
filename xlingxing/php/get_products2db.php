@@ -28,28 +28,23 @@ try {
     }
     require_once $apiPath;
 
-    // ========== 领星API调用逻辑（与get_products.php保持一致） ==========
+    // ========== 领星API调用逻辑 ==========
     $offset = $_GET['offset'] ?? 0;
     $length = $_GET['length'] ?? 100;
     
     $apiClient = new LingXingApiClient();
     $currentTimestamp = time();
-    // 保持与get_products.php相同的参数（仅offset和length）
     $productParams = [
         'offset' => $offset,
         'length' => $length,
-        'update_time_end'=>$currentTimestamp         
+        'update_time_end' => $currentTimestamp         
     ];
 
-    // 调用与get_products.php相同的接口
     $apiResult = $apiClient->post('/erp/sc/routing/data/local_inventory/productList', $productParams);
-    
-    // 关键修改：根据get_products.php的返回结构调整数据提取路径
-    // （假设API返回的产品列表直接在根节点的list中，需根据实际返回结构确认）
     $products = $apiResult['list'] ?? []; 
     
     $response['data']['api_products_count'] = count($products);
-    $response['logs'][] = "API返回原始数据结构：" . json_encode($apiResult, JSON_UNESCAPED_UNICODE); // 临时日志，用于调试
+    $response['logs'][] = "API返回原始数据结构：" . json_encode($apiResult, JSON_UNESCAPED_UNICODE);
 
     if (empty($products)) {
         $response['msg'] = '未获取到产品数据';
@@ -57,18 +52,26 @@ try {
         exit;
     }
 
-    // ========== 数据库操作逻辑 ==========
-    $pdo = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-        DB_USER,
-        DB_PASS,
-        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false
-        ]
-    );
+    // ========== 数据库连接增强检查 ==========
+    try {
+        $pdo = new PDO(
+            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
+            DB_USER,
+            DB_PASS,
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false
+            ]
+        );
+        // 测试连接有效性
+        $pdo->query("SELECT 1");
+        $response['logs'][] = "数据库连接成功";
+    } catch (PDOException $e) {
+        throw new Exception("数据库连接失败：" . $e->getMessage() . " (SQLSTATE: " . $e->getCode() . ")");
+    }
 
+    // ========== SQL语句与执行优化 ==========
     $sql = "INSERT INTO products (
         id, cid, bid, sku, sku_identifier, product_name, pic_url,
         cg_delivery, cg_transport_costs, purchase_remark, cg_price,
@@ -99,10 +102,22 @@ try {
         global_tags = VALUES(global_tags)";
 
     $stmt = $pdo->prepare($sql);
+    if (!$stmt) {
+        $errorInfo = $pdo->errorInfo();
+        throw new Exception("SQL预处理失败：" . $errorInfo[2] . " (SQLSTATE: " . $errorInfo[0] . ")");
+    }
+
     $syncCount = 0;
 
     foreach ($products as $product) {
-        // 时间字段处理（根据API返回的时间格式调整，若为时间戳则用date转换）
+        // 关键字段非空检查
+        $sku = $product['sku'] ?? '';
+        if (empty($sku)) {
+            $response['logs'][] = "跳过无效产品：缺少sku字段";
+            continue;
+        }
+
+        // 时间字段处理
         $createTime = isset($product['create_time']) ? 
             (is_numeric($product['create_time']) ? date('Y-m-d H:i:s', $product['create_time']) : $product['create_time']) : null;
         $updateTime = isset($product['update_time']) ? 
@@ -119,7 +134,7 @@ try {
             ':id' => $product['id'] ?? null,
             ':cid' => $product['cid'] ?? null,
             ':bid' => $product['bid'] ?? null,
-            ':sku' => $product['sku'] ?? '', // sku为非空唯一键，必须赋值
+            ':sku' => $sku,
             ':sku_identifier' => $product['sku_identifier'] ?? null,
             ':product_name' => $product['product_name'] ?? null,
             ':pic_url' => $product['pic_url'] ?? null,
@@ -148,9 +163,32 @@ try {
             ':global_tags' => $globalTags
         ];
 
-        $stmt->execute($data);
-        $syncCount++;
-        $response['logs'][] = "产品【{$data[':sku']}】同步成功";
+        // 执行SQL并捕捉详细错误
+        try {
+            $response['logs'][] = "准备插入产品【{$sku}】，数据：" . json_encode($data, JSON_UNESCAPED_UNICODE);
+            $executionSuccess = $stmt->execute($data);
+            
+            if (!$executionSuccess) {
+                $errorInfo = $stmt->errorInfo();
+                throw new Exception(
+                    "产品【{$sku}】执行失败：" . 
+                    "SQLSTATE: {$errorInfo[0]}, 错误码: {$errorInfo[1]}, 错误信息: {$errorInfo[2]}"
+                );
+            }
+            
+            // 检查受影响的行数（处理重复键更新的情况）
+            $rowCount = $stmt->rowCount();
+            if ($rowCount > 0) {
+                $syncCount++;
+                $response['logs'][] = "产品【{$sku}】同步成功（影响行数：{$rowCount}）";
+            } else {
+                $response['logs'][] = "产品【{$sku}】无变化（未更新）";
+            }
+        } catch (PDOException $e) {
+            $response['logs'][] = "产品【{$sku}】插入失败：" . $e->getMessage() . " (SQLSTATE: " . $e->getCode() . ")";
+            // 如需中断处理可取消注释
+            // throw new Exception("处理产品【{$sku}】时出错：" . $e->getMessage());
+        }
     }
 
     $response['data']['synced_count'] = $syncCount;
@@ -159,7 +197,7 @@ try {
 } catch (Exception $e) {
     $response['code'] = 500;
     $response['msg'] = '操作失败：' . $e->getMessage();
-    $response['logs'] = [];
+    $response['logs'][] = "全局错误：" . $e->getMessage() . " 行号：" . $e->getLine();
     error_log("[产品同步错误] " . date('Y-m-d H:i:s') . "：" . $e->getMessage() . " 行号：" . $e->getLine());
 }
 
