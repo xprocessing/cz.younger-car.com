@@ -686,4 +686,52 @@ class OrderProfit {
         
         return $distribution;
     }
+    
+    // 按品牌统计最近30天的利润和利润率
+    public function getBrandStats($last30DaysStart, $endDate) {
+        $sql = "SELECT op.*, p.brand_name
+                FROM order_profit op
+                LEFT JOIN products p ON op.local_sku = p.sku
+                WHERE DATE(op.global_purchase_time) >= ? AND DATE(op.global_purchase_time) <= ?
+                ORDER BY p.brand_name";
+        
+        $params = [$last30DaysStart, $endDate];
+        $stmt = $this->db->query($sql, $params);
+        $data = $stmt->fetchAll();
+        
+        // 按品牌分组统计
+        $brandStats = [];
+        
+        if (is_array($data) && count($data) > 0) {
+            foreach ($data as $row) {
+                $brandName = $row['brand_name'] ?? '未知品牌';
+                
+                // 确保该品牌的统计数组存在
+                if (!isset($brandStats[$brandName])) {
+                    $brandStats[$brandName] = [
+                        'brand_name' => $brandName,
+                        'order_count' => 0,
+                        'total_profit' => 0,
+                        'total_profit_rate' => 0,
+                        'avg_profit_rate' => 0
+                    ];
+                }
+                
+                // 解析数值并累加
+                $profit = parseCurrencyAmount($row['profit_amount'] ?? '0');
+                $profitRate = parseCurrencyAmount($row['profit_rate'] ?? '0');
+                
+                $brandStats[$brandName]['order_count']++;
+                $brandStats[$brandName]['total_profit'] += $profit;
+                $brandStats[$brandName]['total_profit_rate'] += $profitRate;
+            }
+            
+            // 计算平均利润率
+            foreach ($brandStats as &$stat) {
+                $stat['avg_profit_rate'] = $stat['order_count'] > 0 ? ($stat['total_profit_rate'] / $stat['order_count']) : 0;
+            }
+        }
+        
+        return array_values($brandStats);
+    }
 }

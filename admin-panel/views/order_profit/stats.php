@@ -241,6 +241,46 @@
     </div>
 </div>
 
+<!-- 最近30天按品牌统计 -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">最近30天按品牌统计</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>品牌名称</th>
+                        <th>订单数量</th>
+                        <th>总利润</th>
+                        <th>平均利润率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($brandStats)): ?>
+                    <?php foreach ($brandStats as $brand): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($brand['brand_name']); ?></td>
+                        <td><?php echo number_format($brand['order_count']); ?></td>
+                        <td><strong>$<?php echo number_format($brand['total_profit'], 2); ?></strong></td>
+                        <td><strong
+                                class="<?php echo $brand['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
+                                <?php echo number_format($brand['avg_profit_rate'], 2); ?>%
+                            </strong></td>
+                    </tr>
+                    <?php endforeach; ?>
+                    <?php else: ?>
+                    <tr>
+                        <td colspan="4" class="text-center">暂无数据</td>
+                    </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <script>
 // 等待DOM加载完成
 document.addEventListener('DOMContentLoaded', function() {
