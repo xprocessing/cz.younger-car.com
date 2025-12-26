@@ -58,20 +58,6 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <label for="spu" class="form-label">SPU</label>
-                <select name="spu" class="form-select">
-                    <option value="">全部SPU</option>
-                    <?php if (!empty($spuList)): ?>
-                        <?php foreach ($spuList as $spu): ?>
-                            <option value="<?php echo htmlspecialchars($spu['spu']); ?>" 
-                                    <?php echo (($_GET['spu'] ?? '') == $spu['spu'] ? 'selected' : ''); ?>>
-                                <?php echo htmlspecialchars($spu['spu']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </select>
-            </div>
-            <div class="col-md-2">
                 <label for="status" class="form-label">状态</label>
                 <select name="status" class="form-select">
                     <option value="">全部状态</option>

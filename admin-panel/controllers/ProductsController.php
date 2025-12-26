@@ -22,18 +22,16 @@ class ProductsController {
         $keyword = $_GET['keyword'] ?? '';
         $brand = $_GET['brand'] ?? '';
         $category = $_GET['category'] ?? '';
-        $spu = $_GET['spu'] ?? '';
         $status = $_GET['status'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        $products = $this->productsModel->searchWithFilters($keyword, '', $spu, $status, $brand, $category, $limit, $offset);
-        $totalCount = $this->productsModel->getSearchWithFiltersCount($keyword, '', $spu, $status, $brand, $category);
+        $products = $this->productsModel->searchWithFilters($keyword, '', '', $status, $brand, $category, $limit, $offset);
+        $totalCount = $this->productsModel->getSearchWithFiltersCount($keyword, '', '', $status, $brand, $category);
         
         $totalPages = ceil($totalCount / $limit);
         $brandList = $this->productsModel->getBrandList();
         $categoryList = $this->productsModel->getCategoryList();
-        $spuList = $this->productsModel->getSpuList();
         $title = '商品管理';
         
         include VIEWS_DIR . '/layouts/header.php';
@@ -249,18 +247,16 @@ class ProductsController {
         $keyword = $_GET['keyword'] ?? '';
         $brand = $_GET['brand'] ?? '';
         $category = $_GET['category'] ?? '';
-        $spu = $_GET['spu'] ?? '';
         $status = $_GET['status'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        $products = $this->productsModel->searchWithFilters($keyword, '', $spu, $status, $brand, $category, $limit, $offset);
-        $totalCount = $this->productsModel->getSearchWithFiltersCount($keyword, '', $spu, $status, $brand, $category);
+        $products = $this->productsModel->searchWithFilters($keyword, '', '', $status, $brand, $category, $limit, $offset);
+        $totalCount = $this->productsModel->getSearchWithFiltersCount($keyword, '', '', $status, $brand, $category);
         
         $totalPages = ceil($totalCount / $limit);
         $brandList = $this->productsModel->getBrandList();
         $categoryList = $this->productsModel->getCategoryList();
-        $spuList = $this->productsModel->getSpuList();
         $title = '搜索结果';
         
         include VIEWS_DIR . '/layouts/header.php';
@@ -402,12 +398,11 @@ class ProductsController {
         $keyword = $_GET['keyword'] ?? '';
         $brand = $_GET['brand'] ?? '';
         $category = $_GET['category'] ?? '';
-        $spu = $_GET['spu'] ?? '';
         $status = $_GET['status'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        $products = $this->productsModel->export($keyword, '', $spu, $status, $brand, $category);
+        $products = $this->productsModel->export($keyword, '', '', $status, $brand, $category);
         
         $filename = 'products_export_' . date('YmdHis') . '.csv';
         header('Content-Type: text/csv; charset=utf-8');
