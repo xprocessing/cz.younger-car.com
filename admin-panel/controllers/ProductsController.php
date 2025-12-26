@@ -330,13 +330,13 @@ class ProductsController {
                 continue;
             }
             
-            if (isset($row[7]) && trim($row[7]) !== '' && !is_numeric(preg_replace('/[^\d.-]/', '', $row[7]))) {
+            if (isset($row[8]) && trim($row[8]) !== '' && !is_numeric(preg_replace('/[^\d.-]/', '', $row[8]))) {
                 $errors[] = "第 {$rowCount} 行：采购成本不是有效的数字";
                 $errorCount++;
                 continue;
             }
             
-            if (isset($row[8]) && trim($row[8]) !== '' && !is_numeric(preg_replace('/[^\d.-]/', '', $row[8]))) {
+            if (isset($row[9]) && trim($row[9]) !== '' && !is_numeric(preg_replace('/[^\d.-]/', '', $row[9]))) {
                 $errors[] = "第 {$rowCount} 行：运输成本不是有效的数字";
                 $errorCount++;
                 continue;
@@ -359,9 +359,9 @@ class ProductsController {
                 'open_status' => $row[13] ?? '1',
                 'is_combo' => $row[14] ?? '0',
                 'product_developer' => $row[15] ?? '',
-                'product_developer_uid' => !empty($row[16]) ? (int)$row[16] : null,
-                'cg_opt_username' => $row[17] ?? '',
-                'cg_opt_uid' => !empty($row[18]) ? (int)$row[18] : null
+                'product_developer_uid' => null,
+                'cg_opt_username' => $row[16] ?? '',
+                'cg_opt_uid' => null
             ];
             $successCount++;
         }

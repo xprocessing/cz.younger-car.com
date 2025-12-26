@@ -70,18 +70,25 @@
                 <h5 class="mb-0">CSV格式说明</h5>
             </div>
             <div class="card-body">
-                <h6>字段顺序（共10列）：</h6>
+                <h6>字段顺序（共17列）：</h6>
                 <ol class="list-unstyled">
-                    <li><strong>SKU</strong> - sku</li>
+                    <li><strong>SKU</strong> - sku (必填)</li>
+                    <li><strong>SKU识别码</strong> - sku_identifier</li>
                     <li><strong>SPU</strong> - spu</li>
-                    <li><strong>品牌</strong> - brand</li>
-                    <li><strong>分类</strong> - category</li>
+                    <li><strong>SPU ID</strong> - ps_id</li>
+                    <li><strong>品牌名称</strong> - brand_name</li>
+                    <li><strong>分类名称</strong> - category_name</li>
                     <li><strong>商品名称</strong> - product_name</li>
-                    <li><strong>商品名称(英文)</strong> - product_name_en</li>
-                    <li><strong>成本价</strong> - cost_price</li>
-                    <li><strong>销售价</strong> - sale_price</li>
-                    <li><strong>重量</strong> - weight</li>
-                    <li><strong>状态</strong> - status (1=启用, 0=禁用)</li>
+                    <li><strong>商品图片URL</strong> - pic_url</li>
+                    <li><strong>采购成本</strong> - cg_price</li>
+                    <li><strong>运输成本</strong> - cg_transport_costs</li>
+                    <li><strong>采购交付</strong> - cg_delivery</li>
+                    <li><strong>采购备注</strong> - purchase_remark</li>
+                    <li><strong>销售状态</strong> - status (1=在售, 0=停售, 2=开发中, 3=清仓)</li>
+                    <li><strong>启用状态</strong> - open_status (1=启用, 0=停用)</li>
+                    <li><strong>是否组合产品</strong> - is_combo (1=是, 0=否)</li>
+                    <li><strong>商品开发员</strong> - product_developer</li>
+                    <li><strong>采购员用户名</strong> - cg_opt_username</li>
                 </ol>
             </div>
         </div>
@@ -92,9 +99,9 @@
             </div>
             <div class="card-body">
                 <h6>CSV示例：</h6>
-                <pre class="bg-light p-2 rounded small"><code>SKU001,SPU001,品牌A,分类A,示例商品,Sample Product,99.00,199.00,0.5,1
-SKU002,SPU001,品牌A,分类A,示例商品2,Sample Product 2,149.00,299.00,0.8,1
-SKU003,SPU002,品牌B,分类B,示例商品3,Sample Product 3,199.00,399.00,1.2,1</code></pre>
+                <pre class="bg-light p-2 rounded small"><code>SKU001,SKU001-001,SPU001,1,品牌A,分类A,示例商品,http://example.com/img.jpg,99.0000,5.00,7天,备注,1,1,0,张三,李四
+SKU002,SKU002-001,SPU001,1,品牌A,分类A,示例商品2,http://example.com/img2.jpg,149.0000,8.00,7天,备注2,1,1,0,张三,李四
+SKU003,SKU003-001,SPU002,2,品牌B,分类B,示例商品3,http://example.com/img3.jpg,199.0000,10.00,10天,备注3,1,1,0,王五,赵六</code></pre>
                 
                 <div class="mt-3">
                     <button class="btn btn-sm btn-outline-primary w-100" onclick="downloadTemplate()">
@@ -126,9 +133,9 @@ SKU003,SPU002,品牌B,分类B,示例商品3,Sample Product 3,199.00,399.00,1.2,1
 
 <script>
 function downloadTemplate() {
-    const csvContent = `sku,spu,brand,category,product_name,product_name_en,cost_price,sale_price,weight,status
-SKU001,SPU001,品牌A,分类A,示例商品,Sample Product,99.00,199.00,0.5,1
-SKU002,SPU001,品牌A,分类A,示例商品2,Sample Product 2,149.00,299.00,0.8,1`;
+    const csvContent = `sku,sku_identifier,spu,ps_id,brand_name,category_name,product_name,pic_url,cg_price,cg_transport_costs,cg_delivery,purchase_remark,status,open_status,is_combo,product_developer,cg_opt_username
+SKU001,SKU001-001,SPU001,1,品牌A,分类A,示例商品,http://example.com/img.jpg,99.0000,5.00,7天,备注,1,1,0,张三,李四
+SKU002,SKU002-001,SPU001,1,品牌A,分类A,示例商品2,http://example.com/img2.jpg,149.0000,8.00,7天,备注2,1,1,0,张三,李四`;
     
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
@@ -169,8 +176,8 @@ document.getElementById('excel_file').addEventListener('change', function(e) {
         }
         
         const headerColumns = lines[0].split(',').length;
-        if (headerColumns !== 10) {
-            alert('文件格式不正确，应有10列，实际有' + headerColumns + '列');
+        if (headerColumns !== 17) {
+            alert('文件格式不正确，应有17列，实际有' + headerColumns + '列');
             e.target.value = '';
             return;
         }
