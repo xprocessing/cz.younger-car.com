@@ -102,7 +102,7 @@
             </div>
             <?php endif; ?>
             
-            <?php if (hasPermission('products.view')): ?>
+            <?php  if (isLoggedIn()):  ?>
             <div class="nav-item">
                 <a href="<?php echo APP_URL; ?>/products.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'active' : ''; ?>">
                     <i class="fa fa-shopping-cart"></i> 商品管理
