@@ -15,12 +15,14 @@ try {
     //前天的时间戳，按秒
     $twoDaysAgoTimestamp = $currentTimestamp - (5 * 24 * 60 * 60);
     //格式化为日期时间字符串
+    $offset =$_GET['offset']??0;
+    $length =$_GET['length']??100;
 
    
     // 调用POST接口示例
     $orderParams = [
-        'offset' => 0,
-        'length' => 100       
+        'offset' => $offset,
+        'length' => $length       
        
     ];
     $orders = $apiClient->post('/erp/sc/routing/data/local_inventory/productList', $orderParams);
@@ -31,6 +33,6 @@ try {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
 
-
+//访问链接示例：https://cz.younger-car.com/xlingxing/php/get_products.php?offset=0&length=100
 
 ?>
