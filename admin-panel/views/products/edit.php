@@ -183,19 +183,19 @@
                     <?php if (!empty($product['spu'])): ?>
                     <tr>
                         <td><strong>SPU:</strong></td>
-                        <td><?php echo htmlspecialchars($product['spu']); ?></td>
+                        <td><?php echo htmlspecialchars($product['spu'] ?? ''); ?></td>
                     </tr>
                     <?php endif; ?>
                     <?php if (!empty($product['brand'])): ?>
                     <tr>
                         <td><strong>品牌:</strong></td>
-                        <td><?php echo htmlspecialchars($product['brand']); ?></td>
+                        <td><?php echo htmlspecialchars($product['brand'] ?? ''); ?></td>
                     </tr>
                     <?php endif; ?>
                     <?php if (!empty($product['category'])): ?>
                     <tr>
                         <td><strong>分类:</strong></td>
-                        <td><?php echo htmlspecialchars($product['category']); ?></td>
+                        <td><?php echo htmlspecialchars($product['category'] ?? ''); ?></td>
                     </tr>
                     <?php endif; ?>
                 </table>

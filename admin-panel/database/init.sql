@@ -221,8 +221,8 @@ CREATE TABLE IF NOT EXISTS products (
     sku VARCHAR(50) NOT NULL UNIQUE  COMMENT 'sku',  -- sku非空且唯一
     sku_identifier VARCHAR(100) NULL COMMENT 'SKU识别码',
     product_name VARCHAR(255) NULL COMMENT '产品名称',
-    pic_url TEXT NULL COMMENT '产品图片URL',
-    cg_delivery TINYINT NULL COMMENT '采购：交期',
+    pic_url VARCHAR(255) NULL COMMENT '产品图片URL',
+    cg_delivery VARCHAR(255) NULL COMMENT '采购：交期',
     cg_transport_costs DECIMAL(10, 2) NULL COMMENT '采购：运输成本',
     purchase_remark TEXT NULL COMMENT '采购备注',
     cg_price DECIMAL(10, 4) NULL COMMENT '采购成本',

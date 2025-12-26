@@ -122,11 +122,11 @@
                                 <tr>
                                     <td><input type="checkbox" name="ids[]" value="<?php echo $product['id']; ?>"></td>
                                     <td><?php echo $product['id']; ?></td>
-                                    <td><?php echo htmlspecialchars($product['sku']); ?></td>
-                                    <td><?php echo htmlspecialchars($product['spu']); ?></td>
-                                    <td><?php echo htmlspecialchars($product['brand']); ?></td>
-                                    <td><?php echo htmlspecialchars($product['category']); ?></td>
-                                    <td><?php echo htmlspecialchars($product['product_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($product['sku'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($product['spu'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($product['brand'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($product['category'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($product['product_name'] ?? ''); ?></td>
                                     <td><?php echo number_format($product['cost_price'], 2); ?></td>
                                     <td><?php echo number_format($product['sale_price'], 2); ?></td>
                                     <td><?php echo number_format($product['weight'], 2); ?></td>
