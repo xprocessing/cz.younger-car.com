@@ -9,11 +9,13 @@
             if (!empty($_GET['keyword'])) $exportParams[] = 'keyword=' . urlencode($_GET['keyword']);
             if (!empty($_GET['brand'])) $exportParams[] = 'brand=' . urlencode($_GET['brand']);
             if (!empty($_GET['category'])) $exportParams[] = 'category=' . urlencode($_GET['category']);
-            if (!empty($_GET['spu'])) $exportParams[] = 'spu=' . urlencode($_GET['spu']);
             if (!empty($_GET['status'])) $exportParams[] = 'status=' . urlencode($_GET['status']);
             if (!empty($exportParams)) echo '&' . implode('&', $exportParams);
         ?>" class="btn btn-outline-primary me-2">
             <i class="fa fa-download"></i> 批量导出
+        </a>
+        <a href="<?php echo APP_URL; ?>/products.php?action=stats" class="btn btn-outline-info me-2">
+            <i class="fa fa-chart-bar"></i> 商品统计
         </a>
         <a href="<?php echo APP_URL; ?>/products.php?action=create" class="btn btn-primary">
             <i class="fa fa-plus"></i> 新增商品
@@ -173,7 +175,6 @@
                                     if (!empty($_GET['keyword'])) $params[] = 'keyword=' . urlencode($_GET['keyword']);
                                     if (!empty($_GET['brand'])) $params[] = 'brand=' . urlencode($_GET['brand']);
                                     if (!empty($_GET['category'])) $params[] = 'category=' . urlencode($_GET['category']);
-                                    if (!empty($_GET['spu'])) $params[] = 'spu=' . urlencode($_GET['spu']);
                                     if (!empty($_GET['status'])) $params[] = 'status=' . urlencode($_GET['status']);
                                     if (!empty($params)) echo '&' . implode('&', $params);
                                 ?>">上一页</a>
@@ -192,7 +193,6 @@
                                         if (!empty($_GET['keyword'])) $params[] = 'keyword=' . urlencode($_GET['keyword']);
                                         if (!empty($_GET['brand'])) $params[] = 'brand=' . urlencode($_GET['brand']);
                                         if (!empty($_GET['category'])) $params[] = 'category=' . urlencode($_GET['category']);
-                                        if (!empty($_GET['spu'])) $params[] = 'spu=' . urlencode($_GET['spu']);
                                         if (!empty($_GET['status'])) $params[] = 'status=' . urlencode($_GET['status']);
                                         if (!empty($params)) echo '&' . implode('&', $params);
                                     ?>"><?php echo $i; ?></a>

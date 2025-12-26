@@ -328,6 +328,88 @@ class Products {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    public function getCategoryStats() {
+        $sql = "SELECT 
+                    COALESCE(category_name, '未分类') as category_name,
+                    COUNT(*) as count
+                FROM products
+                GROUP BY category_name
+                ORDER BY count DESC";
+        $stmt = $this->db->query($sql);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $total = array_sum(array_column($results, 'count'));
+        foreach ($results as &$result) {
+            $result['percentage'] = $total > 0 ? ($result['count'] / $total) * 100 : 0;
+        }
+        
+        return $results;
+    }
+    
+    public function getStatusStats() {
+        $sql = "SELECT 
+                    status,
+                    COUNT(*) as count
+                FROM products
+                GROUP BY status
+                ORDER BY status";
+        $stmt = $this->db->query($sql);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $total = array_sum(array_column($results, 'count'));
+        foreach ($results as &$result) {
+            $result['percentage'] = $total > 0 ? ($result['count'] / $total) * 100 : 0;
+        }
+        
+        return $results;
+    }
+    
+    public function getBrandStats() {
+        $sql = "SELECT 
+                    COALESCE(brand_name, '未分类') as brand_name,
+                    COUNT(*) as count
+                FROM products
+                GROUP BY brand_name
+                ORDER BY count DESC";
+        $stmt = $this->db->query($sql);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $total = array_sum(array_column($results, 'count'));
+        foreach ($results as &$result) {
+            $result['percentage'] = $total > 0 ? ($result['count'] / $total) * 100 : 0;
+        }
+        
+        return $results;
+    }
+    
+    public function getTotalProducts() {
+        $sql = "SELECT COUNT(*) as count FROM products";
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetch();
+        return $result['count'];
+    }
+    
+    public function getTotalCategories() {
+        $sql = "SELECT COUNT(DISTINCT category_name) as count FROM products WHERE category_name IS NOT NULL AND category_name != ''";
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetch();
+        return $result['count'];
+    }
+    
+    public function getTotalBrands() {
+        $sql = "SELECT COUNT(DISTINCT brand_name) as count FROM products WHERE brand_name IS NOT NULL AND brand_name != ''";
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetch();
+        return $result['count'];
+    }
+    
+    public function getActiveProducts() {
+        $sql = "SELECT COUNT(*) as count FROM products WHERE status = '1'";
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetch();
+        return $result['count'];
+    }
+    
     public function batchInsert($data) {
         if (empty($data)) {
             return false;

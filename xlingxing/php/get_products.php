@@ -35,5 +35,7 @@ try {
 }
 
 //访问链接示例：https://cz.younger-car.com/xlingxing/php/get_products.php?offset=0&length=100
+//https://cz.younger-car.com/xlingxing/php/get_products2db.php?length=100&offset=201
+//https://cz.younger-car.com/xlingxing/php/get_products2db.php?length=100&offset=301
 
 ?>

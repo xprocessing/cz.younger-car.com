@@ -40,6 +40,9 @@ switch ($action) {
     case 'export':
         $productsController->export();
         break;
+    case 'stats':
+        $productsController->stats();
+        break;
     default:
         $productsController->index();
         break;

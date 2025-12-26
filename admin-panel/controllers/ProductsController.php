@@ -490,4 +490,23 @@ class ProductsController {
         fclose($output);
         exit;
     }
+    
+    public function stats() {
+        if (!isLoggedIn()) {
+            redirect(APP_URL . '/login.php');
+        }
+        
+        $categoryStats = $this->productsModel->getCategoryStats();
+        $statusStats = $this->productsModel->getStatusStats();
+        $brandStats = $this->productsModel->getBrandStats();
+        $totalProducts = $this->productsModel->getTotalProducts();
+        $totalCategories = $this->productsModel->getTotalCategories();
+        $totalBrands = $this->productsModel->getTotalBrands();
+        $activeProducts = $this->productsModel->getActiveProducts();
+        
+        $title = '商品统计';
+        
+        include VIEWS_DIR . '/layouts/header.php';
+        include VIEWS_DIR . '/products/stats.php';
+    }
 }
