@@ -27,18 +27,8 @@ class ProductsController {
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        $params = [
-            'keyword' => $keyword,
-            'brand' => $brand,
-            'category' => $category,
-            'spu' => $spu,
-            'status' => $status,
-            'start_date' => $startDate,
-            'end_date' => $endDate
-        ];
-        
-        $products = $this->productsModel->search($params, $limit, $offset);
-        $totalCount = $this->productsModel->count($params);
+        $products = $this->productsModel->searchWithFilters($keyword, '', $spu, $status, $brand, $category, $limit, $offset);
+        $totalCount = $this->productsModel->getSearchWithFiltersCount($keyword, '', $spu, $status, $brand, $category);
         
         $totalPages = ceil($totalCount / $limit);
         $brandList = $this->productsModel->getBrandList();
@@ -264,18 +254,8 @@ class ProductsController {
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        $params = [
-            'keyword' => $keyword,
-            'brand' => $brand,
-            'category' => $category,
-            'spu' => $spu,
-            'status' => $status,
-            'start_date' => $startDate,
-            'end_date' => $endDate
-        ];
-        
-        $products = $this->productsModel->search($params, $limit, $offset);
-        $totalCount = $this->productsModel->count($params);
+        $products = $this->productsModel->searchWithFilters($keyword, '', $spu, $status, $brand, $category, $limit, $offset);
+        $totalCount = $this->productsModel->getSearchWithFiltersCount($keyword, '', $spu, $status, $brand, $category);
         
         $totalPages = ceil($totalCount / $limit);
         $brandList = $this->productsModel->getBrandList();
@@ -427,17 +407,7 @@ class ProductsController {
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        $params = [
-            'keyword' => $keyword,
-            'brand' => $brand,
-            'category' => $category,
-            'spu' => $spu,
-            'status' => $status,
-            'start_date' => $startDate,
-            'end_date' => $endDate
-        ];
-        
-        $products = $this->productsModel->search($params);
+        $products = $this->productsModel->export($keyword, '', $spu, $status, $brand, $category);
         
         $filename = 'products_export_' . date('YmdHis') . '.csv';
         header('Content-Type: text/csv; charset=utf-8');

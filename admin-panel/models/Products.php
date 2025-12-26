@@ -327,4 +327,59 @@ class Products {
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
+    public function batchInsert($data) {
+        if (empty($data)) {
+            return false;
+        }
+        
+        $sql = "INSERT INTO products (
+                    cid, bid, sku, sku_identifier, product_name, pic_url, 
+                    cg_delivery, cg_transport_costs, purchase_remark, cg_price, 
+                    status, open_status, is_combo, create_time, update_time, 
+                    product_developer_uid, cg_opt_uid, cg_opt_username, spu, ps_id,
+                    attribute, brand_name, category_name, status_text, 
+                    product_developer, supplier_quote, aux_relation_list, custom_fields, global_tags
+                ) VALUES ";
+        
+        $values = [];
+        $params = [];
+        
+        foreach ($data as $row) {
+            $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $params[] = $row['cid'] ?? null;
+            $params[] = $row['bid'] ?? null;
+            $params[] = $row['sku'];
+            $params[] = $row['sku_identifier'] ?? null;
+            $params[] = $row['product_name'] ?? null;
+            $params[] = $row['pic_url'] ?? null;
+            $params[] = $row['cg_delivery'] ?? null;
+            $params[] = $row['cg_transport_costs'] ?? null;
+            $params[] = $row['purchase_remark'] ?? null;
+            $params[] = $row['cg_price'] ?? null;
+            $params[] = $row['status'] ?? null;
+            $params[] = $row['open_status'] ?? null;
+            $params[] = $row['is_combo'] ?? null;
+            $params[] = date('Y-m-d H:i:s');
+            $params[] = date('Y-m-d H:i:s');
+            $params[] = $row['product_developer_uid'] ?? null;
+            $params[] = $row['cg_opt_uid'] ?? null;
+            $params[] = $row['cg_opt_username'] ?? null;
+            $params[] = $row['spu'] ?? null;
+            $params[] = $row['ps_id'] ?? null;
+            $params[] = isset($row['attribute']) ? json_encode($row['attribute']) : null;
+            $params[] = $row['brand_name'] ?? null;
+            $params[] = $row['category_name'] ?? null;
+            $params[] = $row['status_text'] ?? null;
+            $params[] = $row['product_developer'] ?? null;
+            $params[] = isset($row['supplier_quote']) ? json_encode($row['supplier_quote']) : null;
+            $params[] = isset($row['aux_relation_list']) ? json_encode($row['aux_relation_list']) : null;
+            $params[] = isset($row['custom_fields']) ? json_encode($row['custom_fields']) : null;
+            $params[] = isset($row['global_tags']) ? json_encode($row['global_tags']) : null;
+        }
+        
+        $sql .= implode(', ', $values);
+        
+        return $this->db->query($sql, $params);
+    }
 }
