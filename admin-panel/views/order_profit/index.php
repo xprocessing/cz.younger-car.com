@@ -9,6 +9,7 @@
             if (!empty($_GET['keyword'])) $exportParams[] = 'keyword=' . urlencode($_GET['keyword']);
             if (!empty($_GET['platform_name'])) $exportParams[] = 'platform_name=' . urlencode($_GET['platform_name']);
             if (!empty($_GET['store_id'])) $exportParams[] = 'store_id=' . urlencode($_GET['store_id']);
+            if (!empty($_GET['warehouse_name'])) $exportParams[] = 'warehouse_name=' . urlencode($_GET['warehouse_name']);
             if (!empty($_GET['start_date'])) $exportParams[] = 'start_date=' . urlencode($_GET['start_date']);
             if (!empty($_GET['end_date'])) $exportParams[] = 'end_date=' . urlencode($_GET['end_date']);
             if (isset($_GET['rate_min'])) $exportParams[] = 'rate_min=' . urlencode($_GET['rate_min']);
@@ -84,6 +85,20 @@
                 </select>
             </div>
             <div class="col-md-2">
+                <label for="warehouse_name" class="form-label">发货仓库</label>
+                <select name="warehouse_name" class="form-select">
+                    <option value="">全部仓库</option>
+                    <?php if (!empty($warehouseList)): ?>
+                        <?php foreach ($warehouseList as $warehouse): ?>
+                            <option value="<?php echo htmlspecialchars($warehouse['warehouse_name']); ?>" 
+                                    <?php echo (($_GET['warehouse_name'] ?? '') == $warehouse['warehouse_name'] ? 'selected' : ''); ?>>
+                                <?php echo htmlspecialchars($warehouse['warehouse_name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
+            </div>
+            <div class="col-md-2">
                 <label for="start_date" class="form-label">下单时间起始</label>
                 <input type="date" name="start_date" class="form-control"
                        value="<?php echo $_GET['start_date'] ?? ''; ?>">
@@ -140,6 +155,7 @@
             if (!empty($_GET['keyword'])) $params[] = 'keyword=' . urlencode($_GET['keyword']);
             if (!empty($_GET['platform_name'])) $params[] = 'platform_name=' . urlencode($_GET['platform_name']);
             if (!empty($_GET['store_id'])) $params[] = 'store_id=' . urlencode($_GET['store_id']);
+            if (!empty($_GET['warehouse_name'])) $params[] = 'warehouse_name=' . urlencode($_GET['warehouse_name']);
             if (!empty($_GET['start_date'])) $params[] = 'start_date=' . urlencode($_GET['start_date']);
             if (!empty($_GET['end_date'])) $params[] = 'end_date=' . urlencode($_GET['end_date']);
             $baseQuery = implode('&', $params);
@@ -182,7 +198,7 @@
 
 <!-- 当前筛选条件 -->
 <?php 
-$hasFilters = !empty($_GET['keyword']) || !empty($_GET['platform_name']) || !empty($_GET['store_id']) || !empty($_GET['start_date']) || !empty($_GET['end_date']) || isset($_GET['rate_min']) || isset($_GET['rate_max']);
+$hasFilters = !empty($_GET['keyword']) || !empty($_GET['platform_name']) || !empty($_GET['store_id']) || !empty($_GET['warehouse_name']) || !empty($_GET['start_date']) || !empty($_GET['end_date']) || isset($_GET['rate_min']) || isset($_GET['rate_max']);
 if ($hasFilters): ?>
 <div class="alert alert-info d-flex align-items-center" role="alert">
     <i class="fa fa-filter me-2"></i>
@@ -203,6 +219,7 @@ if ($hasFilters): ?>
             }
             $filters[] = "店铺: " . htmlspecialchars($storeName);
         }
+        if (!empty($_GET['warehouse_name'])) $filters[] = "发货仓库: " . htmlspecialchars($_GET['warehouse_name']);
         // 添加下单时间筛选条件显示
         if (!empty($_GET['start_date']) || !empty($_GET['end_date'])) {
             $dateFilter = "下单时间: ";

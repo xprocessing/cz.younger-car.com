@@ -23,14 +23,15 @@ class OrderProfitController {
         $keyword = $_GET['keyword'] ?? '';
         $platformName = $_GET['platform_name'] ?? '';
         $storeId = $_GET['store_id'] ?? '';
+        $warehouseName = $_GET['warehouse_name'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         $rateMin = $_GET['rate_min'] ?? '';
         $rateMax = $_GET['rate_max'] ?? '';
         
-        if ($keyword || $platformName || $storeId || $startDate || $endDate || $rateMin || $rateMax) {
-            $profits = $this->orderProfitModel->searchWithFilters($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax, $limit, $offset);
-            $totalCount = $this->orderProfitModel->getSearchWithFiltersCount($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax);
+        if ($keyword || $platformName || $storeId || $warehouseName || $startDate || $endDate || $rateMin || $rateMax) {
+            $profits = $this->orderProfitModel->searchWithFilters($keyword, $platformName, $storeId, $warehouseName, $startDate, $endDate, $rateMin, $rateMax, $limit, $offset);
+            $totalCount = $this->orderProfitModel->getSearchWithFiltersCount($keyword, $platformName, $storeId, $warehouseName, $startDate, $endDate, $rateMin, $rateMax);
         } else {
             $profits = $this->orderProfitModel->getAll($limit, $offset);
             $totalCount = $this->orderProfitModel->getCount();
@@ -38,6 +39,7 @@ class OrderProfitController {
         
         $totalPages = ceil($totalCount / $limit);
         $storeList = $this->orderProfitModel->getStoreList();
+        $warehouseList = $this->orderProfitModel->getWarehouseList();
         $title = '订单利润管理';
         
         include VIEWS_DIR . '/layouts/header.php';
@@ -223,17 +225,19 @@ class OrderProfitController {
         $keyword = $_GET['keyword'] ?? '';
         $platformName = $_GET['platform_name'] ?? '';
         $storeId = $_GET['store_id'] ?? '';
+        $warehouseName = $_GET['warehouse_name'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         $rateMin = $_GET['rate_min'] ?? '';
         $rateMax = $_GET['rate_max'] ?? '';
         
         // 重用searchWithFilters方法来处理所有筛选条件，包括平台名称和日期范围
-        $profits = $this->orderProfitModel->searchWithFilters($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax, $limit, $offset);
-        $totalCount = $this->orderProfitModel->getSearchWithFiltersCount($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax);
+        $profits = $this->orderProfitModel->searchWithFilters($keyword, $platformName, $storeId, $warehouseName, $startDate, $endDate, $rateMin, $rateMax, $limit, $offset);
+        $totalCount = $this->orderProfitModel->getSearchWithFiltersCount($keyword, $platformName, $storeId, $warehouseName, $startDate, $endDate, $rateMin, $rateMax);
         
         $totalPages = ceil($totalCount / $limit);
         $storeList = $this->orderProfitModel->getStoreList();
+        $warehouseList = $this->orderProfitModel->getWarehouseList();
         $title = '搜索结果';
         
         include VIEWS_DIR . '/layouts/header.php';
@@ -402,13 +406,14 @@ class OrderProfitController {
         $keyword = $_GET['keyword'] ?? '';
         $platformName = $_GET['platform_name'] ?? '';
         $storeId = $_GET['store_id'] ?? '';
+        $warehouseName = $_GET['warehouse_name'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         $rateMin = $_GET['rate_min'] ?? '';
         $rateMax = $_GET['rate_max'] ?? '';
         
         // 获取所有符合条件的数据（不限制数量）
-        $profits = $this->orderProfitModel->getAllWithFilters($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax);
+        $profits = $this->orderProfitModel->getAllWithFilters($keyword, $platformName, $storeId, $warehouseName, $startDate, $endDate, $rateMin, $rateMax);
         
         // 设置CSV文件头
         $filename = 'order_profit_export_' . date('YmdHis') . '.csv';

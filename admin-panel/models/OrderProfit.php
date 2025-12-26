@@ -232,7 +232,7 @@ class OrderProfit {
     }
     
     // 支持多条件搜索的订单利润
-    public function searchWithFilters($keyword = '', $platformName = '', $storeId = '', $startDate = '', $endDate = '', $rateMin = '', $rateMax = '', $limit = null, $offset = 0) {
+    public function searchWithFilters($keyword = '', $platformName = '', $storeId = '', $warehouseName = '', $startDate = '', $endDate = '', $rateMin = '', $rateMax = '', $limit = null, $offset = 0) {
         $sql = "SELECT op.*, s.platform_name, s.store_name 
                 FROM order_profit op 
                 LEFT JOIN store s ON op.store_id = s.store_id 
@@ -255,6 +255,12 @@ class OrderProfit {
         if ($storeId) {
             $sql .= " AND op.store_id = ?";
             $params[] = $storeId;
+        }
+        
+        // 发货仓库筛选
+        if ($warehouseName) {
+            $sql .= " AND op.warehouse_name = ?";
+            $params[] = $warehouseName;
         }
         
         // 下单时间起始筛选
@@ -311,7 +317,7 @@ class OrderProfit {
     }
     
     // 支持多条件搜索的结果数量
-    public function getSearchWithFiltersCount($keyword = '', $platformName = '', $storeId = '', $startDate = '', $endDate = '', $rateMin = '', $rateMax = '') {
+    public function getSearchWithFiltersCount($keyword = '', $platformName = '', $storeId = '', $warehouseName = '', $startDate = '', $endDate = '', $rateMin = '', $rateMax = '') {
         $sql = "SELECT op.* FROM order_profit op 
                 LEFT JOIN store s ON op.store_id = s.store_id 
                 WHERE 1=1";
@@ -333,6 +339,12 @@ class OrderProfit {
         if ($storeId) {
             $sql .= " AND op.store_id = ?";
             $params[] = $storeId;
+        }
+        
+        // 发货仓库筛选
+        if ($warehouseName) {
+            $sql .= " AND op.warehouse_name = ?";
+            $params[] = $warehouseName;
         }
         
         // 下单时间起始筛选
@@ -480,6 +492,13 @@ class OrderProfit {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    // 获取发货仓库列表
+    public function getWarehouseList() {
+        $sql = "SELECT DISTINCT warehouse_name FROM order_profit WHERE warehouse_name IS NOT NULL AND warehouse_name != '' ORDER BY warehouse_name";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
     // 根据store_id获取店铺详细信息
     public function getStoreInfo($storeId) {
         $sql = "SELECT platform_name, store_name FROM store WHERE store_id = ?";
@@ -526,9 +545,9 @@ class OrderProfit {
     }
     
     // 获取所有符合筛选条件的数据（用于导出）
-    public function getAllWithFilters($keyword = '', $platformName = '', $storeId = '', $startDate = '', $endDate = '', $rateMin = '', $rateMax = '') {
+    public function getAllWithFilters($keyword = '', $platformName = '', $storeId = '', $warehouseName = '', $startDate = '', $endDate = '', $rateMin = '', $rateMax = '') {
         // 限制最多100条数据
-        return $this->searchWithFilters($keyword, $platformName, $storeId, $startDate, $endDate, $rateMin, $rateMax, 100, 0);
+        return $this->searchWithFilters($keyword, $platformName, $storeId, $warehouseName, $startDate, $endDate, $rateMin, $rateMax, 100, 0);
     }
     
     // 按平台统计最近30天的利润和利润率
