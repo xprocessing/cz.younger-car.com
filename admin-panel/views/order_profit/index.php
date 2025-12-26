@@ -84,7 +84,7 @@
                     <?php endif; ?>
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label for="warehouse_name" class="form-label">发货仓库</label>
                 <select name="warehouse_name" class="form-select">
                     <option value="">全部仓库</option>
