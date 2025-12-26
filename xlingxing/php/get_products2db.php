@@ -33,7 +33,7 @@ try {
     $length = $_GET['length'] ?? 100;
     
     $apiClient = new LingXingApiClient();
-    
+    $currentTimestamp = time();
     // 保持与get_products.php相同的参数（仅offset和length）
     $productParams = [
         'offset' => $offset,
