@@ -14,7 +14,7 @@ $response = [
 ];
 
 try {
-    // ========== 引入配置文件（提前引入，避免后续依赖） ==========
+    // ========== 引入配置文件 ==========
     $configPath = __DIR__ . '/../../admin-panel/config/config.php';
     if (!file_exists($configPath)) {
         throw new Exception("配置文件不存在：{$configPath}");
@@ -28,23 +28,27 @@ try {
     }
     require_once $apiPath;
 
-    // ========== 领星API调用逻辑 ==========
+    // ========== 领星API调用逻辑（与get_products.php保持一致） ==========
     $offset = $_GET['offset'] ?? 0;
     $length = $_GET['length'] ?? 100;
     
     $apiClient = new LingXingApiClient();
     
-    // 构造请求参数
+    // 保持与get_products.php相同的参数（仅offset和length）
     $productParams = [
         'offset' => $offset,
         'length' => $length       
     ];
 
-    // 调用API获取产品数据（参考get_products.php中的接口）
+    // 调用与get_products.php相同的接口
     $apiResult = $apiClient->post('/erp/sc/routing/data/local_inventory/productList', $productParams);
-    $products = $apiResult['data']['list'] ?? []; // 假设API返回结构与订单类似
+    
+    // 关键修改：根据get_products.php的返回结构调整数据提取路径
+    // （假设API返回的产品列表直接在根节点的list中，需根据实际返回结构确认）
+    $products = $apiResult['list'] ?? []; 
     
     $response['data']['api_products_count'] = count($products);
+    $response['logs'][] = "API返回原始数据结构：" . json_encode($apiResult, JSON_UNESCAPED_UNICODE); // 临时日志，用于调试
 
     if (empty($products)) {
         $response['msg'] = '未获取到产品数据';
@@ -53,7 +57,6 @@ try {
     }
 
     // ========== 数据库操作逻辑 ==========
-    // 初始化PDO连接
     $pdo = new PDO(
         "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
@@ -61,131 +64,61 @@ try {
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false // 禁用模拟预处理，提升安全性
+            PDO::ATTR_EMULATE_PREPARES => false
         ]
     );
 
-    // 使用INSERT ... ON DUPLICATE KEY UPDATE优化（sku是唯一键）
     $sql = "INSERT INTO products (
-        id,
-        cid,
-        bid,
-        sku,
-        sku_identifier,
-        product_name,
-        pic_url,
-        cg_delivery,
-        cg_transport_costs,
-        purchase_remark,
-        cg_price,
-        status,
-        open_status,
-        is_combo,
-        create_time,
-        update_time,
-        product_developer_uid,
-        cg_opt_uid,
-        cg_opt_username,
-        spu,
-        ps_id,
-        attribute,
-        brand_name,
-        category_name,
-        status_text,
-        product_developer,
-        supplier_quote,
-        aux_relation_list,
-        custom_fields,
-        global_tags
+        id, cid, bid, sku, sku_identifier, product_name, pic_url,
+        cg_delivery, cg_transport_costs, purchase_remark, cg_price,
+        status, open_status, is_combo, create_time, update_time,
+        product_developer_uid, cg_opt_uid, cg_opt_username, spu, ps_id,
+        attribute, brand_name, category_name, status_text, product_developer,
+        supplier_quote, aux_relation_list, custom_fields, global_tags
     ) VALUES (
-        :id,
-        :cid,
-        :bid,
-        :sku,
-        :sku_identifier,
-        :product_name,
-        :pic_url,
-        :cg_delivery,
-        :cg_transport_costs,
-        :purchase_remark,
-        :cg_price,
-        :status,
-        :open_status,
-        :is_combo,
-        :create_time,
-        :update_time,
-        :product_developer_uid,
-        :cg_opt_uid,
-        :cg_opt_username,
-        :spu,
-        :ps_id,
-        :attribute,
-        :brand_name,
-        :category_name,
-        :status_text,
-        :product_developer,
-        :supplier_quote,
-        :aux_relation_list,
-        :custom_fields,
-        :global_tags
+        :id, :cid, :bid, :sku, :sku_identifier, :product_name, :pic_url,
+        :cg_delivery, :cg_transport_costs, :purchase_remark, :cg_price,
+        :status, :open_status, :is_combo, :create_time, :update_time,
+        :product_developer_uid, :cg_opt_uid, :cg_opt_username, :spu, :ps_id,
+        :attribute, :brand_name, :category_name, :status_text, :product_developer,
+        :supplier_quote, :aux_relation_list, :custom_fields, :global_tags
     ) ON DUPLICATE KEY UPDATE
-        cid = VALUES(cid),
-        bid = VALUES(bid),
-        sku_identifier = VALUES(sku_identifier),
-        product_name = VALUES(product_name),
-        pic_url = VALUES(pic_url),
-        cg_delivery = VALUES(cg_delivery),
-        cg_transport_costs = VALUES(cg_transport_costs),
-        purchase_remark = VALUES(purchase_remark),
-        cg_price = VALUES(cg_price),
-        status = VALUES(status),
-        open_status = VALUES(open_status),
-        is_combo = VALUES(is_combo),
-        create_time = VALUES(create_time),
-        update_time = VALUES(update_time),
-        product_developer_uid = VALUES(product_developer_uid),
-        cg_opt_uid = VALUES(cg_opt_uid),
-        cg_opt_username = VALUES(cg_opt_username),
-        spu = VALUES(spu),
-        ps_id = VALUES(ps_id),
-        attribute = VALUES(attribute),
-        brand_name = VALUES(brand_name),
-        category_name = VALUES(category_name),
-        status_text = VALUES(status_text),
-        product_developer = VALUES(product_developer),
-        supplier_quote = VALUES(supplier_quote),
-        aux_relation_list = VALUES(aux_relation_list),
-        custom_fields = VALUES(custom_fields),
+        cid = VALUES(cid), bid = VALUES(bid), sku_identifier = VALUES(sku_identifier),
+        product_name = VALUES(product_name), pic_url = VALUES(pic_url),
+        cg_delivery = VALUES(cg_delivery), cg_transport_costs = VALUES(cg_transport_costs),
+        purchase_remark = VALUES(purchase_remark), cg_price = VALUES(cg_price),
+        status = VALUES(status), open_status = VALUES(open_status), is_combo = VALUES(is_combo),
+        create_time = VALUES(create_time), update_time = VALUES(update_time),
+        product_developer_uid = VALUES(product_developer_uid), cg_opt_uid = VALUES(cg_opt_uid),
+        cg_opt_username = VALUES(cg_opt_username), spu = VALUES(spu), ps_id = VALUES(ps_id),
+        attribute = VALUES(attribute), brand_name = VALUES(brand_name),
+        category_name = VALUES(category_name), status_text = VALUES(status_text),
+        product_developer = VALUES(product_developer), supplier_quote = VALUES(supplier_quote),
+        aux_relation_list = VALUES(aux_relation_list), custom_fields = VALUES(custom_fields),
         global_tags = VALUES(global_tags)";
 
     $stmt = $pdo->prepare($sql);
     $syncCount = 0;
 
-    // 遍历产品数据并处理
     foreach ($products as $product) {
-        // 安全取值：避免数组索引未定义错误
-        // 注意：这里的字段映射是基于常规命名推测的，实际应根据API返回的字段进行调整
-        
-        // 处理时间格式：将时间戳转为数据库datetime格式
-        $createTime = $product['create_time'] ?? 0;
-        $createTime = $createTime ? date('Y-m-d H:i:s', $createTime) : null;
-        
-        $updateTime = $product['update_time'] ?? 0;
-        $updateTime = $updateTime ? date('Y-m-d H:i:s', $updateTime) : date('Y-m-d H:i:s');
+        // 时间字段处理（根据API返回的时间格式调整，若为时间戳则用date转换）
+        $createTime = isset($product['create_time']) ? 
+            (is_numeric($product['create_time']) ? date('Y-m-d H:i:s', $product['create_time']) : $product['create_time']) : null;
+        $updateTime = isset($product['update_time']) ? 
+            (is_numeric($product['update_time']) ? date('Y-m-d H:i:s', $product['update_time']) : $product['update_time']) : date('Y-m-d H:i:s');
 
-        // 处理JSON字段
+        // JSON字段处理
         $attribute = isset($product['attribute']) ? json_encode($product['attribute'], JSON_UNESCAPED_UNICODE) : null;
         $supplierQuote = isset($product['supplier_quote']) ? json_encode($product['supplier_quote'], JSON_UNESCAPED_UNICODE) : null;
         $auxRelationList = isset($product['aux_relation_list']) ? json_encode($product['aux_relation_list'], JSON_UNESCAPED_UNICODE) : null;
         $customFields = isset($product['custom_fields']) ? json_encode($product['custom_fields'], JSON_UNESCAPED_UNICODE) : null;
         $globalTags = isset($product['global_tags']) ? json_encode($product['global_tags'], JSON_UNESCAPED_UNICODE) : null;
 
-        // 构造数据数组
         $data = [
             ':id' => $product['id'] ?? null,
             ':cid' => $product['cid'] ?? null,
             ':bid' => $product['bid'] ?? null,
-            ':sku' => $product['sku'] ?? '',
+            ':sku' => $product['sku'] ?? '', // sku为非空唯一键，必须赋值
             ':sku_identifier' => $product['sku_identifier'] ?? null,
             ':product_name' => $product['product_name'] ?? null,
             ':pic_url' => $product['pic_url'] ?? null,
@@ -214,24 +147,20 @@ try {
             ':global_tags' => $globalTags
         ];
 
-        // 执行SQL
         $stmt->execute($data);
         $syncCount++;
         $response['logs'][] = "产品【{$data[':sku']}】同步成功";
     }
 
     $response['data']['synced_count'] = $syncCount;
-    $pdo = null; // 关闭连接
+    $pdo = null;
 
 } catch (Exception $e) {
-    // 统一异常处理
     $response['code'] = 500;
     $response['msg'] = '操作失败：' . $e->getMessage();
     $response['logs'] = [];
-    // 记录错误日志（生产环境建议开启）
     error_log("[产品同步错误] " . date('Y-m-d H:i:s') . "：" . $e->getMessage() . " 行号：" . $e->getLine());
 }
 
-// 输出最终JSON响应
 echo json_encode($response, JSON_UNESCAPED_UNICODE);
 ?>
