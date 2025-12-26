@@ -102,6 +102,14 @@
             </div>
             <?php endif; ?>
             
+            <?php if (hasPermission('products.view')): ?>
+            <div class="nav-item">
+                <a href="<?php echo APP_URL; ?>/products.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'active' : ''; ?>">
+                    <i class="fa fa-shopping-cart"></i> 商品管理
+                </a>
+            </div>
+            <?php endif; ?>
+            
             <?php if (isLoggedIn()): ?>
             <div class="nav-item">
                 <a href="<?php echo APP_URL; ?>/order_profit.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'order_profit.php' ? 'active' : ''; ?>">

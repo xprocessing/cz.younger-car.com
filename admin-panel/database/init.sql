@@ -90,7 +90,15 @@ INSERT INTO permissions (name, slug, description, module) VALUES
 ('查看运费', 'yunfei.view', '可以查看运费记录', 'yunfei'),
 ('创建运费', 'yunfei.create', '可以创建运费记录', 'yunfei'),
 ('编辑运费', 'yunfei.edit', '可以编辑运费记录', 'yunfei'),
-('删除运费', 'yunfei.delete', '可以删除运费记录', 'yunfei');
+('删除运费', 'yunfei.delete', '可以删除运费记录', 'yunfei'),
+
+-- 商品管理权限
+('查看商品', 'products.view', '可以查看商品列表', 'products'),
+('创建商品', 'products.create', '可以创建新商品', 'products'),
+('编辑商品', 'products.edit', '可以编辑现有商品', 'products'),
+('删除商品', 'products.delete', '可以删除商品', 'products'),
+('导入商品', 'products.import', '可以导入商品数据', 'products'),
+('导出商品', 'products.export', '可以导出商品数据', 'products');
 
 -- 给角色分配权限
 
@@ -103,14 +111,21 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 (2, 13), -- 查看数据
 (2, 14), -- 创建数据
 (2, 15), -- 编辑数据
-(2, 16); -- 删除数据
+(2, 16), -- 删除数据
+(2, 22), -- 查看商品
+(2, 23), -- 创建商品
+(2, 24), -- 编辑商品
+(2, 25), -- 删除商品
+(2, 26), -- 导入商品
+(2, 27); -- 导出商品
 
 -- 查看者仅拥有查看权限
 INSERT INTO role_permissions (role_id, permission_id) VALUES
 (3, 1), -- 查看用户
 (3, 5), -- 查看角色
 (3, 9), -- 查看权限
-(3, 13); -- 查看数据
+(3, 13), -- 查看数据
+(3, 22); -- 查看商品
 
 -- 创建默认管理员用户
 INSERT INTO users (username, email, password, full_name) VALUES
@@ -203,31 +218,31 @@ CREATE TABLE IF NOT EXISTS products (
     id INT PRIMARY KEY,  -- 主键，非空且唯一
     cid INT NULL,
     bid INT NULL,
-    sku VARCHAR(50) NOT NULL UNIQUE,  -- sku非空且唯一
-    sku_identifier VARCHAR(100) NULL,
-    product_name VARCHAR(255) NULL,
-    pic_url TEXT NULL,
-    cg_delivery TINYINT NULL,
-    cg_transport_costs DECIMAL(10, 2) NULL,
-    purchase_remark TEXT NULL,
-    cg_price DECIMAL(10, 4) NULL,
-    status TINYINT NULL,
-    open_status TINYINT NULL,
-    is_combo TINYINT NULL,
-    create_time DATETIME NULL,
-    update_time DATETIME NULL,
-    product_developer_uid INT NULL,
-    cg_opt_uid INT NULL,
-    cg_opt_username VARCHAR(100) NULL,
+    sku VARCHAR(50) NOT NULL UNIQUE  COMMENT 'sku',  -- sku非空且唯一
+    sku_identifier VARCHAR(100) NULL COMMENT 'SKU识别码',
+    product_name VARCHAR(255) NULL COMMENT '产品名称',
+    pic_url TEXT NULL COMMENT '产品图片URL',
+    cg_delivery TINYINT NULL COMMENT '采购：交期',
+    cg_transport_costs DECIMAL(10, 2) NULL COMMENT '采购：运输成本',
+    purchase_remark TEXT NULL COMMENT '采购备注',
+    cg_price DECIMAL(10, 4) NULL COMMENT '采购成本',
+    status TINYINT NULL COMMENT '状态（状态：0 停售，1 在售，2 开发中，3 清仓）',
+    open_status TINYINT NULL COMMENT '产品是否启用：0 停用，1 启用',
+    is_combo TINYINT NULL COMMENT '是否组合产品（1：是，0：否）',
+    create_time DATETIME NULL COMMENT '创建时间',
+    update_time DATETIME NULL COMMENT '更新时间',
+    product_developer_uid INT NULL COMMENT '开发人员ID',
+    cg_opt_uid INT NULL COMMENT '采购人员ID',
+    cg_opt_username VARCHAR(100) NULL COMMENT '采购人员名称',
     spu VARCHAR(50) NULL,
-    ps_id INT NULL,
-    attribute JSON NULL,  -- JSON类型，允许为空
-    brand_name VARCHAR(100) NULL,
-    category_name VARCHAR(100) NULL,
-    status_text VARCHAR(50) NULL,
-    product_developer VARCHAR(100) NULL,
-    supplier_quote JSON NULL,  -- JSON类型，允许为空
+    ps_id INT NULL COMMENT 'SPU唯一id',
+    attribute JSON NULL COMMENT '产品属性（JSON格式）',  -- JSON类型，允许为空
+    brand_name VARCHAR(100) NULL COMMENT '品牌名称',
+    category_name VARCHAR(100) NULL COMMENT '分类名称',
+    status_text VARCHAR(50) NULL COMMENT '状态文本',
+    product_developer VARCHAR(100) NULL COMMENT '开发人员',
+    supplier_quote JSON NULL COMMENT '供应商报价信息',  -- JSON类型，允许为空
     aux_relation_list JSON NULL,  -- JSON类型，允许为空
-    custom_fields JSON NULL,  -- JSON类型，允许为空
-    global_tags JSON NULL  -- JSON类型，允许为空
+    custom_fields JSON NULL COMMENT '自定义字段（JSON格式）',  -- JSON类型，允许为空
+    global_tags JSON NULL COMMENT '产品标签（JSON格式）'  -- JSON类型，允许为空
 );
