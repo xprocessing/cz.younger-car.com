@@ -23,16 +23,22 @@ class ProductsController {
         $brand = $_GET['brand'] ?? '';
         $category = $_GET['category'] ?? '';
         $spu = $_GET['spu'] ?? '';
+        $status = $_GET['status'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        if ($keyword || $brand || $category || $spu || $startDate || $endDate) {
-            $products = $this->productsModel->searchWithFilters($keyword, $brand, $category, $spu, $startDate, $endDate, $limit, $offset);
-            $totalCount = $this->productsModel->getSearchWithFiltersCount($keyword, $brand, $category, $spu, $startDate, $endDate);
-        } else {
-            $products = $this->productsModel->getAll($limit, $offset);
-            $totalCount = $this->productsModel->getCount();
-        }
+        $params = [
+            'keyword' => $keyword,
+            'brand' => $brand,
+            'category' => $category,
+            'spu' => $spu,
+            'status' => $status,
+            'start_date' => $startDate,
+            'end_date' => $endDate
+        ];
+        
+        $products = $this->productsModel->search($params, $limit, $offset);
+        $totalCount = $this->productsModel->count($params);
         
         $totalPages = ceil($totalCount / $limit);
         $brandList = $this->productsModel->getBrandList();
@@ -82,17 +88,24 @@ class ProductsController {
         
         $data = [
             'sku' => $_POST['sku'],
+            'sku_identifier' => $_POST['sku_identifier'] ?? '',
             'spu' => $_POST['spu'] ?? '',
-            'brand' => $_POST['brand'] ?? '',
-            'category' => $_POST['category'] ?? '',
+            'ps_id' => !empty($_POST['ps_id']) ? (int)$_POST['ps_id'] : null,
+            'brand_name' => $_POST['brand_name'] ?? '',
+            'category_name' => $_POST['category_name'] ?? '',
             'product_name' => $_POST['product_name'] ?? '',
-            'product_name_en' => $_POST['product_name_en'] ?? '',
-            'cost_price' => $_POST['cost_price'] ?? '0.00',
-            'sale_price' => $_POST['sale_price'] ?? '0.00',
-            'weight' => $_POST['weight'] ?? '0.00',
+            'pic_url' => $_POST['pic_url'] ?? '',
+            'cg_price' => $_POST['cg_price'] ?? '0.0000',
+            'cg_transport_costs' => $_POST['cg_transport_costs'] ?? '0.00',
+            'cg_delivery' => $_POST['cg_delivery'] ?? '',
+            'purchase_remark' => $_POST['purchase_remark'] ?? '',
             'status' => $_POST['status'] ?? '1',
-            'create_time' => date('Y-m-d H:i:s'),
-            'update_time' => date('Y-m-d H:i:s')
+            'open_status' => $_POST['open_status'] ?? '1',
+            'is_combo' => $_POST['is_combo'] ?? '0',
+            'product_developer' => $_POST['product_developer'] ?? '',
+            'product_developer_uid' => !empty($_POST['product_developer_uid']) ? (int)$_POST['product_developer_uid'] : null,
+            'cg_opt_username' => $_POST['cg_opt_username'] ?? '',
+            'cg_opt_uid' => !empty($_POST['cg_opt_uid']) ? (int)$_POST['cg_opt_uid'] : null
         ];
         
         if ($this->productsModel->create($data)) {
@@ -159,16 +172,24 @@ class ProductsController {
         
         $data = [
             'sku' => $_POST['sku'],
+            'sku_identifier' => $_POST['sku_identifier'] ?? '',
             'spu' => $_POST['spu'] ?? '',
-            'brand' => $_POST['brand'] ?? '',
-            'category' => $_POST['category'] ?? '',
+            'ps_id' => !empty($_POST['ps_id']) ? (int)$_POST['ps_id'] : null,
+            'brand_name' => $_POST['brand_name'] ?? '',
+            'category_name' => $_POST['category_name'] ?? '',
             'product_name' => $_POST['product_name'] ?? '',
-            'product_name_en' => $_POST['product_name_en'] ?? '',
-            'cost_price' => $_POST['cost_price'] ?? '0.00',
-            'sale_price' => $_POST['sale_price'] ?? '0.00',
-            'weight' => $_POST['weight'] ?? '0.00',
+            'pic_url' => $_POST['pic_url'] ?? '',
+            'cg_price' => $_POST['cg_price'] ?? '0.0000',
+            'cg_transport_costs' => $_POST['cg_transport_costs'] ?? '0.00',
+            'cg_delivery' => $_POST['cg_delivery'] ?? '',
+            'purchase_remark' => $_POST['purchase_remark'] ?? '',
             'status' => $_POST['status'] ?? '1',
-            'update_time' => date('Y-m-d H:i:s')
+            'open_status' => $_POST['open_status'] ?? '1',
+            'is_combo' => $_POST['is_combo'] ?? '0',
+            'product_developer' => $_POST['product_developer'] ?? '',
+            'product_developer_uid' => !empty($_POST['product_developer_uid']) ? (int)$_POST['product_developer_uid'] : null,
+            'cg_opt_username' => $_POST['cg_opt_username'] ?? '',
+            'cg_opt_uid' => !empty($_POST['cg_opt_uid']) ? (int)$_POST['cg_opt_uid'] : null
         ];
         
         if ($this->productsModel->update($id, $data)) {
@@ -239,11 +260,22 @@ class ProductsController {
         $brand = $_GET['brand'] ?? '';
         $category = $_GET['category'] ?? '';
         $spu = $_GET['spu'] ?? '';
+        $status = $_GET['status'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        $products = $this->productsModel->searchWithFilters($keyword, $brand, $category, $spu, $startDate, $endDate, $limit, $offset);
-        $totalCount = $this->productsModel->getSearchWithFiltersCount($keyword, $brand, $category, $spu, $startDate, $endDate);
+        $params = [
+            'keyword' => $keyword,
+            'brand' => $brand,
+            'category' => $category,
+            'spu' => $spu,
+            'status' => $status,
+            'start_date' => $startDate,
+            'end_date' => $endDate
+        ];
+        
+        $products = $this->productsModel->search($params, $limit, $offset);
+        $totalCount = $this->productsModel->count($params);
         
         $totalPages = ceil($totalCount / $limit);
         $brandList = $this->productsModel->getBrandList();
@@ -322,37 +354,38 @@ class ProductsController {
                 continue;
             }
             
-            if (isset($row[6]) && trim($row[6]) !== '' && !is_numeric(preg_replace('/[^\d.-]/', '', $row[6]))) {
-                $errors[] = "第 {$rowCount} 行：成本价不是有效的数字";
-                $errorCount++;
-                continue;
-            }
-            
             if (isset($row[7]) && trim($row[7]) !== '' && !is_numeric(preg_replace('/[^\d.-]/', '', $row[7]))) {
-                $errors[] = "第 {$rowCount} 行：销售价不是有效的数字";
+                $errors[] = "第 {$rowCount} 行：采购成本不是有效的数字";
                 $errorCount++;
                 continue;
             }
             
             if (isset($row[8]) && trim($row[8]) !== '' && !is_numeric(preg_replace('/[^\d.-]/', '', $row[8]))) {
-                $errors[] = "第 {$rowCount} 行：重量不是有效的数字";
+                $errors[] = "第 {$rowCount} 行：运输成本不是有效的数字";
                 $errorCount++;
                 continue;
             }
             
             $data[] = [
                 'sku' => $row[0] ?? '',
-                'spu' => $row[1] ?? '',
-                'brand' => $row[2] ?? '',
-                'category' => $row[3] ?? '',
-                'product_name' => $row[4] ?? '',
-                'product_name_en' => $row[5] ?? '',
-                'cost_price' => $row[6] ?? '0.00',
-                'sale_price' => $row[7] ?? '0.00',
-                'weight' => $row[8] ?? '0.00',
-                'status' => $row[9] ?? '1',
-                'create_time' => date('Y-m-d H:i:s'),
-                'update_time' => date('Y-m-d H:i:s')
+                'sku_identifier' => $row[1] ?? '',
+                'spu' => $row[2] ?? '',
+                'ps_id' => !empty($row[3]) ? (int)$row[3] : null,
+                'brand_name' => $row[4] ?? '',
+                'category_name' => $row[5] ?? '',
+                'product_name' => $row[6] ?? '',
+                'pic_url' => $row[7] ?? '',
+                'cg_price' => $row[8] ?? '0.0000',
+                'cg_transport_costs' => $row[9] ?? '0.00',
+                'cg_delivery' => $row[10] ?? '',
+                'purchase_remark' => $row[11] ?? '',
+                'status' => $row[12] ?? '1',
+                'open_status' => $row[13] ?? '1',
+                'is_combo' => $row[14] ?? '0',
+                'product_developer' => $row[15] ?? '',
+                'product_developer_uid' => !empty($row[16]) ? (int)$row[16] : null,
+                'cg_opt_username' => $row[17] ?? '',
+                'cg_opt_uid' => !empty($row[18]) ? (int)$row[18] : null
             ];
             $successCount++;
         }
@@ -390,10 +423,21 @@ class ProductsController {
         $brand = $_GET['brand'] ?? '';
         $category = $_GET['category'] ?? '';
         $spu = $_GET['spu'] ?? '';
+        $status = $_GET['status'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        $products = $this->productsModel->getAllWithFilters($keyword, $brand, $category, $spu, $startDate, $endDate);
+        $params = [
+            'keyword' => $keyword,
+            'brand' => $brand,
+            'category' => $category,
+            'spu' => $spu,
+            'status' => $status,
+            'start_date' => $startDate,
+            'end_date' => $endDate
+        ];
+        
+        $products = $this->productsModel->search($params);
         
         $filename = 'products_export_' . date('YmdHis') . '.csv';
         header('Content-Type: text/csv; charset=utf-8');
@@ -408,35 +452,72 @@ class ProductsController {
         $header = [
             'ID',
             'SKU',
+            'SKU识别码',
             'SPU',
-            '品牌',
-            '分类',
+            'SPU ID',
+            '品牌名称',
+            '分类名称',
             '商品名称',
-            '商品名称(英文)',
-            '成本价',
-            '销售价',
-            '重量',
+            '商品图片URL',
+            '采购成本',
+            '运输成本',
+            '采购交付',
+            '采购备注',
             '状态',
-            '创建时间',
-            '更新时间'
+            '启用状态',
+            '是否组合',
+            '商品开发员',
+            '开发员UID',
+            '采购员用户名',
+            '采购员UID',
+            '创建时间'
         ];
         fputcsv($output, $header);
         
         foreach ($products as $product) {
+            $statusText = '';
+            switch($product['status']) {
+                case '0':
+                    $statusText = '停售';
+                    break;
+                case '1':
+                    $statusText = '在售';
+                    break;
+                case '2':
+                    $statusText = '开发中';
+                    break;
+                case '3':
+                    $statusText = '清仓';
+                    break;
+                default:
+                    $statusText = '未知';
+            }
+            
+            $openStatusText = $product['open_status'] == '1' ? '启用' : '停用';
+            $isComboText = $product['is_combo'] == '1' ? '是' : '否';
+            
             $row = [
                 $product['id'],
                 $product['sku'],
+                $product['sku_identifier'],
                 $product['spu'],
-                $product['brand'],
-                $product['category'],
+                $product['ps_id'],
+                $product['brand_name'],
+                $product['category_name'],
                 $product['product_name'],
-                $product['product_name_en'],
-                $product['cost_price'],
-                $product['sale_price'],
-                $product['weight'],
-                $product['status'] == '1' ? '启用' : '禁用',
-                $product['create_time'],
-                $product['update_time']
+                $product['pic_url'],
+                $product['cg_price'],
+                $product['cg_transport_costs'],
+                $product['cg_delivery'],
+                $product['purchase_remark'],
+                $statusText,
+                $openStatusText,
+                $isComboText,
+                $product['product_developer'],
+                $product['product_developer_uid'],
+                $product['cg_opt_username'],
+                $product['cg_opt_uid'],
+                $product['create_time']
             ];
             fputcsv($output, $row);
         }

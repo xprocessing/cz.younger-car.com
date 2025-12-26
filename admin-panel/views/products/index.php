@@ -10,8 +10,7 @@
             if (!empty($_GET['brand'])) $exportParams[] = 'brand=' . urlencode($_GET['brand']);
             if (!empty($_GET['category'])) $exportParams[] = 'category=' . urlencode($_GET['category']);
             if (!empty($_GET['spu'])) $exportParams[] = 'spu=' . urlencode($_GET['spu']);
-            if (!empty($_GET['start_date'])) $exportParams[] = 'start_date=' . urlencode($_GET['start_date']);
-            if (!empty($_GET['end_date'])) $exportParams[] = 'end_date=' . urlencode($_GET['end_date']);
+            if (!empty($_GET['status'])) $exportParams[] = 'status=' . urlencode($_GET['status']);
             if (!empty($exportParams)) echo '&' . implode('&', $exportParams);
         ?>" class="btn btn-outline-primary me-2">
             <i class="fa fa-download"></i> 批量导出
@@ -36,9 +35,9 @@
                     <option value="">全部品牌</option>
                     <?php if (!empty($brandList)): ?>
                         <?php foreach ($brandList as $brand): ?>
-                            <option value="<?php echo htmlspecialchars($brand['brand']); ?>" 
-                                    <?php echo (($_GET['brand'] ?? '') == $brand['brand'] ? 'selected' : ''); ?>>
-                                <?php echo htmlspecialchars($brand['brand']); ?>
+                            <option value="<?php echo htmlspecialchars($brand['brand_name']); ?>" 
+                                    <?php echo (($_GET['brand'] ?? '') == $brand['brand_name'] ? 'selected' : ''); ?>>
+                                <?php echo htmlspecialchars($brand['brand_name']); ?>
                             </option>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -50,9 +49,9 @@
                     <option value="">全部分类</option>
                     <?php if (!empty($categoryList)): ?>
                         <?php foreach ($categoryList as $category): ?>
-                            <option value="<?php echo htmlspecialchars($category['category']); ?>" 
-                                    <?php echo (($_GET['category'] ?? '') == $category['category'] ? 'selected' : ''); ?>>
-                                <?php echo htmlspecialchars($category['category']); ?>
+                            <option value="<?php echo htmlspecialchars($category['category_name']); ?>" 
+                                    <?php echo (($_GET['category'] ?? '') == $category['category_name'] ? 'selected' : ''); ?>>
+                                <?php echo htmlspecialchars($category['category_name']); ?>
                             </option>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -73,14 +72,14 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <label for="start_date" class="form-label">开始日期</label>
-                <input type="date" name="start_date" class="form-control" 
-                       value="<?php echo $_GET['start_date'] ?? ''; ?>">
-            </div>
-            <div class="col-md-2">
-                <label for="end_date" class="form-label">结束日期</label>
-                <input type="date" name="end_date" class="form-control" 
-                       value="<?php echo $_GET['end_date'] ?? ''; ?>">
+                <label for="status" class="form-label">状态</label>
+                <select name="status" class="form-select">
+                    <option value="">全部状态</option>
+                    <option value="0" <?php echo (($_GET['status'] ?? '') == '0' ? 'selected' : ''); ?>>停售</option>
+                    <option value="1" <?php echo (($_GET['status'] ?? '') == '1' ? 'selected' : ''); ?>>在售</option>
+                    <option value="2" <?php echo (($_GET['status'] ?? '') == '2' ? 'selected' : ''); ?>>开发中</option>
+                    <option value="3" <?php echo (($_GET['status'] ?? '') == '3' ? 'selected' : ''); ?>>清仓</option>
+                </select>
             </div>
             <div class="col-12 text-end">
                 <button type="submit" class="btn btn-primary">
@@ -108,9 +107,7 @@
                             <th>品牌</th>
                             <th>分类</th>
                             <th>商品名称</th>
-                            <th>成本价</th>
-                            <th>销售价</th>
-                            <th>重量</th>
+                            <th>采购成本</th>
                             <th>状态</th>
                             <th>创建时间</th>
                             <th>操作</th>
@@ -124,20 +121,40 @@
                                     <td><?php echo $product['id']; ?></td>
                                     <td><?php echo htmlspecialchars($product['sku'] ?? ''); ?></td>
                                     <td><?php echo htmlspecialchars($product['spu'] ?? ''); ?></td>
-                                    <td><?php echo htmlspecialchars($product['brand'] ?? ''); ?></td>
-                                    <td><?php echo htmlspecialchars($product['category'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($product['brand_name'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($product['category_name'] ?? ''); ?></td>
                                     <td><?php echo htmlspecialchars($product['product_name'] ?? ''); ?></td>
-                                    <td><?php echo number_format($product['cost_price'], 2); ?></td>
-                                    <td><?php echo number_format($product['sale_price'], 2); ?></td>
-                                    <td><?php echo number_format($product['weight'], 2); ?></td>
+                                    <td><?php echo number_format($product['cg_price'] ?? 0, 4); ?></td>
                                     <td>
-                                        <?php if ($product['status'] == '1'): ?>
-                                            <span class="badge bg-success">启用</span>
-                                        <?php else: ?>
-                                            <span class="badge bg-danger">禁用</span>
-                                        <?php endif; ?>
+                                        <?php 
+                                        $status = $product['status'] ?? '';
+                                        $statusText = '';
+                                        $badgeClass = '';
+                                        switch($status) {
+                                            case '0':
+                                                $statusText = '停售';
+                                                $badgeClass = 'bg-danger';
+                                                break;
+                                            case '1':
+                                                $statusText = '在售';
+                                                $badgeClass = 'bg-success';
+                                                break;
+                                            case '2':
+                                                $statusText = '开发中';
+                                                $badgeClass = 'bg-warning';
+                                                break;
+                                            case '3':
+                                                $statusText = '清仓';
+                                                $badgeClass = 'bg-secondary';
+                                                break;
+                                            default:
+                                                $statusText = '未知';
+                                                $badgeClass = 'bg-dark';
+                                        }
+                                        ?>
+                                        <span class="badge <?php echo $badgeClass; ?>"><?php echo $statusText; ?></span>
                                     </td>
-                                    <td><?php echo $product['create_time']; ?></td>
+                                    <td><?php echo $product['create_time'] ?? ''; ?></td>
                                     <td>
                                         <a href="<?php echo APP_URL; ?>/products.php?action=edit&id=<?php echo $product['id']; ?>" 
                                            class="btn btn-sm btn-primary">
@@ -171,8 +188,7 @@
                                     if (!empty($_GET['brand'])) $params[] = 'brand=' . urlencode($_GET['brand']);
                                     if (!empty($_GET['category'])) $params[] = 'category=' . urlencode($_GET['category']);
                                     if (!empty($_GET['spu'])) $params[] = 'spu=' . urlencode($_GET['spu']);
-                                    if (!empty($_GET['start_date'])) $params[] = 'start_date=' . urlencode($_GET['start_date']);
-                                    if (!empty($_GET['end_date'])) $params[] = 'end_date=' . urlencode($_GET['end_date']);
+                                    if (!empty($_GET['status'])) $params[] = 'status=' . urlencode($_GET['status']);
                                     if (!empty($params)) echo '&' . implode('&', $params);
                                 ?>">上一页</a>
                             </li>
@@ -191,8 +207,7 @@
                                         if (!empty($_GET['brand'])) $params[] = 'brand=' . urlencode($_GET['brand']);
                                         if (!empty($_GET['category'])) $params[] = 'category=' . urlencode($_GET['category']);
                                         if (!empty($_GET['spu'])) $params[] = 'spu=' . urlencode($_GET['spu']);
-                                        if (!empty($_GET['start_date'])) $params[] = 'start_date=' . urlencode($_GET['start_date']);
-                                        if (!empty($_GET['end_date'])) $params[] = 'end_date=' . urlencode($_GET['end_date']);
+                                        if (!empty($_GET['status'])) $params[] = 'status=' . urlencode($_GET['status']);
                                         if (!empty($params)) echo '&' . implode('&', $params);
                                     ?>"><?php echo $i; ?></a>
                                 </li>
@@ -207,8 +222,7 @@
                                     if (!empty($_GET['brand'])) $params[] = 'brand=' . urlencode($_GET['brand']);
                                     if (!empty($_GET['category'])) $params[] = 'category=' . urlencode($_GET['category']);
                                     if (!empty($_GET['spu'])) $params[] = 'spu=' . urlencode($_GET['spu']);
-                                    if (!empty($_GET['start_date'])) $params[] = 'start_date=' . urlencode($_GET['start_date']);
-                                    if (!empty($_GET['end_date'])) $params[] = 'end_date=' . urlencode($_GET['end_date']);
+                                    if (!empty($_GET['status'])) $params[] = 'status=' . urlencode($_GET['status']);
                                     if (!empty($params)) echo '&' . implode('&', $params);
                                 ?>">下一页</a>
                             </li>
