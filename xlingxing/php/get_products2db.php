@@ -37,7 +37,8 @@ try {
     // 保持与get_products.php相同的参数（仅offset和length）
     $productParams = [
         'offset' => $offset,
-        'length' => $length       
+        'length' => $length,
+        'update_time_end'=>$currentTimestamp         
     ];
 
     // 调用与get_products.php相同的接口

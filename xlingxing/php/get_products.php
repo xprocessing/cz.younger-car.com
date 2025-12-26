@@ -22,7 +22,8 @@ try {
     // 调用POST接口示例
     $orderParams = [
         'offset' => $offset,
-        'length' => $length       
+        'length' => $length,
+        'update_time_end'=>$currentTimestamp      
        
     ];
     $orders = $apiClient->post('/erp/sc/routing/data/local_inventory/productList', $orderParams);
