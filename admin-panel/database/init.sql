@@ -197,3 +197,37 @@ CREATE TABLE `store` (
   PRIMARY KEY (`store_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺信息表';
 
+
+-- 创建产品表
+CREATE TABLE IF NOT EXISTS products (
+    id INT PRIMARY KEY,  -- 主键，非空且唯一
+    cid INT NULL,
+    bid INT NULL,
+    sku VARCHAR(50) NOT NULL UNIQUE,  -- sku非空且唯一
+    sku_identifier VARCHAR(100) NULL,
+    product_name VARCHAR(255) NULL,
+    pic_url TEXT NULL,
+    cg_delivery TINYINT NULL,
+    cg_transport_costs DECIMAL(10, 2) NULL,
+    purchase_remark TEXT NULL,
+    cg_price DECIMAL(10, 4) NULL,
+    status TINYINT NULL,
+    open_status TINYINT NULL,
+    is_combo TINYINT NULL,
+    create_time DATETIME NULL,
+    update_time DATETIME NULL,
+    product_developer_uid INT NULL,
+    cg_opt_uid INT NULL,
+    cg_opt_username VARCHAR(100) NULL,
+    spu VARCHAR(50) NULL,
+    ps_id INT NULL,
+    attribute JSON NULL,  -- JSON类型，允许为空
+    brand_name VARCHAR(100) NULL,
+    category_name VARCHAR(100) NULL,
+    status_text VARCHAR(50) NULL,
+    product_developer VARCHAR(100) NULL,
+    supplier_quote JSON NULL,  -- JSON类型，允许为空
+    aux_relation_list JSON NULL,  -- JSON类型，允许为空
+    custom_fields JSON NULL,  -- JSON类型，允许为空
+    global_tags JSON NULL  -- JSON类型，允许为空
+);

@@ -94,14 +94,6 @@
             </div>
             <?php endif; ?>
             
-            <?php if (hasPermission('data.view')): ?>
-            <div class="nav-item">
-                <a href="<?php echo APP_URL; ?>/data.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'data.php' ? 'active' : ''; ?>">
-                    <i class="fa fa-database"></i> 数据管理
-                </a>
-            </div>
-            <?php endif; ?>
-            
             <?php if (isLoggedIn()): ?>
             <div class="nav-item">
                 <a href="<?php echo APP_URL; ?>/new_products.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'new_products.php' ? 'active' : ''; ?>">

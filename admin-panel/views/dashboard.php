@@ -34,15 +34,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card text-white bg-danger mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">数据管理</h5>
-                                <p class="card-text">管理系统数据</p>
-                                <a href="<?php echo APP_URL; ?>/data.php" class="btn btn-light">进入</a>
-                            </div>
-                        </div>
-                    </div>
                      <div class="col-md-3">
                         <div class="card text-white bg-danger mb-3">
                             <div class="card-body">
