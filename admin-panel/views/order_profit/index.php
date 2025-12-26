@@ -110,21 +110,21 @@
             </div>
             <div class="col-md-1">
                 <label for="rate_min" class="form-label">
-                    <i class="fa fa-percent text-success"></i> 最小利润率(%)
+                    最小利润率(%)
                 </label>
                 <input type="number" name="rate_min" class="form-control" placeholder="-100" step="0.01"
                        value="<?php echo $_GET['rate_min'] ?? ''; ?>"
                        title="输入最小利润率，用于筛选利润率大于等于此值的订单">
-                <div class="form-text">≥ 此值%</div>
+               
             </div>
             <div class="col-md-1">
                 <label for="rate_max" class="form-label">
-                    <i class="fa fa-percent text-danger"></i> 最大利润率(%)
+                     最大利润率(%)
                 </label>
                 <input type="number" name="rate_max" class="form-control" placeholder="100.00" step="0.01"
                        value="<?php echo $_GET['rate_max'] ?? ''; ?>"
                        title="输入最大利润率，用于筛选利润率小于等于此值的订单">
-                <div class="form-text">≤ 此值%</div>
+                
             </div>
             <div class="col-md-1">
                 <label for="action_search" class="form-label">&nbsp;</label>
