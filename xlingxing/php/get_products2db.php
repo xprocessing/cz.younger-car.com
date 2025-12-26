@@ -41,7 +41,7 @@ try {
     ];
 
     $apiResult = $apiClient->post('/erp/sc/routing/data/local_inventory/productList', $productParams);
-    $products = $apiResult['list'] ?? []; 
+    $products = $apiResult['data'] ?? []; 
     
     $response['data']['api_products_count'] = count($products);
     $response['logs'][] = "API返回原始数据结构：" . json_encode($apiResult, JSON_UNESCAPED_UNICODE);
