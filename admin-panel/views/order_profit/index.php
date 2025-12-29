@@ -299,7 +299,7 @@ if ($hasFilters): ?>
                                     <?php echo htmlspecialchars($profit['global_purchase_time'] ?? ''); ?>
                                 </td>
                                 <td>
-                                    <code><?php echo htmlspecialchars($profit['local_sku'] ?? ''); ?></code>
+                                    <code><a href="products.php?keyword=<?php echo urlencode($profit['local_sku'] ?? ''); ?>" target="_blank"><?php echo htmlspecialchars($profit['local_sku'] ?? ''); ?></a></code>
                                 </td>
                                
                                 <td>
