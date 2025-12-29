@@ -183,8 +183,38 @@
                             </li>
                         <?php endif; ?>
                         
-                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                            <?php if ($i == $page): ?>
+                        <?php
+                        $showPages = [];
+                        $showPages[] = 1;
+                        
+                        if ($totalPages > 1) {
+                            $startPage = max(2, $page - 2);
+                            $endPage = min($totalPages - 1, $page + 2);
+                            
+                            if ($startPage > 2) {
+                                $showPages[] = '...';
+                            }
+                            
+                            for ($i = $startPage; $i <= $endPage; $i++) {
+                                $showPages[] = $i;
+                            }
+                            
+                            if ($endPage < $totalPages - 1) {
+                                $showPages[] = '...';
+                            }
+                            
+                            if ($totalPages > 1) {
+                                $showPages[] = $totalPages;
+                            }
+                        }
+                        
+                        foreach ($showPages as $i):
+                            if ($i === '...'):
+                        ?>
+                                <li class="page-item disabled">
+                                    <span class="page-link">...</span>
+                                </li>
+                            <?php elseif ($i == $page): ?>
                                 <li class="page-item active">
                                     <span class="page-link"><?php echo $i; ?></span>
                                 </li>
@@ -195,12 +225,13 @@
                                         if (!empty($_GET['keyword'])) $params[] = 'keyword=' . urlencode($_GET['keyword']);
                                         if (!empty($_GET['brand'])) $params[] = 'brand=' . urlencode($_GET['brand']);
                                         if (!empty($_GET['category'])) $params[] = 'category=' . urlencode($_GET['category']);
+                                        if (!empty($_GET['spu'])) $params[] = 'spu=' . urlencode($_GET['spu']);
                                         if (!empty($_GET['status'])) $params[] = 'status=' . urlencode($_GET['status']);
                                         if (!empty($params)) echo '&' . implode('&', $params);
                                     ?>"><?php echo $i; ?></a>
                                 </li>
                             <?php endif; ?>
-                        <?php endfor; ?>
+                        <?php endforeach; ?>
                         
                         <?php if ($page < $totalPages): ?>
                             <li class="page-item">
