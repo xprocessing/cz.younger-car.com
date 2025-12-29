@@ -37,6 +37,7 @@ try {
     $productParams = [
         'offset' => $offset,
         'length' => $length,
+        'update_time_start' => $currentTimestamp - 86400,
         'update_time_end' => $currentTimestamp         
     ];
 
