@@ -39,6 +39,7 @@ try {
 //$orders 数据中的data为数组，data[0].amazon_order_id为订单号
 //用,拼接订单号，批量查询订单详情，获取利润数据。
 $order_ids = implode(',', array_column($orders['data'], 'amazon_order_id'));
+echo $order_ids;
 try {
     // 调用POST接口获取订单详情
     $detailParams = [
