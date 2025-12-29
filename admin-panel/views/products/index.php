@@ -244,5 +244,6 @@ document.getElementById('selectAll').addEventListener('change', function() {
     transform: scale(5);
     z-index: 1000;
     position: relative;
+    border: 2px solid #000;
 }
 </style>
