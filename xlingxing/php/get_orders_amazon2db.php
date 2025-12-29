@@ -35,7 +35,22 @@ try {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
 
-//https://cz.younger-car.com/xlingxing/php/get_orders_amazon.php?n_days=1
+//https://cz.younger-car.com/xlingxing/php/get_orders_amazon2db.php?n_days=1
+//$orders 数据中的data为数组，data[0].amazon_order_id为订单号
+//用,拼接订单号，批量查询订单详情，获取利润数据。
+$order_ids = implode(',', array_column($orders['data'], 'amazon_order_id'));
+try {
+    // 调用POST接口获取订单详情
+    $detailParams = [
+        'amazon_order_ids' => $order_ids
+    ];
+    $orderDetails = $apiClient->post('/erp/sc/data/mws/orderDetail', $detailParams);
+    //json格式化输出订单详情
+    echo json_encode($orderDetails, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+} catch (\Exception $e) {
+    echo "错误：" . $e->getMessage() . PHP_EOL;
+}
+
 
 
 
