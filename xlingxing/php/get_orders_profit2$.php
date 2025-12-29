@@ -33,6 +33,10 @@ header("Content-Type: application/json; charset=utf-8");
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $results = $stmt->fetchAll();
+    echo json_encode([
+        'data' => $results,
+        'msg' => '执行成功'
+    ], JSON_UNESCAPED_UNICODE);
 
    
 ?>
