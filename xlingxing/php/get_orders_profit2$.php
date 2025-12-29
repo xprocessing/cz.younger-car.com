@@ -27,7 +27,23 @@ header("Content-Type: application/json; charset=utf-8");
     );
 
     // 使用INSERT ... ON DUPLICATE KEY UPDATE优化（需为global_order_no创建唯一索引）
-    $sql = "SELECT * FROM order_profit WHERE 1=1 LIMIT 10";
+    //$sql = "SELECT * FROM order_profit WHERE 1=1 LIMIT 10";
+
+    $sql = "UPDATE order_profit
+SET 
+    order_total_amount = CASE
+        WHEN order_total_amount LIKE '￡%' THEN CONCAT('$', ROUND(CAST(SUBSTRING(order_total_amount,2) AS DECIMAL(10,2)) * 1.35, 2))
+        WHEN order_total_amount LIKE 'JP¥%' THEN CONCAT('$', ROUND(CAST(SUBSTRING(order_total_amount,4) AS DECIMAL(10,2)) * 0.0064, 2))
+        ELSE order_total_amount
+    END,
+    profit_amount = CASE
+        WHEN profit_amount LIKE '￡%' THEN CONCAT('$', ROUND(CAST(SUBSTRING(profit_amount,2) AS DECIMAL(10,2)) * 1.35, 2))
+        WHEN profit_amount LIKE 'JP¥%' THEN CONCAT('$', ROUND(CAST(SUBSTRING(profit_amount,4) AS DECIMAL(10,2)) * 0.0064, 2))
+        ELSE profit_amount
+    END
+WHERE 
+    order_total_amount LIKE '￡%' OR order_total_amount LIKE 'JP¥%' 
+    OR profit_amount LIKE '￡%' OR profit_amount LIKE 'JP¥%';";
 
 
     $stmt = $pdo->prepare($sql);
