@@ -108,7 +108,7 @@
                                 <tr>
                                     <td><input type="checkbox" name="ids[]" value="<?php echo $product['id']; ?>"></td>
                                     <td><?php echo $product['id']; ?></td>
-                                    <td><img src="<?php echo htmlspecialchars($product['pic_url'] ?? ''); ?>" alt="商品图片" style="width: 30px; height: 30px;"></td>
+                                    <td><img src="<?php echo htmlspecialchars($product['pic_url'] ?? ''); ?>" alt="商品图片" style="width: 50px; height: 50px;"></td>
                                     <td><?php echo htmlspecialchars($product['sku'] ?? ''); ?></td>
                                     <td><?php echo htmlspecialchars($product['spu'] ?? ''); ?></td>
                                     <td><?php echo htmlspecialchars($product['brand_name'] ?? ''); ?></td>
