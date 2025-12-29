@@ -241,7 +241,7 @@ document.getElementById('selectAll').addEventListener('change', function() {
 }
 
 .product-img-zoom:hover {
-    transform: scale(3);
+    transform: scale(5);
     z-index: 1000;
     position: relative;
 }
