@@ -301,7 +301,7 @@
                     <?php if (!empty($skuStats)): ?>
                     <?php foreach ($skuStats as $sku): ?>
                     <tr>
-                        <td><code><?php echo htmlspecialchars($sku['sku']); ?></code></td>
+                        <td><a href="products.php?keyword=<?php echo urlencode($sku['sku']); ?>" target="_blank"><?php echo htmlspecialchars($sku['sku']); ?></a></td>
                         <td><strong><?php echo number_format($sku['order_count']); ?></strong></td>
                         <td><strong>$<?php echo number_format($sku['total_profit'], 2); ?></strong></td>
                         <td><strong
