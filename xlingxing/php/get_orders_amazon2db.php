@@ -43,7 +43,7 @@ echo $order_ids;
 try {
     // 调用POST接口获取订单详情
     $detailParams = [
-        'amazon_order_ids' => $order_ids
+        'order_id' => $order_ids
     ];
     $orderDetails = $apiClient->post('/erp/sc/data/mws/orderDetail', $detailParams);
     //json格式化输出订单详情
