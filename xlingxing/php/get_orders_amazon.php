@@ -13,7 +13,8 @@ try {
     //当前时间戳，按 Y-m-d H:i:s 格式
     $end_date = date('Y-m-d H:i:s');
     //前天的时间 ，按 Y-m-d H:i:s 格式
-    $start_date = date('Y-m-d H:i:s', strtotime('-2 days'));
+    $n_days=$_GET['n_days'] ?? 2; // 默认值为2天
+    $start_date = date('Y-m-d H:i:s', strtotime("-$n_days days"));
     //格式化为日期时间字符串
 
    
