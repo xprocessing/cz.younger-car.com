@@ -109,7 +109,7 @@
                                     <td><input type="checkbox" name="ids[]" value="<?php echo $product['id']; ?>"></td>
                                     <td><?php echo $product['id']; ?></td>
                                     <td><img src="<?php echo htmlspecialchars($product['pic_url'] ?? ''); ?>" alt="商品图片" class="product-img-zoom"></td>
-                                    <td><a href="order_profit.php?keyword=<?php echo urlencode($product['sku'] ?? ''); ?>" target="_blank"><?php echo htmlspecialchars($product['sku'] ?? ''); ?></a></td>
+                                    <td><a href="order_profit.php?keyword=<?php echo urlencode($product['sku'] ?? ''); ?>" target="_blank" title="查看订单利润"><?php echo htmlspecialchars($product['sku'] ?? ''); ?></a></td>
                                     <td><?php echo htmlspecialchars($product['spu'] ?? ''); ?></td>
                                     <td><?php echo htmlspecialchars($product['brand_name'] ?? ''); ?></td>
                                     <td><?php echo htmlspecialchars($product['category_name'] ?? ''); ?></td>
