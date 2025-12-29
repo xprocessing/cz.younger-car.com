@@ -20,8 +20,7 @@ try {
     // 调用POST接口示例
     $orderParams = [
         'offset' => 0,
-        'length' => 200,
-        'order_status' => 4,
+        'length' => 200,       
         'date_type' => 1, //1 订购时间【站点时间】 2 订单修改时间【北京时间】 3 平台更新时间【UTC时间】
         'start_date' => $start_date, //查询时间，左闭右开，格式：Y-m-d 或 Y-m-d H:i:s
         'end_date' => $end_date,
