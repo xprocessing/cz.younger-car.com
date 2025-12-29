@@ -645,6 +645,14 @@ class OrderProfit {
             foreach ($storeStats as &$stat) {
                 $stat['avg_profit_rate'] = $stat['order_count'] > 0 ? ($stat['total_profit_rate'] / $stat['order_count']) : 0;
             }
+            
+            // 先按平台名称排序，再按总利润从高到低排序
+            usort($storeStats, function($a, $b) {
+                if ($a['platform_name'] === $b['platform_name']) {
+                    return $b['total_profit'] - $a['total_profit'];
+                }
+                return strcmp($a['platform_name'], $b['platform_name']);
+            });
         }
         
         return array_values($storeStats);
