@@ -281,6 +281,46 @@
     </div>
 </div>
 
+<!-- 最近30天按SKU统计（前100名） -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">最近30天按SKU统计（销量前100名）</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>总销量</th>
+                        <th>总利润</th>
+                        <th>平均利润率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($skuStats)): ?>
+                    <?php foreach ($skuStats as $sku): ?>
+                    <tr>
+                        <td><code><?php echo htmlspecialchars($sku['sku']); ?></code></td>
+                        <td><strong><?php echo number_format($sku['order_count']); ?></strong></td>
+                        <td><strong>$<?php echo number_format($sku['total_profit'], 2); ?></strong></td>
+                        <td><strong
+                                class="<?php echo $sku['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
+                                <?php echo number_format($sku['avg_profit_rate'], 2); ?>%
+                            </strong></td>
+                    </tr>
+                    <?php endforeach; ?>
+                    <?php else: ?>
+                    <tr>
+                        <td colspan="4" class="text-center">暂无数据</td>
+                    </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <script>
 // 等待DOM加载完成
 document.addEventListener('DOMContentLoaded', function() {

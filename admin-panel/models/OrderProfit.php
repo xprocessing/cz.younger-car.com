@@ -692,8 +692,7 @@ class OrderProfit {
         $sql = "SELECT op.*, p.brand_name
                 FROM order_profit op
                 LEFT JOIN products p ON op.local_sku = p.sku
-                WHERE DATE(op.global_purchase_time) >= ? AND DATE(op.global_purchase_time) <= ?
-                ORDER BY p.brand_name";
+                WHERE DATE(op.global_purchase_time) >= ? AND DATE(op.global_purchase_time) <= ?";
         
         $params = [$last30DaysStart, $endDate];
         $stmt = $this->db->query($sql, $params);
@@ -730,8 +729,67 @@ class OrderProfit {
             foreach ($brandStats as &$stat) {
                 $stat['avg_profit_rate'] = $stat['order_count'] > 0 ? ($stat['total_profit_rate'] / $stat['order_count']) : 0;
             }
+            
+            // 按总利润从高到低排序
+            usort($brandStats, function($a, $b) {
+                return $b['total_profit'] - $a['total_profit'];
+            });
         }
         
         return array_values($brandStats);
+    }
+    
+    // 按SKU统计最近30天的销量、利润和利润率，按销量排序取前100名
+    public function getSkuStats($last30DaysStart, $endDate) {
+        $sql = "SELECT op.*
+                FROM order_profit op
+                WHERE DATE(op.global_purchase_time) >= ? AND DATE(op.global_purchase_time) <= ?";
+        
+        $params = [$last30DaysStart, $endDate];
+        $stmt = $this->db->query($sql, $params);
+        $data = $stmt->fetchAll();
+        
+        // 按SKU分组统计
+        $skuStats = [];
+        
+        if (is_array($data) && count($data) > 0) {
+            foreach ($data as $row) {
+                $sku = $row['local_sku'] ?? '未知SKU';
+                
+                // 确保该SKU的统计数组存在
+                if (!isset($skuStats[$sku])) {
+                    $skuStats[$sku] = [
+                        'sku' => $sku,
+                        'order_count' => 0,
+                        'total_profit' => 0,
+                        'total_profit_rate' => 0,
+                        'avg_profit_rate' => 0
+                    ];
+                }
+                
+                // 解析数值并累加
+                $profit = parseCurrencyAmount($row['profit_amount'] ?? '0');
+                $profitRate = parseCurrencyAmount($row['profit_rate'] ?? '0');
+                
+                $skuStats[$sku]['order_count']++;
+                $skuStats[$sku]['total_profit'] += $profit;
+                $skuStats[$sku]['total_profit_rate'] += $profitRate;
+            }
+            
+            // 计算平均利润率
+            foreach ($skuStats as &$stat) {
+                $stat['avg_profit_rate'] = $stat['order_count'] > 0 ? ($stat['total_profit_rate'] / $stat['order_count']) : 0;
+            }
+            
+            // 按总销量从高到低排序，取前100名
+            usort($skuStats, function($a, $b) {
+                return $b['order_count'] - $a['order_count'];
+            });
+            
+            // 只返回前100名
+            $skuStats = array_slice($skuStats, 0, 100);
+        }
+        
+        return $skuStats;
     }
 }
