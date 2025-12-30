@@ -125,7 +125,11 @@ foreach ($orders['data'] as $order) {
     foreach ($orderDetails['data'] as $detail) {
         if ($order['amazon_order_id'] === $detail['amazon_order_id']) {
                //出库成本，采购费用+佣金
-            $wms_outbound_cost_amount =$detail['item_list'][0]['cg_price']+$detail['item_list'][0]['commission_amount'];
+            $wms_outbound_cost_amount = ($detail['item_list'][0]['cg_price']+$detail['item_list'][0]['commission_amount'])*-1;
+            //$wms_outbound_cost_amount 为负，转为正
+
+
+
             //利润率 $detail['item_list'][0]['profit']/$order['order_total_amount'],格式12%
             // 核心：如果订单金额为0，直接赋值0%，否则正常计算利润率
 
@@ -145,7 +149,7 @@ foreach ($orders['data'] as $order) {
                 'profit_amount' => $detail['icon'].$detail['item_list'][0]['profit'],
                 'profit_rate' => $profit_rate,
                 'wms_outbound_cost_amount' => $wms_outbound_cost_amount,
-                'wms_shipping_price_amount' => $detail['item_list'][0]['fba_shipment_amount'],
+                'wms_shipping_price_amount' => $detail['item_list'][0]['fba_shipment_amount']*-1,
                 'update_time' => date('Y-m-d H:i:s')
             ];
             echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
