@@ -4,6 +4,15 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=utf-8"); // 改为JSON输出
+
+$response = [
+    'code' => 200,
+    'msg' => '操作成功',
+    'data' => [],
+    'logs' => []
+];
+
+
 //引入lx_api.php
 
 require_once __DIR__ . '/lx_api.php';
@@ -13,15 +22,15 @@ try {
     //当前时间戳，按 Y-m-d H:i:s 格式
     $end_date = date('Y-m-d H:i:s');
     //前天的时间 ，按 Y-m-d H:i:s 格式
-    $n_days=$_GET['n_days'] ?? 2; // 默认值为2天
+    $n_days = $_GET['n_days'] ?? 2; // 默认值为2天
     $start_date = date('Y-m-d H:i:s', strtotime("-$n_days days"));
     //格式化为日期时间字符串
 
-   
+
     // 调用POST接口示例
     $orderParams = [
         'offset' => 0,
-        'length' => 200,       
+        'length' => 200,
         'date_type' => 2, //1 订购时间【站点时间】 2 订单修改时间【北京时间】 3 平台更新时间【UTC时间】
         'start_date' => $start_date, //查询时间，左闭右开，格式：Y-m-d 或 Y-m-d H:i:s
         'end_date' => $end_date,
@@ -32,7 +41,7 @@ try {
     $orders = $apiClient->post('/erp/sc/data/mws/orders', $orderParams);
     //print_r("订单数据：" . PHP_EOL);
     //json格式化输出
-    echo json_encode($orders, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    //echo json_encode($orders, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 } catch (\Exception $e) {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
@@ -41,7 +50,7 @@ try {
 //$orders 数据中的data为数组，data[0].amazon_order_id为订单号
 //用,拼接订单号，批量查询订单详情，获取利润数据。
 $order_ids = implode(',', array_column($orders['data'], 'amazon_order_id'));
-echo $order_ids;
+//echo $order_ids;
 try {
     // 调用POST接口获取订单详情
     $detailParams = [
@@ -50,21 +59,21 @@ try {
     //2. 获取订单详情
     $orderDetails = $apiClient->post('/erp/sc/data/mws/orderDetail', $detailParams);
     //json格式化输出订单详情
-    echo json_encode($orderDetails, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    //echo json_encode($orderDetails, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 } catch (\Exception $e) {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
 
-
-//数据库准备
- // ========== 引入配置文件（提前引入，避免后续依赖） ==========
-$configPath = __DIR__ . '/../../admin-panel/config/config.php';
+try {
+    //数据库准备
+    // ========== 引入配置文件（提前引入，避免后续依赖） ==========
+    $configPath = __DIR__ . '/../../admin-panel/config/config.php';
     if (!file_exists($configPath)) {
         throw new Exception("配置文件不存在：{$configPath}");
     }
     require_once $configPath;
-    
-$pdo = new PDO(
+
+    $pdo = new PDO(
         "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
         DB_PASS,
@@ -75,7 +84,7 @@ $pdo = new PDO(
         ]
     );
 
- $sql = "INSERT INTO order_profit (
+    $sql = "INSERT INTO order_profit (
         store_id,
         global_order_no,
         warehouse_name,
@@ -115,53 +124,63 @@ $pdo = new PDO(
         update_time = VALUES(update_time)";
 
     $stmt = $pdo->prepare($sql);
+    $syncCount = 0;
     // 构造数据数组
     //3.整理$orders和$orderDetails 数据作为新的数组
 
 
-// 构造数据数组
-$data = [];
-foreach ($orders['data'] as $order) {
-    foreach ($orderDetails['data'] as $detail) {
-        if ($order['amazon_order_id'] === $detail['amazon_order_id']) {
-                    
+    // 构造数据数组
+    $data = [];
+    foreach ($orders['data'] as $order) {
+        foreach ($orderDetails['data'] as $detail) {
+            if ($order['amazon_order_id'] === $detail['amazon_order_id']) {
 
 
 
-            //利润率 $detail['item_list'][0]['profit']/$order['order_total_amount'],格式12%
-            // 核心：如果订单金额为0，直接赋值0%，否则正常计算利润率
 
-            $profit_rate = $order['order_total_amount'] == 0 ? '0.00%' : round($detail['item_list'][0]['profit']/$order['order_total_amount']*100,2) . '%';
-             //出库成本，采购费用+佣金//$wms_outbound_cost_amount 为负，转为正
-            $wms_outbound_cost_amount = ($detail['item_list'][0]['cg_price']+$detail['item_list'][0]['commission_amount'])*-1;
-          $wms_outbound_cost_amount =$detail['icon'].$wms_outbound_cost_amount;     
+                //利润率 $detail['item_list'][0]['profit']/$order['order_total_amount'],格式12%
+                // 核心：如果订单金额为0，直接赋值0%，否则正常计算利润率
 
-            $wms_shipping_price_amount = $detail['icon'].$detail['item_list'][0]['fba_shipment_amount']*-1;
+                $profit_rate = $order['order_total_amount'] == 0 ? '0.00%' : round($detail['item_list'][0]['profit'] / $order['order_total_amount'] * 100, 2) . '%';
+                //出库成本，采购费用+佣金//$wms_outbound_cost_amount 为负，转为正
+                $wms_outbound_cost_amount = ($detail['item_list'][0]['cg_price'] + $detail['item_list'][0]['commission_amount']) * -1;
+                $wms_outbound_cost_amount = $detail['icon'] . $wms_outbound_cost_amount;
+
+                $wms_shipping_price_amount = $detail['icon'] . $detail['item_list'][0]['fba_shipment_amount'] * -1;
 
 
-            $data[] = [
-                'store_id' => $order['sid'],
-                'global_order_no' => $order['amazon_order_id'],
-                'warehouse_name' => $order['fulfillment_channel'],
-                'receiver_country' => $detail['country'],
-                'global_purchase_time' => $order['purchase_date_local'],
-                'local_sku' => $order['item_list'][0]['local_sku'],
-                'order_total_amount' => $detail['icon'].$order['order_total_amount'],
-                'profit_amount' => $detail['icon'].$detail['item_list'][0]['profit'],
-                'profit_rate' => $profit_rate,
-                'wms_outbound_cost_amount' => $wms_outbound_cost_amount,
-                'wms_shipping_price_amount' => $wms_shipping_price_amount,
-                'update_time' => date('Y-m-d H:i:s')
-            ];
-            echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-
+                $data[] = [
+                    'store_id' => $order['sid'],
+                    'global_order_no' => $order['amazon_order_id'],
+                    'warehouse_name' => $order['fulfillment_channel'],
+                    'receiver_country' => $detail['country'],
+                    'global_purchase_time' => $order['purchase_date_local'],
+                    'local_sku' => $order['item_list'][0]['local_sku'],
+                    'order_total_amount' => $detail['icon'] . $order['order_total_amount'],
+                    'profit_amount' => $detail['icon'] . $detail['item_list'][0]['profit'],
+                    'profit_rate' => $profit_rate,
+                    'wms_outbound_cost_amount' => $wms_outbound_cost_amount,
+                    'wms_shipping_price_amount' => $wms_shipping_price_amount,
+                    'update_time' => date('Y-m-d H:i:s')
+                ];
+                //echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+                //执行sql
+                $stmt->execute($data);
+                $syncCount++;
+                $response['logs'][] = "订单【{$data[':global_order_no']}】同步成功";
+            }
         }
     }
+    $response['data']['synced_count'] = $syncCount;
+    $pdo = null; // 关闭连接
+} catch (Exception $e) {
+    // 统一异常处理
+    $response['code'] = 500;
+    $response['msg'] = '操作失败：' . $e->getMessage();
+    $response['logs'] = [];
+    // 记录错误日志（生产环境建议开启）
+    error_log("[订单同步错误] " . date('Y-m-d H:i:s') . "：" . $e->getMessage() . " 行号：" . $e->getLine());
 }
-    // 执行SQL
-   // $stmt->execute($data);
 
-
-
-
-?>
+// 输出最终JSON响应
+echo json_encode($response, JSON_UNESCAPED_UNICODE);
