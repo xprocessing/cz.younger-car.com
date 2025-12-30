@@ -21,10 +21,7 @@
     </div>
     <div class="col-md-2">
         <div class="card text-center border-info">
-            <div class="card-body">
-                <h5 class="card-title text-info">
-                    盈亏统计
-                </h5>
+            <div class="card-body">                
                 <p class="card-text">盈利: <?php echo $stats['positive_orders'] ?? 0; ?> 单</p>
                 <p class="card-text">亏损: <?php echo $stats['negative_orders'] ?? 0; ?> 单</p>
             </div>
@@ -60,7 +57,7 @@
                         echo number_format($totalCost, 2);
                         ?>
                 </h5>
-                <p class="card-text">总成本（待统一货币）</p>
+                <p class="card-text">总货品成本（待统一货币）</p>
             </div>
         </div>
     </div>
@@ -76,7 +73,7 @@
                         echo number_format($totalWmsCost, 2);
                         ?>
                 </h5>
-                <p class="card-text">WMS总成本（待统一货币）</p>
+                <p class="card-text">总运费成本（待统一货币）</p>
             </div>
         </div>
     </div>
