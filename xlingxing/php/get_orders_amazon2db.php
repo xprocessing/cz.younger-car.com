@@ -129,8 +129,8 @@ try {
     //3.整理$orders和$orderDetails 数据作为新的数组
 
 
-    // 构造数据数组
-    $data = [];
+    
+ 
     foreach ($orders['data'] as $order) {
         foreach ($orderDetails['data'] as $detail) {
             if ($order['amazon_order_id'] === $detail['amazon_order_id']) {
@@ -148,20 +148,20 @@ try {
 
                 $wms_shipping_price_amount = $detail['icon'] . $detail['item_list'][0]['fba_shipment_amount'] * -1;
 
-
-                $data[] = [
-                    'store_id' => $order['sid'],
-                    'global_order_no' => $order['amazon_order_id'],
-                    'warehouse_name' => $order['fulfillment_channel'],
-                    'receiver_country' => $detail['country'],
-                    'global_purchase_time' => $order['purchase_date_local'],
-                    'local_sku' => $order['item_list'][0]['local_sku'],
-                    'order_total_amount' => $detail['icon'] . $order['order_total_amount'],
-                    'profit_amount' => $detail['icon'] . $detail['item_list'][0]['profit'],
-                    'profit_rate' => $profit_rate,
-                    'wms_outbound_cost_amount' => $wms_outbound_cost_amount,
-                    'wms_shipping_price_amount' => $wms_shipping_price_amount,
-                    'update_time' => date('Y-m-d H:i:s')
+               // 构造数据数组
+                $data= [
+                    ':store_id' => $order['sid'],
+                    ':global_order_no' => $order['amazon_order_id'],
+                    ':warehouse_name' => $order['fulfillment_channel'],
+                    ':receiver_country' => $detail['country'],
+                    ':global_purchase_time' => $order['purchase_date_local'],
+                    ':local_sku' => $order['item_list'][0]['local_sku'],
+                    ':order_total_amount' => $detail['icon'] . $order['order_total_amount'],
+                    ':profit_amount' => $detail['icon'] . $detail['item_list'][0]['profit'],
+                    ':profit_rate' => $profit_rate,
+                    ':wms_outbound_cost_amount' => $wms_outbound_cost_amount,
+                    ':wms_shipping_price_amount' => $wms_shipping_price_amount,
+                    ':update_time' => date('Y-m-d H:i:s')
                 ];
                 echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
                 //执行sql
