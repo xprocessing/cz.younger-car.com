@@ -46,7 +46,7 @@ try {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
 
-//https://cz.younger-car.com/xlingxing/php/get_orders_amazon2db.php?n_days=31&offset=0 (offset用于分页，每页300条)
+//https://cz.younger-car.com/xlingxing/php/get_orders_amazon2db.php?n_days=3&offset=0 (offset用于分页，每页300条)
 //$orders 数据中的data为数组，data[0].amazon_order_id为订单号
 //用,拼接订单号，批量查询订单详情，获取利润数据。
 $order_ids = implode(',', array_column($orders['data'], 'amazon_order_id'));

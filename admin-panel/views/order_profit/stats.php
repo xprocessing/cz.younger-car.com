@@ -107,15 +107,15 @@
                 <table class="table table-sm">
                     <tr>
                         <td>WMS出库成本:</td>
-                        <td><strong>$<?php echo number_format($stats['wms_cost'] ?? 0, 2); ?></strong></td>
+                        <td><strong><?php echo number_format($stats['wms_cost'] ?? 0, 2); ?></strong></td>
                     </tr>
                     <tr>
                         <td>WMS运费成本:</td>
-                        <td><strong>$<?php echo number_format($stats['wms_shipping'] ?? 0, 2); ?></strong></td>
+                        <td><strong><?php echo number_format($stats['wms_shipping'] ?? 0, 2); ?></strong></td>
                     </tr>
                     <tr class="table-primary">
                         <td>WMS总成本:</td>
-                        <td><strong>$<?php 
+                        <td><strong><?php 
                             $wmsTotal = ($stats['wms_cost'] ?? 0) + ($stats['wms_shipping'] ?? 0);
                             echo number_format($wmsTotal, 2); 
                         ?></strong></td>
@@ -181,7 +181,7 @@
                     <tr>
                         <td><?php echo htmlspecialchars($platform['platform_name']); ?></td>
                         <td><?php echo number_format($platform['order_count']); ?></td>
-                        <td><strong><?php echo number_format($platform['total_profit'], 2); ?></strong></td>
+                        <td><strong>$<?php echo number_format($platform['total_profit'], 2); ?></strong></td>
                         <td><strong
                                 class="<?php echo $platform['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
                                 <?php echo number_format($platform['avg_profit_rate'], 2); ?>%
