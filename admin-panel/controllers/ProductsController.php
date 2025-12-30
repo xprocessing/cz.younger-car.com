@@ -40,8 +40,9 @@ class ProductsController {
     }
     
     public function create() {
-        if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+        if (!hasPermission('products.create')) {
+            showError('您没有权限创建商品');
+            redirect(APP_URL . '/products.php');
         }
         
         $title = '创建商品';
@@ -133,8 +134,9 @@ class ProductsController {
     }
     
     public function editPost() {
-        if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+        if (!hasPermission('products.edit')) {
+            showError('您没有权限编辑商品');
+            redirect(APP_URL . '/products.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -236,8 +238,9 @@ class ProductsController {
     }
     
     public function search() {
-        if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+        if (!hasPermission('products.view')) {
+            showError('您没有权限搜索商品');
+            redirect(APP_URL . '/products.php');
         }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -277,8 +280,9 @@ class ProductsController {
     }
     
     public function importPost() {
-        if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+        if (!hasPermission('products.import')) {
+            showError('您没有权限导入商品');
+            redirect(APP_URL . '/products.php?action=import');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_FILES['excel_file'])) {
@@ -492,8 +496,9 @@ class ProductsController {
     }
     
     public function stats() {
-        if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+        if (!hasPermission('products.view')) {
+            showError('您没有权限查看商品统计');
+            redirect(APP_URL . '/dashboard.php');
         }
         
         $categoryStats = $this->productsModel->getCategoryStats();

@@ -63,8 +63,9 @@ class OrderProfitController {
     
     // 处理创建订单利润请求
     public function createPost() {
-        if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+        if (!hasPermission('order_profit.view')) {
+            showError('您没有权限创建订单利润');
+            redirect(APP_URL . '/order_profit.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -187,8 +188,9 @@ class OrderProfitController {
     
     // 删除订单利润
     public function delete() {
-        if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+        if (!hasPermission('order_profit.view')) {
+            showError('您没有权限删除订单利润');
+            redirect(APP_URL . '/order_profit.php');
         }
         
         $id = $_GET['id'] ?? 0;
@@ -400,8 +402,9 @@ class OrderProfitController {
     
     // 批量导出
     public function export() {
-        if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+        if (!hasPermission('order_profit.view')) {
+            showError('您没有权限导出订单利润');
+            redirect(APP_URL . '/order_profit.php');
         }
         
         // 获取所有筛选参数

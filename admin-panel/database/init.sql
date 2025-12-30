@@ -1,6 +1,6 @@
 -- 创建数据库
-CREATE DATABASE IF NOT EXISTS cz CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE cz;
+CREATE DATABASE IF NOT EXISTS cz_data CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE cz_data;
 
 -- 用户表
 CREATE TABLE IF NOT EXISTS users (
@@ -98,7 +98,26 @@ INSERT INTO permissions (name, slug, description, module) VALUES
 ('编辑商品', 'products.edit', '可以编辑现有商品', 'products'),
 ('删除商品', 'products.delete', '可以删除商品', 'products'),
 ('导入商品', 'products.import', '可以导入商品数据', 'products'),
-('导出商品', 'products.export', '可以导出商品数据', 'products');
+('导出商品', 'products.export', '可以导出商品数据', 'products'),
+
+-- 订单利润管理权限
+('查看订单利润', 'order_profit.view', '可以查看订单利润列表', 'order_profit'),
+('查看订单利润统计', 'order_profit.stats', '可以查看订单利润统计', 'order_profit'),
+
+-- 店铺管理权限
+('查看店铺', 'store.view', '可以查看店铺列表', 'store'),
+('创建店铺', 'store.create', '可以创建新店铺', 'store'),
+('编辑店铺', 'store.edit', '可以编辑现有店铺', 'store'),
+('删除店铺', 'store.delete', '可以删除店铺', 'store'),
+
+-- 新产品管理权限
+('查看新产品', 'new_products.view', '可以查看新产品列表', 'new_products'),
+('创建新产品', 'new_products.create', '可以创建新产品', 'new_products'),
+('编辑新产品', 'new_products.edit', '可以编辑新产品', 'new_products'),
+('删除新产品', 'new_products.delete', '可以删除新产品', 'new_products'),
+
+-- 运费查询权限
+('查询运费', 'query.view', '可以查询运费信息', 'query');
 
 -- 给角色分配权限
 
@@ -117,7 +136,18 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 (2, 24), -- 编辑商品
 (2, 25), -- 删除商品
 (2, 26), -- 导入商品
-(2, 27); -- 导出商品
+(2, 27), -- 导出商品
+(2, 28), -- 查看订单利润
+(2, 29), -- 查看订单利润统计
+(2, 30), -- 查看店铺
+(2, 31), -- 创建店铺
+(2, 32), -- 编辑店铺
+(2, 33), -- 删除店铺
+(2, 34), -- 查看新产品
+(2, 35), -- 创建新产品
+(2, 36), -- 编辑新产品
+(2, 37), -- 删除新产品
+(2, 38); -- 查询运费
 
 -- 查看者仅拥有查看权限
 INSERT INTO role_permissions (role_id, permission_id) VALUES
@@ -125,7 +155,12 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 (3, 5), -- 查看角色
 (3, 9), -- 查看权限
 (3, 13), -- 查看数据
-(3, 22); -- 查看商品
+(3, 22), -- 查看商品
+(3, 28), -- 查看订单利润
+(3, 29), -- 查看订单利润统计
+(3, 30), -- 查看店铺
+(3, 34), -- 查看新产品
+(3, 38); -- 查询运费
 
 -- 创建默认管理员用户
 INSERT INTO users (username, email, password, full_name) VALUES
@@ -188,11 +223,11 @@ CREATE TABLE IF NOT EXISTS `order_profit` (
 	`receiver_country` CHAR(10) COMMENT '收货国家',
 	`global_purchase_time` CHAR(30) COMMENT '下单时间',
 	`local_sku` CHAR(50) COMMENT 'sku',
-	`order_total_amount` CHAR(20) COMMENT '订单总额，为字符串带有不同国家货币符号',
-    `wms_outbound_cost_amount` CHAR(20) COMMENT '实际出库成本，为字符串带有不同国家货币符号',
-	`wms_shipping_price_amount` CHAR(20) COMMENT '实际运费，为字符串带有不同国家货币符号',	
-	`profit_amount` CHAR(20) COMMENT '毛利润，为字符串带有不同国家货币符号，有正有负',
-	`profit_rate` CHAR(20) COMMENT '利润率（已经计算过，数据库中有正有负）',	
+	`order_total_amount` CHAR(20) COMMENT '订单总额，为字符串带$货币符号',
+    `wms_outbound_cost_amount` CHAR(20) COMMENT '实际出库成本，为字符串带有$货币符号',
+	`wms_shipping_price_amount` CHAR(20) COMMENT '实际运费，为字符串带有$货币符号',	
+	`profit_amount` CHAR(20) COMMENT '毛利润，为字符串带有$货币符号，有正有负',
+	`profit_rate` CHAR(20) COMMENT '利润率（已经计算过，数据库中有正有负,保留小数点两位）',	
 	`update_time` DATETIME COMMENT '数据更新时间',
 	PRIMARY KEY(`id`)
 );

@@ -59,6 +59,12 @@ class QueryController {
     
     // API方式查询（返回JSON）
     public function api() {
+        if (!hasPermission('query.view')) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '您没有权限查询运费'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+        
         header('Content-Type: application/json');
         
         $orderNo = trim($_GET['order_no'] ?? '');

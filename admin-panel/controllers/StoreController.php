@@ -12,8 +12,9 @@ class StoreController {
     
     // 显示店铺列表
     public function index() {
-        if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+        if (!hasPermission('store.view')) {
+            showError('您没有权限访问此页面');
+            redirect(APP_URL . '/dashboard.php');
         }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -197,8 +198,9 @@ class StoreController {
     
     // 处理删除店铺请求
     public function delete() {
-        if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+        if (!hasPermission('store.delete')) {
+            showError('您没有权限删除店铺');
+            redirect(APP_URL . '/store.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

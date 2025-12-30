@@ -121,8 +121,9 @@ class NewProductController {
     
     // 处理编辑新产品请求
     public function editPost() {
-        if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+        if (!hasPermission('new_products.edit')) {
+            showError('您没有权限编辑新产品');
+            redirect(APP_URL . '/new_products.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -209,8 +210,9 @@ class NewProductController {
     
     // 搜索新产品
     public function search() {
-        if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+        if (!hasPermission('new_products.view')) {
+            showError('您没有权限搜索新产品');
+            redirect(APP_URL . '/new_products.php');
         }
         
         $keyword = $_GET['keyword'] ?? '';
