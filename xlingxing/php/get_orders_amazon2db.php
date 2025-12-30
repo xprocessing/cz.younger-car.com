@@ -163,7 +163,7 @@ try {
                     'wms_shipping_price_amount' => $wms_shipping_price_amount,
                     'update_time' => date('Y-m-d H:i:s')
                 ];
-                //echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+                echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
                 //执行sql
                 $stmt->execute($data);
                 $syncCount++;
