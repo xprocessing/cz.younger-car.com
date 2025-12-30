@@ -127,7 +127,9 @@ foreach ($orders['data'] as $order) {
                //出库成本，采购费用+佣金
             $wms_outbound_cost_amount =$detail['item_list'][0]['cg_price']+$detail['item_list'][0]['commission_amount'];
             //利润率 $detail['item_list'][0]['profit']/$order['order_total_amount'],格式12%
-            $profit_rate = round($detail['item_list'][0]['profit']/$order['order_total_amount']*100,2) . '%';
+            // 核心：如果订单金额为0，直接赋值0%，否则正常计算利润率
+
+            $profit_rate = $order['order_total_amount'] == 0 ? '0.00%' : round($detail['item_list'][0]['profit']/$order['order_total_amount']*100,2) . '%';
 
             
 
