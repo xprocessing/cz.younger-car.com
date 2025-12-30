@@ -41,7 +41,7 @@
         <div class="card text-center border-success">
             <div class="card-body">
                 <h5 class="card-title text-success">
-                    多种货币
+                    $<?php echo number_format($stats['total_amount'] ?? 0, 2); ?>
                 </h5>
                 <p class="card-text">总订单金额</p>
             </div>

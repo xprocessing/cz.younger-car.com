@@ -410,7 +410,7 @@ class OrderProfit {
             'avg_profit_rate' => 0,
             'wms_cost' => 0,
             'wms_shipping' => 0,
-            'currency_stats' => [], // 按货币类型分组的统计
+            'total_amount' => 0, // 总订单金额
             'positive_orders' => 0,
             'negative_orders' => 0
         ];
@@ -424,6 +424,11 @@ class OrderProfit {
             
             foreach ($data as $row) {
                 $convertedRow = $this->convertCurrencyFields($row);
+                
+                // 计算总订单金额（订单金额统一为美元）
+                if (isset($row['order_total_amount']) && !empty($row['order_total_amount'])) {
+                    $stats['total_amount'] += parseCurrencyAmount($row['order_total_amount']);
+                }
                 
                 // 计算WMS成本（需要转换为数值）
                 $stats['wms_cost'] += parseCurrencyAmount($convertedRow['wms_outbound_cost_amount'] ?? '0');
@@ -440,30 +445,6 @@ class OrderProfit {
                     $positiveOrders++;
                 } elseif ($convertedRow['profit_rate'] < 0) {
                     $negativeOrders++;
-                }
-                
-                // 按货币类型分组统计
-                if (isset($row['order_total_amount']) && !empty($row['order_total_amount'])) {
-                    // 提取货币符号
-                    preg_match('/^([^\d-]+)/', $row['order_total_amount'], $matches);
-                    $currency = $matches[1] ?? 'Unknown';
-                    
-                    // 确保该货币类型的统计数组存在
-                    if (!isset($stats['currency_stats'][$currency])) {
-                        $stats['currency_stats'][$currency] = [
-                            'order_count' => 0,
-                            'total_amount' => 0,
-                            'total_profit' => 0
-                        ];
-                    }
-                    
-                    // 解析数值并累加
-                    $amount = parseCurrencyAmount($row['order_total_amount']);
-                    $profit = parseCurrencyAmount($row['profit_amount'] ?? '0');
-                    
-                    $stats['currency_stats'][$currency]['order_count']++;
-                    $stats['currency_stats'][$currency]['total_amount'] += $amount;
-                    $stats['currency_stats'][$currency]['total_profit'] += $profit;
                 }
             }
             
