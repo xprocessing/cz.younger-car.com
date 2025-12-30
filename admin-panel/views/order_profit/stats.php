@@ -272,18 +272,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 使用真实的利润率分布数据
     const data = {
-        labels: ['亏损 (<0%)', '低利润 (0-5%)', '正常利润 (5-15%)', '高利润 (>15%)'],
+        labels: ['<0%', '0-10%', '10-20%', '20-30%', '30-40%', '40-50%', '50-60%', '60-70%', '70-80%', '80-90%', '>90%'],
         values: [
             <?php echo $profitRateDistribution['negative'] ?? 0; ?>,
-            <?php echo $profitRateDistribution['low'] ?? 0; ?>,
-            <?php echo $profitRateDistribution['normal'] ?? 0; ?>,
-            <?php echo $profitRateDistribution['high'] ?? 0; ?>
+            <?php echo $profitRateDistribution['range_0_10'] ?? 0; ?>,
+            <?php echo $profitRateDistribution['range_10_20'] ?? 0; ?>,
+            <?php echo $profitRateDistribution['range_20_30'] ?? 0; ?>,
+            <?php echo $profitRateDistribution['range_30_40'] ?? 0; ?>,
+            <?php echo $profitRateDistribution['range_40_50'] ?? 0; ?>,
+            <?php echo $profitRateDistribution['range_50_60'] ?? 0; ?>,
+            <?php echo $profitRateDistribution['range_60_70'] ?? 0; ?>,
+            <?php echo $profitRateDistribution['range_70_80'] ?? 0; ?>,
+            <?php echo $profitRateDistribution['range_80_90'] ?? 0; ?>,
+            <?php echo $profitRateDistribution['range_90_plus'] ?? 0; ?>
         ],
         colors: [
             'rgba(255, 99, 132, 0.6)',
-            'rgba(255, 206, 86, 0.6)',
+            'rgba(255, 159, 64, 0.6)',
+            'rgba(255, 205, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
             'rgba(54, 162, 235, 0.6)',
-            'rgba(75, 192, 192, 0.6)'
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 99, 255, 0.6)',
+            'rgba(201, 203, 207, 0.6)',
+            'rgba(255, 128, 0, 0.6)',
+            'rgba(128, 128, 0, 0.6)',
+            'rgba(0, 128, 0, 0.6)'
         ]
     };
 

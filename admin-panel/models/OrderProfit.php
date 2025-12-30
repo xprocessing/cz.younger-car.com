@@ -659,12 +659,19 @@ class OrderProfit {
         $stmt = $this->db->query($sql, $params);
         $data = $stmt->fetchAll();
         
-        // 初始化四个区间的计数
+        // 初始化11个区间的计数
         $distribution = [
-            'negative' => 0,      // 亏损 (<0%)
-            'low' => 0,           // 低利润 (0-5%)
-            'normal' => 0,        // 正常利润 (5-15%)
-            'high' => 0           // 高利润 (>15%)
+            'negative' => 0,       // 亏损 (<0%)
+            'range_0_10' => 0,      // 0-10%
+            'range_10_20' => 0,     // 10-20%
+            'range_20_30' => 0,     // 20-30%
+            'range_30_40' => 0,     // 30-40%
+            'range_40_50' => 0,     // 40-50%
+            'range_50_60' => 0,     // 50-60%
+            'range_60_70' => 0,     // 60-70%
+            'range_70_80' => 0,     // 70-80%
+            'range_80_90' => 0,     // 80-90%
+            'range_90_plus' => 0     // >90%
         ];
         
         if (is_array($data) && count($data) > 0) {
@@ -673,12 +680,26 @@ class OrderProfit {
                 
                 if ($profitRate < 0) {
                     $distribution['negative']++;
-                } elseif ($profitRate >= 0 && $profitRate < 5) {
-                    $distribution['low']++;
-                } elseif ($profitRate >= 5 && $profitRate <= 15) {
-                    $distribution['normal']++;
+                } elseif ($profitRate >= 0 && $profitRate < 10) {
+                    $distribution['range_0_10']++;
+                } elseif ($profitRate >= 10 && $profitRate < 20) {
+                    $distribution['range_10_20']++;
+                } elseif ($profitRate >= 20 && $profitRate < 30) {
+                    $distribution['range_20_30']++;
+                } elseif ($profitRate >= 30 && $profitRate < 40) {
+                    $distribution['range_30_40']++;
+                } elseif ($profitRate >= 40 && $profitRate < 50) {
+                    $distribution['range_40_50']++;
+                } elseif ($profitRate >= 50 && $profitRate < 60) {
+                    $distribution['range_50_60']++;
+                } elseif ($profitRate >= 60 && $profitRate < 70) {
+                    $distribution['range_60_70']++;
+                } elseif ($profitRate >= 70 && $profitRate < 80) {
+                    $distribution['range_70_80']++;
+                } elseif ($profitRate >= 80 && $profitRate < 90) {
+                    $distribution['range_80_90']++;
                 } else {
-                    $distribution['high']++;
+                    $distribution['range_90_plus']++;
                 }
             }
         }
