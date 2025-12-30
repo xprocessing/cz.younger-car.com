@@ -15,17 +15,8 @@ class OrderProfit {
             return $data;
         }
         
-        // CNY成本字段：需要转换为数值（没有货币符号）
-        $cnyFields = [
-            'wms_outbound_cost_amount', 
-            'wms_shipping_price_amount'
-        ];
-        
-        foreach ($cnyFields as $field) {
-            if (isset($data[$field])) {
-                $data[$field] = (float)($data[$field] ?? 0);
-            }
-        }
+        // CNY成本字段：保留原始字符串值，不做转换
+        // wms_outbound_cost_amount, wms_shipping_price_amount 直接展示数据库原始值
         
         // 带不同国家货币符号的字段：不转换，直接展示原始值
         // order_total_amount, profit_amount 保持原始字符串格式
