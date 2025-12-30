@@ -24,13 +24,13 @@ try {
     //前天的时间 ，按 Y-m-d H:i:s 格式
     $n_days = $_GET['n_days'] ?? 2; // 默认值为2天
     $start_date = date('Y-m-d H:i:s', strtotime("-$n_days days"));
+    $offset = $_GET['offset'] ?? 0;
     //格式化为日期时间字符串
-
 
     // 调用POST接口示例
     $orderParams = [
-        'offset' => 0,
-        'length' => 200,
+        'offset' => $offset,
+        'length' => 300,
         'date_type' => 2, //1 订购时间【站点时间】 2 订单修改时间【北京时间】 3 平台更新时间【UTC时间】
         'start_date' => $start_date, //查询时间，左闭右开，格式：Y-m-d 或 Y-m-d H:i:s
         'end_date' => $end_date,
@@ -46,7 +46,7 @@ try {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
 
-//https://cz.younger-car.com/xlingxing/php/get_orders_amazon2db.php?n_days=1
+//https://cz.younger-car.com/xlingxing/php/get_orders_amazon2db.php?n_days=31&offset=0 (offset用于分页，每页300条)
 //$orders 数据中的data为数组，data[0].amazon_order_id为订单号
 //用,拼接订单号，批量查询订单详情，获取利润数据。
 $order_ids = implode(',', array_column($orders['data'], 'amazon_order_id'));
