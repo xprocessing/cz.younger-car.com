@@ -29,38 +29,40 @@ header("Content-Type: application/json; charset=utf-8");
     // 使用INSERT ... ON DUPLICATE KEY UPDATE优化（需为global_order_no创建唯一索引）
     //$sql = "SELECT * FROM order_profit WHERE 1=1 LIMIT 10";
 
-    $sql ="
-UPDATE order_profit 
-SET 
+    $sql ="UPDATE order_profit
+SET
   order_total_amount = CASE
-    WHEN order_total_amount REGEXP '^-?￡' THEN CONCAT('$', ROUND(TRIM(REPLACE(order_total_amount, '￡', '')) * 1.35, 2))
-    WHEN order_total_amount REGEXP '^-?JP¥' THEN CONCAT('$', ROUND(TRIM(REPLACE(order_total_amount, 'JP¥', '')), 2) * 0.0064)
-    WHEN order_total_amount REGEXP '^-?CA\\$' THEN CONCAT('$', ROUND(TRIM(REPLACE(order_total_amount, 'CA$', '')) * 0.73, 2))
-    WHEN order_total_amount REGEXP '^-?¥' THEN CONCAT('$', ROUND(TRIM(REPLACE(order_total_amount, '¥', '')) * 0.14, 2))
+    WHEN order_total_amount LIKE 'JP¥%' THEN CONCAT('$', FORMAT(CAST(REPLACE(order_total_amount, 'JP¥', '') AS DECIMAL(10,2)) * 0.0064, 2))
+    WHEN order_total_amount LIKE 'CA$%' THEN CONCAT('$', FORMAT(CAST(REPLACE(order_total_amount, 'CA$', '') AS DECIMAL(10,2)) * 0.73, 2))
+    WHEN order_total_amount LIKE '￡%' THEN CONCAT('$', FORMAT(CAST(REPLACE(order_total_amount, '￡', '') AS DECIMAL(10,2)) * 1.35, 2))
+    WHEN order_total_amount LIKE '￥%' THEN CONCAT('$', FORMAT(CAST(REPLACE(order_total_amount, '￥', '') AS DECIMAL(10,2)) * 0.14, 2))
     ELSE order_total_amount
   END,
+  profit_amount = CASE
+    WHEN profit_amount LIKE 'JP¥%' THEN CONCAT('$', FORMAT(CAST(REPLACE(profit_amount, 'JP¥', '') AS DECIMAL(10,2)) * 0.0064, 2))
+    WHEN profit_amount LIKE 'CA$%' THEN CONCAT('$', FORMAT(CAST(REPLACE(profit_amount, 'CA$', '') AS DECIMAL(10,2)) * 0.73, 2))
+    WHEN profit_amount LIKE '￡%' THEN CONCAT('$', FORMAT(CAST(REPLACE(profit_amount, '￡', '') AS DECIMAL(10,2)) * 1.35, 2))
+    WHEN profit_amount LIKE '￥%' THEN CONCAT('$', FORMAT(CAST(REPLACE(profit_amount, '￥', '') AS DECIMAL(10,2)) * 0.14, 2))
+    ELSE profit_amount
+  END,
   wms_outbound_cost_amount = CASE
-    WHEN wms_outbound_cost_amount REGEXP '^-?￡' THEN CONCAT('$', ROUND(TRIM(REPLACE(wms_outbound_cost_amount, '￡', '')), 2) * 1.35)
-    WHEN wms_outbound_cost_amount REGEXP '^-?JP¥' THEN CONCAT('$', ROUND(TRIM(REPLACE(wms_outbound_cost_amount, 'JP¥', '')), 2) * 0.0064)
-    WHEN wms_outbound_cost_amount REGEXP '^-?CA\\$' THEN CONCAT('$', ROUND(TRIM(REPLACE(wms_outbound_cost_amount, 'CA$', '')), 2) * 0.73)
-    WHEN wms_outbound_cost_amount REGEXP '^-?¥' THEN CONCAT('$', ROUND(TRIM(REPLACE(wms_outbound_cost_amount, '¥', '')), 2) * 0.14)
+    WHEN wms_outbound_cost_amount LIKE 'JP¥%' THEN CONCAT('$', FORMAT(CAST(REPLACE(wms_outbound_cost_amount, 'JP¥', '') AS DECIMAL(10,2)) * 0.0064, 2))
+    WHEN wms_outbound_cost_amount LIKE 'CA$%' THEN CONCAT('$', FORMAT(CAST(REPLACE(wms_outbound_cost_amount, 'CA$', '') AS DECIMAL(10,2)) * 0.73, 2))
+    WHEN wms_outbound_cost_amount LIKE '￡%' THEN CONCAT('$', FORMAT(CAST(REPLACE(wms_outbound_cost_amount, '￡', '') AS DECIMAL(10,2)) * 1.35, 2))
+    WHEN wms_outbound_cost_amount LIKE '￥%' THEN CONCAT('$', FORMAT(CAST(REPLACE(wms_outbound_cost_amount, '￥', '') AS DECIMAL(10,2)) * 0.14, 2))
     ELSE wms_outbound_cost_amount
   END,
   wms_shipping_price_amount = CASE
-    WHEN wms_shipping_price_amount REGEXP '^-?￡' THEN CONCAT('$', ROUND(TRIM(REPLACE(wms_shipping_price_amount, '￡', '')), 2) * 1.35)
-    WHEN wms_shipping_price_amount REGEXP '^-?JP¥' THEN CONCAT('$', ROUND(TRIM(REPLACE(wms_shipping_price_amount, 'JP¥', '')), 2) * 0.0064)
-    WHEN wms_shipping_price_amount REGEXP '^-?CA\\$' THEN CONCAT('$', ROUND(TRIM(REPLACE(wms_shipping_price_amount, 'CA$', '')), 2) * 0.73)
-    WHEN wms_shipping_price_amount REGEXP '^-?¥' THEN CONCAT('$', ROUND(TRIM(REPLACE(wms_shipping_price_amount, '¥', '')), 2) * 0.14)
+    WHEN wms_shipping_price_amount LIKE 'JP¥%' THEN CONCAT('$', FORMAT(CAST(REPLACE(wms_shipping_price_amount, 'JP¥', '') AS DECIMAL(10,2)) * 0.0064, 2))
+    WHEN wms_shipping_price_amount LIKE 'CA$%' THEN CONCAT('$', FORMAT(CAST(REPLACE(wms_shipping_price_amount, 'CA$', '') AS DECIMAL(10,2)) * 0.73, 2))
+    WHEN wms_shipping_price_amount LIKE '￡%' THEN CONCAT('$', FORMAT(CAST(REPLACE(wms_shipping_price_amount, '￡', '') AS DECIMAL(10,2)) * 1.35, 2))
+    WHEN wms_shipping_price_amount LIKE '￥%' THEN CONCAT('$', FORMAT(CAST(REPLACE(wms_shipping_price_amount, '￥', '') AS DECIMAL(10,2)) * 0.14, 2))
     ELSE wms_shipping_price_amount
-  END,
-  profit_amount = CASE
-    WHEN profit_amount REGEXP '^-?￡' THEN CONCAT('$', ROUND(TRIM(REPLACE(profit_amount, '￡', '')), 2) * 1.35)
-    WHEN profit_amount REGEXP '^-?JP¥' THEN CONCAT('$', ROUND(TRIM(REPLACE(profit_amount, 'JP¥', '')), 2) * 0.0064)
-    WHEN profit_amount REGEXP '^-?CA\\$' THEN CONCAT('$', ROUND(TRIM(REPLACE(profit_amount, 'CA$', '')), 2) * 0.73)
-    WHEN profit_amount REGEXP '^-?¥' THEN CONCAT('$', ROUND(TRIM(REPLACE(profit_amount, '¥', '')), 2) * 0.14)
-    ELSE profit_amount
-  END;
-";
+  END
+WHERE order_total_amount REGEXP '^(JP¥|CA$|￡|￥)' 
+   OR profit_amount REGEXP '^(JP¥|CA$|￡|￥)'
+   OR wms_outbound_cost_amount REGEXP '^(JP¥|CA$|￡|￥)'
+   OR wms_shipping_price_amount REGEXP '^(JP¥|CA$|￡|￥)';";
 
 
     $stmt = $pdo->prepare($sql);
