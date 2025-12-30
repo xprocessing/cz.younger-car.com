@@ -130,6 +130,13 @@ try {
         $profit = floatval(preg_replace('/[^0-9.-]/', '', $transactionInfo['profit_amount'] ?? 0));  
         $profitRate = $orderTotal > 0 ? round(($profit / $orderTotal) * 100, 2) : 0;
 
+        //去掉字符串中的-号
+        $wms_outbound_cost_amount=$transactionInfo['wms_outbound_cost_amount'];
+        $wms_outbound_cost_amount=str_replace('-','',$wms_outbound_cost_amount);
+        $wms_shipping_price_amount=$transactionInfo['wms_shipping_price_amount'];
+        $wms_shipping_price_amount=str_replace('-','',$wms_shipping_price_amount);
+
+
         // 构造数据数组
         $data = [
             ':store_id' => $order['store_id'] ?? '',
@@ -141,8 +148,8 @@ try {
             ':order_total_amount' => $transactionInfo['order_total_amount'] ?? 0,           
             ':profit_amount' => $transactionInfo['profit_amount'] ?? 0,
             ':profit_rate' => $profitRate,
-            ':wms_outbound_cost_amount' => $itemInfo['wms_outbound_cost_amount'] ?? 0,
-            ':wms_shipping_price_amount' => $itemInfo['wms_shipping_price_amount'] ?? 0,
+            ':wms_outbound_cost_amount' => $wms_outbound_cost_amount ?? 0,
+            ':wms_shipping_price_amount' => $wms_shipping_price_amount ?? 0,
             ':update_time' => date('Y-m-d H:i:s')
         ];
 
