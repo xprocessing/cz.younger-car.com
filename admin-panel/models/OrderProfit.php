@@ -425,9 +425,9 @@ class OrderProfit {
             foreach ($data as $row) {
                 $convertedRow = $this->convertCurrencyFields($row);
                 
-                // 计算WMS成本
-                $stats['wms_cost'] += $convertedRow['wms_outbound_cost_amount'];
-                $stats['wms_shipping'] += $convertedRow['wms_shipping_price_amount'];
+                // 计算WMS成本（需要转换为数值）
+                $stats['wms_cost'] += parseCurrencyAmount($convertedRow['wms_outbound_cost_amount'] ?? '0');
+                $stats['wms_shipping'] += parseCurrencyAmount($convertedRow['wms_shipping_price_amount'] ?? '0');
                 
                 // 计算利润率
                 if ($convertedRow['profit_rate'] !== 0) {
