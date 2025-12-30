@@ -321,12 +321,12 @@ if ($hasFilters): ?>
                                 </td>
                                 <td>
                                     <span class="text-danger">
-                                        <?php echo $profit['wms_outbound_cost_amount']; ?>
+                                        <?php echo htmlspecialchars($profit['wms_outbound_cost_amount'] ?? ''); ?>
                                     </span>
                                 </td>
                                 <td>
                                     <span class="text-danger">
-                                        <?php echo $profit['wms_shipping_price_amount']; ?>
+                                        <?php echo htmlspecialchars($profit['wms_shipping_price_amount'] ?? ''); ?>
                                     </span>
                                 </td>
                                 <td>
