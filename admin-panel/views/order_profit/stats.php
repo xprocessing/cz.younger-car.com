@@ -89,7 +89,7 @@
         <h5 class="mb-0">利润率分布</h5>
     </div>
     <div class="card-body">
-        <canvas id="profitRateChart" width="600" height="200"></canvas>
+        <canvas id="profitRateChart" width="100%" height="300"></canvas>
     </div>
 </div>
 
