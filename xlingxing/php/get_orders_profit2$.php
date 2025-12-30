@@ -34,16 +34,18 @@ SET
     order_total_amount = CASE
         WHEN order_total_amount LIKE '￡%' THEN CONCAT('$', ROUND(CAST(SUBSTRING(order_total_amount,2) AS DECIMAL(10,2)) * 1.35, 2))
         WHEN order_total_amount LIKE 'JP¥%' THEN CONCAT('$', ROUND(CAST(SUBSTRING(order_total_amount,4) AS DECIMAL(10,2)) * 0.0064, 2))
+        WHEN order_total_amount LIKE 'CA$%' THEN CONCAT('$', ROUND(CAST(SUBSTRING(order_total_amount,4) AS DECIMAL(10,2)) * 0.73, 2))
         ELSE order_total_amount
     END,
     profit_amount = CASE
         WHEN profit_amount LIKE '￡%' THEN CONCAT('$', ROUND(CAST(SUBSTRING(profit_amount,2) AS DECIMAL(10,2)) * 1.35, 2))
         WHEN profit_amount LIKE 'JP¥%' THEN CONCAT('$', ROUND(CAST(SUBSTRING(profit_amount,4) AS DECIMAL(10,2)) * 0.0064, 2))
+        WHEN profit_amount LIKE 'CA$%' THEN CONCAT('$', ROUND(CAST(SUBSTRING(profit_amount,4) AS DECIMAL(10,2)) * 0.73, 2))
         ELSE profit_amount
     END
 WHERE 
-    order_total_amount LIKE '￡%' OR order_total_amount LIKE 'JP¥%' 
-    OR profit_amount LIKE '￡%' OR profit_amount LIKE 'JP¥%';";
+    order_total_amount LIKE '￡%' OR order_total_amount LIKE 'JP¥%' OR order_total_amount LIKE 'CA$%' 
+    OR profit_amount LIKE '￡%' OR profit_amount LIKE 'JP¥%' OR profit_amount LIKE 'CA$%';";
 
 
     $stmt = $pdo->prepare($sql);
