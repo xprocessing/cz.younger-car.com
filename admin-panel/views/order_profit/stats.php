@@ -22,7 +22,7 @@
     <div class="col-md-2">
         <div class="card text-center border-info">
             <div class="card-body">                
-                <p class="card-text">盈利: <?php echo $stats['positive_orders'] ?? 0; ?> 单</p>
+                <h5 class="card-title text-info">盈利: <?php echo $stats['positive_orders'] ?? 0; ?> 单</h5>
                 <p class="card-text">亏损: <?php echo $stats['negative_orders'] ?? 0; ?> 单</p>
             </div>
         </div>
