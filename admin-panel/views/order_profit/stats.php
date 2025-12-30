@@ -53,11 +53,10 @@
             <div class="card-body">
                 <h5 class="card-title text-secondary">
                     $<?php
-                        $totalCost = ($stats['wms_cost'] ?? 0) + ($stats['wms_shipping'] ?? 0);
-                        echo number_format($totalCost, 2);
+                        echo number_format($stats['wms_cost'] ?? 0, 2);
                         ?>
                 </h5>
-                <p class="card-text">总货品成本（待统一货币）</p>
+                <p class="card-text">总出库成本</p>
             </div>
         </div>
     </div>
@@ -69,11 +68,10 @@
             <div class="card-body">
                 <h5 class="card-title text-info">
                     $<?php
-                        $totalWmsCost = ($stats['wms_cost'] ?? 0) + ($stats['wms_shipping'] ?? 0);
-                        echo number_format($totalWmsCost, 2);
+                        echo number_format($stats['wms_shipping'] ?? 0, 2);
                         ?>
                 </h5>
-                <p class="card-text">总运费成本（待统一货币）</p>
+                <p class="card-text">总运费成本</p>
             </div>
         </div>
     </div>
