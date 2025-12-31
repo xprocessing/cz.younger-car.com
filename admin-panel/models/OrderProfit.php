@@ -731,17 +731,26 @@ class OrderProfit {
                         'order_count' => 0,
                         'total_profit' => 0,
                         'total_profit_rate' => 0,
-                        'avg_profit_rate' => 0
+                        'avg_profit_rate' => 0,
+                        'total_amount' => 0,
+                        'total_wms_cost' => 0,
+                        'total_wms_shipping' => 0
                     ];
                 }
                 
                 // 解析数值并累加
                 $profit = parseCurrencyAmount($row['profit_amount'] ?? '0');
                 $profitRate = parseCurrencyAmount($row['profit_rate'] ?? '0');
+                $amount = parseCurrencyAmount($row['order_total_amount'] ?? '0');
+                $wmsCost = parseCurrencyAmount($row['wms_outbound_cost_amount'] ?? '0');
+                $wmsShipping = parseCurrencyAmount($row['wms_shipping_price_amount'] ?? '0');
                 
                 $brandStats[$brandName]['order_count']++;
                 $brandStats[$brandName]['total_profit'] += $profit;
                 $brandStats[$brandName]['total_profit_rate'] += $profitRate;
+                $brandStats[$brandName]['total_amount'] += $amount;
+                $brandStats[$brandName]['total_wms_cost'] += $wmsCost;
+                $brandStats[$brandName]['total_wms_shipping'] += $wmsShipping;
             }
             
             // 计算平均利润率

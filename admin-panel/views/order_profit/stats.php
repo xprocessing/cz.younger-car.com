@@ -197,7 +197,10 @@
                     <tr>
                         <th>品牌名称</th>
                         <th>订单数量</th>
+                        <th>总订单金额</th>
                         <th>总利润</th>
+                        <th>总出库成本</th>
+                        <th>总运费</th>
                         <th>平均利润率</th>
                     </tr>
                 </thead>
@@ -207,7 +210,10 @@
                             <tr>
                                 <td><?php echo htmlspecialchars($brand['brand_name']); ?></td>
                                 <td><?php echo number_format($brand['order_count']); ?></td>
+                                <td><strong>$<?php echo number_format($brand['total_amount'], 2); ?></strong></td>
                                 <td><strong>$<?php echo number_format($brand['total_profit'], 2); ?></strong></td>
+                                <td><strong>$<?php echo number_format($brand['total_wms_cost'], 2); ?></strong></td>
+                                <td><strong>$<?php echo number_format($brand['total_wms_shipping'], 2); ?></strong></td>
                                 <td><strong
                                         class="<?php echo $brand['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
                                         <?php echo number_format($brand['avg_profit_rate'], 2); ?>%
@@ -216,7 +222,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="4" class="text-center">暂无数据</td>
+                            <td colspan="7" class="text-center">暂无数据</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
