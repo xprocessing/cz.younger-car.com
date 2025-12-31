@@ -548,17 +548,26 @@ class OrderProfit {
                         'order_count' => 0,
                         'total_profit' => 0,
                         'total_profit_rate' => 0,
-                        'avg_profit_rate' => 0
+                        'avg_profit_rate' => 0,
+                        'total_amount' => 0,
+                        'total_wms_cost' => 0,
+                        'total_wms_shipping' => 0
                     ];
                 }
                 
                 // 解析数值并累加
                 $profit = parseCurrencyAmount($row['profit_amount'] ?? '0');
                 $profitRate = parseCurrencyAmount($row['profit_rate'] ?? '0');
+                $amount = parseCurrencyAmount($row['order_total_amount'] ?? '0');
+                $wmsCost = parseCurrencyAmount($row['wms_outbound_cost_amount'] ?? '0');
+                $wmsShipping = parseCurrencyAmount($row['wms_shipping_price_amount'] ?? '0');
                 
                 $platformStats[$platformName]['order_count']++;
                 $platformStats[$platformName]['total_profit'] += $profit;
                 $platformStats[$platformName]['total_profit_rate'] += $profitRate;
+                $platformStats[$platformName]['total_amount'] += $amount;
+                $platformStats[$platformName]['total_wms_cost'] += $wmsCost;
+                $platformStats[$platformName]['total_wms_shipping'] += $wmsShipping;
             }
             
             // 计算平均利润率
@@ -600,17 +609,26 @@ class OrderProfit {
                         'order_count' => 0,
                         'total_profit' => 0,
                         'total_profit_rate' => 0,
-                        'avg_profit_rate' => 0
+                        'avg_profit_rate' => 0,
+                        'total_amount' => 0,
+                        'total_wms_cost' => 0,
+                        'total_wms_shipping' => 0
                     ];
                 }
                 
                 // 解析数值并累加
                 $profit = parseCurrencyAmount($row['profit_amount'] ?? '0');
                 $profitRate = parseCurrencyAmount($row['profit_rate'] ?? '0');
+                $amount = parseCurrencyAmount($row['order_total_amount'] ?? '0');
+                $wmsCost = parseCurrencyAmount($row['wms_outbound_cost_amount'] ?? '0');
+                $wmsShipping = parseCurrencyAmount($row['wms_shipping_price_amount'] ?? '0');
                 
                 $storeStats[$storeId]['order_count']++;
                 $storeStats[$storeId]['total_profit'] += $profit;
                 $storeStats[$storeId]['total_profit_rate'] += $profitRate;
+                $storeStats[$storeId]['total_amount'] += $amount;
+                $storeStats[$storeId]['total_wms_cost'] += $wmsCost;
+                $storeStats[$storeId]['total_wms_shipping'] += $wmsShipping;
             }
             
             // 计算平均利润率
@@ -764,17 +782,26 @@ class OrderProfit {
                         'order_count' => 0,
                         'total_profit' => 0,
                         'total_profit_rate' => 0,
-                        'avg_profit_rate' => 0
+                        'avg_profit_rate' => 0,
+                        'total_amount' => 0,
+                        'total_wms_cost' => 0,
+                        'total_wms_shipping' => 0
                     ];
                 }
                 
                 // 解析数值并累加
                 $profit = parseCurrencyAmount($row['profit_amount'] ?? '0');
                 $profitRate = parseCurrencyAmount($row['profit_rate'] ?? '0');
+                $amount = parseCurrencyAmount($row['order_total_amount'] ?? '0');
+                $wmsCost = parseCurrencyAmount($row['wms_outbound_cost_amount'] ?? '0');
+                $wmsShipping = parseCurrencyAmount($row['wms_shipping_price_amount'] ?? '0');
                 
                 $skuStats[$sku]['order_count']++;
                 $skuStats[$sku]['total_profit'] += $profit;
                 $skuStats[$sku]['total_profit_rate'] += $profitRate;
+                $skuStats[$sku]['total_amount'] += $amount;
+                $skuStats[$sku]['total_wms_cost'] += $wmsCost;
+                $skuStats[$sku]['total_wms_shipping'] += $wmsShipping;
             }
             
             // 计算平均利润率
