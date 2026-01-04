@@ -74,7 +74,7 @@
                                 <input type="number" class="form-control" id="wp_id" name="wp_id"
                                        value="<?php echo htmlspecialchars($warehouse['wp_id'] ?? ''); ?>"
                                        placeholder="请输入WP ID">
-                                <div class="form-text">WordPress平台ID</div>
+                                <div class="form-text">服务商平台ID</div>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                                 <input type="text" class="form-control" id="wp_name" name="wp_name"
                                        value="<?php echo htmlspecialchars($warehouse['wp_name'] ?? ''); ?>"
                                        placeholder="请输入WP名称" maxlength="50">
-                                <div class="form-text">WordPress平台名称</div>
+                                <div class="form-text">服务商平台名称</div>
                             </div>
                         </div>
                         <div class="col-md-6">

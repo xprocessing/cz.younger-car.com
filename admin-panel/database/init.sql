@@ -116,6 +116,12 @@ INSERT INTO permissions (name, slug, description, module) VALUES
 ('编辑仓库', 'warehouses.edit', '可以编辑现有仓库', 'warehouses'),
 ('删除仓库', 'warehouses.delete', '可以删除仓库', 'warehouses'),
 
+-- 库存明细权限
+('查看库存明细', 'inventory_details.view', '可以查看库存明细列表', 'inventory_details'),
+('创建库存明细', 'inventory_details.create', '可以创建库存明细', 'inventory_details'),
+('编辑库存明细', 'inventory_details.edit', '可以编辑库存明细', 'inventory_details'),
+('删除库存明细', 'inventory_details.delete', '可以删除库存明细', 'inventory_details'),
+
 -- 新产品管理权限
 ('查看新产品', 'new_products.view', '可以查看新产品列表', 'new_products'),
 ('创建新产品', 'new_products.create', '可以创建新产品', 'new_products'),
@@ -157,7 +163,11 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 (2, 40), -- 创建新产品
 (2, 41), -- 编辑新产品
 (2, 42), -- 删除新产品
-(2, 43); -- 查询运费
+(2, 44), -- 查看库存明细
+(2, 45), -- 创建库存明细
+(2, 46), -- 编辑库存明细
+(2, 47), -- 删除库存明细
+(2, 48); -- 查询运费
 
 -- 查看者仅拥有查看权限
 INSERT INTO role_permissions (role_id, permission_id) VALUES
@@ -170,8 +180,9 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 (3, 29), -- 查看订单利润统计
 (3, 30), -- 查看店铺
 (3, 35), -- 查看仓库
+(3, 44), -- 查看库存明细
 (3, 39), -- 查看新产品
-(3, 43); -- 查询运费
+(3, 48); -- 查询运费
 
 -- 创建默认管理员用户
 INSERT INTO users (username, email, password, full_name) VALUES
@@ -402,3 +413,48 @@ CREATE TABLE `inventory_details` (
   PRIMARY KEY (`id`),
   KEY `idx_sku_wid` (`sku`,`wid`) USING BTREE COMMENT 'SKU+仓库ID联合索引，提升业务查询效率'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='库存详情表-原生JSON格式存储，适配MySQL5.7.40，无语法错误';
+
+INSERT INTO `inventory_details` (
+  wid,product_id,sku,seller_id,fnsku,product_total,product_valid_num,product_bad_num,product_qc_num,product_lock_num,
+  good_lock_num,bad_lock_num,stock_cost_total,quantity_receive,stock_cost,product_onway,transit_head_cost,average_age,
+  third_inventory,stock_age_list,available_inventory_box_qty,purchase_price,price,head_stock_price,stock_price
+) VALUES
+(5848,83506,'NI-C63-FL-GB','0','',1,1,0,0,0,0,0,428.32,'0',428.3190,0,0.00,214,
+'{"qty_sellable":"1","qty_reserved":"0","qty_onway":"0","qty_pending":"0","box_qty_sellable":"0","box_qty_reserved":"0","box_qty_onway":"0","box_qty_pending":"0"}',
+'[{"name":"0-15天库龄","qty":0},{"name":"16-30天库龄","qty":0},{"name":"31-90天库龄","qty":0},{"name":"91天以上库龄","qty":1}]',
+1.0,428.3190,0.0000,0.0000,428.3190),
+
+(5850,83506,'NI-C63-FL-GB','0','',5,5,0,0,0,0,0,1499.55,'0',299.9101,0,0.00,74,
+'{"qty_sellable":"5","qty_reserved":"0","qty_onway":"0","qty_pending":"0","box_qty_sellable":"0","box_qty_reserved":"0","box_qty_onway":"0","box_qty_pending":"0"}',
+'[{"name":"0-15天库龄","qty":0},{"name":"16-30天库龄","qty":0},{"name":"31-90天库龄","qty":2},{"name":"91天以上库龄","qty":1}]',
+5.0,238.2001,0.0000,61.7100,299.9101),
+
+(5847,83506,'NI-C63-FL-GB','0','',3,3,0,0,0,0,0,1220.94,'0',406.9808,0,0.00,77,
+'{"qty_sellable":"3","qty_reserved":"0","qty_onway":"0","qty_pending":"0","box_qty_sellable":"0","box_qty_reserved":"0","box_qty_onway":"0","box_qty_pending":"0"}',
+'[{"name":"0-15天库龄","qty":0},{"name":"16-30天库龄","qty":0},{"name":"31-90天库龄","qty":2},{"name":"91天以上库龄","qty":1}]',
+3.0,281.1257,0.0000,125.8550,406.9808),
+
+(5849,83506,'NI-C63-FL-GB','0','',2,2,0,0,0,0,0,768.09,'0',384.0456,0,0.00,69,
+'{"qty_sellable":"2","qty_reserved":"0","qty_onway":"0","qty_pending":"0","box_qty_sellable":"0","box_qty_reserved":"0","box_qty_onway":"0","box_qty_pending":"0"}',
+'[{"name":"0-15天库龄","qty":0},{"name":"16-30天库龄","qty":0},{"name":"31-90天库龄","qty":2},{"name":"91天以上库龄","qty":0}]',
+2.0,230.0000,0.0000,154.0456,384.0456),
+
+(5851,83506,'NI-C63-FL-GB','0','',0,0,0,0,0,0,0,0.00,'0',0.0000,9,0.00,0,
+'{"qty_sellable":"0","qty_reserved":"0","qty_onway":"9","qty_pending":"0","box_qty_sellable":"0","box_qty_reserved":"0","box_qty_onway":"0","box_qty_pending":"0"}',
+'[{"name":"0-15天库龄","qty":0},{"name":"16-30天库龄","qty":0},{"name":"31-90天库龄","qty":0},{"name":"91天以上库龄","qty":0}]',
+0.0,0.0000,0.0000,0.0000,0.0000),
+
+(5860,83506,'NI-C63-FL-GB','0','',9,9,0,0,0,0,0,2070.00,'0',230.0000,0,0.00,30,
+'{"qty_sellable":"9","qty_reserved":"0","qty_onway":"0","qty_pending":"0","box_qty_sellable":"0","box_qty_reserved":"0","box_qty_onway":"0","box_qty_pending":"0"}',
+'[{"name":"0-15天库龄","qty":0},{"name":"16-30天库龄","qty":9},{"name":"31-90天库龄","qty":0},{"name":"91天以上库龄","qty":0}]',
+9.0,230.0000,0.0000,0.0000,230.0000),
+
+(5693,93391,'NI-C63-FL-GB-2','0','',7,7,0,0,0,0,0,725.56,'0',103.6510,0,0.00,214,
+'{"qty_sellable":"","qty_reserved":"","qty_onway":"","qty_pending":"","box_qty_sellable":"","box_qty_reserved":"","box_qty_onway":"","box_qty_pending":""}',
+'[{"name":"0-15天库龄","qty":0},{"name":"16-30天库龄","qty":0},{"name":"31-90天库龄","qty":0},{"name":"91天以上库龄","qty":7}]',
+7.0,103.6510,0.0000,0.0000,103.6510),
+
+(5693,83506,'NI-C63-FL-GB','0','',2,2,0,0,0,0,0,460.00,'0',230.0000,0,0.00,34,
+'{"qty_sellable":"","qty_reserved":"","qty_onway":"","qty_pending":"","box_qty_sellable":"","box_qty_reserved":"","box_qty_onway":"","box_qty_pending":""}',
+'[{"name":"0-15天库龄","qty":0},{"name":"16-30天库龄","qty":0},{"name":"31-90天库龄","qty":2},{"name":"91天以上库龄","qty":0}]',
+2.0,230.0000,0.0000,0.0000,230.0000);

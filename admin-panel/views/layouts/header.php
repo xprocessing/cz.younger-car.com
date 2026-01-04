@@ -141,6 +141,14 @@
                 </a>
             </div>
             <?php endif; ?>
+            
+            <?php if (hasPermission('inventory_details.view')): ?>
+            <div class="nav-item">
+                <a href="<?php echo APP_URL; ?>/inventory_details.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'inventory_details.php' ? 'active' : ''; ?>">
+                    <i class="fa fa-list"></i> 库存明细
+                </a>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
     
