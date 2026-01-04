@@ -61,7 +61,7 @@
                                 <td><?php echo htmlspecialchars($detail['id']); ?></td>
                                 <td><?php echo htmlspecialchars($detail['wid']); ?></td>
                                 <td><?php echo $detail['warehouse_name']; ?></td>
-                                <td><?php echo htmlspecialchars($detail['sku']); ?></td>
+                                <td><a href="<?php echo APP_URL; ?>/products.php?keyword=<?php echo $detail['sku']; ?>" target="_blank"><?php echo htmlspecialchars($detail['sku']); ?> </a></td>
                                 <td><?php echo number_format($detail['product_valid_num']); ?></td>
                                 <td><?php echo htmlspecialchars($detail['quantity_receive']); ?></td>
                                 <td><?php echo number_format($detail['average_age']); ?></td>
