@@ -67,7 +67,7 @@
                                 <label for="wp_id" class="form-label">WP ID</label>
                                 <input type="number" class="form-control" id="wp_id" name="wp_id"
                                        placeholder="请输入WP ID">
-                                <div class="form-text">WordPress平台ID</div>
+                                <div class="form-text">服务商ID</div>
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                                 <label for="wp_name" class="form-label">WP名称</label>
                                 <input type="text" class="form-control" id="wp_name" name="wp_name"
                                        placeholder="请输入WP名称" maxlength="50">
-                                <div class="form-text">WordPress平台名称</div>
+                                <div class="form-text">服务商平台名称</div>
                             </div>
                         </div>
                         <div class="col-md-6">
