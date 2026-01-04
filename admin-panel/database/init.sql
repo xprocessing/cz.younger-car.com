@@ -110,6 +110,12 @@ INSERT INTO permissions (name, slug, description, module) VALUES
 ('编辑店铺', 'store.edit', '可以编辑现有店铺', 'store'),
 ('删除店铺', 'store.delete', '可以删除店铺', 'store'),
 
+-- 仓库管理权限
+('查看仓库', 'warehouses.view', '可以查看仓库列表', 'warehouses'),
+('创建仓库', 'warehouses.create', '可以创建新仓库', 'warehouses'),
+('编辑仓库', 'warehouses.edit', '可以编辑现有仓库', 'warehouses'),
+('删除仓库', 'warehouses.delete', '可以删除仓库', 'warehouses'),
+
 -- 新产品管理权限
 ('查看新产品', 'new_products.view', '可以查看新产品列表', 'new_products'),
 ('创建新产品', 'new_products.create', '可以创建新产品', 'new_products'),
@@ -138,16 +144,20 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 (2, 26), -- 导入商品
 (2, 27), -- 导出商品
 (2, 28), -- 查看订单利润
-(2, 29), -- 查看订单利润统计
-(2, 30), -- 查看店铺
-(2, 31), -- 创建店铺
-(2, 32), -- 编辑店铺
-(2, 33), -- 删除店铺
-(2, 34), -- 查看新产品
-(2, 35), -- 创建新产品
-(2, 36), -- 编辑新产品
-(2, 37), -- 删除新产品
-(2, 38); -- 查询运费
+(2, 30), -- 查看订单利润统计
+(2, 31), -- 查看店铺
+(2, 32), -- 创建店铺
+(2, 33), -- 编辑店铺
+(2, 34), -- 删除店铺
+(2, 35), -- 查看仓库
+(2, 36), -- 创建仓库
+(2, 37), -- 编辑仓库
+(2, 38), -- 删除仓库
+(2, 39), -- 查看新产品
+(2, 40), -- 创建新产品
+(2, 41), -- 编辑新产品
+(2, 42), -- 删除新产品
+(2, 43); -- 查询运费
 
 -- 查看者仅拥有查看权限
 INSERT INTO role_permissions (role_id, permission_id) VALUES
@@ -159,8 +169,9 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 (3, 28), -- 查看订单利润
 (3, 29), -- 查看订单利润统计
 (3, 30), -- 查看店铺
-(3, 34), -- 查看新产品
-(3, 38); -- 查询运费
+(3, 35), -- 查看仓库
+(3, 39), -- 查看新产品
+(3, 43); -- 查询运费
 
 -- 创建默认管理员用户
 INSERT INTO users (username, email, password, full_name) VALUES
@@ -281,3 +292,113 @@ CREATE TABLE IF NOT EXISTS products (
     custom_fields JSON NULL COMMENT '自定义字段（JSON格式）',  -- JSON类型，允许为空
     global_tags JSON NULL COMMENT '产品标签（JSON格式）'  -- JSON类型，允许为空
 );
+
+USE cz_data;
+
+-- 创建仓库信息表（包含所有JSON数据中出现的字段）
+CREATE TABLE IF NOT EXISTS warehouses (
+    wid INT PRIMARY KEY,
+    type INT NOT NULL,
+    sub_type INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    is_delete INT NOT NULL,
+    country_code VARCHAR(10),
+    wp_id INT,
+    wp_name VARCHAR(50),
+    t_warehouse_name VARCHAR(50),
+    t_warehouse_code VARCHAR(50),
+    t_country_area_name VARCHAR(50),
+    t_status VARCHAR(10)
+);
+
+-- 插入所有文件中data字段的仓库数据
+INSERT INTO warehouses (wid, type, sub_type, name, is_delete, country_code, wp_id, wp_name, t_warehouse_name, t_warehouse_code, t_country_area_name, t_status)
+VALUES
+    -- get_warehouse6.json 数据
+    (5830, 6, 0, 'may_auto_store-US美国仓(AWD)', 0, 'US', 0, '', '', '', '', ''),
+    (6568, 6, 0, 'YoungerCar-US美国仓(AWD)', 0, 'US', 0, '', '', '', '', ''),
+    (6580, 6, 0, 'chiesma-US美国仓(AWD)', 0, 'US', 0, '', '', '', '', ''),
+    (6587, 6, 0, 'loyalty-US美国仓(AWD)', 0, 'US', 0, '', '', '', '', ''),
+    (6613, 6, 0, 'Auoleru-US美国仓(AWD)', 0, 'US', 0, '', '', '', '', ''),
+    
+    -- get_warehouse1.json 数据
+    (8111, 1, 0, '一件代发仓', 0, '', 0, '', '', '', '', ''),
+    (5693, 1, 0, '中国温州仓', 0, 'CN', 0, '', '', '', '', ''),
+    (8071, 1, 0, '虚拟仓', 0, '', 0, '', '', '', '', ''),
+    (5572, 1, 0, '默认仓库', 0, '', 0, '', '', '', '', ''),
+    
+    -- get_warehouse4.json 数据
+    (5829, 4, 0, 'may_auto_store-US美国仓', 0, '', 0, '', '', '', '', ''),
+    (5831, 4, 0, 'may_auto_store-CA加拿大仓', 0, '', 0, '', '', '', '', ''),
+    (6567, 4, 0, 'YoungerCar-US美国仓', 0, '', 0, '', '', '', '', ''),
+    (6569, 4, 0, 'YoungerCar-CA加拿大仓', 0, '', 0, '', '', '', '', ''),
+    (6570, 4, 0, 'YoungerCar-UK英国仓', 0, '', 0, '', '', '', '', ''),
+    (6571, 4, 0, 'may_auto_store-UK英国仓', 0, '', 0, '', '', '', '', ''),
+    (6572, 4, 0, 'may_auto_store-DE德国仓', 0, '', 0, '', '', '', '', ''),
+    (6579, 4, 0, 'chiesma-US美国仓', 0, '', 0, '', '', '', '', ''),
+    (6581, 4, 0, 'chiesma-CA加拿大仓', 0, '', 0, '', '', '', '', ''),
+    (6585, 4, 0, 'CARIG-JP日本仓', 0, '', 0, '', '', '', '', ''),
+    (6586, 4, 0, 'loyalty-US美国仓', 0, '', 0, '', '', '', '', ''),
+    (6588, 4, 0, 'loyalty-CA加拿大仓', 0, '', 0, '', '', '', '', ''),
+    (6612, 4, 0, 'Auoleru-US美国仓', 0, '', 0, '', '', '', '', ''),
+    
+    -- get_warehouse3.json 数据
+    (5851, 3, 2, 'eBay-运德美东仓', 0, 'US', 339, '运德', '美东仓', 'WDUSNJ', '美国', '1'),
+    (5850, 3, 2, 'eBay-运德美西仓', 0, 'US', 339, '运德', '美西仓', 'WDUSLG', '美国', '1'),
+    (5842, 3, 2, 'eBay中邮美东仓', 0, 'US', 334, '中邮', '美东仓库', 'USEA', '美国', '1'),
+    (5843, 3, 2, 'eBay中邮美西仓', 0, 'US', 334, '中邮', '美西仓库', 'USWE', '美国', '1'),
+    (5859, 3, 2, '中邮德国仓', 0, 'DE', 340, '中邮', '德国仓库', 'DE', '德国', '1'),
+    (5858, 3, 2, '中邮捷克仓', 0, 'CZ', 340, '中邮', '捷克仓库', 'CZ', '捷克', '1'),
+    (5832, 3, 2, '中邮美东仓', 0, 'US', 330, '中邮', '美东仓库', 'USEA', '美国', '1'),
+    (5833, 3, 2, '中邮美西仓', 0, 'US', 330, '中邮', '美西仓库', 'USWE', '美国', '1'),
+    (5860, 3, 2, '中邮英国仓', 0, 'GB', 340, '中邮', '英国仓库', 'UK', '英国', '1'),
+    (5840, 3, 2, '亚马逊-中邮美东仓', 0, 'US', 333, '中邮', '美东仓库', 'USEA', '美国', '1'),
+    (5841, 3, 2, '亚马逊-中邮美西仓', 0, 'US', 333, '中邮', '美西仓库', 'USWE', '美国', '1'),
+    (5849, 3, 2, '亚马逊-运德美东仓', 0, 'US', 338, '运德', '美东仓', 'WDUSNJ', '美国', '1'),
+    (5848, 3, 2, '亚马逊-运德美西仓', 0, 'US', 338, '运德', '美西仓', 'WDUSLG', '美国', '1'),
+    (8069, 3, 2, '恒心运德仓 美东仓', 0, 'US', 510, '运德', '美东仓', 'WDUSNJ', '美国', '1'),
+    (9159, 3, 2, '恒心运德仓 美东六仓', 0, 'US', 510, '运德', '美东六仓', 'WDUSNJS', '美国', '1'),
+    (8070, 3, 2, '恒心运德仓 美西仓', 0, 'US', 510, '运德', '美西仓', 'WDUSLG', '美国', '1'),
+    (5838, 3, 2, '独立站-中邮美东仓', 0, 'US', 332, '中邮', '美东仓库', 'USEA', '美国', '1'),
+    (5839, 3, 2, '独立站-中邮美西仓', 0, 'US', 332, '中邮', '美西仓库', 'USWE', '美国', '1'),
+    (5847, 3, 2, '独立站-运德美东仓', 0, 'US', 337, '运德', '美东仓', 'WDUSNJ', '美国', '1'),
+    (5846, 3, 2, '独立站-运德美西仓', 0, 'US', 337, '运德', '美西仓', 'WDUSLG', '美国', '1'),
+    (8061, 3, 1, '美东自由仓', 0, '', 0, '', '', '', '', ''),
+    (17814, 3, 2, '美东领星自由仓 E commerce logistics', 0, 'US', 1155, '领星WMS', 'E commerce logistics', 'NJ', '美国', '1'),
+    (5875, 3, 1, '美西自由仓', 0, '', 0, '', '', '', '', ''),
+    (5844, 3, 2, '运德美东仓', 0, 'US', 336, '运德', '美东仓', 'WDUSNJ', '美国', '1'),
+    (5845, 3, 2, '运德美西仓', 0, 'US', 336, '运德', '美西仓', 'WDUSLG', '美国', '1');
+
+
+
+
+CREATE TABLE `inventory_details` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键自增ID',
+  `wid` INT NOT NULL COMMENT '仓库id',
+  `product_id` INT NOT NULL COMMENT '本地产品id',
+  `sku` VARCHAR(50) NOT NULL COMMENT '产品SKU编码',
+  `seller_id` VARCHAR(30) DEFAULT '' COMMENT '店铺id',
+  `fnsku` VARCHAR(50) DEFAULT '' COMMENT 'FNSKU编码',
+  `product_total` INT NOT NULL DEFAULT 0 COMMENT '实际库存总量【可用+次品+待检+锁定】',
+  `product_valid_num` INT NOT NULL DEFAULT 0 COMMENT '可用量',
+  `product_bad_num` INT NOT NULL DEFAULT 0 COMMENT '次品量',
+  `product_qc_num` INT NOT NULL DEFAULT 0 COMMENT '待检待上架量',
+  `product_lock_num` INT NOT NULL DEFAULT 0 COMMENT '锁定量',
+  `good_lock_num` INT NOT NULL DEFAULT 0 COMMENT '良品锁定量',
+  `bad_lock_num` INT NOT NULL DEFAULT 0 COMMENT '次品锁定量',
+  `stock_cost_total` DECIMAL(12,4) NOT NULL DEFAULT 0.0000 COMMENT '库存成本总计',
+  `quantity_receive` VARCHAR(20) DEFAULT '0' COMMENT '待到货量',
+  `stock_cost` DECIMAL(12,4) NOT NULL DEFAULT 0.0000 COMMENT '单位库存成本',
+  `product_onway` INT NOT NULL DEFAULT 0 COMMENT '调拨在途数量',
+  `transit_head_cost` DECIMAL(12,4) NOT NULL DEFAULT 0.0000 COMMENT '调拨在途头程成本',
+  `average_age` INT NOT NULL DEFAULT 0 COMMENT '平均库龄(天)',
+  `third_inventory` JSON NOT NULL COMMENT '海外仓第三方库存信息【完整嵌套对象，原生JSON格式】',
+  `stock_age_list` JSON NOT NULL COMMENT '库龄信息列表【完整数组结构，原生JSON格式】',
+  `available_inventory_box_qty` DECIMAL(10,1) DEFAULT 0.0 COMMENT '可用箱装库存数量',
+  `purchase_price` DECIMAL(12,4) NOT NULL DEFAULT 0.0000 COMMENT '采购单价',
+  `price` DECIMAL(12,4) NOT NULL DEFAULT 0.0000 COMMENT '单位费用',
+  `head_stock_price` DECIMAL(12,4) NOT NULL DEFAULT 0.0000 COMMENT '单位头程费用',
+  `stock_price` DECIMAL(12,4) NOT NULL DEFAULT 0.0000 COMMENT '单位库存成本',
+  PRIMARY KEY (`id`),
+  KEY `idx_sku_wid` (`sku`,`wid`) USING BTREE COMMENT 'SKU+仓库ID联合索引，提升业务查询效率'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='库存详情表-原生JSON格式存储，适配MySQL5.7.40，无语法错误';
