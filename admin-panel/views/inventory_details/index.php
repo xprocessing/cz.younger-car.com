@@ -10,6 +10,42 @@
     </div>
 </div>
 
+<?php
+function getSortUrl($field) {
+    $currentSort = $_GET['sort'] ?? 'id';
+    $currentOrder = $_GET['order'] ?? 'DESC';
+    
+    $newOrder = ($currentSort === $field && $currentOrder === 'ASC') ? 'DESC' : 'ASC';
+    
+    $params = ['sort' => $field, 'order' => $newOrder];
+    
+    if (!empty($_GET['keyword'])) {
+        $params['keyword'] = $_GET['keyword'];
+    }
+    
+    if (!empty($_GET['wid'])) {
+        $params['wid'] = $_GET['wid'];
+    }
+    
+    if (!empty($_GET['page'])) {
+        $params['page'] = $_GET['page'];
+    }
+    
+    return APP_URL . '/inventory_details.php?' . http_build_query($params);
+}
+
+function getSortIcon($field) {
+    $currentSort = $_GET['sort'] ?? 'id';
+    $currentOrder = $_GET['order'] ?? 'DESC';
+    
+    if ($currentSort === $field) {
+        return $currentOrder === 'ASC' ? '<i class="fa fa-sort-asc"></i>' : '<i class="fa fa-sort-desc"></i>';
+    }
+    
+    return '<i class="fa fa-sort text-muted"></i>';
+}
+?>
+
 <div class="card mb-3">
     <div class="card-body">
         <form method="GET" action="<?php echo APP_URL; ?>/inventory_details.php" class="row g-3">
@@ -34,6 +70,16 @@
                     </a>
                 </div>
             </div>
+            <?php if (!empty($_GET['sort']) || !empty($_GET['order'])): ?>
+            <div class="col-md-2">
+                <label for="action_clear_sort" class="form-label">&nbsp;</label>
+                <div>
+                    <a href="<?php echo APP_URL; ?>/inventory_details.php<?php echo !empty($keyword) ? '?keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($wid) ? '&wid=' . urlencode($wid) : ''; ?>" class="btn btn-outline-warning">
+                        <i class="fa fa-times"></i> 清除排序
+                    </a>
+                </div>
+            </div>
+            <?php endif; ?>
         </form>
     </div>
 </div>
@@ -44,16 +90,16 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>仓库ID</th>
+                        <th><a href="<?php echo getSortUrl('id'); ?>" class="text-decoration-none text-dark">ID <?php echo getSortIcon('id'); ?></a></th>
+                        <th><a href="<?php echo getSortUrl('wid'); ?>" class="text-decoration-none text-dark">仓库ID <?php echo getSortIcon('wid'); ?></a></th>
                         <th>仓库名称</th>
-                        <th>SKU</th>
-                        <th>可用量</th>
-                        <th>待到货量</th>
-                        <th>平均库龄(天)</th>
-                        <th>采购单价</th>
-                        <th>单位头程费用</th>
-                        <th>单位库存成本</th>
+                        <th><a href="<?php echo getSortUrl('sku'); ?>" class="text-decoration-none text-dark">SKU <?php echo getSortIcon('sku'); ?></a></th>
+                        <th><a href="<?php echo getSortUrl('product_valid_num'); ?>" class="text-decoration-none text-dark">可用量 <?php echo getSortIcon('product_valid_num'); ?></a></th>
+                        <th><a href="<?php echo getSortUrl('quantity_receive'); ?>" class="text-decoration-none text-dark">待到货量 <?php echo getSortIcon('quantity_receive'); ?></a></th>
+                        <th><a href="<?php echo getSortUrl('average_age'); ?>" class="text-decoration-none text-dark">平均库龄(天) <?php echo getSortIcon('average_age'); ?></a></th>
+                        <th><a href="<?php echo getSortUrl('purchase_price'); ?>" class="text-decoration-none text-dark">采购单价 <?php echo getSortIcon('purchase_price'); ?></a></th>
+                        <th><a href="<?php echo getSortUrl('head_stock_price'); ?>" class="text-decoration-none text-dark">单位头程费用 <?php echo getSortIcon('head_stock_price'); ?></a></th>
+                        <th><a href="<?php echo getSortUrl('stock_price'); ?>" class="text-decoration-none text-dark">单位库存成本 <?php echo getSortIcon('stock_price'); ?></a></th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -126,7 +172,7 @@
                     <li class="page-item disabled"><span class="page-link">...</span></li>
                 <?php else: ?>
                     <li class="page-item <?php echo $p == $currentPage ? 'active' : ''; ?>">
-                        <a class="page-link" href="<?php echo APP_URL; ?>/inventory_details.php?page=<?php echo $p; ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($wid) ? '&wid=' . urlencode($wid) : ''; ?>">
+                        <a class="page-link" href="<?php echo APP_URL; ?>/inventory_details.php?page=<?php echo $p; ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($wid) ? '&wid=' . urlencode($wid) : ''; ?><?php echo !empty($_GET['sort']) ? '&sort=' . urlencode($_GET['sort']) : ''; ?><?php echo !empty($_GET['order']) ? '&order=' . urlencode($_GET['order']) : ''; ?>">
                             <?php echo $p; ?>
                         </a>
                     </li>

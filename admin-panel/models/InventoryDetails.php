@@ -17,12 +17,23 @@ class InventoryDetails {
         return $stmt->fetch();
     }
     
-    public function getAll($limit = null, $offset = 0) {
+    public function getAll($limit = null, $offset = 0, $sortField = 'id', $sortOrder = 'DESC') {
+        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price'];
+        $allowedSortOrders = ['ASC', 'DESC'];
+        
+        if (!in_array($sortField, $allowedSortFields)) {
+            $sortField = 'id';
+        }
+        
+        if (!in_array($sortOrder, $allowedSortOrders)) {
+            $sortOrder = 'DESC';
+        }
+        
         $sql = "SELECT i.id, i.wid, i.sku, i.product_valid_num, i.quantity_receive, i.average_age, 
                        i.purchase_price, i.head_stock_price, i.stock_price, w.name as warehouse_name 
                 FROM inventory_details i 
                 LEFT JOIN warehouses w ON i.wid = w.wid 
-                ORDER BY i.id DESC";
+                ORDER BY i.$sortField $sortOrder";
         $params = [];
         
         if ($limit) {
@@ -92,13 +103,24 @@ class InventoryDetails {
         return $this->db->query($sql, [$id]);
     }
     
-    public function search($keyword, $limit = null, $offset = 0) {
+    public function search($keyword, $limit = null, $offset = 0, $sortField = 'id', $sortOrder = 'DESC') {
+        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price'];
+        $allowedSortOrders = ['ASC', 'DESC'];
+        
+        if (!in_array($sortField, $allowedSortFields)) {
+            $sortField = 'id';
+        }
+        
+        if (!in_array($sortOrder, $allowedSortOrders)) {
+            $sortOrder = 'DESC';
+        }
+        
         $sql = "SELECT i.id, i.wid, i.sku, i.product_valid_num, i.quantity_receive, i.average_age, 
                        i.purchase_price, i.head_stock_price, i.stock_price, w.name as warehouse_name 
                 FROM inventory_details i 
                 LEFT JOIN warehouses w ON i.wid = w.wid 
                 WHERE i.sku LIKE ? 
-                ORDER BY i.id DESC";
+                ORDER BY i.$sortField $sortOrder";
         $params = ["%$keyword%"];
         
         if ($limit) {
@@ -117,13 +139,24 @@ class InventoryDetails {
         return $stmt->fetchColumn();
     }
     
-    public function getByWid($wid, $limit = null, $offset = 0) {
+    public function getByWid($wid, $limit = null, $offset = 0, $sortField = 'id', $sortOrder = 'DESC') {
+        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price'];
+        $allowedSortOrders = ['ASC', 'DESC'];
+        
+        if (!in_array($sortField, $allowedSortFields)) {
+            $sortField = 'id';
+        }
+        
+        if (!in_array($sortOrder, $allowedSortOrders)) {
+            $sortOrder = 'DESC';
+        }
+        
         $sql = "SELECT i.id, i.wid, i.sku, i.product_valid_num, i.quantity_receive, i.average_age, 
                        i.purchase_price, i.head_stock_price, i.stock_price, w.name as warehouse_name 
                 FROM inventory_details i 
                 LEFT JOIN warehouses w ON i.wid = w.wid 
                 WHERE i.wid = ?
-                ORDER BY i.id DESC";
+                ORDER BY i.$sortField $sortOrder";
         $params = [$wid];
         
         if ($limit) {

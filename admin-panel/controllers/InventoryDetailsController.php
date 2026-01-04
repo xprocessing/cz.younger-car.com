@@ -22,15 +22,17 @@ class InventoryDetailsController {
         
         $keyword = $_GET['keyword'] ?? '';
         $wid = $_GET['wid'] ?? '';
+        $sortField = $_GET['sort'] ?? 'id';
+        $sortOrder = $_GET['order'] ?? 'DESC';
         
         if ($keyword) {
-            $inventoryDetails = $this->inventoryDetailsModel->search($keyword, $limit, $offset);
+            $inventoryDetails = $this->inventoryDetailsModel->search($keyword, $limit, $offset, $sortField, $sortOrder);
             $totalCount = $this->inventoryDetailsModel->getSearchCount($keyword);
         } elseif ($wid) {
-            $inventoryDetails = $this->inventoryDetailsModel->getByWid($wid, $limit, $offset);
+            $inventoryDetails = $this->inventoryDetailsModel->getByWid($wid, $limit, $offset, $sortField, $sortOrder);
             $totalCount = $this->inventoryDetailsModel->getCountByWid($wid);
         } else {
-            $inventoryDetails = $this->inventoryDetailsModel->getAll($limit, $offset);
+            $inventoryDetails = $this->inventoryDetailsModel->getAll($limit, $offset, $sortField, $sortOrder);
             $totalCount = $this->inventoryDetailsModel->getCount();
         }
         
