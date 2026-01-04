@@ -125,18 +125,19 @@
             </div>
             <?php endif; ?>
             
-            <?php if (hasPermission('warehouses.view')): ?>
-            <div class="nav-item">
-                <a href="<?php echo APP_URL; ?>/warehouses.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'warehouses.php' ? 'active' : ''; ?>">
-                    <i class="fa fa-warehouse"></i> 仓库管理
-                </a>
-            </div>
-            <?php endif; ?>
+           
             
             <?php if (hasPermission('yunfei.view')): ?>
             <div class="nav-item">
                 <a href="<?php echo APP_URL; ?>/yunfei.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'yunfei.php' ? 'active' : ''; ?>">
                     <i class="fa fa-truck"></i> 运费管理
+                </a>
+            </div>
+            <?php endif; ?>
+             <?php if (hasPermission('warehouses.view')): ?>
+            <div class="nav-item">
+                <a href="<?php echo APP_URL; ?>/warehouses.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'warehouses.php' ? 'active' : ''; ?>">
+                    <i class="fa fa-warehouse"></i> 仓库管理
                 </a>
             </div>
             <?php endif; ?>
