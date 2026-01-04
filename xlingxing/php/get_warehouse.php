@@ -29,6 +29,7 @@ try {
 }
 
 //测试https://cz.younger-car.com/xlingxing/php/get_warehouse.php?type=1
+// 仓库类型：1 本地仓【默认值】 ，3 海外仓 ，4 亚马逊平台仓，6 AWD仓
 
 
 ?>
