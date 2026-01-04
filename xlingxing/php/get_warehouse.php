@@ -11,12 +11,13 @@ try {
     // 初始化API客户端
     $apiClient = new LingXingApiClient();
 
-   // $sku = $_GET['sku'];
+   $type = $_GET['type'];
    
     // 调用POST接口示例
     $orderParams = [
         'offset' => 0,
-        'length' => 200
+        'length' => 200,
+        'type'=>$type
         
     ];
     $orders = $apiClient->post('/erp/sc/data/local_inventory/warehouse', $orderParams);
@@ -27,6 +28,7 @@ try {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
 
+//测试https://cz.younger-car.com/xlingxing/php/get_warehouse.php?type=1
 
 
 ?>

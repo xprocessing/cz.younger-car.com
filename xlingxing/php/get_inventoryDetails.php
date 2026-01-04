@@ -28,6 +28,7 @@ try {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
 
+// 测试https://cz.younger-car.com/xlingxing/php/get_inventoryDetails.php?sku=NI-C63-FL-GB
 
 
 ?>
