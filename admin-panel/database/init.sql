@@ -414,6 +414,11 @@ CREATE TABLE `inventory_details` (
   KEY `idx_sku_wid` (`sku`,`wid`) USING BTREE COMMENT 'SKU+仓库ID联合索引，提升业务查询效率'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='库存详情表-原生JSON格式存储，适配MySQL5.7.40，无语法错误';
 
+---创建唯一索引 仓库id+sku唯一索引。
+ALTER TABLE `inventory_details`
+ADD UNIQUE KEY `uk_wid_sku` (`wid`, `sku`);
+
+
 INSERT INTO `inventory_details` (
   wid,product_id,sku,seller_id,fnsku,product_total,product_valid_num,product_bad_num,product_qc_num,product_lock_num,
   good_lock_num,bad_lock_num,stock_cost_total,quantity_receive,stock_cost,product_onway,transit_head_cost,average_age,
