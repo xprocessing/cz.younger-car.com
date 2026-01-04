@@ -11,13 +11,13 @@ try {
     // 初始化API客户端
     $apiClient = new LingXingApiClient();
 
-   $type = $_GET['type'];
+    $type = isset($_GET['type']) ? (int)$_GET['type'] : 1; // 默认值为1 强制转换为int类型
    
     // 调用POST接口示例
     $orderParams = [
         'offset' => 0,
         'length' => 200,
-        'type'=>$type
+        'type'=> $type
         
     ];
     $orders = $apiClient->post('/erp/sc/data/local_inventory/warehouse', $orderParams);
