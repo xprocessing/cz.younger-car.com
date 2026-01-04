@@ -43,6 +43,7 @@
                     <tr>
                         <th>ID</th>
                         <th>仓库ID</th>
+                        <th>仓库名称</th>
                         <th>SKU</th>
                         <th>可用量</th>
                         <th>待到货量</th>
@@ -59,6 +60,7 @@
                             <tr>
                                 <td><?php echo htmlspecialchars($detail['id']); ?></td>
                                 <td><?php echo htmlspecialchars($detail['wid']); ?></td>
+                                <td><?php echo htmlspecialchars($detail['warehouse_name']); ?></td>
                                 <td><?php echo htmlspecialchars($detail['sku']); ?></td>
                                 <td><?php echo number_format($detail['product_valid_num']); ?></td>
                                 <td><?php echo htmlspecialchars($detail['quantity_receive']); ?></td>

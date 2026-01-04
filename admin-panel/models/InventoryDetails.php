@@ -9,16 +9,20 @@ class InventoryDetails {
     }
     
     public function getById($id) {
-        $sql = "SELECT * FROM inventory_details WHERE id = ?";
+        $sql = "SELECT i.*, w.name as warehouse_name 
+                FROM inventory_details i 
+                LEFT JOIN warehouses w ON i.wid = w.id 
+                WHERE i.id = ?";
         $stmt = $this->db->query($sql, [$id]);
         return $stmt->fetch();
     }
     
     public function getAll($limit = null, $offset = 0) {
-        $sql = "SELECT id, wid, sku, product_valid_num, quantity_receive, average_age, 
-                       purchase_price, head_stock_price, stock_price 
-                FROM inventory_details 
-                ORDER BY id DESC";
+        $sql = "SELECT i.id, i.wid, i.sku, i.product_valid_num, i.quantity_receive, i.average_age, 
+                       i.purchase_price, i.head_stock_price, i.stock_price, w.name as warehouse_name 
+                FROM inventory_details i 
+                LEFT JOIN warehouses w ON i.wid = w.id 
+                ORDER BY i.id DESC";
         $params = [];
         
         if ($limit) {
@@ -89,11 +93,12 @@ class InventoryDetails {
     }
     
     public function search($keyword, $limit = null, $offset = 0) {
-        $sql = "SELECT id, wid, sku, product_valid_num, quantity_receive, average_age, 
-                       purchase_price, head_stock_price, stock_price 
-                FROM inventory_details 
-                WHERE sku LIKE ? 
-                ORDER BY id DESC";
+        $sql = "SELECT i.id, i.wid, i.sku, i.product_valid_num, i.quantity_receive, i.average_age, 
+                       i.purchase_price, i.head_stock_price, i.stock_price, w.name as warehouse_name 
+                FROM inventory_details i 
+                LEFT JOIN warehouses w ON i.wid = w.id 
+                WHERE i.sku LIKE ? 
+                ORDER BY i.id DESC";
         $params = ["%$keyword%"];
         
         if ($limit) {
@@ -113,11 +118,12 @@ class InventoryDetails {
     }
     
     public function getByWid($wid, $limit = null, $offset = 0) {
-        $sql = "SELECT id, wid, sku, product_valid_num, quantity_receive, average_age, 
-                       purchase_price, head_stock_price, stock_price 
-                FROM inventory_details 
-                WHERE wid = ?
-                ORDER BY id DESC";
+        $sql = "SELECT i.id, i.wid, i.sku, i.product_valid_num, i.quantity_receive, i.average_age, 
+                       i.purchase_price, i.head_stock_price, i.stock_price, w.name as warehouse_name 
+                FROM inventory_details i 
+                LEFT JOIN warehouses w ON i.wid = w.id 
+                WHERE i.wid = ?
+                ORDER BY i.id DESC";
         $params = [$wid];
         
         if ($limit) {
