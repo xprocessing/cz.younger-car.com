@@ -202,4 +202,20 @@ class InventoryDetailsController {
         
         redirect(APP_URL . '/inventory_details.php');
     }
+    
+    public function overagedStats() {
+        if (!hasPermission('inventory_details.view')) {
+            showError('您没有权限访问此页面');
+            redirect(APP_URL . '/dashboard.php');
+        }
+        
+        $thresholdDays = $_GET['threshold'] ?? 180;
+        $overagedInventory = $this->inventoryDetailsModel->getOveragedInventory($thresholdDays);
+        
+        $title = '库龄统计（超过' . $thresholdDays . '天）';
+        
+        include VIEWS_DIR . '/layouts/header.php';
+        include VIEWS_DIR . '/inventory_details/overaged_stats.php';
+        include VIEWS_DIR . '/layouts/footer.php';
+    }
 }

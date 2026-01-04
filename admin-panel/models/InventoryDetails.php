@@ -141,4 +141,20 @@ class InventoryDetails {
         $stmt = $this->db->query($sql, [$wid]);
         return $stmt->fetchColumn();
     }
+    
+    public function getOveragedInventory($thresholdDays = 180) {
+        $sql = "SELECT i.sku, 
+                       i.wid, 
+                       i.product_valid_num, 
+                       i.average_age, 
+                       w.name as warehouse_name 
+                FROM inventory_details i 
+                LEFT JOIN warehouses w ON i.wid = w.wid 
+                WHERE i.average_age > ? 
+                AND i.product_valid_num > 0
+                ORDER BY i.average_age DESC, i.sku ASC";
+        
+        $stmt = $this->db->query($sql, [$thresholdDays]);
+        return $stmt->fetchAll();
+    }
 }

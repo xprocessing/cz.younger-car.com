@@ -28,6 +28,9 @@ switch ($action) {
     case 'search':
         $inventoryDetailsController->index();
         break;
+    case 'overaged_stats':
+        $inventoryDetailsController->overagedStats();
+        break;
     default:
         $inventoryDetailsController->index();
         break;
