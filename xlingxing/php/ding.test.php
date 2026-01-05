@@ -68,7 +68,7 @@ function sendDingMsgByUserId_Success($access_token, $userIdArr, $atUserIdArr = [
         "msg"           => [
             "msgtype" => "text",
             "text"    => [
-                "content" => "✅【发送成功】钉钉DING消息强提醒，弹窗+铃声必达！2"
+                "content" => "✅【发送成功】钉钉DING消息强提醒，弹窗+铃声必达！测试"
             ],
             "at"      => [
                 "atUserIds" => $atUserIdArr, // @对应用户ID
@@ -101,7 +101,7 @@ try {
     echo "✅ 获取access_token成功：" . $accessToken . PHP_EOL . PHP_EOL;
 
     // 你的手机号列表
-    $mobileList = ["18868725001","18868268995"];
+    $mobileList = ["18868725001","18868268995","13868380570"];
     $realUserIdList = [];
     foreach ($mobileList as $mobile) {
         $realUserIdList[] = getRealUserIdByMobile($accessToken, $mobile);
