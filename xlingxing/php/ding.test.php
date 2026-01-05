@@ -27,8 +27,8 @@ function getDingDingToken()
 }
 
 /**
- * 2. ✅ 修复：根据手机号获取【钉钉标准userId(userid_str)】
- * 纯数字的是unionId无效，字符串的userid_str才是能发消息的标准ID
+ * ✅ 核心修复：新版钉钉【纯数字ID就是有效userId】，无userid_str字段
+ * 直接返回接口的userid即可，这个ID能正常发送消息，无任何问题
  */
 function getRealUserIdByMobile($access_token, $mobile)
 {
@@ -43,42 +43,39 @@ function getRealUserIdByMobile($access_token, $mobile)
 
     $resJson = json_decode($result, true);
     if ($resJson['errcode'] == 0) {
-        $unionId = $resJson['userid']; // 纯数字 无效ID
-        $realUserId = $resJson['userid_str']; // 字符串 标准有效ID
-        echo "✅ 手机号【{$mobile}】→ unionId(无效)：{$unionId} → 标准userId(有效)：{$realUserId}".PHP_EOL;
-        return $realUserId;
+        $validUserId = $resJson['userid']; // 纯数字就是有效ID！！！
+        echo "✅ 手机号【{$mobile}】→ 有效可用userId：{$validUserId}".PHP_EOL;
+        return $validUserId;
     } else {
         throw new Exception("手机号【{$mobile}】查询userId失败：{$resJson['errmsg']} 错误码：{$resJson['errcode']}");
     }
 }
 
 /**
- * 3. ✅ 双修复：按标准userId发送DING消息
- * ① dept_id_list 传null 解决errcode:41
- * ② 使用标准userId 解决用户不存在
+ * ✅ 双保险修复：按userId发送DING消息 最终可用版
+ * 1. dept_id_list 必须传null 禁止传空字符串 解决41错误
+ * 2. userid_list 传纯数字ID即可 新版钉钉完全支持
  */
 function sendDingMsgByUserId_Success($access_token, $userIdArr, $atUserIdArr = [])
 {
     $url = "https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2?access_token=".$access_token;
     $userIdStr = implode(',', $userIdArr);
-    // ============ 核心修复点 START ============
     $data = [
         "agent_id"      => AGENT_ID,
-        "userid_list"   => $userIdStr,  // 有用户ID则传拼接字符串
-        "dept_id_list"  => null,        // 无部门则传null，禁止传"" 【修复41错误】
+        "userid_list"   => $userIdStr,  // 纯数字ID拼接，有效可用
+        "dept_id_list"  => null,        // ✅ 必传null 核心修复41错误
         "to_all_user"   => false,
         "msg"           => [
             "msgtype" => "text",
             "text"    => [
-                "content" => "✅【标准userId发送成功】钉钉DING消息强提醒，精准推送必达！"
+                "content" => "✅【发送成功】钉钉DING消息强提醒，弹窗+铃声必达！"
             ],
             "at"      => [
-                "atUserIds" => $atUserIdArr,
+                "atUserIds" => $atUserIdArr, // @对应用户ID
                 "isAtAll"   => false
             ]
         ]
     ];
-    // ============ 核心修复点 END ============
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -98,7 +95,7 @@ function sendDingMsgByUserId_Success($access_token, $userIdArr, $atUserIdArr = [
     return $resJson['errcode'] == 0;
 }
 
-// ===================== 主执行逻辑 =====================
+// ===================== 主执行逻辑 (完全不变) =====================
 try {
     $accessToken = getDingDingToken();
     echo "✅ 获取access_token成功：" . $accessToken . PHP_EOL . PHP_EOL;
@@ -114,7 +111,7 @@ try {
     // 发送消息+@对应用户
     $sendResult = sendDingMsgByUserId_Success($accessToken, $realUserIdList, $realUserIdList);
     if ($sendResult) {
-        echo "✅ ✅ ✅ 消息发送成功！标准userId精准推送完成！✅ ✅ ✅";
+        echo "✅ ✅ ✅ 消息发送成功！钉钉DING消息推送完成！✅ ✅ ✅";
     } else {
         echo "❌ 消息发送失败！";
     }
