@@ -192,6 +192,8 @@ class InventoryDetails {
     }
     
     public function getInventoryAlert() {
+        $thirtyDaysAgo = date('Y-m-d 00:00:00', strtotime('-30 days'));
+        
         $sql = "SELECT i.sku,
                        SUM(i.product_valid_num) as product_valid_num,
                        SUM(CASE WHEN i.quantity_receive != '' THEN CAST(i.quantity_receive AS SIGNED) ELSE 0 END) as quantity_receive,
@@ -202,14 +204,14 @@ class InventoryDetails {
                     SELECT local_sku, 
                            COUNT(*) as outbound_30days
                     FROM order_profit
-                    WHERE STR_TO_DATE(global_purchase_time, '%Y-%m-%d %H:%i:%s') >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+                    WHERE global_purchase_time >= ?
                     GROUP BY local_sku
                 ) op ON i.sku = op.local_sku
                 WHERE i.wid != 5693
                 GROUP BY i.sku
                 ORDER BY op.outbound_30days DESC, i.sku ASC";
         
-        $stmt = $this->db->query($sql);
+        $stmt = $this->db->query($sql, [$thirtyDaysAgo]);
         return $stmt->fetchAll();
     }
 }
