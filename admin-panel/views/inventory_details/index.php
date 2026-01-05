@@ -99,6 +99,7 @@ function getSortIcon($field) {
                         <th><a href="<?php echo getSortUrl('sku'); ?>" class="text-decoration-none text-dark">SKU <?php echo getSortIcon('sku'); ?></a></th>
                         <th><a href="<?php echo getSortUrl('product_valid_num'); ?>" class="text-decoration-none text-dark">可用量 <?php echo getSortIcon('product_valid_num'); ?></a></th>
                         <th><a href="<?php echo getSortUrl('quantity_receive'); ?>" class="text-decoration-none text-dark">待到货量 <?php echo getSortIcon('quantity_receive'); ?></a></th>
+                        <th><a href="<?php echo getSortUrl('quantity_transfer'); ?>" class="text-decoration-none text-dark">调拨在途 <?php echo getSortIcon('quantity_transfer'); ?></a></th>
                         <th><a href="<?php echo getSortUrl('average_age'); ?>" class="text-decoration-none text-dark">平均库龄(天) <?php echo getSortIcon('average_age'); ?></a></th>
                         <th><a href="<?php echo getSortUrl('purchase_price'); ?>" class="text-decoration-none text-dark">采购单价 <?php echo getSortIcon('purchase_price'); ?></a></th>
                         <th><a href="<?php echo getSortUrl('head_stock_price'); ?>" class="text-decoration-none text-dark">单位头程费用 <?php echo getSortIcon('head_stock_price'); ?></a></th>
