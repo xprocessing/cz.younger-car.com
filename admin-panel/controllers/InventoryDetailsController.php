@@ -229,7 +229,7 @@ class InventoryDetailsController {
         
         $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert();
         
-        $title = '库存预警';
+        $title = '库存预警（海外仓）';
         
         include VIEWS_DIR . '/layouts/header.php';
         include VIEWS_DIR . '/inventory_details/inventory_alert.php';
