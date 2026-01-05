@@ -112,7 +112,7 @@ try {
     echo "✅ 获取access_token成功：" . $accessToken . PHP_EOL . PHP_EOL;
 
     // 步骤2：配置需要发送消息的【手机号列表】(可修改/增减手机号)
-    $mobileList = ["18868725001", "18069755001"];
+    $mobileList = ["18868725001", "18868725001"];
     $userIdList = []; // 存储转换后的userId列表
 
     // 步骤3：循环遍历手机号，批量获取对应的userId
