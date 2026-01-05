@@ -28,7 +28,7 @@
         <div class="col-md-3">
             <div class="card bg-info text-white">
                 <div class="card-body">
-                    <h5 class="card-title">30天总出库量</h5>
+                    <h5 class="card-title">最近30天总出库量</h5>
                     <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'outbound_30days'))); ?></h2>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                             <th>可用量</th>
                             <th>待到货量</th>
                             <th>调拨在途</th>
-                            <th>30天出库量</th>
+                            <th>最近30天出库量</th>
                         </tr>
                     </thead>
                     <tbody>
