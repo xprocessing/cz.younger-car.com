@@ -68,7 +68,7 @@ function sendDingMsgByUserId_Success($access_token, $userIdArr, $atUserIdArr = [
         "msg"           => [
             "msgtype" => "text",
             "text"    => [
-                "content" => "✅【发送成功】钉钉DING消息强提醒，弹窗+铃声必达！"
+                "content" => "✅【发送成功】钉钉DING消息强提醒，弹窗+铃声必达！2"
             ],
             "at"      => [
                 "atUserIds" => $atUserIdArr, // @对应用户ID
