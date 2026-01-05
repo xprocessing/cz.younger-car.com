@@ -101,7 +101,7 @@ try {
     echo "✅ 获取access_token成功：" . $accessToken . PHP_EOL . PHP_EOL;
 
     // 你的手机号列表
-    $mobileList = ["18868725001"];
+    $mobileList = ["18868725001","18868268995"];
     $realUserIdList = [];
     foreach ($mobileList as $mobile) {
         $realUserIdList[] = getRealUserIdByMobile($accessToken, $mobile);
