@@ -62,7 +62,7 @@
                             <tr>
                                 <td><?php echo $index + 1; ?></td>
                                 <td>
-                                    <a href="<?php echo APP_URL; ?>/products.php?keyword=<?php echo $item['sku']; ?>" target="_blank">
+                                    <a href="<?php echo APP_URL; ?>/inventory_details.php?keyword=<?php echo $item['sku']; ?>" target="_blank">
                                         <?php echo htmlspecialchars($item['sku']); ?>
                                     </a>
                                 </td>
