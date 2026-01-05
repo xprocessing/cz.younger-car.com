@@ -75,6 +75,7 @@ try {
     $sql = "INSERT INTO order_profit (
         store_id,
         global_order_no,
+        wid,
         warehouse_name,
         receiver_country,
         global_purchase_time,
@@ -88,6 +89,7 @@ try {
     ) VALUES (
         :store_id,
         :global_order_no,
+        :wid,
         :warehouse_name,    
         :receiver_country,
         :global_purchase_time,
@@ -100,6 +102,7 @@ try {
         :update_time
     ) ON DUPLICATE KEY UPDATE
         store_id = VALUES(store_id),
+        wid = VALUES(wid),
         warehouse_name = VALUES(warehouse_name),
         receiver_country = VALUES(receiver_country),
         global_purchase_time = VALUES(global_purchase_time),
@@ -143,6 +146,7 @@ try {
             ':global_order_no' => $order['global_order_no'] ?? '',
             ':receiver_country' => $addressInfo['receiver_country_code'] ?? '',
             ':global_purchase_time' => $purchaseTime,
+            ':wid' => $order['wid'] ?? '',
             ':warehouse_name' => $order['warehouse_name'] ?? '',
             ':local_sku' => $itemInfo['local_sku'] ?? '',
             ':order_total_amount' => $transactionInfo['order_total_amount'] ?? 0,           
