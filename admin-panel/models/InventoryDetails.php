@@ -211,7 +211,7 @@ class InventoryDetails {
                     WHERE global_purchase_time >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
                     GROUP BY wid, local_sku
                 ) op ON i.wid = op.wid AND i.sku = op.local_sku
-                ORDER BY i.average_age DESC, i.sku ASC";
+                ORDER BY op.outbound_30days DESC, i.sku ASC";
         
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll();
