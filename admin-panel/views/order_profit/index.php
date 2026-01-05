@@ -255,6 +255,7 @@ if ($hasFilters): ?>
                         <th>ID</th>
                         <th>店铺ID</th>
                         <th>订单号</th>
+                        <th>仓库ID</th>
                         <th>发货仓库</th>
                         <th>收货国家</th>
                         <th>下单时间</th>
@@ -287,7 +288,12 @@ if ($hasFilters): ?>
                                         <strong><?php echo htmlspecialchars($profit['global_order_no'] ?? ''); ?></strong>
                                     </a>
                                 </td>
-                                 <td>
+                                <td>
+                                    <span class="badge bg-secondary">
+                                        <?php echo htmlspecialchars($profit['wid'] ?? ''); ?>
+                                    </span>
+                                </td>
+                                <td>
                                     <span class="badge bg-primary">
                                         <?php echo htmlspecialchars($profit['warehouse_name'] ?? ''); ?>
                                     </span>
