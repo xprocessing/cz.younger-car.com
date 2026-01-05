@@ -97,7 +97,7 @@
         <h5 class="mb-0">最近60天每日销量统计</h5>
     </div>
     <div class="card-body">
-        <canvas id="dailySalesChart" width="100%" height="300"></canvas>
+        <canvas id="dailySalesChart" style="width: 100%; height: 300px;"></canvas>
     </div>
 </div>
 
@@ -382,9 +382,13 @@
             return;
         }
 
+        const width = canvas.offsetWidth;
+        const height = canvas.offsetHeight;
+
+        canvas.width = width;
+        canvas.height = height;
+
         const ctx = canvas.getContext('2d');
-        const width = canvas.width;
-        const height = canvas.height;
 
         const dailySalesData = [
             <?php 
