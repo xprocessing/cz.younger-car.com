@@ -87,7 +87,7 @@
         <h5 class="mb-0">利润率分布</h5>
     </div>
     <div class="card-body">
-        <canvas id="profitRateChart" width="800" height="300"></canvas>
+        <canvas id="profitRateChart" style="width: 100%; height: 300px;"></canvas>
     </div>
 </div>
 
@@ -296,9 +296,13 @@
             return;
         }
 
+        const width = canvas.offsetWidth;
+        const height = canvas.offsetHeight;
+
+        canvas.width = width;
+        canvas.height = height;
+
         const ctx = canvas.getContext('2d');
-        const width = canvas.width;
-        const height = canvas.height;
 
         // 使用真实的利润率分布数据
         const data = {
