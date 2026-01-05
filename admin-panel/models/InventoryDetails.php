@@ -196,7 +196,7 @@ class InventoryDetails {
         
         $sql = "SELECT i.sku,
                        SUM(i.product_valid_num) as product_valid_num,
-                       SUM(CAST(IFNULL(i.quantity_receive, 0) AS SIGNED)) as quantity_receive,
+                       SUM(i.quantity_receive) as quantity_receive,
                        SUM(i.product_onway) as product_onway,
                        COALESCE(op.outbound_30days, 0) as outbound_30days
                 FROM inventory_details i
