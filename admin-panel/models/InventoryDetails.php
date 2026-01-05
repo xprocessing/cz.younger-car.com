@@ -190,4 +190,30 @@ class InventoryDetails {
         $stmt = $this->db->query($sql, [$thresholdDays]);
         return $stmt->fetchAll();
     }
+    
+    public function getInventoryAlert() {
+        $sql = "SELECT i.id,
+                       i.wid,
+                       i.sku,
+                       i.product_valid_num,
+                       i.quantity_receive,
+                       i.product_onway,
+                       i.average_age,
+                       w.name as warehouse_name,
+                       COALESCE(op.outbound_30days, 0) as outbound_30days
+                FROM inventory_details i
+                LEFT JOIN warehouses w ON i.wid = w.wid
+                LEFT JOIN (
+                    SELECT wid, 
+                           local_sku, 
+                           COUNT(*) as outbound_30days
+                    FROM order_profit
+                    WHERE global_purchase_time >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+                    GROUP BY wid, local_sku
+                ) op ON i.wid = op.wid AND i.sku = op.local_sku
+                ORDER BY i.average_age DESC, i.sku ASC";
+        
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll();
+    }
 }

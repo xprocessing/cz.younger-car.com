@@ -1,6 +1,9 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>库存明细</h4>
     <div>
+        <a href="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert" class="btn btn-danger me-2">
+            <i class="fa fa-exclamation-triangle"></i> 库存预警
+        </a>
         <a href="<?php echo APP_URL; ?>/inventory_details.php?action=overaged_stats" class="btn btn-warning me-2">
             <i class="fa fa-clock-o"></i> 库龄统计
         </a>

@@ -220,4 +220,19 @@ class InventoryDetailsController {
         include VIEWS_DIR . '/inventory_details/overaged_stats.php';
         include VIEWS_DIR . '/layouts/footer.php';
     }
+    
+    public function inventoryAlert() {
+        if (!hasPermission('inventory_details.view')) {
+            showError('您没有权限访问此页面');
+            redirect(APP_URL . '/dashboard.php');
+        }
+        
+        $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert();
+        
+        $title = '库存预警';
+        
+        include VIEWS_DIR . '/layouts/header.php';
+        include VIEWS_DIR . '/inventory_details/inventory_alert.php';
+        include VIEWS_DIR . '/layouts/footer.php';
+    }
 }

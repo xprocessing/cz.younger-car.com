@@ -31,6 +31,9 @@ switch ($action) {
     case 'overaged_stats':
         $inventoryDetailsController->overagedStats();
         break;
+    case 'inventory_alert':
+        $inventoryDetailsController->inventoryAlert();
+        break;
     default:
         $inventoryDetailsController->index();
         break;
