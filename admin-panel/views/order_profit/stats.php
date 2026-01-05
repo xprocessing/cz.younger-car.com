@@ -97,7 +97,7 @@
         <h5 class="mb-0">最近60天每日销量统计</h5>
     </div>
     <div class="card-body">
-        <canvas id="dailySalesChart" width="800" height="300"></canvas>
+        <canvas id="dailySalesChart" width="100%" height="300"></canvas>
     </div>
 </div>
 
