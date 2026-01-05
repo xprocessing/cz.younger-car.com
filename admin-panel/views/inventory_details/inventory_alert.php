@@ -70,7 +70,7 @@
                                     </a>
                                 </td>
                                 <td><?php echo htmlspecialchars($item['wid']); ?></td>
-                                <td><?php echo htmlspecialchars($item['warehouse_name']); ?></td>
+                                <td><?php echo htmlspecialchars($item['warehouse_name'] ?? ''); ?></td>
                                 <td>
                                     <?php 
                                     $productValidNum = $item['product_valid_num'];
