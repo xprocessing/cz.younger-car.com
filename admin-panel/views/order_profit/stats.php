@@ -91,6 +91,16 @@
     </div>
 </div>
 
+<!-- 最近30天每日销量统计 -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">最近30天每日销量统计</h5>
+    </div>
+    <div class="card-body">
+        <canvas id="dailySalesChart" width="800" height="300"></canvas>
+    </div>
+</div>
+
 <!-- 最近30天按平台统计 -->
 <div class="card mt-4">
     <div class="card-header">
@@ -361,5 +371,74 @@
         });
 
         console.log('Chart drawing completed');
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('dailySalesChart');
+        if (!canvas) {
+            console.error('Daily sales canvas element not found');
+            return;
+        }
+
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+
+        const dailySalesData = [
+            <?php 
+            if (!empty($dailySalesStats)) {
+                foreach ($dailySalesStats as $day) {
+                    echo "['" . $day['sale_date'] . "', " . $day['order_count'] . "],";
+                }
+            }
+            ?>
+        ];
+
+        if (dailySalesData.length === 0) {
+            ctx.fillStyle = '#f8f9fa';
+            ctx.fillRect(0, 0, width, height);
+            ctx.fillStyle = '#333';
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('暂无数据', width / 2, height / 2);
+            return;
+        }
+
+        const maxValue = Math.max(...dailySalesData.map(d => d[1]));
+        const barWidth = (width - 60) / dailySalesData.length;
+        const chartHeight = height - 60;
+
+        ctx.clearRect(0, 0, width, height);
+
+        ctx.fillStyle = '#f8f9fa';
+        ctx.fillRect(0, 0, width, height);
+
+        dailySalesData.forEach((data, index) => {
+            const [date, count] = data;
+            const barHeight = maxValue > 0 ? (count / maxValue) * chartHeight : 0;
+            const x = 40 + index * barWidth;
+            const y = chartHeight - barHeight + 30;
+
+            ctx.fillStyle = count > 0 ? 'rgba(54, 162, 235, 0.8)' : 'rgba(201, 203, 207, 0.8)';
+            ctx.fillRect(x, y, barWidth * 0.7, barHeight);
+
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(count, x + barWidth * 0.35, y - 5);
+
+            ctx.font = '10px Arial';
+            const dateParts = date.split('-');
+            ctx.fillText(dateParts[1] + '-' + dateParts[2], x + barWidth * 0.35, y + 15);
+        });
+
+        ctx.fillStyle = '#666';
+        ctx.font = '11px Arial';
+        ctx.textAlign = 'right';
+        ctx.fillText('订单数量', 30, 20);
+        ctx.textAlign = 'left';
+        ctx.fillText('日期', width - 30, 20);
     });
 </script>

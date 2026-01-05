@@ -829,4 +829,18 @@ class OrderProfit {
         
         return $skuStats;
     }
+    
+    public function getDailySalesStats($last30DaysStart, $endDate) {
+        $sql = "SELECT 
+                    DATE(global_purchase_time) as sale_date,
+                    COUNT(*) as order_count
+                FROM order_profit
+                WHERE global_purchase_time >= ? 
+                AND global_purchase_time <= ?
+                GROUP BY DATE(global_purchase_time)
+                ORDER BY sale_date ASC";
+        
+        $stmt = $this->db->query($sql, [$last30DaysStart, $endDate]);
+        return $stmt->fetchAll();
+    }
 }

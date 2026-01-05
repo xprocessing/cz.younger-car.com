@@ -264,6 +264,7 @@ class OrderProfitController {
         $skuStats = $this->orderProfitModel->getSkuStats($startDate, $endDate);
         $stats = $this->orderProfitModel->getProfitStats($startDate, $endDate, $storeId);
         $profitRateDistribution = $this->orderProfitModel->getProfitRateDistribution($startDate, $endDate);
+        $dailySalesStats = $this->orderProfitModel->getDailySalesStats($startDate, $endDate);
         
         $storeList = $this->orderProfitModel->getStoreList();
         $title = '利润统计';
