@@ -1,7 +1,7 @@
 import asyncio
 import aiohttp
 from all_skus_data import all_skus_list
-
+#需要定期更新sku数据
 # 并发请求数量
 CONCURRENT_NUM = 10
 # 每批请求间隔时间(秒)
@@ -43,7 +43,7 @@ async def main():
                 print(f"等待 {INTERVAL} 秒后处理下一批...")
                 await asyncio.sleep(INTERVAL)
     
-    print("所有SKU请求处理完成")
+    print("所有SKU库存更新处理完成，请每周更新sku list数据。")
 
 if __name__ == "__main__":
     asyncio.run(main())
