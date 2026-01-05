@@ -254,7 +254,7 @@ class OrderProfitController {
         }
         
         $endDate = date('Y-m-d');
-        $startDate = date('Y-m-d', strtotime('-30 days'));
+        $startDate = date('Y-m-d', strtotime('-60 days'));
         
         $storeId = '';
         
