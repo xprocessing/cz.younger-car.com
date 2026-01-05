@@ -202,7 +202,7 @@ class InventoryDetails {
                     SELECT local_sku, 
                            COUNT(*) as outbound_30days
                     FROM order_profit
-                    WHERE global_purchase_time >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+                    WHERE DATE(global_purchase_time) >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
                     GROUP BY local_sku
                 ) op ON i.sku = op.local_sku
                 WHERE i.wid != 5693
