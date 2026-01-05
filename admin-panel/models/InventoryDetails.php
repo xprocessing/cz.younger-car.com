@@ -192,25 +192,21 @@ class InventoryDetails {
     }
     
     public function getInventoryAlert() {
-        $sql = "SELECT i.id,
-                       i.wid,
-                       i.sku,
-                       i.product_valid_num,
-                       i.quantity_receive,
-                       i.product_onway,
-                       i.average_age,
-                       w.name as warehouse_name,
+        $sql = "SELECT i.sku,
+                       SUM(i.product_valid_num) as product_valid_num,
+                       SUM(CASE WHEN i.quantity_receive != '' THEN CAST(i.quantity_receive AS SIGNED) ELSE 0 END) as quantity_receive,
+                       SUM(i.product_onway) as product_onway,
                        COALESCE(op.outbound_30days, 0) as outbound_30days
                 FROM inventory_details i
-                LEFT JOIN warehouses w ON i.wid = w.wid
                 LEFT JOIN (
-                    SELECT wid, 
-                           local_sku, 
+                    SELECT local_sku, 
                            COUNT(*) as outbound_30days
                     FROM order_profit
                     WHERE global_purchase_time >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
-                    GROUP BY wid, local_sku
-                ) op ON i.wid = op.wid AND i.sku = op.local_sku
+                    GROUP BY local_sku
+                ) op ON i.sku = op.local_sku
+                WHERE i.wid != 5693
+                GROUP BY i.sku
                 ORDER BY op.outbound_30days DESC, i.sku ASC";
         
         $stmt = $this->db->query($sql);
