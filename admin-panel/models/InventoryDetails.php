@@ -194,24 +194,39 @@ class InventoryDetails {
     public function getInventoryAlert() {
         $thirtyDaysAgo = date('Y-m-d 00:00:00', strtotime('-30 days'));
         
-        $sql = "SELECT i.sku,
-                       SUM(i.product_valid_num) as product_valid_num,
-                       SUM(i.quantity_receive) as quantity_receive,
-                       SUM(i.product_onway) as product_onway,
-                       COALESCE(op.outbound_30days, 0) as outbound_30days
-                FROM inventory_details i
+        $sql = "SELECT combined_data.sku,
+                       SUM(combined_data.product_valid_num) as product_valid_num,
+                       SUM(combined_data.quantity_receive) as quantity_receive,
+                       SUM(combined_data.product_onway) as product_onway,
+                       COALESCE(MAX(op.outbound_30days), 0) as outbound_30days
+                FROM (
+                    -- 从inventory_details获取基础数据
+                    SELECT i.sku COLLATE utf8mb4_unicode_ci as sku,
+                           i.product_valid_num,
+                           i.quantity_receive,
+                           i.product_onway
+                    FROM inventory_details i
+                    WHERE i.wid != 5693
+                    UNION ALL
+                    -- 从order_profit获取最近30天有出库记录的SKU
+                    SELECT op.local_sku COLLATE utf8mb4_unicode_ci as sku,
+                           0 as product_valid_num,
+                           0 as quantity_receive,
+                           0 as product_onway
+                    FROM order_profit op
+                    WHERE op.global_purchase_time >= ?
+                ) AS combined_data
                 LEFT JOIN (
-                    SELECT local_sku, 
+                    SELECT local_sku COLLATE utf8mb4_unicode_ci as local_sku,
                            COUNT(*) as outbound_30days
                     FROM order_profit
                     WHERE global_purchase_time >= ?
                     GROUP BY local_sku
-                ) op ON i.sku = op.local_sku
-                WHERE i.wid != 5693
-                GROUP BY i.sku
-                ORDER BY op.outbound_30days DESC, i.sku ASC";
+                ) op ON combined_data.sku = op.local_sku
+                GROUP BY combined_data.sku
+                ORDER BY outbound_30days DESC, combined_data.sku ASC";
         
-        $stmt = $this->db->query($sql, [$thirtyDaysAgo]);
+        $stmt = $this->db->query($sql, [$thirtyDaysAgo, $thirtyDaysAgo]);
         return $stmt->fetchAll();
     }
 }
