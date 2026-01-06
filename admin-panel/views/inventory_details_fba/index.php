@@ -57,7 +57,14 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" id="selectAll"></th>
+                            <th rowspan="2"><input type="checkbox" id="selectAll"></th>
+                            <th colspan="12">基本信息</th>
+                            <th colspan="18">库存数量</th>
+                            <th colspan="18">库存成本</th>
+                            <th colspan="10">库存分析</th>
+                            <th rowspan="2">操作</th>
+                        </tr>
+                        <tr>
                             <th>仓库名</th>
                             <th>共享仓店铺名</th>
                             <th>店铺ID</th>
@@ -70,15 +77,69 @@
                             <th>分类</th>
                             <th>品牌</th>
                             <th>共享类型</th>
+                            
                             <th>总数</th>
-                            <th>总价</th>
+                            <th>可用总数</th>
                             <th>FBA可售</th>
                             <th>待调仓</th>
                             <th>调仓中</th>
                             <th>待发货</th>
                             <th>FBM可售</th>
                             <th>不可售</th>
-                            <th>操作</th>
+                            <th>计划入库</th>
+                            <th>在途</th>
+                            <th>入库中</th>
+                            <th>实际在途</th>
+                            <th>调查中数量</th>
+                            <th>总可用库存</th>
+                            <th>0-1个月库龄</th>
+                            <th>1-2个月库龄</th>
+                            <th>2-3个月库龄</th>
+                            <th>0-3个月库龄</th>
+                            <th>3-6个月库龄</th>
+                            <th>6-9个月库龄</th>
+                            <th>9-11个月库龄</th>
+                            <th>9-12个月库龄</th>
+                            <th>11-12个月库龄</th>
+                            <th>12个月以上库龄</th>
+                            
+                            <th>总价</th>
+                            <th>可用总数成本价</th>
+                            <th>FBA可售成本价</th>
+                            <th>待调仓成本价</th>
+                            <th>调仓中成本价</th>
+                            <th>待发货成本价</th>
+                            <th>FBM可售成本价</th>
+                            <th>不可售成本价</th>
+                            <th>计划入库成本价</th>
+                            <th>在途成本价</th>
+                            <th>入库中成本价</th>
+                            <th>实际在途成本价</th>
+                            <th>调查中数量成本价</th>
+                            <th>0-1个月库龄成本价</th>
+                            <th>1-2个月库龄成本价</th>
+                            <th>2-3个月库龄成本价</th>
+                            <th>0-3个月库龄成本价</th>
+                            <th>3-6个月库龄成本价</th>
+                            <th>6-9个月库龄成本价</th>
+                            <th>9-11个月库龄成本价</th>
+                            <th>9-12个月库龄成本价</th>
+                            <th>11-12个月库龄成本价</th>
+                            <th>12个月以上库龄成本价</th>
+                            <th>历史供货天数成本价</th>
+                            <th>单位采购成本</th>
+                            <th>单位头程费用</th>
+                            
+                            <th>推荐操作</th>
+                            <th>售出率</th>
+                            <th>预计冗余数量</th>
+                            <th>预计30天仓储费用</th>
+                            <th>最低库存水平</th>
+                            <th>库存水平健康度</th>
+                            <th>历史供货天数</th>
+                            <th>低库存水平费收取情况</th>
+                            <th>配送方式</th>
+                            <th>FBA可售信息列表</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -131,14 +192,72 @@
                                             <?php echo $shareTypeText; ?>
                                         </span>
                                     </td>
+                                    
                                     <td><?php echo $item['total']; ?></td>
-                                    <td><?php echo number_format($item['total_price'], 2); ?></td>
+                                    <td><?php echo $item['available_total']; ?></td>
                                     <td><?php echo $item['afn_fulfillable_quantity']; ?></td>
                                     <td><?php echo $item['reserved_fc_transfers']; ?></td>
                                     <td><?php echo $item['reserved_fc_processing']; ?></td>
                                     <td><?php echo $item['reserved_customerorders']; ?></td>
                                     <td><?php echo $item['quantity']; ?></td>
                                     <td><?php echo $item['afn_unsellable_quantity']; ?></td>
+                                    <td><?php echo $item['afn_inbound_working_quantity']; ?></td>
+                                    <td><?php echo $item['afn_inbound_shipped_quantity']; ?></td>
+                                    <td><?php echo $item['afn_inbound_receiving_quantity']; ?></td>
+                                    <td><?php echo $item['stock_up_num']; ?></td>
+                                    <td><?php echo $item['afn_researching_quantity']; ?></td>
+                                    <td><?php echo $item['total_fulfillable_quantity']; ?></td>
+                                    <td><?php echo $item['inv_age_0_to_30_days']; ?></td>
+                                    <td><?php echo $item['inv_age_31_to_60_days']; ?></td>
+                                    <td><?php echo $item['inv_age_61_to_90_days']; ?></td>
+                                    <td><?php echo $item['inv_age_0_to_90_days']; ?></td>
+                                    <td><?php echo $item['inv_age_91_to_180_days']; ?></td>
+                                    <td><?php echo $item['inv_age_181_to_270_days']; ?></td>
+                                    <td><?php echo $item['inv_age_271_to_330_days']; ?></td>
+                                    <td><?php echo $item['inv_age_271_to_365_days']; ?></td>
+                                    <td><?php echo $item['inv_age_331_to_365_days']; ?></td>
+                                    <td><?php echo $item['inv_age_365_plus_days']; ?></td>
+                                    
+                                    <td><?php echo number_format($item['total_price'], 2); ?></td>
+                                    <td><?php echo $item['available_total_price']; ?></td>
+                                    <td><?php echo $item['afn_fulfillable_quantity_price']; ?></td>
+                                    <td><?php echo $item['reserved_fc_transfers_price']; ?></td>
+                                    <td><?php echo $item['reserved_fc_processing_price']; ?></td>
+                                    <td><?php echo $item['reserved_customerorders_price']; ?></td>
+                                    <td><?php echo $item['quantity_price']; ?></td>
+                                    <td><?php echo $item['afn_unsellable_quantity_price']; ?></td>
+                                    <td><?php echo $item['afn_inbound_working_quantity_price']; ?></td>
+                                    <td><?php echo $item['afn_inbound_shipped_quantity_price']; ?></td>
+                                    <td><?php echo $item['afn_inbound_receiving_quantity_price']; ?></td>
+                                    <td><?php echo $item['stock_up_num_price']; ?></td>
+                                    <td><?php echo $item['afn_researching_quantity_price']; ?></td>
+                                    <td><?php echo $item['inv_age_0_to_30_price']; ?></td>
+                                    <td><?php echo $item['inv_age_31_to_60_price']; ?></td>
+                                    <td><?php echo $item['inv_age_61_to_90_price']; ?></td>
+                                    <td><?php echo $item['inv_age_0_to_90_price']; ?></td>
+                                    <td><?php echo $item['inv_age_91_to_180_price']; ?></td>
+                                    <td><?php echo $item['inv_age_181_to_270_price']; ?></td>
+                                    <td><?php echo $item['inv_age_271_to_330_price']; ?></td>
+                                    <td><?php echo $item['inv_age_271_to_365_price']; ?></td>
+                                    <td><?php echo $item['inv_age_331_to_365_price']; ?></td>
+                                    <td><?php echo $item['inv_age_365_plus_price']; ?></td>
+                                    <td><?php echo $item['historical_days_of_supply_price']; ?></td>
+                                    <td><?php echo $item['cg_price']; ?></td>
+                                    <td><?php echo $item['cg_transport_costs']; ?></td>
+                                    
+                                    <td><?php echo htmlspecialchars($item['recommended_action']); ?></td>
+                                    <td><?php echo number_format($item['sell_through'], 2); ?></td>
+                                    <td><?php echo number_format($item['estimated_excess_quantity'], 2); ?></td>
+                                    <td><?php echo number_format($item['estimated_storage_cost_next_month'], 2); ?></td>
+                                    <td><?php echo number_format($item['fba_minimum_inventory_level'], 2); ?></td>
+                                    <td><?php echo htmlspecialchars($item['fba_inventory_level_health_status']); ?></td>
+                                    <td><?php echo number_format($item['historical_days_of_supply'], 2); ?></td>
+                                    <td><?php echo htmlspecialchars($item['low_inventory_level_fee_applied']); ?></td>
+                                    <td><?php echo htmlspecialchars($item['fulfillment_channel']); ?></td>
+                                    <td title="<?php echo htmlspecialchars($item['fba_storage_quantity_list']); ?>">
+                                        <?php echo mb_strlen($item['fba_storage_quantity_list']) > 50 ? mb_substr($item['fba_storage_quantity_list'], 0, 50) . '...' : htmlspecialchars($item['fba_storage_quantity_list']); ?>
+                                    </td>
+                                    
                                     <td>
                                         <a href="<?php echo APP_URL; ?>/inventory_details_fba.php?action=delete&name=<?php echo urlencode($item['name']); ?>&sku=<?php echo urlencode($item['sku']); ?>" 
                                            class="btn btn-sm btn-danger" 
@@ -150,7 +269,7 @@
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="21" class="text-center">暂无数据</td>
+                                <td colspan="60" class="text-center">暂无数据</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
