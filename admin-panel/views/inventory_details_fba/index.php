@@ -3,6 +3,10 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>FBA库存详情管理</h4>
     <div>
+        <!-- 默认字段按钮 -->
+        <button type="button" class="btn btn-secondary me-2" id="resetToDefaultFields">
+            <i class="fa fa-refresh"></i> 默认字段
+        </button>
         <!-- 字段选择按钮 -->
         <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#fieldSelectionModal">
             <i class="fa fa-cog"></i> 字段选择
@@ -733,6 +737,30 @@
         
         // 设置复选框状态和表格列显示
         updateFieldSelection(savedFields);
+        
+        // 默认字段按钮事件
+        document.getElementById('resetToDefaultFields').addEventListener('click', function() {
+            // 定义默认字段
+            const defaultFields = {
+                'name': true,
+                'seller_group_name': true,
+                'sid': true,
+                'asin': true,
+                'product_name': true,
+                'small_image_url': true,
+                'sku': true,
+                'afn_fulfillable_quantity': true
+            };
+            
+            // 清除localStorage中的用户设置
+            localStorage.removeItem('fbaInventoryFields');
+            
+            // 更新字段选择和表格显示
+            updateFieldSelection(defaultFields);
+            
+            // 提示用户
+            alert('已恢复为默认字段设置');
+        });
         
         // 保存设置按钮事件
         document.getElementById('saveFieldSelection').addEventListener('click', function() {
