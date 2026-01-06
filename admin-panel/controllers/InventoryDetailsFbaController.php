@@ -39,10 +39,12 @@ class InventoryDetailsFbaController {
         $allInventoryDetails = $this->inventoryDetailsFbaModel->getAll($filters);
         $totalCount = count($allInventoryDetails);
         $inventoryDetails = array_slice($allInventoryDetails, $offset, $limit);
-        
         $totalPages = ceil($totalCount / $limit);
         $warehouseNames = $this->inventoryDetailsFbaModel->getAllWarehouseNames();
         $title = 'FBA库存详情管理';
+        
+        // 确保变量可以在视图中访问
+        global $inventoryDetails, $totalPages, $page, $warehouseNames, $title;
         
         include VIEWS_DIR . '/layouts/header.php';
         include VIEWS_DIR . '/inventory_details_fba/index.php';

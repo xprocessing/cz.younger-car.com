@@ -21,31 +21,30 @@ class InventoryDetailsFba {
         $params = [];
         
         // 添加过滤条件
-        if (!empty($filters)) {
-            $whereClause = [];
-            
-            if (isset($filters['search'])) {
-                $whereClause[] = "(name LIKE ? OR sku LIKE ? OR asin LIKE ? OR product_name LIKE ?)";
-                $searchTerm = '%' . $filters['search'] . '%';
-                $params[] = $searchTerm;
-                $params[] = $searchTerm;
-                $params[] = $searchTerm;
-                $params[] = $searchTerm;
-            }
-            
-            if (isset($filters['name'])) {
-                $whereClause[] = "name = ?";
-                $params[] = $filters['name'];
-            }
-            
-            if (isset($filters['sku'])) {
-                $whereClause[] = "sku LIKE ?";
-                $params[] = '%' . $filters['sku'] . '%';
-            }
-            
-            if (!empty($whereClause)) {
-                $sql .= " WHERE " . implode(" AND ", $whereClause);
-            }
+        $whereClause = [];
+        $params = [];
+        
+        if (isset($filters['search']) && !empty($filters['search'])) {
+            $whereClause[] = "(name LIKE ? OR sku LIKE ? OR asin LIKE ? OR product_name LIKE ?)";
+            $searchTerm = '%' . $filters['search'] . '%';
+            $params[] = $searchTerm;
+            $params[] = $searchTerm;
+            $params[] = $searchTerm;
+            $params[] = $searchTerm;
+        }
+        
+        if (isset($filters['name']) && !empty($filters['name'])) {
+            $whereClause[] = "name = ?";
+            $params[] = $filters['name'];
+        }
+        
+        if (isset($filters['sku']) && !empty($filters['sku'])) {
+            $whereClause[] = "sku LIKE ?";
+            $params[] = '%' . $filters['sku'] . '%';
+        }
+        
+        if (!empty($whereClause)) {
+            $sql .= " WHERE " . implode(" AND ", $whereClause);
         }
         
         $sql .= " ORDER BY name, sku";
