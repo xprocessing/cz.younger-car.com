@@ -107,7 +107,7 @@ class InventoryDetails {
     }
     
     public function search($keyword, $limit = null, $offset = 0, $sortField = 'id', $sortOrder = 'DESC') {
-        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price'];
+        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'product_onway', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price'];
         $allowedSortOrders = ['ASC', 'DESC'];
         
         if (!in_array($sortField, $allowedSortFields)) {
@@ -143,7 +143,7 @@ class InventoryDetails {
     }
     
     public function getByWid($wid, $limit = null, $offset = 0, $sortField = 'id', $sortOrder = 'DESC') {
-        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price'];
+        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'product_onway', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price'];
         $allowedSortOrders = ['ASC', 'DESC'];
         
         if (!in_array($sortField, $allowedSortFields)) {

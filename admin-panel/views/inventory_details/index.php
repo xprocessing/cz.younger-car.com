@@ -99,7 +99,7 @@ function getSortIcon($field) {
                         <th><a href="<?php echo getSortUrl('sku'); ?>" class="text-decoration-none text-dark">SKU <?php echo getSortIcon('sku'); ?></a></th>
                         <th><a href="<?php echo getSortUrl('product_valid_num'); ?>" class="text-decoration-none text-dark">可用量 <?php echo getSortIcon('product_valid_num'); ?></a></th>
                         <th><a href="<?php echo getSortUrl('quantity_receive'); ?>" class="text-decoration-none text-dark">待到货量 <?php echo getSortIcon('quantity_receive'); ?></a></th>
-                        <th><a href="<?php echo getSortUrl('quantity_transfer'); ?>" class="text-decoration-none text-dark">调拨在途 <?php echo getSortIcon('quantity_transfer'); ?></a></th>
+                        <th><a href="<?php echo getSortUrl('product_onway'); ?>" class="text-decoration-none text-dark">调拨在途 <?php echo getSortIcon('product_onway'); ?></a></th>
                         <th><a href="<?php echo getSortUrl('average_age'); ?>" class="text-decoration-none text-dark">平均库龄(天) <?php echo getSortIcon('average_age'); ?></a></th>
                         <th><a href="<?php echo getSortUrl('purchase_price'); ?>" class="text-decoration-none text-dark">采购单价 <?php echo getSortIcon('purchase_price'); ?></a></th>
                         <th><a href="<?php echo getSortUrl('head_stock_price'); ?>" class="text-decoration-none text-dark">单位头程费用 <?php echo getSortIcon('head_stock_price'); ?></a></th>
@@ -117,6 +117,7 @@ function getSortIcon($field) {
                                 <td><a href="<?php echo APP_URL; ?>/products.php?keyword=<?php echo $detail['sku']; ?>" target="_blank"><?php echo htmlspecialchars($detail['sku']); ?> </a></td>
                                 <td><?php echo number_format($detail['product_valid_num']); ?></td>
                                 <td><?php echo htmlspecialchars($detail['quantity_receive']); ?></td>
+                                <td><?php echo number_format($detail['product_onway']); ?></td>
                                 <td><?php echo number_format($detail['average_age']); ?></td>
                                 <td><?php echo number_format($detail['purchase_price'], 4); ?></td>
                                 <td><?php echo number_format($detail['head_stock_price'], 4); ?></td>
