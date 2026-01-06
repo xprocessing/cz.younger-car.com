@@ -11,24 +11,27 @@ try {
     // 初始化API客户端
     $apiClient = new LingXingApiClient();
 
-    $sku = $_GET['sku'];
+    $offset = $_GET['offset'] ?? 0;
    
     // 调用POST接口示例
-    $orderParams = [
-        'offset' => 0,
-        'length' => 100,
-        'sku' => $sku
+    $params = [
+        'offset' => $offset,
+        'length' => 100
+       
         
     ];
-    $orders = $apiClient->post('/basicOpen/openapi/storage/fbaWarehouseDetail', $orderParams);
+    $result = $apiClient->post('/basicOpen/openapi/storage/fbaWarehouseDetail', $params);
     //print_r("订单数据：" . PHP_EOL);
     //json格式化输出
-    echo json_encode($orders, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 } catch (\Exception $e) {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
 
-// 测试https://cz.younger-car.com/xlingxing/php/get_inventoryDetails.php?sku=NI-C63-FL-GB
+// 测试https://cz.younger-car.com/xlingxing/php/get_inventoryDetails_FBA.php?offset=0
+// 测试https://cz.younger-car.com/xlingxing/php/get_inventoryDetails_FBA.php?offset=100
+
+//将$result中的data数据存入数据库
 
 
 ?>
