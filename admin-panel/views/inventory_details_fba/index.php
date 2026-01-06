@@ -3,11 +3,173 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>FBA库存详情管理</h4>
     <div>
+        <!-- 字段选择按钮 -->
+        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#fieldSelectionModal">
+            <i class="fa fa-cog"></i> 字段选择
+        </button>
         <!-- 批量删除按钮 -->
         <button type="submit" form="batchDeleteForm" class="btn btn-danger" 
                 onclick="return confirm('确定要删除选中的FBA库存详情记录吗？');">
             <i class="fa fa-trash"></i> 批量删除
         </button>
+    </div>
+</div>
+
+<!-- 字段选择模态框 -->
+<div class="modal fade" id="fieldSelectionModal" tabindex="-1" aria-labelledby="fieldSelectionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fieldSelectionModalLabel">选择显示字段</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- 基本信息字段 -->
+                    <div class="col-md-4">
+                        <h6 class="mb-2">基本信息</h6>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="name" id="field-name" checked>
+                            <label class="form-check-label" for="field-name">仓库名</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="seller_group_name" id="field-seller_group_name" checked>
+                            <label class="form-check-label" for="field-seller_group_name">共享仓店铺名</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="sid" id="field-sid">
+                            <label class="form-check-label" for="field-sid">店铺ID</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="asin" id="field-asin" checked>
+                            <label class="form-check-label" for="field-asin">ASIN</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="product_name" id="field-product_name" checked>
+                            <label class="form-check-label" for="field-product_name">商品名称</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="small_image_url" id="field-small_image_url">
+                            <label class="form-check-label" for="field-small_image_url">预览图</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="seller_sku" id="field-seller_sku">
+                            <label class="form-check-label" for="field-seller_sku">MSKU</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="fnsku" id="field-fnsku">
+                            <label class="form-check-label" for="field-fnsku">FNSKU</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="sku" id="field-sku" checked>
+                            <label class="form-check-label" for="field-sku">SKU</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="category_text" id="field-category_text">
+                            <label class="form-check-label" for="field-category_text">分类</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="product_brand_text" id="field-product_brand_text">
+                            <label class="form-check-label" for="field-product_brand_text">品牌</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="share_type" id="field-share_type">
+                            <label class="form-check-label" for="field-share_type">共享类型</label>
+                        </div>
+                    </div>
+                    
+                    <!-- 库存数量字段 -->
+                    <div class="col-md-4">
+                        <h6 class="mb-2">库存数量</h6>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="total" id="field-total" checked>
+                            <label class="form-check-label" for="field-total">总数</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="available_total" id="field-available_total" checked>
+                            <label class="form-check-label" for="field-available_total">可用总数</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_fulfillable_quantity" id="field-afn_fulfillable_quantity" checked>
+                            <label class="form-check-label" for="field-afn_fulfillable_quantity">FBA可售</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="reserved_fc_transfers" id="field-reserved_fc_transfers">
+                            <label class="form-check-label" for="field-reserved_fc_transfers">待调仓</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="reserved_fc_processing" id="field-reserved_fc_processing">
+                            <label class="form-check-label" for="field-reserved_fc_processing">调仓中</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="reserved_customerorders" id="field-reserved_customerorders">
+                            <label class="form-check-label" for="field-reserved_customerorders">待发货</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="quantity" id="field-quantity">
+                            <label class="form-check-label" for="field-quantity">FBM可售</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_unsellable_quantity" id="field-afn_unsellable_quantity">
+                            <label class="form-check-label" for="field-afn_unsellable_quantity">不可售</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_inbound_working_quantity" id="field-afn_inbound_working_quantity">
+                            <label class="form-check-label" for="field-afn_inbound_working_quantity">计划入库</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_inbound_shipped_quantity" id="field-afn_inbound_shipped_quantity" checked>
+                            <label class="form-check-label" for="field-afn_inbound_shipped_quantity">在途</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_inbound_receiving_quantity" id="field-afn_inbound_receiving_quantity">
+                            <label class="form-check-label" for="field-afn_inbound_receiving_quantity">入库中</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="stock_up_num" id="field-stock_up_num">
+                            <label class="form-check-label" for="field-stock_up_num">实际在途</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_researching_quantity" id="field-afn_researching_quantity">
+                            <label class="form-check-label" for="field-afn_researching_quantity">调查中数量</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="total_fulfillable_quantity" id="field-total_fulfillable_quantity">
+                            <label class="form-check-label" for="field-total_fulfillable_quantity">总可用库存</label>
+                        </div>
+                    </div>
+                    
+                    <!-- 其他字段 -->
+                    <div class="col-md-4">
+                        <h6 class="mb-2">其他字段</h6>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="recommended_action" id="field-recommended_action" checked>
+                            <label class="form-check-label" for="field-recommended_action">推荐操作</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="sell_through" id="field-sell_through">
+                            <label class="form-check-label" for="field-sell_through">售出率</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="fba_inventory_level_health_status" id="field-fba_inventory_level_health_status">
+                            <label class="form-check-label" for="field-fba_inventory_level_health_status">库存水平健康度</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="historical_days_of_supply" id="field-historical_days_of_supply">
+                            <label class="form-check-label" for="field-historical_days_of_supply">历史供货天数</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="fulfillment_channel" id="field-fulfillment_channel">
+                            <label class="form-check-label" for="field-fulfillment_channel">配送方式</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveFieldSelection">保存设置</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -67,80 +229,80 @@
                             <th rowspan="2">操作</th>
                         </tr>
                         <tr>
-                            <th>仓库名</th>
-                            <th>共享仓店铺名</th>
-                            <th>店铺ID</th>
-                            <th>ASIN</th>
-                            <th>商品名称</th>
-                            <th>预览图</th>
-                            <th>MSKU</th>
-                            <th>FNSKU</th>
-                            <th>SKU</th>
-                            <th>分类</th>
-                            <th>品牌</th>
-                            <th>共享类型</th>                            
-                            <th>总数</th>
-                            <th>可用总数</th>
-                            <th>FBA可售</th>
-                            <th>待调仓</th>
-                            <th>调仓中</th>
-                            <th>待发货</th>
-                            <th>FBM可售</th>
-                            <th>不可售</th>
-                            <th>计划入库</th>
-                            <th>在途</th>
-                            <th>入库中</th>
-                            <th>实际在途</th>
-                            <th>调查中数量</th>
-                            <th>总可用库存</th>
-                            <th>0-1个月库龄</th>
-                            <th>1-2个月库龄</th>
-                            <th>2-3个月库龄</th>
-                            <th>0-3个月库龄</th>
-                            <th>3-6个月库龄</th>
-                            <th>6-9个月库龄</th>
-                            <th>9-11个月库龄</th>
-                            <th>9-12个月库龄</th>
-                            <th>11-12个月库龄</th>
-                            <th>12个月以上库龄</th>
+                            <th data-field="name">仓库名</th>
+                            <th data-field="seller_group_name">共享仓店铺名</th>
+                            <th data-field="sid">店铺ID</th>
+                            <th data-field="asin">ASIN</th>
+                            <th data-field="product_name">商品名称</th>
+                            <th data-field="small_image_url">预览图</th>
+                            <th data-field="seller_sku">MSKU</th>
+                            <th data-field="fnsku">FNSKU</th>
+                            <th data-field="sku">SKU</th>
+                            <th data-field="category_text">分类</th>
+                            <th data-field="product_brand_text">品牌</th>
+                            <th data-field="share_type">共享类型</th>                            
+                            <th data-field="total">总数</th>
+                            <th data-field="available_total">可用总数</th>
+                            <th data-field="afn_fulfillable_quantity">FBA可售</th>
+                            <th data-field="reserved_fc_transfers">待调仓</th>
+                            <th data-field="reserved_fc_processing">调仓中</th>
+                            <th data-field="reserved_customerorders">待发货</th>
+                            <th data-field="quantity">FBM可售</th>
+                            <th data-field="afn_unsellable_quantity">不可售</th>
+                            <th data-field="afn_inbound_working_quantity">计划入库</th>
+                            <th data-field="afn_inbound_shipped_quantity">在途</th>
+                            <th data-field="afn_inbound_receiving_quantity">入库中</th>
+                            <th data-field="stock_up_num">实际在途</th>
+                            <th data-field="afn_researching_quantity">调查中数量</th>
+                            <th data-field="total_fulfillable_quantity">总可用库存</th>
+                            <th data-field="inv_age_0_to_30_days">0-1个月库龄</th>
+                            <th data-field="inv_age_31_to_60_days">1-2个月库龄</th>
+                            <th data-field="inv_age_61_to_90_days">2-3个月库龄</th>
+                            <th data-field="inv_age_0_to_90_days">0-3个月库龄</th>
+                            <th data-field="inv_age_91_to_180_days">3-6个月库龄</th>
+                            <th data-field="inv_age_181_to_270_days">6-9个月库龄</th>
+                            <th data-field="inv_age_271_to_330_days">9-11个月库龄</th>
+                            <th data-field="inv_age_271_to_365_days">9-12个月库龄</th>
+                            <th data-field="inv_age_331_to_365_days">11-12个月库龄</th>
+                            <th data-field="inv_age_365_plus_days">12个月以上库龄</th>
                             
-                            <th>总价</th>
-                            <th>可用总数成本价</th>
-                            <th>FBA可售成本价</th>
-                            <th>待调仓成本价</th>
-                            <th>调仓中成本价</th>
-                            <th>待发货成本价</th>
-                            <th>FBM可售成本价</th>
-                            <th>不可售成本价</th>
-                            <th>计划入库成本价</th>
-                            <th>在途成本价</th>
-                            <th>入库中成本价</th>
-                            <th>实际在途成本价</th>
-                            <th>调查中数量成本价</th>
-                            <th>0-1个月库龄成本价</th>
-                            <th>1-2个月库龄成本价</th>
-                            <th>2-3个月库龄成本价</th>
-                            <th>0-3个月库龄成本价</th>
-                            <th>3-6个月库龄成本价</th>
-                            <th>6-9个月库龄成本价</th>
-                            <th>9-11个月库龄成本价</th>
-                            <th>9-12个月库龄成本价</th>
-                            <th>11-12个月库龄成本价</th>
-                            <th>12个月以上库龄成本价</th>
-                            <th>历史供货天数成本价</th>
-                            <th>单位采购成本</th>
-                            <th>单位头程费用</th>
+                            <th data-field="total_price">总价</th>
+                            <th data-field="available_total_price">可用总数成本价</th>
+                            <th data-field="afn_fulfillable_quantity_price">FBA可售成本价</th>
+                            <th data-field="reserved_fc_transfers_price">待调仓成本价</th>
+                            <th data-field="reserved_fc_processing_price">调仓中成本价</th>
+                            <th data-field="reserved_customerorders_price">待发货成本价</th>
+                            <th data-field="quantity_price">FBM可售成本价</th>
+                            <th data-field="afn_unsellable_quantity_price">不可售成本价</th>
+                            <th data-field="afn_inbound_working_quantity_price">计划入库成本价</th>
+                            <th data-field="afn_inbound_shipped_quantity_price">在途成本价</th>
+                            <th data-field="afn_inbound_receiving_quantity_price">入库中成本价</th>
+                            <th data-field="stock_up_num_price">实际在途成本价</th>
+                            <th data-field="afn_researching_quantity_price">调查中数量成本价</th>
+                            <th data-field="inv_age_0_to_30_price">0-1个月库龄成本价</th>
+                            <th data-field="inv_age_31_to_60_price">1-2个月库龄成本价</th>
+                            <th data-field="inv_age_61_to_90_price">2-3个月库龄成本价</th>
+                            <th data-field="inv_age_0_to_90_price">0-3个月库龄成本价</th>
+                            <th data-field="inv_age_91_to_180_price">3-6个月库龄成本价</th>
+                            <th data-field="inv_age_181_to_270_price">6-9个月库龄成本价</th>
+                            <th data-field="inv_age_271_to_330_price">9-11个月库龄成本价</th>
+                            <th data-field="inv_age_271_to_365_price">9-12个月库龄成本价</th>
+                            <th data-field="inv_age_331_to_365_price">11-12个月库龄成本价</th>
+                            <th data-field="inv_age_365_plus_price">12个月以上库龄成本价</th>
+                            <th data-field="historical_days_of_supply_price">历史供货天数成本价</th>
+                            <th data-field="cg_price">单位采购成本</th>
+                            <th data-field="cg_transport_costs">单位头程费用</th>
                             
-                            <th>推荐操作</th>
-                            <th>售出率</th>
-                            <th>预计冗余数量</th>
-                            <th>预计30天仓储费用</th>
-                            <th>最低库存水平</th>
-                            <th>库存水平健康度</th>
-                            <th>历史供货天数</th>
-                            <th>低库存水平费收取情况</th>
-                            <th>配送方式</th>
-                            <th>FBA可售信息列表</th>
+                            <th data-field="recommended_action">推荐操作</th>
+                            <th data-field="sell_through">售出率</th>
+                            <th data-field="estimated_excess_quantity">预计冗余数量</th>
+                            <th data-field="estimated_storage_cost_next_month">预计30天仓储费用</th>
+                            <th data-field="fba_minimum_inventory_level">最低库存水平</th>
+                            <th data-field="fba_inventory_level_health_status">库存水平健康度</th>
+                            <th data-field="historical_days_of_supply">历史供货天数</th>
+                            <th data-field="low_inventory_level_fee_applied">低库存水平费收取情况</th>
+                            <th data-field="fulfillment_channel">配送方式</th>
+                            <th data-field="fba_storage_quantity_list">FBA可售信息列表</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -148,14 +310,14 @@
                             <?php foreach ($inventoryDetails as $item): ?>
                                 <tr>
                                     <td><input type="checkbox" name="records[]" value="<?php echo urlencode($item['name']) . '|' . urlencode($item['sku']); ?>"></td>
-                                    <td><?php echo htmlspecialchars($item['name']); ?></td>
-                                    <td><?php echo htmlspecialchars($item['seller_group_name']); ?></td>
-                                    <td><?php echo $item['sid']; ?></td>
-                                    <td><?php echo htmlspecialchars($item['asin']); ?></td>
-                                    <td title="<?php echo htmlspecialchars($item['product_name']); ?>">
+                                    <td data-field="name"><?php echo htmlspecialchars($item['name']); ?></td>
+                                    <td data-field="seller_group_name"><?php echo htmlspecialchars($item['seller_group_name']); ?></td>
+                                    <td data-field="sid"><?php echo $item['sid']; ?></td>
+                                    <td data-field="asin"><?php echo htmlspecialchars($item['asin']); ?></td>
+                                    <td data-field="product_name" title="<?php echo htmlspecialchars($item['product_name']); ?>">
                                         <?php echo mb_strlen($item['product_name']) > 20 ? mb_substr($item['product_name'], 0, 20) . '...' : htmlspecialchars($item['product_name']); ?>
                                     </td>
-                                    <td>
+                                    <td data-field="small_image_url">
                                         <?php if (!empty($item['small_image_url'])): ?>
                                             <img src="<?php echo htmlspecialchars($item['small_image_url']); ?>" 
                                                  alt="预览图" 
@@ -165,14 +327,14 @@
                                             <span class="text-muted">无图片</span>
                                         <?php endif; ?>
                                     </td>
-                                    <td><?php echo htmlspecialchars($item['seller_sku']); ?></td>
-                                    <td><?php echo htmlspecialchars($item['fnsku']); ?></td>
-                                    <td><?php echo htmlspecialchars($item['sku']); ?></td>
-                                    <td title="<?php echo htmlspecialchars($item['category_text']); ?>">
+                                    <td data-field="seller_sku"><?php echo htmlspecialchars($item['seller_sku']); ?></td>
+                                    <td data-field="fnsku"><?php echo htmlspecialchars($item['fnsku']); ?></td>
+                                    <td data-field="sku"><?php echo htmlspecialchars($item['sku']); ?></td>
+                                    <td data-field="category_text" title="<?php echo htmlspecialchars($item['category_text']); ?>">
                                         <?php echo mb_strlen($item['category_text']) > 20 ? mb_substr($item['category_text'], 0, 20) . '...' : htmlspecialchars($item['category_text']); ?>
                                     </td>
-                                    <td><?php echo htmlspecialchars($item['product_brand_text']); ?></td>
-                                    <td>
+                                    <td data-field="product_brand_text"><?php echo htmlspecialchars($item['product_brand_text']); ?></td>
+                                    <td data-field="share_type">
                                         <?php 
                                         $shareTypeText = '';
                                         switch($item['share_type']) {
@@ -194,68 +356,68 @@
                                         </span>
                                     </td>
                                     
-                                    <td><?php echo $item['total']; ?></td>
-                                    <td><?php echo $item['available_total']; ?></td>
-                                    <td><?php echo $item['afn_fulfillable_quantity']; ?></td>
-                                    <td><?php echo $item['reserved_fc_transfers']; ?></td>
-                                    <td><?php echo $item['reserved_fc_processing']; ?></td>
-                                    <td><?php echo $item['reserved_customerorders']; ?></td>
-                                    <td><?php echo $item['quantity']; ?></td>
-                                    <td><?php echo $item['afn_unsellable_quantity']; ?></td>
-                                    <td><?php echo $item['afn_inbound_working_quantity']; ?></td>
-                                    <td><?php echo $item['afn_inbound_shipped_quantity']; ?></td>
-                                    <td><?php echo $item['afn_inbound_receiving_quantity']; ?></td>
-                                    <td><?php echo $item['stock_up_num']; ?></td>
-                                    <td><?php echo $item['afn_researching_quantity']; ?></td>
-                                    <td><?php echo $item['total_fulfillable_quantity']; ?></td>
-                                    <td><?php echo $item['inv_age_0_to_30_days']; ?></td>
-                                    <td><?php echo $item['inv_age_31_to_60_days']; ?></td>
-                                    <td><?php echo $item['inv_age_61_to_90_days']; ?></td>
-                                    <td><?php echo $item['inv_age_0_to_90_days']; ?></td>
-                                    <td><?php echo $item['inv_age_91_to_180_days']; ?></td>
-                                    <td><?php echo $item['inv_age_181_to_270_days']; ?></td>
-                                    <td><?php echo $item['inv_age_271_to_330_days']; ?></td>
-                                    <td><?php echo $item['inv_age_271_to_365_days']; ?></td>
-                                    <td><?php echo $item['inv_age_331_to_365_days']; ?></td>
-                                    <td><?php echo $item['inv_age_365_plus_days']; ?></td>
+                                    <td data-field="total"><?php echo $item['total']; ?></td>
+                                    <td data-field="available_total"><?php echo $item['available_total']; ?></td>
+                                    <td data-field="afn_fulfillable_quantity"><?php echo $item['afn_fulfillable_quantity']; ?></td>
+                                    <td data-field="reserved_fc_transfers"><?php echo $item['reserved_fc_transfers']; ?></td>
+                                    <td data-field="reserved_fc_processing"><?php echo $item['reserved_fc_processing']; ?></td>
+                                    <td data-field="reserved_customerorders"><?php echo $item['reserved_customerorders']; ?></td>
+                                    <td data-field="quantity"><?php echo $item['quantity']; ?></td>
+                                    <td data-field="afn_unsellable_quantity"><?php echo $item['afn_unsellable_quantity']; ?></td>
+                                    <td data-field="afn_inbound_working_quantity"><?php echo $item['afn_inbound_working_quantity']; ?></td>
+                                    <td data-field="afn_inbound_shipped_quantity"><?php echo $item['afn_inbound_shipped_quantity']; ?></td>
+                                    <td data-field="afn_inbound_receiving_quantity"><?php echo $item['afn_inbound_receiving_quantity']; ?></td>
+                                    <td data-field="stock_up_num"><?php echo $item['stock_up_num']; ?></td>
+                                    <td data-field="afn_researching_quantity"><?php echo $item['afn_researching_quantity']; ?></td>
+                                    <td data-field="total_fulfillable_quantity"><?php echo $item['total_fulfillable_quantity']; ?></td>
+                                    <td data-field="inv_age_0_to_30_days"><?php echo $item['inv_age_0_to_30_days']; ?></td>
+                                    <td data-field="inv_age_31_to_60_days"><?php echo $item['inv_age_31_to_60_days']; ?></td>
+                                    <td data-field="inv_age_61_to_90_days"><?php echo $item['inv_age_61_to_90_days']; ?></td>
+                                    <td data-field="inv_age_0_to_90_days"><?php echo $item['inv_age_0_to_90_days']; ?></td>
+                                    <td data-field="inv_age_91_to_180_days"><?php echo $item['inv_age_91_to_180_days']; ?></td>
+                                    <td data-field="inv_age_181_to_270_days"><?php echo $item['inv_age_181_to_270_days']; ?></td>
+                                    <td data-field="inv_age_271_to_330_days"><?php echo $item['inv_age_271_to_330_days']; ?></td>
+                                    <td data-field="inv_age_271_to_365_days"><?php echo $item['inv_age_271_to_365_days']; ?></td>
+                                    <td data-field="inv_age_331_to_365_days"><?php echo $item['inv_age_331_to_365_days']; ?></td>
+                                    <td data-field="inv_age_365_plus_days"><?php echo $item['inv_age_365_plus_days']; ?></td>
                                     
-                                    <td><?php echo number_format($item['total_price'], 2); ?></td>
-                                    <td><?php echo $item['available_total_price']; ?></td>
-                                    <td><?php echo $item['afn_fulfillable_quantity_price']; ?></td>
-                                    <td><?php echo $item['reserved_fc_transfers_price']; ?></td>
-                                    <td><?php echo $item['reserved_fc_processing_price']; ?></td>
-                                    <td><?php echo $item['reserved_customerorders_price']; ?></td>
-                                    <td><?php echo $item['quantity_price']; ?></td>
-                                    <td><?php echo $item['afn_unsellable_quantity_price']; ?></td>
-                                    <td><?php echo $item['afn_inbound_working_quantity_price']; ?></td>
-                                    <td><?php echo $item['afn_inbound_shipped_quantity_price']; ?></td>
-                                    <td><?php echo $item['afn_inbound_receiving_quantity_price']; ?></td>
-                                    <td><?php echo $item['stock_up_num_price']; ?></td>
-                                    <td><?php echo $item['afn_researching_quantity_price']; ?></td>
-                                    <td><?php echo $item['inv_age_0_to_30_price']; ?></td>
-                                    <td><?php echo $item['inv_age_31_to_60_price']; ?></td>
-                                    <td><?php echo $item['inv_age_61_to_90_price']; ?></td>
-                                    <td><?php echo $item['inv_age_0_to_90_price']; ?></td>
-                                    <td><?php echo $item['inv_age_91_to_180_price']; ?></td>
-                                    <td><?php echo $item['inv_age_181_to_270_price']; ?></td>
-                                    <td><?php echo $item['inv_age_271_to_330_price']; ?></td>
-                                    <td><?php echo $item['inv_age_271_to_365_price']; ?></td>
-                                    <td><?php echo $item['inv_age_331_to_365_price']; ?></td>
-                                    <td><?php echo $item['inv_age_365_plus_price']; ?></td>
-                                    <td><?php echo $item['historical_days_of_supply_price']; ?></td>
-                                    <td><?php echo $item['cg_price']; ?></td>
-                                    <td><?php echo $item['cg_transport_costs']; ?></td>
+                                    <td data-field="total_price"><?php echo number_format($item['total_price'], 2); ?></td>
+                                    <td data-field="available_total_price"><?php echo $item['available_total_price']; ?></td>
+                                    <td data-field="afn_fulfillable_quantity_price"><?php echo $item['afn_fulfillable_quantity_price']; ?></td>
+                                    <td data-field="reserved_fc_transfers_price"><?php echo $item['reserved_fc_transfers_price']; ?></td>
+                                    <td data-field="reserved_fc_processing_price"><?php echo $item['reserved_fc_processing_price']; ?></td>
+                                    <td data-field="reserved_customerorders_price"><?php echo $item['reserved_customerorders_price']; ?></td>
+                                    <td data-field="quantity_price"><?php echo $item['quantity_price']; ?></td>
+                                    <td data-field="afn_unsellable_quantity_price"><?php echo $item['afn_unsellable_quantity_price']; ?></td>
+                                    <td data-field="afn_inbound_working_quantity_price"><?php echo $item['afn_inbound_working_quantity_price']; ?></td>
+                                    <td data-field="afn_inbound_shipped_quantity_price"><?php echo $item['afn_inbound_shipped_quantity_price']; ?></td>
+                                    <td data-field="afn_inbound_receiving_quantity_price"><?php echo $item['afn_inbound_receiving_quantity_price']; ?></td>
+                                    <td data-field="stock_up_num_price"><?php echo $item['stock_up_num_price']; ?></td>
+                                    <td data-field="afn_researching_quantity_price"><?php echo $item['afn_researching_quantity_price']; ?></td>
+                                    <td data-field="inv_age_0_to_30_price"><?php echo $item['inv_age_0_to_30_price']; ?></td>
+                                    <td data-field="inv_age_31_to_60_price"><?php echo $item['inv_age_31_to_60_price']; ?></td>
+                                    <td data-field="inv_age_61_to_90_price"><?php echo $item['inv_age_61_to_90_price']; ?></td>
+                                    <td data-field="inv_age_0_to_90_price"><?php echo $item['inv_age_0_to_90_price']; ?></td>
+                                    <td data-field="inv_age_91_to_180_price"><?php echo $item['inv_age_91_to_180_price']; ?></td>
+                                    <td data-field="inv_age_181_to_270_price"><?php echo $item['inv_age_181_to_270_price']; ?></td>
+                                    <td data-field="inv_age_271_to_330_price"><?php echo $item['inv_age_271_to_330_price']; ?></td>
+                                    <td data-field="inv_age_271_to_365_price"><?php echo $item['inv_age_271_to_365_price']; ?></td>
+                                    <td data-field="inv_age_331_to_365_price"><?php echo $item['inv_age_331_to_365_price']; ?></td>
+                                    <td data-field="inv_age_365_plus_price"><?php echo $item['inv_age_365_plus_price']; ?></td>
+                                    <td data-field="historical_days_of_supply_price"><?php echo $item['historical_days_of_supply_price']; ?></td>
+                                    <td data-field="cg_price"><?php echo $item['cg_price']; ?></td>
+                                    <td data-field="cg_transport_costs"><?php echo $item['cg_transport_costs']; ?></td>
                                     
-                                    <td><?php echo htmlspecialchars($item['recommended_action']); ?></td>
-                                    <td><?php echo number_format($item['sell_through'], 2); ?></td>
-                                    <td><?php echo number_format($item['estimated_excess_quantity'], 2); ?></td>
-                                    <td><?php echo number_format($item['estimated_storage_cost_next_month'], 2); ?></td>
-                                    <td><?php echo number_format($item['fba_minimum_inventory_level'], 2); ?></td>
-                                    <td><?php echo htmlspecialchars($item['fba_inventory_level_health_status'] ?? ''); ?></td>
-                                    <td><?php echo number_format($item['historical_days_of_supply'], 2); ?></td>
-                                    <td><?php echo htmlspecialchars($item['low_inventory_level_fee_applied'] ?? ''); ?></td>
-                                    <td><?php echo htmlspecialchars($item['fulfillment_channel'] ?? ''); ?></td>
-                                    <td title="<?php echo htmlspecialchars($item['fba_storage_quantity_list'] ?? ''); ?>">
+                                    <td data-field="recommended_action"><?php echo htmlspecialchars($item['recommended_action']); ?></td>
+                                    <td data-field="sell_through"><?php echo number_format($item['sell_through'], 2); ?></td>
+                                    <td data-field="estimated_excess_quantity"><?php echo number_format($item['estimated_excess_quantity'], 2); ?></td>
+                                    <td data-field="estimated_storage_cost_next_month"><?php echo number_format($item['estimated_storage_cost_next_month'], 2); ?></td>
+                                    <td data-field="fba_minimum_inventory_level"><?php echo number_format($item['fba_minimum_inventory_level'], 2); ?></td>
+                                    <td data-field="fba_inventory_level_health_status"><?php echo htmlspecialchars($item['fba_inventory_level_health_status'] ?? ''); ?></td>
+                                    <td data-field="historical_days_of_supply"><?php echo number_format($item['historical_days_of_supply'], 2); ?></td>
+                                    <td data-field="low_inventory_level_fee_applied"><?php echo htmlspecialchars($item['low_inventory_level_fee_applied'] ?? ''); ?></td>
+                                    <td data-field="fulfillment_channel"><?php echo htmlspecialchars($item['fulfillment_channel'] ?? ''); ?></td>
+                                    <td data-field="fba_storage_quantity_list" title="<?php echo htmlspecialchars($item['fba_storage_quantity_list'] ?? ''); ?>">
                                         <?php 
                                         $storageList = $item['fba_storage_quantity_list'] ?? '';
                                         echo mb_strlen($storageList) > 50 ? mb_substr($storageList, 0, 50) . '...' : htmlspecialchars($storageList); 
@@ -373,4 +535,73 @@
             checkbox.checked = this.checked;
         });
     });
+</script>
+
+<!-- 字段选择脚本 -->
+<script>
+    // 初始化字段选择
+    document.addEventListener('DOMContentLoaded', function() {
+        // 从localStorage加载用户的字段选择
+        const savedFields = JSON.parse(localStorage.getItem('fbaInventoryFields')) || {
+            // 默认显示的字段
+            'name': true,
+            'seller_sku': true,
+            'sku': true,
+            'total': true,
+            'available_total': true,
+            'afn_fulfillable_quantity': true,
+            'afn_inbound_shipped_quantity': true,
+            'recommended_action': true
+        };
+        
+        // 设置复选框状态和表格列显示
+        updateFieldSelection(savedFields);
+        
+        // 保存设置按钮事件
+        document.getElementById('saveFieldSelection').addEventListener('click', function() {
+            const selectedFields = {};
+            
+            // 获取所有字段复选框的状态
+            document.querySelectorAll('.field-checkbox').forEach(checkbox => {
+                selectedFields[checkbox.value] = checkbox.checked;
+            });
+            
+            // 保存到localStorage
+            localStorage.setItem('fbaInventoryFields', JSON.stringify(selectedFields));
+            
+            // 更新表格列显示
+            updateTableColumns(selectedFields);
+            
+            // 关闭模态框
+            const modal = bootstrap.Modal.getInstance(document.getElementById('fieldSelectionModal'));
+            modal.hide();
+        });
+    });
+    
+    // 更新字段选择状态
+    function updateFieldSelection(savedFields) {
+        document.querySelectorAll('.field-checkbox').forEach(checkbox => {
+            checkbox.checked = savedFields[checkbox.value] || false;
+        });
+        
+        updateTableColumns(savedFields);
+    }
+    
+    // 更新表格列显示
+    function updateTableColumns(selectedFields) {
+        // 遍历所有表头和数据列
+        Object.keys(selectedFields).forEach(field => {
+            const isVisible = selectedFields[field];
+            
+            // 隐藏/显示表头列
+            document.querySelectorAll(`th[data-field="${field}"]`).forEach(th => {
+                th.style.display = isVisible ? '' : 'none';
+            });
+            
+            // 隐藏/显示数据列
+            document.querySelectorAll(`td[data-field="${field}"]`).forEach(td => {
+                td.style.display = isVisible ? '' : 'none';
+            });
+        });
+    }
 </script>

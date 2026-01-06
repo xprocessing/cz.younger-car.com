@@ -395,5 +395,5 @@ try {
 echo json_encode($response, JSON_UNESCAPED_UNICODE);
 
 // 请求参考链接：https://cz.younger-car.com/xlingxing/php/get_inventoryDetails_FBA2db.php?offset=0
-// 测试：https://cz.younger-car.com/xlingxing/php/get_inventoryDetails_FBA2db.php?offset=100
+// 测试：https://cz.younger-car.com/xlingxing/php/get_inventoryDetails_FBA2db.php?offset=200
 ?>
