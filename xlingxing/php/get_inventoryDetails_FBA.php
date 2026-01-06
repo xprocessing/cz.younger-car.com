@@ -16,7 +16,8 @@ try {
     // 调用POST接口示例
     $params = [
         'offset' => $offset,
-        'length' => 100
+        'length' => 200,
+        'fulfillment_channel_type' => 'FBA'
        
         
     ];

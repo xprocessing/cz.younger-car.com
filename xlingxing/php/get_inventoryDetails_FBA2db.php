@@ -35,7 +35,8 @@ try {
     $apiClient = new LingXingApiClient();
     $params = [
         'offset' => $offset,
-        'length' => 100
+        'length' => 200,
+        'fulfillment_channel_type' => 'FBA'
     ];
 
     $apiResult = $apiClient->post('/basicOpen/openapi/storage/fbaWarehouseDetail', $params);

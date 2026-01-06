@@ -466,8 +466,7 @@ INSERT INTO `inventory_details` (
 2.0,230.0000,0.0000,0.0000,230.0000);
 
 ---fba仓库明细，仓库name+sku唯一索引。
-CREATE TABLE `inventory_details_fba` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增主键ID',
+CREATE TABLE `inventory_details_fba` ( 
   `name` VARCHAR(100) NOT NULL COMMENT '仓库名',
   `seller_group_name` VARCHAR(100) NOT NULL COMMENT '共享仓店铺名',
   `sid` INT NOT NULL COMMENT '店铺id【当仓库为共享仓时，sid为0返回】',
@@ -541,7 +540,6 @@ CREATE TABLE `inventory_details_fba` (
   `fulfillment_channel` VARCHAR(50) NOT NULL COMMENT '配送方式',
   `cg_price` VARCHAR(20) DEFAULT NULL COMMENT '单位采购成本',
   `cg_transport_costs` VARCHAR(20) DEFAULT NULL COMMENT '单位头程费用',
-  `fba_storage_quantity_list` JSON DEFAULT NULL COMMENT 'FBA可售信息列表，当仓库为共享仓库时，该字段才返回',
-  PRIMARY KEY (`id`) USING BTREE,
+  `fba_storage_quantity_list` JSON DEFAULT NULL COMMENT 'FBA可售信息列表，当仓库为共享仓库时，该字段才返回', 
   UNIQUE KEY `uk_name_sku` (`name`, `sku`) USING BTREE COMMENT '组合唯一键：仓库名+SKU，保证同仓库同SKU唯一'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='FBA库存详情表（含所有库存维度/库龄/成本/仓储信息）';
