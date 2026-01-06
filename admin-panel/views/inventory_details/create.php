@@ -56,6 +56,17 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
+                                <label for="product_onway" class="form-label">调拨在途</label>
+                                <input type="number" class="form-control" id="product_onway" name="product_onway"
+                                       placeholder="请输入调拨在途数量" value="0">
+                                <div class="form-text">调拨在途的库存数量</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
                                 <label for="average_age" class="form-label">平均库龄(天)</label>
                                 <input type="number" class="form-control" id="average_age" name="average_age"
                                        placeholder="请输入平均库龄" value="0">

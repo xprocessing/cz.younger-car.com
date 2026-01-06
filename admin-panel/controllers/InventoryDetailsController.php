@@ -90,7 +90,8 @@ class InventoryDetailsController {
             'average_age' => $_POST['average_age'] ?? 0,
             'purchase_price' => $_POST['purchase_price'] ?? 0,
             'head_stock_price' => $_POST['head_stock_price'] ?? 0,
-            'stock_price' => $_POST['stock_price'] ?? 0
+            'stock_price' => $_POST['stock_price'] ?? 0,
+            'product_onway' => $_POST['product_onway'] ?? 0
         ];
         
         if ($this->inventoryDetailsModel->create($data)) {
@@ -166,7 +167,8 @@ class InventoryDetailsController {
             'average_age' => $_POST['average_age'] ?? 0,
             'purchase_price' => $_POST['purchase_price'] ?? 0,
             'head_stock_price' => $_POST['head_stock_price'] ?? 0,
-            'stock_price' => $_POST['stock_price'] ?? 0
+            'stock_price' => $_POST['stock_price'] ?? 0,
+            'product_onway' => $_POST['product_onway'] ?? 0
         ];
         
         if ($this->inventoryDetailsModel->update($id, $data)) {

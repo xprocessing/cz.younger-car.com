@@ -18,7 +18,7 @@ class InventoryDetails {
     }
     
     public function getAll($limit = null, $offset = 0, $sortField = 'id', $sortOrder = 'DESC') {
-        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price'];
+        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price', 'product_onway'];
         $allowedSortOrders = ['ASC', 'DESC'];
         
         if (!in_array($sortField, $allowedSortFields)) {
@@ -30,7 +30,7 @@ class InventoryDetails {
         }
         
         $sql = "SELECT i.id, i.wid, i.sku, i.product_valid_num, i.quantity_receive, i.average_age, 
-                       i.purchase_price, i.head_stock_price, i.stock_price, w.name as warehouse_name 
+                       i.purchase_price, i.head_stock_price, i.stock_price, i.product_onway, w.name as warehouse_name 
                 FROM inventory_details i 
                 LEFT JOIN warehouses w ON i.wid = w.wid 
                 ORDER BY i.$sortField $sortOrder";
@@ -54,8 +54,8 @@ class InventoryDetails {
     
     public function create($data) {
         $sql = "INSERT INTO inventory_details (wid, sku, product_valid_num, quantity_receive, average_age, 
-                purchase_price, head_stock_price, stock_price) 
-               VALUES (?, ?, ?, ?, ?, ?, ?)";
+                purchase_price, head_stock_price, stock_price, product_onway) 
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $params = [
             $data['wid'],
@@ -65,7 +65,8 @@ class InventoryDetails {
             $data['average_age'],
             $data['purchase_price'],
             $data['head_stock_price'],
-            $data['stock_price']
+            $data['stock_price'],
+            $data['product_onway'] ?? 0
         ];
         
         return $this->db->query($sql, $params);
@@ -80,7 +81,8 @@ class InventoryDetails {
                 average_age = ?, 
                 purchase_price = ?, 
                 head_stock_price = ?, 
-                stock_price = ? 
+                stock_price = ?, 
+                product_onway = ? 
                 WHERE id = ?";
         
         $params = [
@@ -92,6 +94,7 @@ class InventoryDetails {
             $data['purchase_price'],
             $data['head_stock_price'],
             $data['stock_price'],
+            $data['product_onway'] ?? 0,
             $id
         ];
         
@@ -116,7 +119,7 @@ class InventoryDetails {
         }
         
         $sql = "SELECT i.id, i.wid, i.sku, i.product_valid_num, i.quantity_receive, i.average_age, 
-                       i.purchase_price, i.head_stock_price, i.stock_price, w.name as warehouse_name 
+                       i.purchase_price, i.head_stock_price, i.stock_price, i.product_onway, w.name as warehouse_name 
                 FROM inventory_details i 
                 LEFT JOIN warehouses w ON i.wid = w.wid 
                 WHERE i.sku LIKE ? 
@@ -152,7 +155,7 @@ class InventoryDetails {
         }
         
         $sql = "SELECT i.id, i.wid, i.sku, i.product_valid_num, i.quantity_receive, i.average_age, 
-                       i.purchase_price, i.head_stock_price, i.stock_price, w.name as warehouse_name 
+                       i.purchase_price, i.head_stock_price, i.stock_price, i.product_onway, w.name as warehouse_name 
                 FROM inventory_details i 
                 LEFT JOIN warehouses w ON i.wid = w.wid 
                 WHERE i.wid = ?
