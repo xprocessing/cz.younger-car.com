@@ -752,8 +752,8 @@
                 'afn_fulfillable_quantity': true
             };
             
-            // 清除localStorage中的用户设置
-            localStorage.removeItem('fbaInventoryFields');
+            // 将默认字段设置保存到localStorage
+            localStorage.setItem('fbaInventoryFields', JSON.stringify(defaultFields));
             
             // 更新字段选择和表格显示
             updateFieldSelection(defaultFields);
