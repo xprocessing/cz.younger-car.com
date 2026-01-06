@@ -227,7 +227,21 @@ class InventoryDetailsController {
             redirect(APP_URL . '/dashboard.php');
         }
         
+        // 添加不缓存头部
+        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache');
+        
         $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert();
+        
+        // 再次过滤掉全零的SKU，作为双重保障
+        $filteredInventoryAlerts = [];
+        foreach ($inventoryAlerts as $alert) {
+            if ($alert['product_valid_num'] > 0 || $alert['quantity_receive'] > 0 || $alert['product_onway'] > 0 || $alert['outbound_30days'] > 0) {
+                $filteredInventoryAlerts[] = $alert;
+            }
+        }
+        $inventoryAlerts = $filteredInventoryAlerts;
         
         $title = '库存预警（海外仓）';
         

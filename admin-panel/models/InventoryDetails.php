@@ -224,6 +224,7 @@ class InventoryDetails {
                     GROUP BY local_sku
                 ) op ON combined_data.sku = op.local_sku
                 GROUP BY combined_data.sku
+                HAVING product_valid_num > 0 OR quantity_receive > 0 OR product_onway > 0 OR outbound_30days > 0
                 ORDER BY outbound_30days DESC, combined_data.sku ASC";
         
         $stmt = $this->db->query($sql, [$thirtyDaysAgo, $thirtyDaysAgo]);
