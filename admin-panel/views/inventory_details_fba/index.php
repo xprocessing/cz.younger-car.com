@@ -262,12 +262,15 @@
                                     <td><?php echo number_format($item['estimated_excess_quantity'], 2); ?></td>
                                     <td><?php echo number_format($item['estimated_storage_cost_next_month'], 2); ?></td>
                                     <td><?php echo number_format($item['fba_minimum_inventory_level'], 2); ?></td>
-                                    <td><?php echo htmlspecialchars($item['fba_inventory_level_health_status']); ?></td>
+                                    <td><?php echo htmlspecialchars($item['fba_inventory_level_health_status'] ?? ''); ?></td>
                                     <td><?php echo number_format($item['historical_days_of_supply'], 2); ?></td>
-                                    <td><?php echo htmlspecialchars($item['low_inventory_level_fee_applied']); ?></td>
-                                    <td><?php echo htmlspecialchars($item['fulfillment_channel']); ?></td>
-                                    <td title="<?php echo htmlspecialchars($item['fba_storage_quantity_list']); ?>">
-                                        <?php echo mb_strlen($item['fba_storage_quantity_list']) > 50 ? mb_substr($item['fba_storage_quantity_list'], 0, 50) . '...' : htmlspecialchars($item['fba_storage_quantity_list']); ?>
+                                    <td><?php echo htmlspecialchars($item['low_inventory_level_fee_applied'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($item['fulfillment_channel'] ?? ''); ?></td>
+                                    <td title="<?php echo htmlspecialchars($item['fba_storage_quantity_list'] ?? ''); ?>">
+                                        <?php 
+                                        $storageList = $item['fba_storage_quantity_list'] ?? '';
+                                        echo mb_strlen($storageList) > 50 ? mb_substr($storageList, 0, 50) . '...' : htmlspecialchars($storageList); 
+                                        ?>
                                     </td>
                                     
                                     <td>

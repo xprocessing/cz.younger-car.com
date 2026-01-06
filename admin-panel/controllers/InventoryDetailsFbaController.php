@@ -43,8 +43,15 @@ class InventoryDetailsFbaController {
         $warehouseNames = $this->inventoryDetailsFbaModel->getAllWarehouseNames();
         $title = 'FBA库存详情管理';
         
-        // 确保变量可以在视图中访问
-        global $inventoryDetails, $totalPages, $page, $warehouseNames, $title;
+        // 使用extract函数将变量导入当前作用域
+        $data = [
+            'inventoryDetails' => $inventoryDetails,
+            'totalPages' => $totalPages,
+            'page' => $page,
+            'warehouseNames' => $warehouseNames,
+            'title' => $title
+        ];
+        extract($data);
         
         include VIEWS_DIR . '/layouts/header.php';
         include VIEWS_DIR . '/inventory_details_fba/index.php';
