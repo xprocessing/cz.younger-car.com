@@ -406,8 +406,7 @@
                             <th colspan="12">基本信息</th>
                             <th colspan="18">库存数量</th>
                             <th colspan="18">库存成本</th>
-                            <th colspan="10">库存分析</th>
-                            <th rowspan="2">操作</th>
+                            <th colspan="10">库存分析</th>                           
                         </tr>
                         <tr>
                             <th data-field="name">仓库名</th>
