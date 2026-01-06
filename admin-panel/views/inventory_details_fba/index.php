@@ -1,14 +1,4 @@
-<!-- 调试代码 -->
-<div style="background: #ffffcc; padding: 10px; border: 1px solid #ccc; margin-bottom: 20px;">
-    <h3>调试信息</h3>
-    <p><strong>inventoryDetails变量类型:</strong> <?php echo gettype($inventoryDetails); ?></p>
-    <p><strong>inventoryDetails变量长度:</strong> <?php echo count($inventoryDetails); ?></p>
-    <p><strong>是否为空:</strong> <?php echo empty($inventoryDetails) ? '是' : '否'; ?></p>
-    <p><strong>PHP版本:</strong> <?php echo phpversion(); ?></p>
-    <?php if (!empty($inventoryDetails)): ?>
-        <p><strong>第一条记录:</strong> <?php echo htmlspecialchars(print_r($inventoryDetails[0], true)); ?></p>
-    <?php endif; ?>
-</div>
+
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>FBA库存详情管理</h4>
@@ -88,8 +78,7 @@
                             <th>SKU</th>
                             <th>分类</th>
                             <th>品牌</th>
-                            <th>共享类型</th>
-                            
+                            <th>共享类型</th>                            
                             <th>总数</th>
                             <th>可用总数</th>
                             <th>FBA可售</th>
