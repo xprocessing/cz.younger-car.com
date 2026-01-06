@@ -122,6 +122,10 @@ INSERT INTO permissions (name, slug, description, module) VALUES
 ('编辑库存明细', 'inventory_details.edit', '可以编辑库存明细', 'inventory_details'),
 ('删除库存明细', 'inventory_details.delete', '可以删除库存明细', 'inventory_details'),
 
+-- FBA库存明细权限
+('查看FBA库存明细', 'inventory_details_fba.view', '可以查看FBA库存明细列表', 'inventory_details_fba'),
+('删除FBA库存明细', 'inventory_details_fba.delete', '可以删除FBA库存明细', 'inventory_details_fba'),
+
 -- 新产品管理权限
 ('查看新产品', 'new_products.view', '可以查看新产品列表', 'new_products'),
 ('创建新产品', 'new_products.create', '可以创建新产品', 'new_products'),
