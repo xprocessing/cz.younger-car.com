@@ -300,7 +300,7 @@
                     <div class="col-md-4">
                         <h6 class="mb-2">其他字段</h6>
                         <div class="form-check">
-                            <input class="form-check-input field-checkbox" type="checkbox" value="recommended_action" id="field-recommended_action" checked>
+                            <input class="form-check-input field-checkbox" type="checkbox" value="recommended_action" id="field-recommended_action">
                             <label class="form-check-label" for="field-recommended_action">推荐操作</label>
                         </div>
                         <div class="form-check">
@@ -794,9 +794,15 @@
     
     // 更新表格列显示
     function updateTableColumns(selectedFields) {
-        // 遍历所有表头和数据列
-        Object.keys(selectedFields).forEach(field => {
-            const isVisible = selectedFields[field];
+        // 获取所有唯一的字段名
+        const allFields = new Set();
+        document.querySelectorAll('th[data-field]').forEach(th => {
+            allFields.add(th.dataset.field);
+        });
+        
+        // 遍历所有字段，设置它们的显示状态
+        allFields.forEach(field => {
+            const isVisible = selectedFields[field] || false;
             
             // 隐藏/显示表头列
             document.querySelectorAll(`th[data-field="${field}"]`).forEach(th => {
