@@ -37,7 +37,7 @@
                             <label class="form-check-label" for="field-seller_group_name">共享仓店铺名</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input field-checkbox" type="checkbox" value="sid" id="field-sid">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="sid" id="field-sid" checked>
                             <label class="form-check-label" for="field-sid">店铺ID</label>
                         </div>
                         <div class="form-check">
@@ -49,7 +49,7 @@
                             <label class="form-check-label" for="field-product_name">商品名称</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input field-checkbox" type="checkbox" value="small_image_url" id="field-small_image_url">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="small_image_url" id="field-small_image_url" checked>
                             <label class="form-check-label" for="field-small_image_url">预览图</label>
                         </div>
                         <div class="form-check">
@@ -82,11 +82,11 @@
                     <div class="col-md-4">
                         <h6 class="mb-2">库存数量</h6>
                         <div class="form-check">
-                            <input class="form-check-input field-checkbox" type="checkbox" value="total" id="field-total" checked>
+                            <input class="form-check-input field-checkbox" type="checkbox" value="total" id="field-total">
                             <label class="form-check-label" for="field-total">总数</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input field-checkbox" type="checkbox" value="available_total" id="field-available_total" checked>
+                            <input class="form-check-input field-checkbox" type="checkbox" value="available_total" id="field-available_total">
                             <label class="form-check-label" for="field-available_total">可用总数</label>
                         </div>
                         <div class="form-check">
@@ -118,7 +118,7 @@
                             <label class="form-check-label" for="field-afn_inbound_working_quantity">计划入库</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_inbound_shipped_quantity" id="field-afn_inbound_shipped_quantity" checked>
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_inbound_shipped_quantity" id="field-afn_inbound_shipped_quantity">
                             <label class="form-check-label" for="field-afn_inbound_shipped_quantity">在途</label>
                         </div>
                         <div class="form-check">
@@ -137,6 +137,159 @@
                             <input class="form-check-input field-checkbox" type="checkbox" value="total_fulfillable_quantity" id="field-total_fulfillable_quantity">
                             <label class="form-check-label" for="field-total_fulfillable_quantity">总可用库存</label>
                         </div>
+                        
+                        <!-- 库龄相关字段 -->
+                        <h6 class="mt-3 mb-2">库龄信息</h6>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_0_to_30_days" id="field-inv_age_0_to_30_days">
+                            <label class="form-check-label" for="field-inv_age_0_to_30_days">0-1个月库龄</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_31_to_60_days" id="field-inv_age_31_to_60_days">
+                            <label class="form-check-label" for="field-inv_age_31_to_60_days">1-2个月库龄</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_61_to_90_days" id="field-inv_age_61_to_90_days">
+                            <label class="form-check-label" for="field-inv_age_61_to_90_days">2-3个月库龄</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_0_to_90_days" id="field-inv_age_0_to_90_days">
+                            <label class="form-check-label" for="field-inv_age_0_to_90_days">0-3个月库龄</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_91_to_180_days" id="field-inv_age_91_to_180_days">
+                            <label class="form-check-label" for="field-inv_age_91_to_180_days">3-6个月库龄</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_181_to_270_days" id="field-inv_age_181_to_270_days">
+                            <label class="form-check-label" for="field-inv_age_181_to_270_days">6-9个月库龄</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_271_to_330_days" id="field-inv_age_271_to_330_days">
+                            <label class="form-check-label" for="field-inv_age_271_to_330_days">9-11个月库龄</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_271_to_365_days" id="field-inv_age_271_to_365_days">
+                            <label class="form-check-label" for="field-inv_age_271_to_365_days">9-12个月库龄</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_331_to_365_days" id="field-inv_age_331_to_365_days">
+                            <label class="form-check-label" for="field-inv_age_331_to_365_days">11-12个月库龄</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_365_plus_days" id="field-inv_age_365_plus_days">
+                            <label class="form-check-label" for="field-inv_age_365_plus_days">12个月以上库龄</label>
+                        </div>
+                    </div>
+                    
+                    <!-- 库存成本字段 -->
+                    <div class="col-md-4">
+                        <h6 class="mb-2">库存成本</h6>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="total_price" id="field-total_price">
+                            <label class="form-check-label" for="field-total_price">总价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="available_total_price" id="field-available_total_price">
+                            <label class="form-check-label" for="field-available_total_price">可用总数成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_fulfillable_quantity_price" id="field-afn_fulfillable_quantity_price">
+                            <label class="form-check-label" for="field-afn_fulfillable_quantity_price">FBA可售成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="reserved_fc_transfers_price" id="field-reserved_fc_transfers_price">
+                            <label class="form-check-label" for="field-reserved_fc_transfers_price">待调仓成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="reserved_fc_processing_price" id="field-reserved_fc_processing_price">
+                            <label class="form-check-label" for="field-reserved_fc_processing_price">调仓中成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="reserved_customerorders_price" id="field-reserved_customerorders_price">
+                            <label class="form-check-label" for="field-reserved_customerorders_price">待发货成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="quantity_price" id="field-quantity_price">
+                            <label class="form-check-label" for="field-quantity_price">FBM可售成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_unsellable_quantity_price" id="field-afn_unsellable_quantity_price">
+                            <label class="form-check-label" for="field-afn_unsellable_quantity_price">不可售成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_inbound_working_quantity_price" id="field-afn_inbound_working_quantity_price">
+                            <label class="form-check-label" for="field-afn_inbound_working_quantity_price">计划入库成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_inbound_shipped_quantity_price" id="field-afn_inbound_shipped_quantity_price">
+                            <label class="form-check-label" for="field-afn_inbound_shipped_quantity_price">在途成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_inbound_receiving_quantity_price" id="field-afn_inbound_receiving_quantity_price">
+                            <label class="form-check-label" for="field-afn_inbound_receiving_quantity_price">入库中成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="stock_up_num_price" id="field-stock_up_num_price">
+                            <label class="form-check-label" for="field-stock_up_num_price">实际在途成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="afn_researching_quantity_price" id="field-afn_researching_quantity_price">
+                            <label class="form-check-label" for="field-afn_researching_quantity_price">调查中数量成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="cg_price" id="field-cg_price">
+                            <label class="form-check-label" for="field-cg_price">单位采购成本</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="cg_transport_costs" id="field-cg_transport_costs">
+                            <label class="form-check-label" for="field-cg_transport_costs">单位头程费用</label>
+                        </div>
+                    </div>
+                    
+                    <!-- 库龄成本字段 -->
+                    <div class="col-md-4">
+                        <h6 class="mb-2">库龄成本</h6>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_0_to_30_price" id="field-inv_age_0_to_30_price">
+                            <label class="form-check-label" for="field-inv_age_0_to_30_price">0-1个月库龄成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_31_to_60_price" id="field-inv_age_31_to_60_price">
+                            <label class="form-check-label" for="field-inv_age_31_to_60_price">1-2个月库龄成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_61_to_90_price" id="field-inv_age_61_to_90_price">
+                            <label class="form-check-label" for="field-inv_age_61_to_90_price">2-3个月库龄成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_0_to_90_price" id="field-inv_age_0_to_90_price">
+                            <label class="form-check-label" for="field-inv_age_0_to_90_price">0-3个月库龄成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_91_to_180_price" id="field-inv_age_91_to_180_price">
+                            <label class="form-check-label" for="field-inv_age_91_to_180_price">3-6个月库龄成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_181_to_270_price" id="field-inv_age_181_to_270_price">
+                            <label class="form-check-label" for="field-inv_age_181_to_270_price">6-9个月库龄成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_271_to_330_price" id="field-inv_age_271_to_330_price">
+                            <label class="form-check-label" for="field-inv_age_271_to_330_price">9-11个月库龄成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_271_to_365_price" id="field-inv_age_271_to_365_price">
+                            <label class="form-check-label" for="field-inv_age_271_to_365_price">9-12个月库龄成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_331_to_365_price" id="field-inv_age_331_to_365_price">
+                            <label class="form-check-label" for="field-inv_age_331_to_365_price">11-12个月库龄成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="inv_age_365_plus_price" id="field-inv_age_365_plus_price">
+                            <label class="form-check-label" for="field-inv_age_365_plus_price">12个月以上库龄成本价</label>
+                        </div>
                     </div>
                     
                     <!-- 其他字段 -->
@@ -151,6 +304,18 @@
                             <label class="form-check-label" for="field-sell_through">售出率</label>
                         </div>
                         <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="estimated_excess_quantity" id="field-estimated_excess_quantity">
+                            <label class="form-check-label" for="field-estimated_excess_quantity">预计冗余数量</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="estimated_storage_cost_next_month" id="field-estimated_storage_cost_next_month">
+                            <label class="form-check-label" for="field-estimated_storage_cost_next_month">预计30天仓储费用</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="fba_minimum_inventory_level" id="field-fba_minimum_inventory_level">
+                            <label class="form-check-label" for="field-fba_minimum_inventory_level">最低库存水平</label>
+                        </div>
+                        <div class="form-check">
                             <input class="form-check-input field-checkbox" type="checkbox" value="fba_inventory_level_health_status" id="field-fba_inventory_level_health_status">
                             <label class="form-check-label" for="field-fba_inventory_level_health_status">库存水平健康度</label>
                         </div>
@@ -159,8 +324,20 @@
                             <label class="form-check-label" for="field-historical_days_of_supply">历史供货天数</label>
                         </div>
                         <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="historical_days_of_supply_price" id="field-historical_days_of_supply_price">
+                            <label class="form-check-label" for="field-historical_days_of_supply_price">历史供货天数成本价</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="low_inventory_level_fee_applied" id="field-low_inventory_level_fee_applied">
+                            <label class="form-check-label" for="field-low_inventory_level_fee_applied">低库存水平费收取情况</label>
+                        </div>
+                        <div class="form-check">
                             <input class="form-check-input field-checkbox" type="checkbox" value="fulfillment_channel" id="field-fulfillment_channel">
                             <label class="form-check-label" for="field-fulfillment_channel">配送方式</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input field-checkbox" type="checkbox" value="fba_storage_quantity_list" id="field-fba_storage_quantity_list">
+                            <label class="form-check-label" for="field-fba_storage_quantity_list">FBA可售信息列表</label>
                         </div>
                     </div>
                 </div>
@@ -545,13 +722,13 @@
         const savedFields = JSON.parse(localStorage.getItem('fbaInventoryFields')) || {
             // 默认显示的字段
             'name': true,
-            'seller_sku': true,
+            'seller_group_name': true,
+            'sid': true,
+            'asin': true,
+            'product_name': true,
+            'small_image_url': true,
             'sku': true,
-            'total': true,
-            'available_total': true,
-            'afn_fulfillable_quantity': true,
-            'afn_inbound_shipped_quantity': true,
-            'recommended_action': true
+            'afn_fulfillable_quantity': true
         };
         
         // 设置复选框状态和表格列显示
