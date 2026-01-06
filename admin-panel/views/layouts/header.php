@@ -149,7 +149,7 @@
                 </a>
             </div>
             <?php endif; ?>
-            <?php if (hasPermission('inventory_details_fba.view')): ?>
+            <?php if (isLoggedIn()): ?>
             <div class="nav-item">
                 <a href="<?php echo APP_URL; ?>/inventory_details_fba.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'inventory_details_fba.php' ? 'active' : ''; ?>">
                     <i class="fa fa-list"></i> fba库存明细
