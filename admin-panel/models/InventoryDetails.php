@@ -18,7 +18,7 @@ class InventoryDetails {
     }
     
     public function getAll($limit = null, $offset = 0, $sortField = 'id', $sortOrder = 'DESC') {
-        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price', 'product_onway'];
+        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price', 'product_onway', 'product_name'];
         $allowedSortOrders = ['ASC', 'DESC'];
         
         if (!in_array($sortField, $allowedSortFields)) {
@@ -30,9 +30,11 @@ class InventoryDetails {
         }
         
         $sql = "SELECT i.id, i.wid, i.sku, i.product_valid_num, i.quantity_receive, i.average_age, 
-                       i.purchase_price, i.head_stock_price, i.stock_price, i.product_onway, w.name as warehouse_name 
+                       i.purchase_price, i.head_stock_price, i.stock_price, i.product_onway, w.name as warehouse_name, 
+                       p.product_name, p.pic_url 
                 FROM inventory_details i 
                 LEFT JOIN warehouses w ON i.wid = w.wid 
+                LEFT JOIN products p ON i.sku = p.sku 
                 ORDER BY i.$sortField $sortOrder";
         $params = [];
         
@@ -107,7 +109,7 @@ class InventoryDetails {
     }
     
     public function search($keyword, $limit = null, $offset = 0, $sortField = 'id', $sortOrder = 'DESC') {
-        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'product_onway', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price'];
+        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'product_onway', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price', 'product_name'];
         $allowedSortOrders = ['ASC', 'DESC'];
         
         if (!in_array($sortField, $allowedSortFields)) {
@@ -119,9 +121,11 @@ class InventoryDetails {
         }
         
         $sql = "SELECT i.id, i.wid, i.sku, i.product_valid_num, i.quantity_receive, i.average_age, 
-                       i.purchase_price, i.head_stock_price, i.stock_price, i.product_onway, w.name as warehouse_name 
+                       i.purchase_price, i.head_stock_price, i.stock_price, i.product_onway, w.name as warehouse_name, 
+                       p.product_name, p.pic_url 
                 FROM inventory_details i 
                 LEFT JOIN warehouses w ON i.wid = w.wid 
+                LEFT JOIN products p ON i.sku = p.sku 
                 WHERE i.sku LIKE ? 
                 ORDER BY i.$sortField $sortOrder";
         $params = ["%$keyword%"];
@@ -143,7 +147,7 @@ class InventoryDetails {
     }
     
     public function getByWid($wid, $limit = null, $offset = 0, $sortField = 'id', $sortOrder = 'DESC') {
-        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'product_onway', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price'];
+        $allowedSortFields = ['id', 'wid', 'sku', 'product_valid_num', 'quantity_receive', 'product_onway', 'average_age', 'purchase_price', 'head_stock_price', 'stock_price', 'product_name'];
         $allowedSortOrders = ['ASC', 'DESC'];
         
         if (!in_array($sortField, $allowedSortFields)) {
@@ -155,9 +159,11 @@ class InventoryDetails {
         }
         
         $sql = "SELECT i.id, i.wid, i.sku, i.product_valid_num, i.quantity_receive, i.average_age, 
-                       i.purchase_price, i.head_stock_price, i.stock_price, i.product_onway, w.name as warehouse_name 
+                       i.purchase_price, i.head_stock_price, i.stock_price, i.product_onway, w.name as warehouse_name, 
+                       p.product_name, p.pic_url 
                 FROM inventory_details i 
                 LEFT JOIN warehouses w ON i.wid = w.wid 
+                LEFT JOIN products p ON i.sku = p.sku 
                 WHERE i.wid = ?
                 ORDER BY i.$sortField $sortOrder";
         $params = [$wid];

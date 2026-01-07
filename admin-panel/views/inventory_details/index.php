@@ -97,6 +97,8 @@ function getSortIcon($field) {
                         <th><a href="<?php echo getSortUrl('wid'); ?>" class="text-decoration-none text-dark">仓库ID <?php echo getSortIcon('wid'); ?></a></th>
                         <th>仓库名称</th>
                         <th><a href="<?php echo getSortUrl('sku'); ?>" class="text-decoration-none text-dark">SKU <?php echo getSortIcon('sku'); ?></a></th>
+                        <th><a href="<?php echo getSortUrl('product_name'); ?>" class="text-decoration-none text-dark">商品名称 <?php echo getSortIcon('product_name'); ?></a></th>
+                        <th>商品图片</th>
                         <th><a href="<?php echo getSortUrl('product_valid_num'); ?>" class="text-decoration-none text-dark">可用量 <?php echo getSortIcon('product_valid_num'); ?></a></th>
                         <th><a href="<?php echo getSortUrl('quantity_receive'); ?>" class="text-decoration-none text-dark">待到货量 <?php echo getSortIcon('quantity_receive'); ?></a></th>
                         <th><a href="<?php echo getSortUrl('product_onway'); ?>" class="text-decoration-none text-dark">调拨在途 <?php echo getSortIcon('product_onway'); ?></a></th>
@@ -115,6 +117,8 @@ function getSortIcon($field) {
                                 <td><?php echo htmlspecialchars($detail['wid']); ?></td>
                                 <td><?php echo $detail['warehouse_name']; ?></td>
                                 <td><a href="<?php echo APP_URL; ?>/products.php?keyword=<?php echo $detail['sku']; ?>" target="_blank"><?php echo htmlspecialchars($detail['sku']); ?> </a></td>
+                                <td><?php echo htmlspecialchars($detail['product_name'] ?? ''); ?></td>
+                                <td><?php if (!empty($detail['pic_url'])): ?><img src="<?php echo htmlspecialchars($detail['pic_url']); ?>" width="50" height="50" alt="商品图片" style="object-fit: cover;"><?php endif; ?></td>
                                 <td><?php echo number_format($detail['product_valid_num']); ?></td>
                                 <td><?php echo htmlspecialchars($detail['quantity_receive']); ?></td>
                                 <td><?php echo number_format($detail['product_onway']); ?></td>
