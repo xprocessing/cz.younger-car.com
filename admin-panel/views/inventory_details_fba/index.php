@@ -402,13 +402,7 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th rowspan="2"><input type="checkbox" id="selectAll"></th>
-                            <th colspan="12">基本信息</th>
-                            <th colspan="18">库存数量</th>
-                            <th colspan="18">库存成本</th>
-                            <th colspan="10">库存分析</th>                           
-                        </tr>
-                        <tr>
+                            <th><input type="checkbox" id="selectAll"></th>
                             <th data-field="name">仓库名</th>
                             <th data-field="seller_group_name">共享仓店铺名</th>
                             <th data-field="sid">店铺ID</th>
