@@ -403,80 +403,440 @@
                     <thead>
                         <tr>
                             <th><input type="checkbox" id="selectAll"></th>
-                            <th data-field="name">仓库名</th>
-                            <th data-field="seller_group_name">共享仓店铺名</th>
-                            <th data-field="sid">店铺ID</th>
-                            <th data-field="asin">ASIN</th>
-                            <th data-field="product_name">商品名称</th>
-                            <th data-field="small_image_url">预览图</th>
-                            <th data-field="seller_sku">MSKU</th>
-                            <th data-field="fnsku">FNSKU</th>
-                            <th data-field="sku">SKU</th>
-                            <th data-field="category_text">分类</th>
-                            <th data-field="product_brand_text">品牌</th>
-                            <th data-field="share_type">共享类型</th>                            
-                            <th data-field="total">总数</th>
-                            <th data-field="available_total">可用总数</th>
-                            <th data-field="afn_fulfillable_quantity">FBA可售</th>
-                            <th data-field="reserved_fc_transfers">待调仓</th>
-                            <th data-field="reserved_fc_processing">调仓中</th>
-                            <th data-field="reserved_customerorders">待发货</th>
-                            <th data-field="quantity">FBM可售</th>
-                            <th data-field="afn_unsellable_quantity">不可售</th>
-                            <th data-field="afn_inbound_working_quantity">计划入库</th>
-                            <th data-field="afn_inbound_shipped_quantity">在途</th>
-                            <th data-field="afn_inbound_receiving_quantity">入库中</th>
-                            <th data-field="stock_up_num">实际在途</th>
-                            <th data-field="afn_researching_quantity">调查中数量</th>
-                            <th data-field="total_fulfillable_quantity">总可用库存</th>
-                            <th data-field="inv_age_0_to_30_days">0-1个月库龄</th>
-                            <th data-field="inv_age_31_to_60_days">1-2个月库龄</th>
-                            <th data-field="inv_age_61_to_90_days">2-3个月库龄</th>
-                            <th data-field="inv_age_0_to_90_days">0-3个月库龄</th>
-                            <th data-field="inv_age_91_to_180_days">3-6个月库龄</th>
-                            <th data-field="inv_age_181_to_270_days">6-9个月库龄</th>
-                            <th data-field="inv_age_271_to_330_days">9-11个月库龄</th>
-                            <th data-field="inv_age_271_to_365_days">9-12个月库龄</th>
-                            <th data-field="inv_age_331_to_365_days">11-12个月库龄</th>
-                            <th data-field="inv_age_365_plus_days">12个月以上库龄</th>
+                            <th data-field="name" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    仓库名
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="seller_group_name" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    共享仓店铺名
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="sid" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    店铺ID
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="asin" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    ASIN
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="product_name" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    商品名称
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="small_image_url" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    预览图
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="seller_sku" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    MSKU
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="fnsku" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    FNSKU
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="sku" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    SKU
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="category_text" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    分类
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="product_brand_text" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    品牌
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="share_type" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    共享类型
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>                            
+                            <th data-field="total" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    总数
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="available_total" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    可用总数
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="afn_fulfillable_quantity" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    FBA可售
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="reserved_fc_transfers" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    待调仓
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="reserved_fc_processing" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    调仓中
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="reserved_customerorders" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    待发货
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="quantity" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    FBM可售
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="afn_unsellable_quantity" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    不可售
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="afn_inbound_working_quantity" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    计划入库
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="afn_inbound_shipped_quantity" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    在途
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="afn_inbound_receiving_quantity" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    入库中
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="stock_up_num" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    实际在途
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="afn_researching_quantity" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    调查中数量
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="total_fulfillable_quantity" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    总可用库存
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_0_to_30_days" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    0-1个月库龄
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_31_to_60_days" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    1-2个月库龄
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_61_to_90_days" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    2-3个月库龄
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_0_to_90_days" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    0-3个月库龄
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_91_to_180_days" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    3-6个月库龄
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_181_to_270_days" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    6-9个月库龄
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_271_to_330_days" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    9-11个月库龄
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_271_to_365_days" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    9-12个月库龄
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_331_to_365_days" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    11-12个月库龄
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_365_plus_days" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    12个月以上库龄
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
                             
-                            <th data-field="total_price">总价</th>
-                            <th data-field="available_total_price">可用总数成本价</th>
-                            <th data-field="afn_fulfillable_quantity_price">FBA可售成本价</th>
-                            <th data-field="reserved_fc_transfers_price">待调仓成本价</th>
-                            <th data-field="reserved_fc_processing_price">调仓中成本价</th>
-                            <th data-field="reserved_customerorders_price">待发货成本价</th>
-                            <th data-field="quantity_price">FBM可售成本价</th>
-                            <th data-field="afn_unsellable_quantity_price">不可售成本价</th>
-                            <th data-field="afn_inbound_working_quantity_price">计划入库成本价</th>
-                            <th data-field="afn_inbound_shipped_quantity_price">在途成本价</th>
-                            <th data-field="afn_inbound_receiving_quantity_price">入库中成本价</th>
-                            <th data-field="stock_up_num_price">实际在途成本价</th>
-                            <th data-field="afn_researching_quantity_price">调查中数量成本价</th>
-                            <th data-field="inv_age_0_to_30_price">0-1个月库龄成本价</th>
-                            <th data-field="inv_age_31_to_60_price">1-2个月库龄成本价</th>
-                            <th data-field="inv_age_61_to_90_price">2-3个月库龄成本价</th>
-                            <th data-field="inv_age_0_to_90_price">0-3个月库龄成本价</th>
-                            <th data-field="inv_age_91_to_180_price">3-6个月库龄成本价</th>
-                            <th data-field="inv_age_181_to_270_price">6-9个月库龄成本价</th>
-                            <th data-field="inv_age_271_to_330_price">9-11个月库龄成本价</th>
-                            <th data-field="inv_age_271_to_365_price">9-12个月库龄成本价</th>
-                            <th data-field="inv_age_331_to_365_price">11-12个月库龄成本价</th>
-                            <th data-field="inv_age_365_plus_price">12个月以上库龄成本价</th>
-                            <th data-field="historical_days_of_supply_price">历史供货天数成本价</th>
-                            <th data-field="cg_price">单位采购成本</th>
-                            <th data-field="cg_transport_costs">单位头程费用</th>
+                            <th data-field="total_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    总价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="available_total_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    可用总数成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="afn_fulfillable_quantity_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    FBA可售成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="reserved_fc_transfers_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    待调仓成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="reserved_fc_processing_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    调仓中成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="reserved_customerorders_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    待发货成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="quantity_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    FBM可售成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="afn_unsellable_quantity_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    不可售成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="afn_inbound_working_quantity_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    计划入库成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="afn_inbound_shipped_quantity_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    在途成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="afn_inbound_receiving_quantity_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    入库中成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="stock_up_num_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    实际在途成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="afn_researching_quantity_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    调查中数量成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_0_to_30_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    0-1个月库龄成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_31_to_60_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    1-2个月库龄成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_61_to_90_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    2-3个月库龄成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_0_to_90_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    0-3个月库龄成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_91_to_180_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    3-6个月库龄成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_181_to_270_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    6-9个月库龄成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_271_to_330_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    9-11个月库龄成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_271_to_365_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    9-12个月库龄成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_331_to_365_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    11-12个月库龄成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="inv_age_365_plus_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    12个月以上库龄成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="historical_days_of_supply_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    历史供货天数成本价
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="cg_price" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    单位采购成本
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="cg_transport_costs" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    单位头程费用
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
                             
-                            <th data-field="recommended_action">推荐操作</th>
-                            <th data-field="sell_through">售出率</th>
-                            <th data-field="estimated_excess_quantity">预计冗余数量</th>
-                            <th data-field="estimated_storage_cost_next_month">预计30天仓储费用</th>
-                            <th data-field="fba_minimum_inventory_level">最低库存水平</th>
-                            <th data-field="fba_inventory_level_health_status">库存水平健康度</th>
-                            <th data-field="historical_days_of_supply">历史供货天数</th>
-                            <th data-field="low_inventory_level_fee_applied">低库存水平费收取情况</th>
-                            <th data-field="fulfillment_channel">配送方式</th>
-                            <th data-field="fba_storage_quantity_list">FBA可售信息列表</th>
+                            <th data-field="recommended_action" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    推荐操作
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="sell_through" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    售出率
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="estimated_excess_quantity" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    预计冗余数量
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="estimated_storage_cost_next_month" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    预计30天仓储费用
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="fba_minimum_inventory_level" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    最低库存水平
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="fba_inventory_level_health_status" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    库存水平健康度
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="historical_days_of_supply" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    历史供货天数
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="low_inventory_level_fee_applied" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    低库存水平费收取情况
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="fulfillment_channel" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    配送方式
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
+                            <th data-field="fba_storage_quantity_list" data-sort="none" class="sortable">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    FBA可售信息列表
+                                    <span class="sort-icons"><i class="fa fa-sort" aria-hidden="true"></i></span>
+                                </div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -808,4 +1168,98 @@
             });
         });
     }
+
+    // 表格排序功能
+    document.addEventListener('DOMContentLoaded', function() {
+        // 为所有可排序的表头添加点击事件
+        document.querySelectorAll('.sortable').forEach(th => {
+            th.addEventListener('click', function() {
+                const field = this.dataset.field;
+                const currentSort = this.dataset.sort;
+                
+                // 切换排序状态
+                let newSort = 'asc';
+                if (currentSort === 'asc') {
+                    newSort = 'desc';
+                } else if (currentSort === 'desc') {
+                    newSort = 'none';
+                }
+                
+                // 更新当前表头的排序状态
+                this.dataset.sort = newSort;
+                
+                // 更新所有表头的排序图标
+                updateSortIcons();
+                
+                // 如果是"none"状态，则不排序
+                if (newSort === 'none') {
+                    // 恢复原始顺序
+                    const table = this.closest('table');
+                    const tbody = table.querySelector('tbody');
+                    const rows = Array.from(tbody.querySelectorAll('tr'));
+                    rows.forEach(row => tbody.appendChild(row));
+                    return;
+                }
+                
+                // 执行排序
+                sortTable(field, newSort);
+            });
+        });
+        
+        // 更新排序图标
+        function updateSortIcons() {
+            document.querySelectorAll('.sortable').forEach(th => {
+                const sort = th.dataset.sort;
+                const icon = th.querySelector('.sort-icons i');
+                
+                // 移除所有排序图标类
+                icon.className = 'fa';
+                
+                // 根据排序状态添加相应的图标类
+                if (sort === 'asc') {
+                    icon.classList.add('fa-sort-asc');
+                } else if (sort === 'desc') {
+                    icon.classList.add('fa-sort-desc');
+                } else {
+                    icon.classList.add('fa-sort');
+                }
+            });
+        }
+        
+        // 排序表格
+        function sortTable(field, direction) {
+            const table = document.querySelector('table');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            // 根据字段和方向排序行
+            rows.sort((a, b) => {
+                const aValue = getCellValue(a, field);
+                const bValue = getCellValue(b, field);
+                
+                // 确定比较类型（数字或字符串）
+                if (!isNaN(parseFloat(aValue)) && isFinite(aValue) && 
+                    !isNaN(parseFloat(bValue)) && isFinite(bValue)) {
+                    // 数字比较
+                    return direction === 'asc' ? parseFloat(aValue) - parseFloat(bValue) : parseFloat(bValue) - parseFloat(aValue);
+                } else {
+                    // 字符串比较
+                    if (direction === 'asc') {
+                        return aValue.localeCompare(bValue, 'zh-CN');
+                    } else {
+                        return bValue.localeCompare(aValue, 'zh-CN');
+                    }
+                }
+            });
+            
+            // 重新排列行
+            rows.forEach(row => tbody.appendChild(row));
+        }
+        
+        // 获取单元格值
+        function getCellValue(row, field) {
+            const cell = row.querySelector(`td[data-field="${field}"]`);
+            return cell ? cell.textContent.trim() : '';
+        }
+    });
 </script>
