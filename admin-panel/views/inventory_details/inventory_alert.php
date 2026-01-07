@@ -36,8 +36,8 @@
         <div class="col-md-3">
             <div class="card bg-warning text-dark">
                 <div class="card-body">
-                    <h5 class="card-title">总待到货量</h5>
-                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'quantity_receive'))); ?></h2>
+                    <h5 class="card-title">总调拨在途</h5>
+                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_onway'))); ?></h2>
                 </div>
             </div>
         </div>
