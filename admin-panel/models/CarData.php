@@ -24,7 +24,7 @@ class CarData {
         if (!empty($filters)) {
             $whereClause = [];
             
-            if (isset($filters['keyword'])) {
+            if (isset($filters['keyword']) && !empty($filters['keyword'])) {
                 $whereClause[] = "(make LIKE ? OR make_cn LIKE ? OR model LIKE ? OR trim LIKE ? OR market LIKE ?)";
                 $searchTerm = '%' . $filters['keyword'] . '%';
                 for ($i = 0; $i < 5; $i++) {
@@ -32,27 +32,27 @@ class CarData {
                 }
             }
             
-            if (isset($filters['make'])) {
+            if (isset($filters['make']) && !empty($filters['make'])) {
                 $whereClause[] = "make = ?";
                 $params[] = $filters['make'];
             }
             
-            if (isset($filters['make_cn'])) {
+            if (isset($filters['make_cn']) && !empty($filters['make_cn'])) {
                 $whereClause[] = "make_cn = ?";
                 $params[] = $filters['make_cn'];
             }
             
-            if (isset($filters['model'])) {
+            if (isset($filters['model']) && !empty($filters['model'])) {
                 $whereClause[] = "model = ?";
                 $params[] = $filters['model'];
             }
             
-            if (isset($filters['year'])) {
+            if (isset($filters['year']) && !empty($filters['year'])) {
                 $whereClause[] = "year = ?";
                 $params[] = $filters['year'];
             }
             
-            if (isset($filters['market'])) {
+            if (isset($filters['market']) && !empty($filters['market'])) {
                 $whereClause[] = "market = ?";
                 $params[] = $filters['market'];
             }
@@ -83,7 +83,7 @@ class CarData {
         if (!empty($filters)) {
             $whereClause = [];
             
-            if (isset($filters['keyword'])) {
+            if (isset($filters['keyword']) && !empty($filters['keyword'])) {
                 $whereClause[] = "(make LIKE ? OR make_cn LIKE ? OR model LIKE ? OR trim LIKE ? OR market LIKE ?)";
                 $searchTerm = '%' . $filters['keyword'] . '%';
                 for ($i = 0; $i < 5; $i++) {
@@ -91,27 +91,27 @@ class CarData {
                 }
             }
             
-            if (isset($filters['make'])) {
+            if (isset($filters['make']) && !empty($filters['make'])) {
                 $whereClause[] = "make = ?";
                 $params[] = $filters['make'];
             }
             
-            if (isset($filters['make_cn'])) {
+            if (isset($filters['make_cn']) && !empty($filters['make_cn'])) {
                 $whereClause[] = "make_cn = ?";
                 $params[] = $filters['make_cn'];
             }
             
-            if (isset($filters['model'])) {
+            if (isset($filters['model']) && !empty($filters['model'])) {
                 $whereClause[] = "model = ?";
                 $params[] = $filters['model'];
             }
             
-            if (isset($filters['year'])) {
+            if (isset($filters['year']) && !empty($filters['year'])) {
                 $whereClause[] = "year = ?";
                 $params[] = $filters['year'];
             }
             
-            if (isset($filters['market'])) {
+            if (isset($filters['market']) && !empty($filters['market'])) {
                 $whereClause[] = "market = ?";
                 $params[] = $filters['market'];
             }
