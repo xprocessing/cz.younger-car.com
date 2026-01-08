@@ -221,5 +221,13 @@ class CarData {
         $years = $stmt->fetchAll();
         return array_column($years, 'year');
     }
+    
+    // 获取所有车型列表
+    public function getModelList() {
+        $sql = "SELECT DISTINCT model FROM car_data WHERE model IS NOT NULL AND model != '' ORDER BY model";
+        $stmt = $this->db->query($sql);
+        $models = $stmt->fetchAll();
+        return array_column($models, 'model');
+    }
 }
 ?>

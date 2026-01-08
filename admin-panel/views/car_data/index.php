@@ -54,6 +54,15 @@
                             </select>
                         </div>
                         <div class="col-md-1">
+                            <label for="model" class="form-label">车型：</label>
+                            <select class="form-select" id="model" name="model">
+                                <option value="">全部</option>
+                                <?php foreach ($modelList as $modelItem): ?>
+                                    <option value="<?php echo htmlspecialchars($modelItem); ?>" <?php echo isset($model) && $model == $modelItem ? 'selected' : ''; ?>><?php echo htmlspecialchars($modelItem); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-md-1">
                             <label for="year" class="form-label">年份：</label>
                             <select class="form-select" id="year" name="year">
                                 <option value="">全部</option>

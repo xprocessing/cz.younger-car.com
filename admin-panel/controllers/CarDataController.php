@@ -45,6 +45,7 @@ class CarDataController {
         $totalPages = ceil($totalCount / $limit);
         $makeList = $this->carDataModel->getMakeList();
         $makeCnList = $this->carDataModel->getMakeCnList();
+        $modelList = $this->carDataModel->getModelList();
         $yearList = $this->carDataModel->getYearList();
         $marketList = $this->carDataModel->getMarketList();
         
