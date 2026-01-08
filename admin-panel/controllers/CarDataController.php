@@ -219,16 +219,20 @@ class CarDataController {
             redirect(APP_URL . '/car_data.php');
         }
         
-        $importType = $_POST['import_type'] ?? 'file';
         $dataArray = [];
         
-        if ($importType === 'file') {
+        // 检查是否有文件上传
+        $hasFile = isset($_FILES['import_file']) && $_FILES['import_file']['error'] !== UPLOAD_ERR_NO_FILE;
+        // 检查是否有文本粘贴
+        $hasText = !empty($_POST['import_text']);
+        
+        if (!$hasFile && !$hasText) {
+            showError('请选择CSV文件或粘贴CSV文本');
+            redirect(APP_URL . '/car_data.php?action=import');
+        }
+        
+        if ($hasFile) {
             // 文件上传方式
-            if (!isset($_FILES['import_file']) || $_FILES['import_file']['error'] !== UPLOAD_ERR_OK) {
-                showError('请选择要导入的文件');
-                redirect(APP_URL . '/car_data.php?action=import');
-            }
-            
             $file = $_FILES['import_file'];
             $fileType = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
             
@@ -259,13 +263,10 @@ class CarDataController {
                 
                 fclose($handle);
             }
-        } else {
+        }
+        
+        if ($hasText) {
             // 文本粘贴方式
-            if (empty($_POST['import_text'])) {
-                showError('请粘贴CSV格式的文本内容');
-                redirect(APP_URL . '/car_data.php?action=import');
-            }
-            
             $csvText = $_POST['import_text'];
             
             // 检查并移除UTF-8 BOM
@@ -276,31 +277,28 @@ class CarDataController {
             // 按行分割文本
             $lines = explode("\n", $csvText);
             
-            if (count($lines) < 2) {
-                showError('CSV文本内容格式不正确，至少需要包含表头和一行数据');
-                redirect(APP_URL . '/car_data.php?action=import');
-            }
-            
-            // 跳过表头行
-            array_shift($lines);
-            
-            foreach ($lines as $line) {
-                $line = trim($line);
-                if (empty($line)) continue;
+            if (count($lines) >= 2) {
+                // 跳过表头行
+                array_shift($lines);
                 
-                // 使用str_getcsv解析CSV行
-                $data = str_getcsv($line);
-                
-                if (count($data) >= 7) {
-                    $dataArray[] = [
-                        'make' => $data[0] ?? null,
-                        'make_cn' => $data[1] ?? null,
-                        'model' => $data[2] ?? null,
-                        'year' => !empty($data[3]) ? (int)$data[3] : null,
-                        'trim' => $data[4] ?? null,
-                        'trim_description' => $data[5] ?? null,
-                        'market' => $data[6] ?? null
-                    ];
+                foreach ($lines as $line) {
+                    $line = trim($line);
+                    if (empty($line)) continue;
+                    
+                    // 使用str_getcsv解析CSV行
+                    $data = str_getcsv($line);
+                    
+                    if (count($data) >= 7) {
+                        $dataArray[] = [
+                            'make' => $data[0] ?? null,
+                            'make_cn' => $data[1] ?? null,
+                            'model' => $data[2] ?? null,
+                            'year' => !empty($data[3]) ? (int)$data[3] : null,
+                            'trim' => $data[4] ?? null,
+                            'trim_description' => $data[5] ?? null,
+                            'market' => $data[6] ?? null
+                        ];
+                    }
                 }
             }
         }
