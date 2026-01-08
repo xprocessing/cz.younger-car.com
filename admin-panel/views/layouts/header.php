@@ -134,6 +134,14 @@
                 </a>
             </div>
             <?php endif; ?>
+            
+            <?php if (hasPermission('car_data.view')): ?>
+            <div class="nav-item">
+                <a href="<?php echo APP_URL; ?>/car_data.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'car_data.php' ? 'active' : ''; ?>">
+                    <i class="fa fa-car"></i> 车型数据管理
+                </a>
+            </div>
+            <?php endif; ?>
              <?php if (hasPermission('warehouses.view')): ?>
             <div class="nav-item">
                 <a href="<?php echo APP_URL; ?>/warehouses.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'warehouses.php' ? 'active' : ''; ?>">

@@ -61,6 +61,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="card text-white bg-secondary mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">车型数据管理</h5>
+                                <p class="card-text">管理车型数据</p>
+                                <a href="<?php echo APP_URL; ?>/car_data.php" class="btn btn-light">进入</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

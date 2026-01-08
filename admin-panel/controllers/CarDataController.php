@@ -15,6 +15,9 @@ class CarDataController {
         if (!isLoggedIn()) {
             redirect(APP_URL . '/login.php');
         }
+        if (!hasPermission('car_data.view')) {
+            redirect(APP_URL . '/dashboard.php');
+        }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
         $limit = 50;
@@ -57,6 +60,9 @@ class CarDataController {
         if (!isLoggedIn()) {
             redirect(APP_URL . '/login.php');
         }
+        if (!hasPermission('car_data.create')) {
+            redirect(APP_URL . '/dashboard.php');
+        }
         
         $title = '创建车型数据';
         
@@ -69,6 +75,9 @@ class CarDataController {
     public function createPost() {
         if (!isLoggedIn()) {
             redirect(APP_URL . '/login.php');
+        }
+        if (!hasPermission('car_data.create')) {
+            redirect(APP_URL . '/dashboard.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -99,6 +108,9 @@ class CarDataController {
         if (!isLoggedIn()) {
             redirect(APP_URL . '/login.php');
         }
+        if (!hasPermission('car_data.edit')) {
+            redirect(APP_URL . '/dashboard.php');
+        }
         
         $carData = $this->carDataModel->getById($id);
         
@@ -118,6 +130,9 @@ class CarDataController {
     public function editPost($id) {
         if (!isLoggedIn()) {
             redirect(APP_URL . '/login.php');
+        }
+        if (!hasPermission('car_data.edit')) {
+            redirect(APP_URL . '/dashboard.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -155,6 +170,9 @@ class CarDataController {
         if (!isLoggedIn()) {
             redirect(APP_URL . '/login.php');
         }
+        if (!hasPermission('car_data.delete')) {
+            redirect(APP_URL . '/dashboard.php');
+        }
         
         $carData = $this->carDataModel->getById($id);
         
@@ -177,6 +195,9 @@ class CarDataController {
         if (!isLoggedIn()) {
             redirect(APP_URL . '/login.php');
         }
+        if (!hasPermission('car_data.create')) {
+            redirect(APP_URL . '/dashboard.php');
+        }
         
         $title = '导入车型数据';
         
@@ -189,6 +210,9 @@ class CarDataController {
     public function importPost() {
         if (!isLoggedIn()) {
             redirect(APP_URL . '/login.php');
+        }
+        if (!hasPermission('car_data.create')) {
+            redirect(APP_URL . '/dashboard.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -249,6 +273,9 @@ class CarDataController {
     public function export() {
         if (!isLoggedIn()) {
             redirect(APP_URL . '/login.php');
+        }
+        if (!hasPermission('car_data.view')) {
+            redirect(APP_URL . '/dashboard.php');
         }
         
         $keyword = $_GET['keyword'] ?? '';
