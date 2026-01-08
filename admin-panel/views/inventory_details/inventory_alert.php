@@ -51,6 +51,8 @@
                         <tr>
                             <th>序号</th>
                             <th>SKU</th>
+                            <th>商品名称</th>
+                            <th>商品图片</th>
                             <th>可用量</th>
                             <th>待到货量</th>
                             <th>调拨在途</th>
@@ -65,6 +67,12 @@
                                     <a href="<?php echo APP_URL; ?>/inventory_details.php?keyword=<?php echo $item['sku']; ?>" target="_blank">
                                         <?php echo htmlspecialchars($item['sku']); ?>
                                     </a>
+                                </td>
+                                <td><?php echo htmlspecialchars($item['product_name'] ?? ''); ?></td>
+                                <td>
+                                    <?php if (!empty($item['product_image'])): ?>
+                                        <img src="<?php echo $item['product_image']; ?>" alt="商品图片" style="max-width: 50px; max-height: 50px;">
+                                    <?php endif; ?>
                                 </td>
                                 <td>
                                     <?php 

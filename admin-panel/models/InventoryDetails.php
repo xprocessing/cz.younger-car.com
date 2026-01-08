@@ -189,9 +189,12 @@ class InventoryDetails {
                        i.wid, 
                        i.product_valid_num, 
                        i.average_age, 
-                       w.name as warehouse_name 
+                       w.name as warehouse_name,
+                       COALESCE(p.product_name, '') as product_name,
+                       COALESCE(p.pic_url, '') as product_image 
                 FROM inventory_details i 
                 LEFT JOIN warehouses w ON i.wid = w.wid 
+                LEFT JOIN products p ON i.sku = p.sku
                 WHERE i.average_age > ? 
                 AND i.product_valid_num > 0
                 ORDER BY i.average_age DESC, i.sku ASC";
@@ -207,7 +210,9 @@ class InventoryDetails {
                        SUM(combined_data.product_valid_num) as product_valid_num,
                        SUM(combined_data.quantity_receive) as quantity_receive,
                        SUM(combined_data.product_onway) as product_onway,
-                       COALESCE(MAX(op.outbound_30days), 0) as outbound_30days
+                       COALESCE(MAX(op.outbound_30days), 0) as outbound_30days,
+                       COALESCE(p.product_name, '') as product_name,
+                       COALESCE(p.pic_url, '') as product_image
                 FROM (
                     -- 从inventory_details获取基础数据
                     SELECT i.sku COLLATE utf8mb4_unicode_ci as sku,
@@ -232,6 +237,7 @@ class InventoryDetails {
                     WHERE global_purchase_time >= ?
                     GROUP BY local_sku
                 ) op ON combined_data.sku = op.local_sku
+                LEFT JOIN products p ON combined_data.sku = p.sku
                 GROUP BY combined_data.sku
                 HAVING product_valid_num > 0 OR quantity_receive > 0 OR product_onway > 0 OR outbound_30days > 0
                 ORDER BY outbound_30days DESC, combined_data.sku ASC";
