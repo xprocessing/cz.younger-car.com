@@ -547,3 +547,31 @@ CREATE TABLE `inventory_details_fba` (
   `fba_storage_quantity_list` JSON DEFAULT NULL COMMENT 'FBA可售信息列表，当仓库为共享仓库时，该字段才返回', 
   UNIQUE KEY `uk_name_sku` (`name`, `sku`) USING BTREE COMMENT '组合唯一键：仓库名+SKU，保证同仓库同SKU唯一'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='FBA库存详情表（含所有库存维度/库龄/成本/仓储信息）';
+
+
+
+-- 创建 车型数据 car_data表（如果不存在），避免重复创建报错
+CREATE TABLE IF NOT EXISTS car_data (
+    -- 主键ID，自增，无符号整数（避免负数，扩大可用范围）
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID，自增',
+    -- 品牌（英文/原厂标识），可变字符，允许为空
+    make VARCHAR(50) DEFAULT NULL COMMENT '汽车品牌（英文）',
+    -- 中文品牌名，可变字符，允许为空
+    make_cn VARCHAR(50) DEFAULT NULL COMMENT '汽车品牌（中文）',
+    -- 车型名称，可变字符，允许为空
+    model VARCHAR(50) DEFAULT NULL COMMENT '汽车型号',
+    -- 生产年份，整数类型（适配4位年份，如2025），允许为空
+    year INT DEFAULT NULL COMMENT '生产年份',
+    -- 配置版本（如舒适版/豪华版），可变字符，允许为空
+    trim VARCHAR(50) DEFAULT NULL COMMENT '配置版本',
+    -- 配置描述（支持更长文本），允许为空
+    trim_description TEXT DEFAULT NULL COMMENT '配置版本详细描述',
+    -- 销售市场（如中国大陆/北美/欧洲），允许为空
+    market VARCHAR(50) DEFAULT NULL COMMENT '销售市场',
+    -- 创建时间，默认当前时间戳，插入数据时自动填充
+    create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    -- 更新时间，数据更新时自动刷新为当前时间，允许为空
+    update_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    -- 设定id为主键，保证唯一性
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='车型数据';
