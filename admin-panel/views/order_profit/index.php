@@ -260,6 +260,7 @@ if ($hasFilters): ?>
                         <th>收货国家</th>
                         <th>下单时间</th>
                         <th>SKU</th>
+                        <th>商品图片</th>
                         <th>订单总额</th>
                         <th>毛利润</th>
                         <th>利润率</th>
@@ -307,7 +308,13 @@ if ($hasFilters): ?>
                                 <td>
                                     <code><a href="products.php?keyword=<?php echo urlencode($profit['local_sku'] ?? ''); ?>" target="_blank" title="查看商品"><?php echo htmlspecialchars($profit['local_sku'] ?? ''); ?></a></code>
                                 </td>
-                               
+                                <td>
+                                    <?php if (!empty($profit['product_image'])): ?>
+                                        <img src="<?php echo htmlspecialchars($profit['product_image']); ?>" alt="商品图片" width="40" height="40" class="img-thumbnail" title="查看商品图片">
+                                    <?php else: ?>
+                                        <span class="text-muted">无图片</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td>
                                     <span class="text-success fw-bold">
                                         <?php echo htmlspecialchars($profit['order_total_amount'] ?? ''); ?>

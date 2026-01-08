@@ -33,9 +33,10 @@ class OrderProfit {
     
     // 根据ID获取订单利润
     public function getById($id) {
-        $sql = "SELECT op.*, s.platform_name, s.store_name 
+        $sql = "SELECT op.*, s.platform_name, s.store_name, COALESCE(p.pic_url, '') as product_image
                 FROM order_profit op 
                 LEFT JOIN store s ON op.store_id = s.store_id 
+                LEFT JOIN products p ON op.local_sku = p.sku
                 WHERE op.id = ?";
         $stmt = $this->db->query($sql, [$id]);
         $data = $stmt->fetch();
@@ -44,9 +45,10 @@ class OrderProfit {
     
     // 根据订单号获取订单利润
     public function getByOrderNo($globalOrderNo) {
-        $sql = "SELECT op.*, s.platform_name, s.store_name 
+        $sql = "SELECT op.*, s.platform_name, s.store_name, COALESCE(p.pic_url, '') as product_image
                 FROM order_profit op 
                 LEFT JOIN store s ON op.store_id = s.store_id 
+                LEFT JOIN products p ON op.local_sku = p.sku
                 WHERE op.global_order_no = ?";
         $stmt = $this->db->query($sql, [$globalOrderNo]);
         $data = $stmt->fetch();
@@ -55,9 +57,10 @@ class OrderProfit {
     
     // 获取所有订单利润
     public function getAll($limit = null, $offset = 0) {
-        $sql = "SELECT op.*, s.platform_name, s.store_name 
+        $sql = "SELECT op.*, s.platform_name, s.store_name, COALESCE(p.pic_url, '') as product_image
                 FROM order_profit op 
                 LEFT JOIN store s ON op.store_id = s.store_id 
+                LEFT JOIN products p ON op.local_sku = p.sku
                 ORDER BY op.id DESC";
         if ($limit) {
             $sql .= " LIMIT ? OFFSET ?";
@@ -152,9 +155,10 @@ class OrderProfit {
     
     // 搜索订单利润
     public function search($keyword, $limit = null, $offset = 0) {
-        $sql = "SELECT op.*, s.platform_name, s.store_name 
+        $sql = "SELECT op.*, s.platform_name, s.store_name, COALESCE(p.pic_url, '') as product_image
                 FROM order_profit op 
                 LEFT JOIN store s ON op.store_id = s.store_id 
+                LEFT JOIN products p ON op.local_sku = p.sku
                 WHERE op.global_order_no LIKE ? 
                 OR op.store_id LIKE ? 
                 OR op.local_sku LIKE ? 
@@ -196,9 +200,10 @@ class OrderProfit {
     
     // 根据店铺ID获取订单利润
     public function getByStoreId($storeId, $limit = null, $offset = 0) {
-        $sql = "SELECT op.*, s.platform_name, s.store_name 
+        $sql = "SELECT op.*, s.platform_name, s.store_name, COALESCE(p.pic_url, '') as product_image
                 FROM order_profit op 
                 LEFT JOIN store s ON op.store_id = s.store_id 
+                LEFT JOIN products p ON op.local_sku = p.sku
                 WHERE op.store_id = ? 
                 ORDER BY op.id DESC";
         $params = [$storeId];
@@ -224,9 +229,10 @@ class OrderProfit {
     
     // 支持多条件搜索的订单利润
     public function searchWithFilters($keyword = '', $platformName = '', $storeId = '', $warehouseName = '', $startDate = '', $endDate = '', $rateMin = '', $rateMax = '', $limit = null, $offset = 0) {
-        $sql = "SELECT op.*, s.platform_name, s.store_name 
+        $sql = "SELECT op.*, s.platform_name, s.store_name, COALESCE(p.pic_url, '') as product_image
                 FROM order_profit op 
                 LEFT JOIN store s ON op.store_id = s.store_id 
+                LEFT JOIN products p ON op.local_sku = p.sku
                 WHERE 1=1";
         $params = [];
         
@@ -311,6 +317,7 @@ class OrderProfit {
     public function getSearchWithFiltersCount($keyword = '', $platformName = '', $storeId = '', $warehouseName = '', $startDate = '', $endDate = '', $rateMin = '', $rateMax = '') {
         $sql = "SELECT op.* FROM order_profit op 
                 LEFT JOIN store s ON op.store_id = s.store_id 
+                LEFT JOIN products p ON op.local_sku = p.sku
                 WHERE 1=1";
         $params = [];
         
@@ -382,7 +389,10 @@ class OrderProfit {
     
     // 获取利润统计
     public function getProfitStats($startDate = null, $endDate = null, $storeId = null) {
-        $sql = "SELECT * FROM order_profit WHERE 1=1";
+        $sql = "SELECT op.*, COALESCE(p.pic_url, '') as product_image
+                FROM order_profit op
+                LEFT JOIN products p ON op.local_sku = p.sku
+                WHERE 1=1";
         
         $params = [];
         
@@ -524,9 +534,10 @@ class OrderProfit {
     
     // 按平台统计最近30天的利润和利润率
     public function getPlatformStats($last30DaysStart, $endDate) {
-        $sql = "SELECT op.*, s.platform_name
+        $sql = "SELECT op.*, s.platform_name, COALESCE(p.pic_url, '') as product_image
                 FROM order_profit op
                 LEFT JOIN store s ON op.store_id = s.store_id
+                LEFT JOIN products p ON op.local_sku = p.sku
                 WHERE DATE(op.global_purchase_time) >= ? AND DATE(op.global_purchase_time) <= ?
                 ORDER BY s.platform_name";
         
