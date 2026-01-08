@@ -555,7 +555,7 @@ CREATE TABLE IF NOT EXISTS car_data (
     -- 主键ID，自增，无符号整数（避免负数，扩大可用范围）
     id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID，自增',
     -- 品牌（英文/原厂标识），可变字符，允许为空
-    make VARCHAR(50) DEFAULT NULL COMMENT '汽车品牌（英文）',
+    make VARCHAR(50) NOT NULL COMMENT '汽车品牌（英文）',
     -- 中文品牌名，可变字符，允许为空
     make_cn VARCHAR(50) DEFAULT NULL COMMENT '汽车品牌（中文）',
     -- 车型名称，可变字符，允许为空

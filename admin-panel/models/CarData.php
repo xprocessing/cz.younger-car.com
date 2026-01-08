@@ -170,7 +170,7 @@ class CarData {
             return 0;
         }
         
-        $sql = "INSERT INTO car_data (make, make_cn, model, year, trim, trim_description, market) VALUES ";
+        $sql = "INSERT IGNORE INTO car_data (make, make_cn, model, year, trim, trim_description, market) VALUES ";
         $params = [];
         $values = [];
         
