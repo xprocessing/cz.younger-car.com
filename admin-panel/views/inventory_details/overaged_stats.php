@@ -68,7 +68,7 @@
                                         <?php echo htmlspecialchars($item['sku']); ?>
                                     </a>
                                 </td>
-                                <td><?php echo htmlspecialchars($item['product_name'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars(mb_strlen($item['product_name'] ?? '') > 20 ? mb_substr($item['product_name'] ?? '', 0, 20) . '...' : ($item['product_name'] ?? '')); ?></td>
                                 <td>
                                     <?php if (!empty($item['product_image'])): ?>
                                         <img src="<?php echo $item['product_image']; ?>" alt="商品图片" style="max-width: 50px; max-height: 50px;">
