@@ -23,52 +23,58 @@
                 </div>
                 <div class="card-body">
                     <form method="get" action="<?php echo APP_URL; ?>/car_data.php" class="form-inline">
-                        <div class="form-group mr-3 mb-2">
-                            <label for="keyword" class="mr-2">关键词：</label>
-                            <input type="text" class="form-control" id="keyword" name="keyword" placeholder="品牌/车型/配置/市场" value="<?php echo htmlspecialchars($keyword ?? ''); ?>">
+                        <div class="form-row align-items-center flex-nowrap">
+                            <div class="col-auto">
+                                <label for="keyword" class="sr-only">关键词：</label>
+                                <input type="text" class="form-control mr-sm-2" id="keyword" name="keyword" placeholder="品牌/车型/配置/市场" value="<?php echo htmlspecialchars($keyword ?? ''); ?>">
+                            </div>
+                            <div class="col-auto">
+                                <label for="make" class="sr-only">品牌(英文)：</label>
+                                <select class="form-control mr-sm-2" id="make" name="make">
+                                    <option value="">全部品牌(英文)</option>
+                                    <?php foreach ($makeList as $makeItem): ?>
+                                        <option value="<?php echo htmlspecialchars($makeItem); ?>" <?php echo isset($make) && $make == $makeItem ? 'selected' : ''; ?>><?php echo htmlspecialchars($makeItem); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <label for="make_cn" class="sr-only">品牌(中文)：</label>
+                                <select class="form-control mr-sm-2" id="make_cn" name="make_cn">
+                                    <option value="">全部品牌(中文)</option>
+                                    <?php foreach ($makeCnList as $makeCnItem): ?>
+                                        <option value="<?php echo htmlspecialchars($makeCnItem); ?>" <?php echo isset($make_cn) && $make_cn == $makeCnItem ? 'selected' : ''; ?>><?php echo htmlspecialchars($makeCnItem); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <label for="year" class="sr-only">年份：</label>
+                                <select class="form-control mr-sm-2" id="year" name="year">
+                                    <option value="">全部年份</option>
+                                    <?php foreach ($yearList as $yearItem): ?>
+                                        <option value="<?php echo htmlspecialchars($yearItem); ?>" <?php echo isset($year) && $year == $yearItem ? 'selected' : ''; ?>><?php echo htmlspecialchars($yearItem); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <label for="market" class="sr-only">市场：</label>
+                                <select class="form-control mr-sm-2" id="market" name="market">
+                                    <option value="">全部市场</option>
+                                    <?php foreach ($marketList as $marketItem): ?>
+                                        <option value="<?php echo htmlspecialchars($marketItem); ?>" <?php echo isset($market) && $market == $marketItem ? 'selected' : ''; ?>><?php echo htmlspecialchars($marketItem); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary mr-sm-2">
+                                    <i class="fa fa-search"></i> 筛选
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <a href="<?php echo APP_URL; ?>/car_data.php" class="btn btn-default">
+                                    <i class="fa fa-refresh"></i> 重置
+                                </a>
+                            </div>
                         </div>
-                        <div class="form-group mr-3 mb-2">
-                            <label for="make" class="mr-2">品牌(英文)：</label>
-                            <select class="form-control" id="make" name="make">
-                                <option value="">全部</option>
-                                <?php foreach ($makeList as $makeItem): ?>
-                                    <option value="<?php echo htmlspecialchars($makeItem); ?>" <?php echo isset($make) && $make == $makeItem ? 'selected' : ''; ?>><?php echo htmlspecialchars($makeItem); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-group mr-3 mb-2">
-                            <label for="make_cn" class="mr-2">品牌(中文)：</label>
-                            <select class="form-control" id="make_cn" name="make_cn">
-                                <option value="">全部</option>
-                                <?php foreach ($makeCnList as $makeCnItem): ?>
-                                    <option value="<?php echo htmlspecialchars($makeCnItem); ?>" <?php echo isset($make_cn) && $make_cn == $makeCnItem ? 'selected' : ''; ?>><?php echo htmlspecialchars($makeCnItem); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-group mr-3 mb-2">
-                            <label for="year" class="mr-2">年份：</label>
-                            <select class="form-control" id="year" name="year">
-                                <option value="">全部</option>
-                                <?php foreach ($yearList as $yearItem): ?>
-                                    <option value="<?php echo htmlspecialchars($yearItem); ?>" <?php echo isset($year) && $year == $yearItem ? 'selected' : ''; ?>><?php echo htmlspecialchars($yearItem); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-group mr-3 mb-2">
-                            <label for="market" class="mr-2">市场：</label>
-                            <select class="form-control" id="market" name="market">
-                                <option value="">全部</option>
-                                <?php foreach ($marketList as $marketItem): ?>
-                                    <option value="<?php echo htmlspecialchars($marketItem); ?>" <?php echo isset($market) && $market == $marketItem ? 'selected' : ''; ?>><?php echo htmlspecialchars($marketItem); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary mb-2">
-                            <i class="fa fa-search"></i> 筛选
-                        </button>
-                        <a href="<?php echo APP_URL; ?>/car_data.php" class="btn btn-default mb-2 ml-2">
-                            <i class="fa fa-refresh"></i> 重置
-                        </a>
                     </form>
                 </div>
             </div>
