@@ -1,20 +1,28 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">
-                <?php echo htmlspecialchars($title); ?>
-                <div class="float-right">
-                    <a href="<?php echo APP_URL; ?>/car_data.php?action=create" class="btn btn-success mr-2">
-                        <i class="fa fa-plus"></i> 创建车型数据
-                    </a>
-                    <a href="<?php echo APP_URL; ?>/car_data.php?action=import" class="btn btn-info mr-2">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4><?php echo htmlspecialchars($title); ?></h4>
+                <div>
+                    <a href="<?php echo APP_URL; ?>/car_data.php?action=import" class="btn btn-outline-success me-2">
                         <i class="fa fa-upload"></i> 导入数据
                     </a>
-                    <a href="<?php echo APP_URL; ?>/car_data.php?action=export<?php echo !empty($_SERVER['QUERY_STRING']) ? '&' . $_SERVER['QUERY_STRING'] : ''; ?>" class="btn btn-primary">
+                    <a href="<?php echo APP_URL; ?>/car_data.php?action=export<?php 
+                        $exportParams = [];
+                        if (!empty($_GET['keyword'])) $exportParams[] = 'keyword=' . urlencode($_GET['keyword']);
+                        if (!empty($_GET['make'])) $exportParams[] = 'make=' . urlencode($_GET['make']);
+                        if (!empty($_GET['make_cn'])) $exportParams[] = 'make_cn=' . urlencode($_GET['make_cn']);
+                        if (!empty($_GET['year'])) $exportParams[] = 'year=' . urlencode($_GET['year']);
+                        if (!empty($_GET['market'])) $exportParams[] = 'market=' . urlencode($_GET['market']);
+                        if (!empty($exportParams)) echo '&' . implode('&', $exportParams);
+                    ?>" class="btn btn-outline-primary me-2">
                         <i class="fa fa-download"></i> 导出数据
                     </a>
+                    <a href="<?php echo APP_URL; ?>/car_data.php?action=create" class="btn btn-primary">
+                        <i class="fa fa-plus"></i> 创建车型数据
+                    </a>
                 </div>
-            </h1>
+            </div>
             
             <!-- 筛选表单 -->
             <div class="card mb-4">
