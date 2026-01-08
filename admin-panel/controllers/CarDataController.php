@@ -219,27 +219,78 @@ class CarDataController {
             redirect(APP_URL . '/car_data.php');
         }
         
-        if (!isset($_FILES['import_file']) || $_FILES['import_file']['error'] !== UPLOAD_ERR_OK) {
-            showError('请选择要导入的文件');
-            redirect(APP_URL . '/car_data.php?action=import');
-        }
-        
-        $file = $_FILES['import_file'];
-        $fileType = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        
-        if ($fileType !== 'csv') {
-            showError('仅支持CSV文件导入');
-            redirect(APP_URL . '/car_data.php?action=import');
-        }
-        
+        $importType = $_POST['import_type'] ?? 'file';
         $dataArray = [];
-        $handle = fopen($file['tmp_name'], 'r');
         
-        if ($handle) {
-            // 跳过表头
-            fgetcsv($handle);
+        if ($importType === 'file') {
+            // 文件上传方式
+            if (!isset($_FILES['import_file']) || $_FILES['import_file']['error'] !== UPLOAD_ERR_OK) {
+                showError('请选择要导入的文件');
+                redirect(APP_URL . '/car_data.php?action=import');
+            }
             
-            while (($data = fgetcsv($handle)) !== false) {
+            $file = $_FILES['import_file'];
+            $fileType = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            
+            if ($fileType !== 'csv') {
+                showError('仅支持CSV文件导入');
+                redirect(APP_URL . '/car_data.php?action=import');
+            }
+            
+            $handle = fopen($file['tmp_name'], 'r');
+            
+            if ($handle) {
+                // 跳过表头
+                fgetcsv($handle);
+                
+                while (($data = fgetcsv($handle)) !== false) {
+                    if (count($data) >= 7) {
+                        $dataArray[] = [
+                            'make' => $data[0] ?? null,
+                            'make_cn' => $data[1] ?? null,
+                            'model' => $data[2] ?? null,
+                            'year' => !empty($data[3]) ? (int)$data[3] : null,
+                            'trim' => $data[4] ?? null,
+                            'trim_description' => $data[5] ?? null,
+                            'market' => $data[6] ?? null
+                        ];
+                    }
+                }
+                
+                fclose($handle);
+            }
+        } else {
+            // 文本粘贴方式
+            if (empty($_POST['import_text'])) {
+                showError('请粘贴CSV格式的文本内容');
+                redirect(APP_URL . '/car_data.php?action=import');
+            }
+            
+            $csvText = $_POST['import_text'];
+            
+            // 检查并移除UTF-8 BOM
+            if (substr($csvText, 0, 3) === chr(0xEF) . chr(0xBB) . chr(0xBF)) {
+                $csvText = substr($csvText, 3);
+            }
+            
+            // 按行分割文本
+            $lines = explode("\n", $csvText);
+            
+            if (count($lines) < 2) {
+                showError('CSV文本内容格式不正确，至少需要包含表头和一行数据');
+                redirect(APP_URL . '/car_data.php?action=import');
+            }
+            
+            // 跳过表头行
+            array_shift($lines);
+            
+            foreach ($lines as $line) {
+                $line = trim($line);
+                if (empty($line)) continue;
+                
+                // 使用str_getcsv解析CSV行
+                $data = str_getcsv($line);
+                
                 if (count($data) >= 7) {
                     $dataArray[] = [
                         'make' => $data[0] ?? null,
@@ -252,8 +303,6 @@ class CarDataController {
                     ];
                 }
             }
-            
-            fclose($handle);
         }
         
         if (!empty($dataArray)) {
