@@ -577,5 +577,5 @@ CREATE TABLE IF NOT EXISTS car_data (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='车型数据';
 
 -- 为已有的car_data表添加make+year+trim组合唯一约束
-ALTER TABLE car_data
-ADD UNIQUE KEY uk_make_year_trim (make, year, trim) COMMENT '品牌、年份、配置版本联合唯一';
+ALTER TABLE `cz_data`.`car_data` DROP INDEX `uk_make_year_trim`, ADD UNIQUE `uk_make_year_trim` (`make`, `model`, `year`, `trim`) USING BTREE COMMENT '品牌、年份、配置版本联合唯一';
+

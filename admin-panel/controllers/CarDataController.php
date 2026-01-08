@@ -10,6 +10,144 @@ class CarDataController {
         session_start();
     }
     
+    // 根据品牌获取车型列表（API接口）
+    public function getModelsByMake() {
+        if (!isLoggedIn()) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '未登录']);
+            exit;
+        }
+        
+        $make = $_GET['make'] ?? '';
+        if (empty($make)) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '品牌参数不能为空']);
+            exit;
+        }
+        
+        $models = $this->carDataModel->getModelsByMake($make);
+        
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'models' => $models]);
+        exit;
+    }
+    
+    // 根据中文品牌获取车型列表（API接口）
+    public function getModelsByMakeCn() {
+        if (!isLoggedIn()) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '未登录']);
+            exit;
+        }
+        
+        $makeCn = $_GET['make_cn'] ?? '';
+        if (empty($makeCn)) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '中文品牌参数不能为空']);
+            exit;
+        }
+        
+        $models = $this->carDataModel->getModelsByMakeCn($makeCn);
+        
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'models' => $models]);
+        exit;
+    }
+    
+    // 根据品牌和车型获取年份列表（API接口）
+    public function getYearsByMakeAndModel() {
+        if (!isLoggedIn()) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '未登录']);
+            exit;
+        }
+        
+        $make = $_GET['make'] ?? '';
+        $model = $_GET['model'] ?? '';
+        if (empty($make) || empty($model)) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '品牌和车型参数不能为空']);
+            exit;
+        }
+        
+        $years = $this->carDataModel->getYearsByMakeAndModel($make, $model);
+        
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'years' => $years]);
+        exit;
+    }
+    
+    // 根据中文品牌和车型获取年份列表（API接口）
+    public function getYearsByMakeCnAndModel() {
+        if (!isLoggedIn()) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '未登录']);
+            exit;
+        }
+        
+        $makeCn = $_GET['make_cn'] ?? '';
+        $model = $_GET['model'] ?? '';
+        if (empty($makeCn) || empty($model)) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '中文品牌和车型参数不能为空']);
+            exit;
+        }
+        
+        $years = $this->carDataModel->getYearsByMakeCnAndModel($makeCn, $model);
+        
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'years' => $years]);
+        exit;
+    }
+    
+    // 根据品牌、车型和年份获取市场列表（API接口）
+    public function getMarketsByMakeModelAndYear() {
+        if (!isLoggedIn()) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '未登录']);
+            exit;
+        }
+        
+        $make = $_GET['make'] ?? '';
+        $model = $_GET['model'] ?? '';
+        $year = $_GET['year'] ?? '';
+        if (empty($make) || empty($model) || empty($year)) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '品牌、车型和年份参数不能为空']);
+            exit;
+        }
+        
+        $markets = $this->carDataModel->getMarketsByMakeModelAndYear($make, $model, $year);
+        
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'markets' => $markets]);
+        exit;
+    }
+    
+    // 根据中文品牌、车型和年份获取市场列表（API接口）
+    public function getMarketsByMakeCnModelAndYear() {
+        if (!isLoggedIn()) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '未登录']);
+            exit;
+        }
+        
+        $makeCn = $_GET['make_cn'] ?? '';
+        $model = $_GET['model'] ?? '';
+        $year = $_GET['year'] ?? '';
+        if (empty($makeCn) || empty($model) || empty($year)) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => '中文品牌、车型和年份参数不能为空']);
+            exit;
+        }
+        
+        $markets = $this->carDataModel->getMarketsByMakeCnModelAndYear($makeCn, $model, $year);
+        
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'markets' => $markets]);
+        exit;
+    }
+    
     // 显示车型数据列表
     public function index() {
         if (!isLoggedIn()) {

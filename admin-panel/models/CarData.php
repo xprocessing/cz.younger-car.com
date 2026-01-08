@@ -229,5 +229,53 @@ class CarData {
         $models = $stmt->fetchAll();
         return array_column($models, 'model');
     }
+    
+    // 根据品牌获取车型列表
+    public function getModelsByMake($make) {
+        $sql = "SELECT DISTINCT model FROM car_data WHERE make = ? AND model IS NOT NULL AND model != '' ORDER BY model";
+        $stmt = $this->db->query($sql, [$make]);
+        $models = $stmt->fetchAll();
+        return array_column($models, 'model');
+    }
+    
+    // 根据中文品牌获取车型列表
+    public function getModelsByMakeCn($makeCn) {
+        $sql = "SELECT DISTINCT model FROM car_data WHERE make_cn = ? AND model IS NOT NULL AND model != '' ORDER BY model";
+        $stmt = $this->db->query($sql, [$makeCn]);
+        $models = $stmt->fetchAll();
+        return array_column($models, 'model');
+    }
+    
+    // 根据品牌和车型获取年份列表
+    public function getYearsByMakeAndModel($make, $model) {
+        $sql = "SELECT DISTINCT year FROM car_data WHERE make = ? AND model = ? AND year IS NOT NULL ORDER BY year DESC";
+        $stmt = $this->db->query($sql, [$make, $model]);
+        $years = $stmt->fetchAll();
+        return array_column($years, 'year');
+    }
+    
+    // 根据中文品牌和车型获取年份列表
+    public function getYearsByMakeCnAndModel($makeCn, $model) {
+        $sql = "SELECT DISTINCT year FROM car_data WHERE make_cn = ? AND model = ? AND year IS NOT NULL ORDER BY year DESC";
+        $stmt = $this->db->query($sql, [$makeCn, $model]);
+        $years = $stmt->fetchAll();
+        return array_column($years, 'year');
+    }
+    
+    // 根据品牌、车型和年份获取市场列表
+    public function getMarketsByMakeModelAndYear($make, $model, $year) {
+        $sql = "SELECT DISTINCT market FROM car_data WHERE make = ? AND model = ? AND year = ? AND market IS NOT NULL AND market != '' ORDER BY market";
+        $stmt = $this->db->query($sql, [$make, $model, $year]);
+        $markets = $stmt->fetchAll();
+        return array_column($markets, 'market');
+    }
+    
+    // 根据中文品牌、车型和年份获取市场列表
+    public function getMarketsByMakeCnModelAndYear($makeCn, $model, $year) {
+        $sql = "SELECT DISTINCT market FROM car_data WHERE make_cn = ? AND model = ? AND year = ? AND market IS NOT NULL AND market != '' ORDER BY market";
+        $stmt = $this->db->query($sql, [$makeCn, $model, $year]);
+        $markets = $stmt->fetchAll();
+        return array_column($markets, 'market');
+    }
 }
 ?>

@@ -23,6 +23,188 @@
                     </a>
                 </div>
             </div>
+
+            <script>
+                // 动态筛选逻辑
+                document.addEventListener('DOMContentLoaded', function() {
+                    const makeSelect = document.getElementById('make');
+                    const makeCnSelect = document.getElementById('make_cn');
+                    const modelSelect = document.getElementById('model');
+                    const yearSelect = document.getElementById('year');
+                    const marketSelect = document.getElementById('market');
+                    
+                    // 根据品牌获取车型列表
+                    function loadModels(makeType, makeValue) {
+                        let url = '';
+                        if (makeType === 'make') {
+                            url = '<?php echo APP_URL; ?>/car_data.php?action=getModelsByMake&make=' + encodeURIComponent(makeValue);
+                        } else {
+                            url = '<?php echo APP_URL; ?>/car_data.php?action=getModelsByMakeCn&make_cn=' + encodeURIComponent(makeValue);
+                        }
+                        
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    // 清空车型、年份、市场列表
+                                    modelSelect.innerHTML = '<option value="">全部</option>';
+                                    yearSelect.innerHTML = '<option value="">全部</option>';
+                                    marketSelect.innerHTML = '<option value="">全部</option>';
+                                    
+                                    // 添加车型选项
+                                    data.models.forEach(model => {
+                                        const option = document.createElement('option');
+                                        option.value = model;
+                                        option.textContent = model;
+                                        modelSelect.appendChild(option);
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('加载车型列表失败:', error);
+                            });
+                    }
+                    
+                    // 根据品牌和车型获取年份列表
+                    function loadYears() {
+                        const make = makeSelect.value;
+                        const makeCn = makeCnSelect.value;
+                        const model = modelSelect.value;
+                        
+                        if (!model) return;
+                        
+                        let url = '';
+                        if (make) {
+                            url = '<?php echo APP_URL; ?>/car_data.php?action=getYearsByMakeAndModel&make=' + encodeURIComponent(make) + '&model=' + encodeURIComponent(model);
+                        } else if (makeCn) {
+                            url = '<?php echo APP_URL; ?>/car_data.php?action=getYearsByMakeCnAndModel&make_cn=' + encodeURIComponent(makeCn) + '&model=' + encodeURIComponent(model);
+                        } else {
+                            return;
+                        }
+                        
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    // 清空年份和市场列表
+                                    yearSelect.innerHTML = '<option value="">全部</option>';
+                                    marketSelect.innerHTML = '<option value="">全部</option>';
+                                    
+                                    // 添加年份选项
+                                    data.years.forEach(year => {
+                                        const option = document.createElement('option');
+                                        option.value = year;
+                                        option.textContent = year;
+                                        yearSelect.appendChild(option);
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('加载年份列表失败:', error);
+                            });
+                    }
+                    
+                    // 根据品牌、车型和年份获取市场列表
+                    function loadMarkets() {
+                        const make = makeSelect.value;
+                        const makeCn = makeCnSelect.value;
+                        const model = modelSelect.value;
+                        const year = yearSelect.value;
+                        
+                        if (!model || !year) return;
+                        
+                        let url = '';
+                        if (make) {
+                            url = '<?php echo APP_URL; ?>/car_data.php?action=getMarketsByMakeModelAndYear&make=' + encodeURIComponent(make) + '&model=' + encodeURIComponent(model) + '&year=' + encodeURIComponent(year);
+                        } else if (makeCn) {
+                            url = '<?php echo APP_URL; ?>/car_data.php?action=getMarketsByMakeCnModelAndYear&make_cn=' + encodeURIComponent(makeCn) + '&model=' + encodeURIComponent(model) + '&year=' + encodeURIComponent(year);
+                        } else {
+                            return;
+                        }
+                        
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    // 清空市场列表
+                                    marketSelect.innerHTML = '<option value="">全部</option>';
+                                    
+                                    // 添加市场选项
+                                    data.markets.forEach(market => {
+                                        const option = document.createElement('option');
+                                        option.value = market;
+                                        option.textContent = market;
+                                        marketSelect.appendChild(option);
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('加载市场列表失败:', error);
+                            });
+                    }
+                    
+                    // 品牌(英文)选择事件
+                    makeSelect.addEventListener('change', function() {
+                        const makeValue = this.value;
+                        // 如果选择了品牌(英文)，则清空品牌(中文)选择
+                        if (makeValue) {
+                            makeCnSelect.value = '';
+                        }
+                        // 加载车型列表
+                        if (makeValue) {
+                            loadModels('make', makeValue);
+                        } else {
+                            // 清空所有关联下拉框
+                            modelSelect.innerHTML = '<option value="">全部</option>';
+                            yearSelect.innerHTML = '<option value="">全部</option>';
+                            marketSelect.innerHTML = '<option value="">全部</option>';
+                        }
+                    });
+                    
+                    // 品牌(中文)选择事件
+                    makeCnSelect.addEventListener('change', function() {
+                        const makeCnValue = this.value;
+                        // 如果选择了品牌(中文)，则清空品牌(英文)选择
+                        if (makeCnValue) {
+                            makeSelect.value = '';
+                        }
+                        // 加载车型列表
+                        if (makeCnValue) {
+                            loadModels('make_cn', makeCnValue);
+                        } else {
+                            // 清空所有关联下拉框
+                            modelSelect.innerHTML = '<option value="">全部</option>';
+                            yearSelect.innerHTML = '<option value="">全部</option>';
+                            marketSelect.innerHTML = '<option value="">全部</option>';
+                        }
+                    });
+                    
+                    // 车型选择事件
+                    modelSelect.addEventListener('change', function() {
+                        const modelValue = this.value;
+                        // 加载年份列表
+                        if (modelValue) {
+                            loadYears();
+                        } else {
+                            // 清空所有关联下拉框
+                            yearSelect.innerHTML = '<option value="">全部</option>';
+                            marketSelect.innerHTML = '<option value="">全部</option>';
+                        }
+                    });
+                    
+                    // 年份选择事件
+                    yearSelect.addEventListener('change', function() {
+                        const yearValue = this.value;
+                        // 加载市场列表
+                        if (yearValue) {
+                            loadMarkets();
+                        } else {
+                            // 清空市场下拉框
+                            marketSelect.innerHTML = '<option value="">全部</option>';
+                        }
+                    });
+                });
+            </script>
             
             <!-- 筛选表单 -->
             <div class="card mb-4">

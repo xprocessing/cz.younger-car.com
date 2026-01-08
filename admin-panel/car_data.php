@@ -49,6 +49,25 @@ switch ($action) {
     case 'export':
         $carDataController->export();
         break;
+    // 动态筛选API接口
+    case 'getModelsByMake':
+        $carDataController->getModelsByMake();
+        break;
+    case 'getModelsByMakeCn':
+        $carDataController->getModelsByMakeCn();
+        break;
+    case 'getYearsByMakeAndModel':
+        $carDataController->getYearsByMakeAndModel();
+        break;
+    case 'getYearsByMakeCnAndModel':
+        $carDataController->getYearsByMakeCnAndModel();
+        break;
+    case 'getMarketsByMakeModelAndYear':
+        $carDataController->getMarketsByMakeModelAndYear();
+        break;
+    case 'getMarketsByMakeCnModelAndYear':
+        $carDataController->getMarketsByMakeCnModelAndYear();
+        break;
     default:
         $carDataController->index();
         break;
