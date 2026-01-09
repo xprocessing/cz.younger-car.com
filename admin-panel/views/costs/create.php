@@ -80,7 +80,7 @@
                     <li><strong>店铺名称</strong>: 店铺名称</li>
                     <li><strong>日广告花费</strong>: 每日广告花费金额（美元）</li>
                     <li><strong>日期</strong>: 数据日期，按天存储</li>
-                    <li>特别注意：平台名字和店铺名字必须大小写一致，具体参照<a href="<?php echo APP_URL; ?>/admin-panel/stores.php" target="_blank">店铺列表</a></li>
+                    <li>特别注意：平台名字和店铺名字必须大小写一致，具体参照<a href="<?php echo APP_URL; ?>/stores.php" target="_blank">店铺列表</a></li>
                 </ul>
             </div>
         </div>
