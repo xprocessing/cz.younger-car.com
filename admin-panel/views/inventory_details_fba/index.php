@@ -853,10 +853,14 @@
                                     </td>
                                     <td data-field="small_image_url">
                                         <?php if (!empty($item['small_image_url'])): ?>
-                                            <img src="<?php echo htmlspecialchars($item['small_image_url']); ?>" 
-                                                 alt="预览图" 
-                                                 class="img-thumbnail" 
-                                                 style="width: 50px; height: 50px; object-fit: cover;">
+                                            <div style="display: inline-block; position: relative; width: 50px; height: 50px; overflow: hidden;">
+                                                <img src="<?php echo htmlspecialchars($item['small_image_url']); ?>" 
+                                                     alt="预览图" 
+                                                     class="img-thumbnail" 
+                                                     style="width: 50px; height: 50px; object-fit: cover; transition: transform 0.3s ease;"
+                                                     onmouseover="this.style.transform='scale(3)'"
+                                                     onmouseout="this.style.transform='scale(1)'">
+                                            </div>
                                         <?php else: ?>
                                             <span class="text-muted">无图片</span>
                                         <?php endif; ?>
