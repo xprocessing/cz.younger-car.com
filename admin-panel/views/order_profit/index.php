@@ -310,7 +310,7 @@ if ($hasFilters): ?>
                                 </td>
                                 <td>
                                     <?php if (!empty($profit['product_image'])): ?>
-                                        <img src="<?php echo htmlspecialchars($profit['product_image']); ?>" alt="商品图片" width="40" height="40" class="img-thumbnail" title="查看商品图片">
+                                        <img src="<?php echo htmlspecialchars($profit['product_image']); ?>" alt="商品图片" width="60" height="60" class="img-thumbnail" title="查看商品图片">
                                     <?php else: ?>
                                         <span class="text-muted">无图片</span>
                                     <?php endif; ?>
