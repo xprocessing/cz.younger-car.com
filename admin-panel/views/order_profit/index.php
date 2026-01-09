@@ -310,7 +310,9 @@ if ($hasFilters): ?>
                                 </td>
                                 <td>
                                     <?php if (!empty($profit['product_image'])): ?>
-                                        <img src="<?php echo htmlspecialchars($profit['product_image']); ?>" alt="商品图片" width="60" height="60" class="img-thumbnail" title="查看商品图片">
+                                        <div class="image-zoom-container" style="display: inline-block; position: relative; width: 60px; height: 60px; overflow: hidden;">
+                                            <img src="<?php echo htmlspecialchars($profit['product_image']); ?>" alt="商品图片" width="60" height="60" class="img-thumbnail" title="查看商品图片" style="transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='scale(2)'; this.style.zIndex='1000'; this.style.position='relative';" onmouseout="this.style.transform='scale(1)'; this.style.zIndex='1'; this.style.position='relative';">
+                                        </div>
                                     <?php else: ?>
                                         <span class="text-muted">无图片</span>
                                     <?php endif; ?>
