@@ -98,7 +98,7 @@
                                 <td><?php echo $cost['id']; ?></td>
                                 <td><?php echo htmlspecialchars($cost['platform_name']); ?></td>
                                 <td><?php echo htmlspecialchars($cost['store_name']); ?></td>
-                                <td><?php echo $cost['cost']; ?></td>
+                                <td>$<?php echo $cost['cost']; ?></td>
                                 <td><?php echo $cost['date']; ?></td>
                                 <td><?php echo $cost['create_at']; ?></td>
                                 <td><?php echo $cost['update_at']; ?></td>
