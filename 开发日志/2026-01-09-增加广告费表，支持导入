@@ -1,0 +1,13 @@
+# 每日广告费用导入功能
+
+
+给我生成mysq 数据表 costs
+字段：
+id 主键，自增
+platform_name 平台名称
+store_name 店铺名称
+cost 日均广告花费（按美元）
+date 日期 按天，格式为YYYY-MM-DD
+create_at 创建时间 格式为YYYY-MM-DD HH:MM:SS
+update_at 更新时间 格式为YYYY-MM-DD HH:MM:SS
+

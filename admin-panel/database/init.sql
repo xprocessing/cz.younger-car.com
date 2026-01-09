@@ -579,3 +579,26 @@ CREATE TABLE IF NOT EXISTS car_data (
 -- 为已有的car_data表添加make+year+trim组合唯一约束
 ALTER TABLE `cz_data`.`car_data` DROP INDEX `uk_make_year_trim`, ADD UNIQUE `uk_make_year_trim` (`make`, `model`, `year`, `trim`) USING BTREE COMMENT '品牌、年份、配置版本联合唯一';
 
+
+
+-- 创建 costs 数据表（如果不存在）
+CREATE TABLE IF NOT EXISTS costs (
+    -- 主键 id，自增整数
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    -- 平台名称，非空，最大50字符
+    platform_name VARCHAR(50) NOT NULL COMMENT '平台名称（如Amazon-FBA，Amazon、eBay，Shopify）',
+    -- 店铺名称，非空，最大50字符
+    store_name VARCHAR(50) NOT NULL COMMENT '店铺名称',
+    -- 日均广告花费（美元），非空，小数类型（总长度10，小数位2，支持最大99999999.99美元）
+    cost DECIMAL(10, 2) NOT NULL COMMENT '日均广告花费（美元）',
+    -- 日期，按天存储，格式YYYY-MM-DD
+    date DATE NOT NULL COMMENT '数据日期（YYYY-MM-DD）',
+    -- 创建时间，默认当前时间，格式YYYY-MM-DD HH:MM:SS
+    create_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    -- 更新时间，默认当前时间，更新时自动刷新
+    update_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    -- 设置主键
+    PRIMARY KEY (id),
+    -- 可选：添加联合索引，避免同一平台、店铺、日期的重复数据
+    UNIQUE KEY uk_platform_store_date (platform_name, store_name, date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='广告花费数据表';
