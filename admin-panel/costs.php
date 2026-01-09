@@ -31,9 +31,7 @@ switch ($action) {
     case 'import_post':
         $costsController->importPost();
         break;
-    case 'import_paste':
-        $costsController->importPaste();
-        break;
+
     case 'export':
         $costsController->export();
         break;

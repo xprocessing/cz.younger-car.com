@@ -41,14 +41,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="cost" class="form-label">日均广告花费（美元） <span class="text-danger">*</span></label>
+                                <label for="cost" class="form-label">日广告花费（美元） <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
                                     <input type="number" step="0.01" class="form-control" id="cost" 
                                            name="cost" required placeholder="0.00"
                                            value="<?php echo htmlspecialchars($cost['cost']); ?>">
                                 </div>
-                                <div class="form-text">日均广告花费金额</div>
+                                <div class="form-text">日广告花费金额</div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -125,7 +125,7 @@
                 <ul class="list-unstyled">
                     <li><strong>平台名称</strong>: 平台名称，如Amazon-FBA，Amazon、eBay，Shopify</li>
                     <li><strong>店铺名称</strong>: 店铺名称</li>
-                    <li><strong>日均广告花费</strong>: 每日广告花费金额（美元）</li>
+                    <li><strong>日广告花费</strong>: 每日广告花费金额（美元）</li>
                     <li><strong>日期</strong>: 数据日期，按天存储</li>
                 </ul>
             </div>
@@ -155,7 +155,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
     const cost = parseFloat(document.getElementById('cost').value) || 0;
     if (cost <= 0) {
         e.preventDefault();
-        alert('日均广告花费必须大于0');
+        alert('日广告花费必须大于0');
         document.getElementById('cost').focus();
         return;
     }

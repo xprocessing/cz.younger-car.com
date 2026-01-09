@@ -590,7 +590,7 @@ CREATE TABLE IF NOT EXISTS costs (
     -- 店铺名称，非空，最大50字符
     store_name VARCHAR(50) NOT NULL COMMENT '店铺名称',
     -- 日均广告花费（美元），非空，小数类型（总长度10，小数位2，支持最大99999999.99美元）
-    cost DECIMAL(10, 2) NOT NULL COMMENT '日均广告花费（美元）',
+    cost DECIMAL(10, 2) NOT NULL COMMENT '日广告花费（美元）',
     -- 日期，按天存储，格式YYYY-MM-DD
     date DATE NOT NULL COMMENT '数据日期（YYYY-MM-DD）',
     -- 创建时间，默认当前时间，格式YYYY-MM-DD HH:MM:SS

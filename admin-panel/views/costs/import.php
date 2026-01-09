@@ -40,7 +40,7 @@
                 <h5 class="mb-0">粘贴CSV内容导入</h5>
             </div>
             <div class="card-body">
-                <form method="POST" action="<?php echo APP_URL; ?>/costs.php?action=import_paste">
+                <form method="POST" action="<?php echo APP_URL; ?>/costs.php?action=import_post">
                     <div class="mb-3">
                         <label for="csv_content" class="form-label">CSV内容</label>
                         <textarea class="form-control" id="csv_content" name="csv_content" rows="8"
@@ -99,7 +99,7 @@
                 <ol class="list-unstyled">
                     <li><strong>平台名称</strong> - platform_name</li>
                     <li><strong>店铺名称</strong> - store_name</li>
-                    <li><strong>日均广告花费</strong> - cost</li>
+                    <li><strong>日广告花费</strong> - cost</li>
                     <li><strong>日期</strong> - date</li>
                 </ol>
             </div>
@@ -111,7 +111,7 @@
             </div>
             <div class="card-body">
                 <h6>CSV示例：</h6>
-                <pre class="bg-light p-2 rounded small"><code>平台名称,店铺名称,日均广告花费,日期
+                <pre class="bg-light p-2 rounded small"><code>平台名称,店铺名称,日广告花费,日期
 Amazon-FBA,Shop001,299.50,2024-01-15
 eBay,Shop002,149.75,2024-01-15
 Shopify,Shop003,89.99,2024-01-15</code></pre>
@@ -147,7 +147,7 @@ Shopify,Shop003,89.99,2024-01-15</code></pre>
 <script>
 // 下载模板文件
 function downloadTemplate() {
-    const csvContent = `平台名称,店铺名称,日均广告花费,日期
+    const csvContent = `平台名称,店铺名称,日广告花费,日期
 Amazon-FBA,Shop001,299.50,2024-01-15
 eBay,Shop002,149.75,2024-01-15
 Shopify,Shop003,89.99,2024-01-15`;
