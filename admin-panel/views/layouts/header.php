@@ -165,6 +165,13 @@
                 </a>
             </div>
             <?php endif; ?>
+             <?php if (isLoggedIn()): ?>
+            <div class="nav-item">
+                <a href="<?php echo APP_URL; ?>/costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'costs.php' ? 'active' : ''; ?>">
+                    <i class="fa fa-list"></i> 广告费
+                </a>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
     
