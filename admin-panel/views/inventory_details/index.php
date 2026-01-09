@@ -118,7 +118,7 @@ function getSortIcon($field) {
                                 <td><?php echo $detail['warehouse_name']; ?></td>
                                 <td><a href="<?php echo APP_URL; ?>/products.php?keyword=<?php echo $detail['sku']; ?>" target="_blank"><?php echo htmlspecialchars($detail['sku']); ?> </a></td>
                                 <td><?php echo htmlspecialchars($detail['product_name'] ?? ''); ?></td>
-                                <td><?php if (!empty($detail['pic_url'])): ?><img src="<?php echo htmlspecialchars($detail['pic_url']); ?>" width="50" height="50" alt="商品图片" style="object-fit: cover;"><?php endif; ?></td>
+                                <td><?php if (!empty($detail['pic_url'])): ?><div style="display: inline-block; position: relative; width: 50px; height: 50px; "><img src="<?php echo htmlspecialchars($detail['pic_url']); ?>" width="50" height="50" alt="商品图片" style="object-fit: cover; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='scale(3)'; this.style.zIndex='1000'; this.style.position='relative';" onmouseout="this.style.transform='scale(1)'; this.style.zIndex='1'; this.style.position='relative';"></div><?php endif; ?></td>
                                 <td><?php echo number_format($detail['product_valid_num']); ?></td>
                                 <td><?php echo htmlspecialchars($detail['quantity_receive']); ?></td>
                                 <td><?php echo number_format($detail['product_onway']); ?></td>
