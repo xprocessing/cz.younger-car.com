@@ -460,7 +460,8 @@ class CarDataController {
         if (!isLoggedIn()) {
             redirect(APP_URL . '/login.php');
         }
-        if (!hasPermission('car_data.view')) {
+        // 导出功能仅管理员可使用
+        if (!hasRole('admin')) {
             redirect(APP_URL . '/dashboard.php');
         }
         
