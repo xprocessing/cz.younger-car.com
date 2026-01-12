@@ -283,7 +283,7 @@ if (empty($content)) {
 }
 
 
-
+echo $content;
 
 
 $mobileList = ["18868725001"];
