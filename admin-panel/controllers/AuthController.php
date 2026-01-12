@@ -85,6 +85,9 @@ class AuthController {
         // 获取最近60天各平台每日销售额数据
         $dailyPlatformSales = $orderProfitModel->getDailyPlatformSales(60);
         
+        // 获取各平台月度销售额统计数据
+        $platformMonthlyStats = $orderProfitModel->getPlatformMonthlySalesStats();
+        
         $success = getSuccess();
         $user = getCurrentUser();
         

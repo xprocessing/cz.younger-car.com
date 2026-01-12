@@ -1028,4 +1028,83 @@ class OrderProfit {
         
         return $formattedData;
     }
+    
+    // 获取各个平台的月度销售额统计数据
+    public function getPlatformMonthlySalesStats() {
+        // 获取本月、上月、上上月的年份和月份
+        $currentYearMonth = date('Y-m');
+        $lastYearMonth = date('Y-m', strtotime('-1 month'));
+        $lastLastYearMonth = date('Y-m', strtotime('-2 month'));
+        
+        // 计算每个月的开始和结束日期
+        $currentMonthStart = $currentYearMonth . '-01';
+        $currentMonthEnd = date('Y-m-t', strtotime($currentYearMonth));
+        
+        $lastMonthStart = $lastYearMonth . '-01';
+        $lastMonthEnd = date('Y-m-t', strtotime($lastYearMonth));
+        
+        $lastLastMonthStart = $lastLastYearMonth . '-01';
+        $lastLastMonthEnd = date('Y-m-t', strtotime($lastLastYearMonth));
+        
+        // 构建SQL查询
+        $sql = "SELECT 
+                    s.platform_name,
+                    
+                    -- 本月销售额
+                    SUM(CASE 
+                        WHEN DATE_FORMAT(op.global_purchase_time, '%Y-%m') = ? 
+                        THEN CAST(REPLACE(REPLACE(REPLACE(op.order_total_amount, '$', ''), ',', ''), '%', '') AS DECIMAL(10,2)) 
+                        ELSE 0 
+                    END) as current_month_sales,
+                    
+                    -- 上月销售额
+                    SUM(CASE 
+                        WHEN DATE_FORMAT(op.global_purchase_time, '%Y-%m') = ? 
+                        THEN CAST(REPLACE(REPLACE(REPLACE(op.order_total_amount, '$', ''), ',', ''), '%', '') AS DECIMAL(10,2)) 
+                        ELSE 0 
+                    END) as last_month_sales,
+                    
+                    -- 上上月销售额
+                    SUM(CASE 
+                        WHEN DATE_FORMAT(op.global_purchase_time, '%Y-%m') = ? 
+                        THEN CAST(REPLACE(REPLACE(REPLACE(op.order_total_amount, '$', ''), ',', ''), '%', '') AS DECIMAL(10,2)) 
+                        ELSE 0 
+                    END) as last_last_month_sales
+                
+                FROM order_profit op
+                LEFT JOIN store s ON op.store_id = s.store_id
+                WHERE 
+                    DATE(op.global_purchase_time) BETWEEN ? AND ?
+                GROUP BY s.platform_name
+                ORDER BY s.platform_name ASC";
+        
+        $params = [$currentYearMonth, $lastYearMonth, $lastLastYearMonth, $lastLastMonthStart, $currentMonthEnd];
+        $stmt = $this->db->query($sql, $params);
+        $result = $stmt->fetchAll();
+        
+        // 处理结果，计算增长率
+        $stats = [];
+        foreach ($result as $row) {
+            $platform = $row['platform_name'] ?? '未知平台';
+            $currentMonthSales = floatval($row['current_month_sales']);
+            $lastMonthSales = floatval($row['last_month_sales']);
+            $lastLastMonthSales = floatval($row['last_last_month_sales']);
+            
+            // 计算增长率
+            $growthRate = 0;
+            if ($lastLastMonthSales > 0) {
+                $growthRate = (($lastMonthSales - $lastLastMonthSales) / $lastLastMonthSales) * 100;
+            }
+            
+            $stats[] = [
+                'platform_name' => $platform,
+                'current_month_sales' => $currentMonthSales,
+                'last_month_sales' => $lastMonthSales,
+                'last_last_month_sales' => $lastLastMonthSales,
+                'growth_rate' => $growthRate
+            ];
+        }
+        
+        return $stats;
+    }
 }

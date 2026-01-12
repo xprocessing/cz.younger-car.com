@@ -5,6 +5,54 @@
                 <h5>欢迎回来，<?php echo $_SESSION['full_name']; ?></h5>
             </div>
             <div class="card-body">
+                <!-- 各平台月度销售额统计 -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <h3>各平台月度销售额统计</h3>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>平台名称</th>
+                                            <th>本月销售额</th>
+                                            <th>上月销售额</th>
+                                            <th>上上月销售额</th>
+                                            <th>上月对比上上月增长率</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if (!empty($platformMonthlyStats)): ?>
+                                            <?php foreach ($platformMonthlyStats as $stat): ?>
+                                                <tr>
+                                                    <td><?php echo htmlspecialchars($stat['platform_name']); ?></td>
+                                                    <td>$<?php echo number_format($stat['current_month_sales'], 2); ?></td>
+                                                    <td>$<?php echo number_format($stat['last_month_sales'], 2); ?></td>
+                                                    <td>$<?php echo number_format($stat['last_last_month_sales'], 2); ?></td>
+                                                    <td>
+                                                        <?php 
+                                                            $growthRate = $stat['growth_rate']; 
+                                                            $growthClass = $growthRate > 0 ? 'text-success' : ($growthRate < 0 ? 'text-danger' : 'text-muted');
+                                                            echo '<span class="' . $growthClass . '">';
+                                                            echo $growthRate > 0 ? '+' : '';
+                                                            echo number_format($growthRate, 2) . '%';
+                                                            echo '</span>';
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5" class="text-center">暂无数据</td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-md-3">
                         <div class="mb-4">
@@ -71,6 +119,8 @@
                         </div>
                     </div>
                 </div>
+
+                
                 
 
 
