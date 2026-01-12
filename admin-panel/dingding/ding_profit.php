@@ -55,7 +55,7 @@ if (empty($content)) {
     exit;
 }
 
-$mobileList = ["18868725001","18868268995","13868380570"];
+$mobileList = ["18868725001","18868268995","13868380570","15645962735"];
 //$mobileList = ["18868725001"];
 //$content = "缺货预警：有缺货sku...[点击查看](https://cz.younger-car.com/admin-panel/inventory_details.php?action=inventory_alert)";
 
