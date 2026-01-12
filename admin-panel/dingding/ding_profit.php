@@ -42,7 +42,7 @@ if (!empty($lossOrders)) {
         );
     }
     $content .= "\n";
-    $content.="[更多订单信息](https://cz.younger-car.com/admin-panel/order_profit.php)";
+    $content.="[订单信息](https://cz.younger-car.com/admin-panel/order_profit.php?rate_min=-100&rate_max=0)";
 }
 
 // 3. 从order_profit和inventory_details表，根据sku的近30天销量，判断库存是否不足
