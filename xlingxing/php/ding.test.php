@@ -56,7 +56,7 @@ function getRealUserIdByMobile($access_token, $mobile)
  * 1. dept_id_list 必须传null 禁止传空字符串 解决41错误
  * 2. userid_list 传纯数字ID即可 新版钉钉完全支持
  */
-function sendDingMsgByUserId_Success($access_token, $userIdArr, $atUserIdArr = [])
+function sendDingMsgByUserId_Success($access_token, $userIdArr, $atUserIdArr = [], $content = "")
 {
     $url = "https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2?access_token=".$access_token;
     $userIdStr = implode(',', $userIdArr);
@@ -66,9 +66,10 @@ function sendDingMsgByUserId_Success($access_token, $userIdArr, $atUserIdArr = [
         "dept_id_list"  => null,        // ✅ 必传null 核心修复41错误
         "to_all_user"   => false,
         "msg"           => [
-            "msgtype" => "text",
-            "text"    => [
-                "content" => "✅【发送成功】钉钉DING消息强提醒，弹窗+铃声必达！测试"
+            "msgtype" => "markdown",
+            "markdown"    => [
+                "title" => "DING消息",
+                "text" => $content
             ],
             "at"      => [
                 "atUserIds" => $atUserIdArr, // @对应用户ID
@@ -109,7 +110,8 @@ try {
     echo PHP_EOL;
 
     // 发送消息+@对应用户
-    $sendResult = sendDingMsgByUserId_Success($accessToken, $realUserIdList, $realUserIdList);
+    $content = "缺货预警：sku，链接：[点击查看](https://cz.younger-car.com/admin-panel/inventory_details.php?action=inventory_alert)";
+    $sendResult = sendDingMsgByUserId_Success($accessToken, $realUserIdList, $realUserIdList, $content);    
     if ($sendResult) {
         echo "✅ ✅ ✅ 消息发送成功！钉钉DING消息推送完成！✅ ✅ ✅";
     } else {
