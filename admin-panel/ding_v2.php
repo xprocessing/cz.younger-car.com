@@ -204,7 +204,7 @@ $db = new PDO($dsn, DB_USER, DB_PASS, $options);
 $yesterday = date('Y-m-d', strtotime('-1 day'));
 $sql1 = "SELECT global_order_no, profit_amount, local_sku, global_purchase_time 
          FROM order_profit 
-         WHERE profit_amount < '-10.00' 
+         WHERE profit_rate < '0' 
          AND DATE(STR_TO_DATE(global_purchase_time, '%Y-%m-%d %H:%i:%s')) = :yesterday";
 $stmt1 = $db->prepare($sql1);
 $stmt1->execute(['yesterday' => $yesterday]);
