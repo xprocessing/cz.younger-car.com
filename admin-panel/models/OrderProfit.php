@@ -937,7 +937,7 @@ class OrderProfit {
     public function getPlatformCostPercentage($startDate = null, $endDate = null) {
         $sql = "SELECT s.platform_name, SUM(c.cost) as total_cost
                 FROM costs c
-                LEFT JOIN store s ON c.store_name = s.store_name
+                LEFT JOIN store s ON c.store_name COLLATE utf8mb4_unicode_ci = s.store_name COLLATE utf8mb4_unicode_ci
                 WHERE 1=1";
         
         $params = [];
