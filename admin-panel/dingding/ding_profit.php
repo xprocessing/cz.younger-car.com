@@ -29,7 +29,7 @@ $stmt1->execute(['yesterday' => $yesterday]);
 $lossOrders = $stmt1->fetchAll();
 
 if (!empty($lossOrders)) {
-    $content .= "### 昨日亏损超过10美元的订单\n";
+    $content .= "### 昨日亏损的订单\n";
     $content .= "| 订单号 | 亏损金额 | SKU | 下单时间 | 店铺名称 |\n";
     $content .= "| --- | --- | --- | --- | --- |\n";
     foreach ($lossOrders as $order) {
@@ -55,8 +55,8 @@ if (empty($content)) {
     exit;
 }
 
-//$mobileList = ["18868725001","18868268995","13868380570"];
-$mobileList = ["18868725001"];
+$mobileList = ["18868725001","18868268995","13868380570"];
+//$mobileList = ["18868725001"];
 //$content = "缺货预警：有缺货sku...[点击查看](https://cz.younger-car.com/admin-panel/inventory_details.php?action=inventory_alert)";
 
 // 3. 调用推送方法，获取标准化执行结果

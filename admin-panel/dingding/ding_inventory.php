@@ -50,8 +50,8 @@ if (empty($content)) {
     exit;
 }
 
-//$mobileList = ["18868725001","18868268995","13868380570"];
-$mobileList = ["18868725001"];
+$mobileList = ["18868725001","18868268995","13868380570"];
+//$mobileList = ["18868725001"];
 //$content = "缺货预警：有缺货sku...[点击查看](https://cz.younger-car.com/admin-panel/inventory_details.php?action=inventory_alert)";
 
 // 3. 调用推送方法，获取标准化执行结果
