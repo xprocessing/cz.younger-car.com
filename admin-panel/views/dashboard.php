@@ -23,10 +23,10 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th>平台名称</th>
-                                            <th><?php echo $currentMonth; ?>销售额</th>
-                                            <th><?php echo $lastMonth; ?>销售额</th>
-                                            <th><?php echo $lastLastMonth; ?>销售额</th>
-                                            <th><?php echo $lastMonth; ?>对比<?php echo $lastLastMonth; ?>增长率</th>
+                                            <th><?php echo $currentMonth; ?>销售额(本月)</th>
+                                            <th><?php echo $lastMonth; ?>销售额(上月)</th>
+                                            <th><?php echo $lastLastMonth; ?>销售额(上上月)</th>
+                                            <th><?php echo $lastMonth; ?>对比<?php echo $lastLastMonth; ?>增长率(上月对比上上月)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
