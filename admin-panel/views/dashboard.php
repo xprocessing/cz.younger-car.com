@@ -37,9 +37,9 @@
                 <!-- 各个平台销售额折线图（最近60天） -->
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="mb-4">
+                        <div class="mb-12">
                             <h3>各个平台销售额折线图（最近60天）</h3>
-                            <canvas id="dailySalesChart" width="800" height="400"></canvas>
+                            <canvas id="dailySalesChart" style="width: 100%;" height="400"></canvas>
                         </div>
                     </div>
                 </div>
