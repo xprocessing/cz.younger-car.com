@@ -110,7 +110,7 @@ try {
     echo PHP_EOL;
 
     // 发送消息+@对应用户
-    $content = "缺货预警：sku，链接：[点击查看](https://cz.younger-car.com/admin-panel/inventory_details.php?action=inventory_alert)";
+    $content = "缺货预警：有缺货sku，[点击查看](https://cz.younger-car.com/admin-panel/inventory_details.php?action=inventory_alert)";
     $sendResult = sendDingMsgByUserId_Success($accessToken, $realUserIdList, $realUserIdList, $content);    
     if ($sendResult) {
         echo "✅ ✅ ✅ 消息发送成功！钉钉DING消息推送完成！✅ ✅ ✅";
