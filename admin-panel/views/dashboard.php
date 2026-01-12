@@ -8,25 +8,25 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="mb-4">
-                            <h3>各个平台销售额占比（饼状图）</h3>
+                            <h3>各平台销售额占比</h3>
                             <canvas id="salesChart" width="250" height="200"></canvas>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-4">
-                            <h3>各个平台订单总量占比（饼状图）</h3>
+                            <h3>各平台订单总量占比</h3>
                             <canvas id="ordersChart" width="250" height="200"></canvas>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-4">
-                            <h3>各个平台毛利润占比（饼状图）</h3>
+                            <h3>各平台毛利润占比</h3>
                             <canvas id="profitsChart" width="250" height="200"></canvas>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-4">
-                            <h3>各个平台广告费占比（饼状图）</h3>
+                            <h3>各平台广告费占比</h3>
                             <canvas id="costsChart" width="250" height="200"></canvas>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-12">
-                            <h3>各个平台销售额折线图（最近60天）</h3>
+                            <h3>各个平台销售额走势（最近60天）</h3>
                             <canvas id="dailySalesChart" height="400" style="width: 100%;"></canvas>
                         </div>
                     </div>
