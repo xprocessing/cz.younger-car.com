@@ -6,30 +6,28 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="mb-4">
                             <h3>各个平台销售额占比（饼状图）</h3>
-                            <canvas id="salesChart" width="400" height="300"></canvas>
+                            <canvas id="salesChart" width="250" height="200"></canvas>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="mb-4">
                             <h3>各个平台订单总量占比（饼状图）</h3>
-                            <canvas id="ordersChart" width="400" height="300"></canvas>
+                            <canvas id="ordersChart" width="250" height="200"></canvas>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="mb-4">
                             <h3>各个平台毛利润占比（饼状图）</h3>
-                            <canvas id="profitsChart" width="400" height="300"></canvas>
+                            <canvas id="profitsChart" width="250" height="200"></canvas>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="mb-4">
                             <h3>各个平台广告费占比（饼状图）</h3>
-                            <canvas id="costsChart" width="400" height="300"></canvas>
+                            <canvas id="costsChart" width="250" height="200"></canvas>
                         </div>
                     </div>
                 </div>
@@ -60,14 +58,14 @@
         const height = canvas.height;
         const centerX = width / 2;
         const centerY = height / 2;
-        const radius = Math.min(centerX, centerY) - 20;
+        const radius = Math.min(centerX, centerY) - 15;
         
         // 计算总数
         const total = data.reduce((sum, item) => sum + item.value, 0);
         
         if (total === 0) {
             ctx.fillStyle = '#ccc';
-            ctx.font = '16px Arial';
+            ctx.font = '12px Arial';
             ctx.textAlign = 'center';
             ctx.fillText('暂无数据', centerX, centerY);
             return;
@@ -90,42 +88,47 @@
             ctx.closePath();
             ctx.fill();
             
-            // 绘制扇形标签
-            const labelAngle = startAngle + sliceAngle / 2;
-            const labelX = centerX + Math.cos(labelAngle) * (radius + 20);
-            const labelY = centerY + Math.sin(labelAngle) * (radius + 20);
-            
-            ctx.fillStyle = '#333';
-            ctx.font = '12px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText(item.label, labelX, labelY);
-            
-            // 绘制百分比
-            const percentage = ((item.value / total) * 100).toFixed(1) + '%';
-            ctx.fillText(percentage, labelX, labelY + 15);
+            // 绘制扇形标签（仅在画布足够大时显示）
+            if (width > 300) {
+                const labelAngle = startAngle + sliceAngle / 2;
+                const labelX = centerX + Math.cos(labelAngle) * (radius + 15);
+                const labelY = centerY + Math.sin(labelAngle) * (radius + 15);
+                
+                ctx.fillStyle = '#333';
+                ctx.font = '10px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(item.label, labelX, labelY);
+                
+                // 绘制百分比
+                const percentage = ((item.value / total) * 100).toFixed(1) + '%';
+                ctx.fillText(percentage, labelX, labelY + 12);
+            }
             
             startAngle += sliceAngle;
         });
         
         // 绘制图例
-        const legendX = centerX - 80;
-        const legendY = centerY + radius + 30;
-        const legendItemHeight = 20;
+        const legendX = 10;
+        const legendY = centerY + radius - 20;
+        const legendItemHeight = 16;
         
-        data.forEach((item, index) => {
-            const itemX = legendX;
-            const itemY = legendY + index * legendItemHeight;
-            
-            // 绘制颜色块
-            ctx.fillStyle = colors[index % colors.length];
-            ctx.fillRect(itemX, itemY, 15, 15);
-            
-            // 绘制图例文本
-            ctx.fillStyle = '#333';
-            ctx.font = '12px Arial';
-            ctx.textAlign = 'left';
-            ctx.fillText(item.label + ': ' + ((item.value / total) * 100).toFixed(1) + '%', itemX + 20, itemY + 12);
-        });
+        // 仅在小尺寸画布上显示图例
+        if (width <= 300) {
+            data.forEach((item, index) => {
+                const itemX = legendX;
+                const itemY = legendY + index * legendItemHeight;
+                
+                // 绘制颜色块
+                ctx.fillStyle = colors[index % colors.length];
+                ctx.fillRect(itemX, itemY, 12, 12);
+                
+                // 绘制图例文本
+                ctx.fillStyle = '#333';
+                ctx.font = '10px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText(item.label + ': ' + ((item.value / total) * 100).toFixed(1) + '%', itemX + 18, itemY + 10);
+            });
+        }
     }
     
     // 数据准备
