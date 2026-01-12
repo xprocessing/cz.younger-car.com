@@ -39,7 +39,7 @@
                     <div class="col-md-12">
                         <div class="mb-12">
                             <h3>各个平台销售额折线图（最近60天）</h3>
-                            <canvas id="dailySalesChart" style="width: 100%;" height="400"></canvas>
+                            <canvas id="dailySalesChart" height="400" style="width: 100%;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -183,6 +183,8 @@
         const canvas = document.getElementById(canvasId);
         if (!canvas) return;
         
+        // 动态设置canvas宽度以匹配显示宽度
+        canvas.width = canvas.clientWidth;
         const ctx = canvas.getContext('2d');
         const width = canvas.width;
         const height = canvas.height;
@@ -335,13 +337,19 @@
     }
     
     // 绘制所有图表
-    window.onload = function() {
+    function drawAllCharts() {
         drawPieChart('salesChart', salesData, '平台销售额占比');
         drawPieChart('ordersChart', ordersData, '平台订单总量占比');
         drawPieChart('profitsChart', profitsData, '平台毛利润占比');
         drawPieChart('costsChart', costsData, '平台广告费占比');
         drawLineChart('dailySalesChart', dailySalesData);
-    };
+    }
+    
+    // 页面加载完成后绘制图表
+    window.onload = drawAllCharts;
+    
+    // 窗口大小变化时重新绘制图表
+    window.addEventListener('resize', drawAllCharts);
 </script>
 
 <?php include VIEWS_DIR . '/layouts/footer.php'; ?>
