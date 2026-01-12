@@ -82,6 +82,9 @@ class AuthController {
         // 获取各平台广告费占比
         $platformCosts = $orderProfitModel->getPlatformCostPercentage($startDate, $endDate);
         
+        // 获取最近60天各平台每日销售额数据
+        $dailyPlatformSales = $orderProfitModel->getDailyPlatformSales(60);
+        
         $success = getSuccess();
         $user = getCurrentUser();
         

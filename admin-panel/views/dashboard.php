@@ -33,6 +33,17 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 各个平台销售额折线图（最近60天） -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <h3>各个平台销售额折线图（最近60天）</h3>
+                            <canvas id="dailySalesChart" width="800" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -162,12 +173,174 @@
         echo json_encode($costsData);
     ?>;
     
-    // 绘制饼图
+    // 准备折线图数据
+    const dailySalesData = <?php 
+        echo json_encode($dailyPlatformSales);
+    ?>;
+    
+    // 折线图绘制函数
+    function drawLineChart(canvasId, data) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+        
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        const padding = { top: 30, right: 50, bottom: 60, left: 70 };
+        const chartWidth = width - padding.left - padding.right;
+        const chartHeight = height - padding.top - padding.bottom;
+        
+        // 清空画布
+        ctx.clearRect(0, 0, width, height);
+        
+        // 绘制背景
+        ctx.fillStyle = '#f8f9fa';
+        ctx.fillRect(0, 0, width, height);
+        
+        const dates = data.dates;
+        const platforms = data.platforms;
+        const sales = data.sales;
+        
+        if (dates.length === 0 || platforms.length === 0) {
+            ctx.fillStyle = '#ccc';
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('暂无数据', width / 2, height / 2);
+            return;
+        }
+        
+        // 颜色数组（与饼图保持一致）
+        const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#8ACB88', '#8884D8'];
+        
+        // 计算X轴和Y轴的刻度
+        const maxSales = Math.max(...sales.flat());
+        const yScale = chartHeight / maxSales;
+        const xStep = chartWidth / (dates.length - 1);
+        
+        // 绘制网格线
+        ctx.strokeStyle = '#e0e0e0';
+        ctx.lineWidth = 1;
+        
+        // Y轴网格线
+        for (let i = 0; i <= 10; i++) {
+            const y = padding.top + (chartHeight / 10) * i;
+            ctx.beginPath();
+            ctx.moveTo(padding.left, y);
+            ctx.lineTo(padding.left + chartWidth, y);
+            ctx.stroke();
+            
+            // Y轴刻度
+            const value = (maxSales / 10) * (10 - i);
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'right';
+            ctx.fillText('$' + value.toFixed(0), padding.left - 10, y + 4);
+        }
+        
+        // X轴网格线（每7天显示一个日期）
+        for (let i = 0; i < dates.length; i += Math.ceil(dates.length / 10)) {
+            const x = padding.left + i * xStep;
+            ctx.beginPath();
+            ctx.moveTo(x, padding.top);
+            ctx.lineTo(x, padding.top + chartHeight);
+            ctx.stroke();
+            
+            // X轴日期标签
+            const date = new Date(dates[i]);
+            const dateLabel = (date.getMonth() + 1) + '/' + date.getDate();
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(dateLabel, x, padding.top + chartHeight + 20);
+        }
+        
+        // 绘制折线
+        platforms.forEach((platform, platformIndex) => {
+            ctx.strokeStyle = colors[platformIndex % colors.length];
+            ctx.fillStyle = colors[platformIndex % colors.length];
+            ctx.lineWidth = 2;
+            
+            // 绘制折线
+            ctx.beginPath();
+            for (let i = 0; i < dates.length; i++) {
+                const x = padding.left + i * xStep;
+                const y = padding.top + chartHeight - (sales[i][platformIndex] * yScale);
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            
+            // 绘制数据点
+            for (let i = 0; i < dates.length; i += Math.ceil(dates.length / 20)) {
+                const x = padding.left + i * xStep;
+                const y = padding.top + chartHeight - (sales[i][platformIndex] * yScale);
+                
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // 添加数值标签（每10天显示一个）
+                if (i % Math.ceil(dates.length / 10) === 0) {
+                    ctx.fillStyle = '#333';
+                    ctx.font = '10px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('$' + sales[i][platformIndex].toFixed(0), x, y - 10);
+                }
+            }
+        });
+        
+        // 绘制图例
+        const legendX = padding.left + chartWidth - 200;
+        const legendY = padding.top + 10;
+        const legendItemHeight = 20;
+        
+        platforms.forEach((platform, index) => {
+            const itemY = legendY + index * legendItemHeight;
+            
+            // 绘制颜色块
+            ctx.fillStyle = colors[index % colors.length];
+            ctx.fillRect(legendX, itemY, 15, 15);
+            
+            // 绘制图例文本
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText(platform, legendX + 20, itemY + 12);
+        });
+        
+        // 绘制图表标题
+        ctx.fillStyle = '#333';
+        ctx.font = '16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('各平台销售额趋势（最近60天）', width / 2, padding.top - 10);
+        
+        // 绘制X轴和Y轴标题
+        ctx.fillStyle = '#666';
+        ctx.font = '14px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('日期', width / 2, height - 20);
+        
+        ctx.save();
+        ctx.translate(padding.left / 2, height / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillStyle = '#666';
+        ctx.font = '14px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('销售额（美元）', 0, 0);
+        ctx.restore();
+    }
+    
+    // 绘制所有图表
     window.onload = function() {
         drawPieChart('salesChart', salesData, '平台销售额占比');
         drawPieChart('ordersChart', ordersData, '平台订单总量占比');
         drawPieChart('profitsChart', profitsData, '平台毛利润占比');
         drawPieChart('costsChart', costsData, '平台广告费占比');
+        drawLineChart('dailySalesChart', dailySalesData);
     };
 </script>
 

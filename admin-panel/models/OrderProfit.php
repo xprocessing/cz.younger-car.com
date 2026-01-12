@@ -958,4 +958,74 @@ class OrderProfit {
         $stmt = $this->db->query($sql, $params);
         return $stmt->fetchAll();
     }
+    
+    // 获取最近60天各平台每日销售额数据
+    public function getDailyPlatformSales($days = 60) {
+        // 计算日期范围
+        $endDate = date('Y-m-d');
+        $startDate = date('Y-m-d', strtotime("-$days days"));
+        
+        $sql = "SELECT 
+                    DATE(op.global_purchase_time) as sale_date,
+                    s.platform_name,
+                    SUM(CAST(REPLACE(REPLACE(REPLACE(op.order_total_amount, '$', ''), ',', ''), '%', '') AS DECIMAL(10,2))) as total_sales
+                FROM order_profit op
+                LEFT JOIN store s ON op.store_id = s.store_id
+                WHERE DATE(op.global_purchase_time) BETWEEN ? AND ?
+                GROUP BY DATE(op.global_purchase_time), s.platform_name
+                ORDER BY sale_date ASC, s.platform_name ASC";
+        
+        $params = [$startDate, $endDate];
+        $stmt = $this->db->query($sql, $params);
+        $result = $stmt->fetchAll();
+        
+        // 处理数据格式，便于前端绘制折线图
+        $dailySales = [];
+        $platforms = [];
+        
+        // 收集所有平台和日期
+        foreach ($result as $row) {
+            $saleDate = $row['sale_date'];
+            $platformName = $row['platform_name'] ?? '未知平台';
+            
+            // 确保日期数组存在
+            if (!isset($dailySales[$saleDate])) {
+                $dailySales[$saleDate] = [];
+            }
+            
+            // 记录销售额
+            $dailySales[$saleDate][$platformName] = floatval($row['total_sales']);
+            
+            // 收集平台名称
+            if (!in_array($platformName, $platforms)) {
+                $platforms[] = $platformName;
+            }
+        }
+        
+        // 生成连续的日期序列
+        $continuousDates = [];
+        $currentDate = $startDate;
+        while (strtotime($currentDate) <= strtotime($endDate)) {
+            $continuousDates[] = $currentDate;
+            $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
+        }
+        
+        // 构建最终的返回数据结构
+        $formattedData = [
+            'dates' => $continuousDates,
+            'platforms' => $platforms,
+            'sales' => []
+        ];
+        
+        // 填充每个日期每个平台的销售额数据
+        foreach ($continuousDates as $date) {
+            $dateData = [];
+            foreach ($platforms as $platform) {
+                $dateData[] = isset($dailySales[$date][$platform]) ? $dailySales[$date][$platform] : 0;
+            }
+            $formattedData['sales'][] = $dateData;
+        }
+        
+        return $formattedData;
+    }
 }
