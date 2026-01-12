@@ -248,34 +248,7 @@ if (!empty($oldStockSkus)) {
 }
 
 // 3. 从order_profit和inventory_details表，根据sku的近30天销量，判断库存是否不足
-$thirtyDaysAgo = date('Y-m-d', strtotime('-30 days'));
-$sql3 = "SELECT op.local_sku as sku, 
-                COUNT(op.id) as sales_count, 
-                SUM(CAST(REPLACE(op.order_total_amount, '$', '') AS DECIMAL(10,2))) as total_sales, 
-                id.product_valid_num as available_stock 
-         FROM order_profit op 
-         LEFT JOIN inventory_details id ON op.local_sku = id.sku 
-         WHERE DATE(STR_TO_DATE(op.global_purchase_time, '%Y-%m-%d %H:%i:%s')) >= :thirtyDaysAgo 
-         GROUP BY op.local_sku, id.product_valid_num 
-         HAVING sales_count > 0 AND (available_stock IS NULL OR available_stock <= 0)";
-$stmt3 = $db->prepare($sql3);
-$stmt3->execute(['thirtyDaysAgo' => $thirtyDaysAgo]);
-$stockShortageSkus = $stmt3->fetchAll();
 
-if (!empty($stockShortageSkus)) {
-    $content .= "### 近30天有销量但库存不足的SKU\n";
-    $content .= "| SKU | 销量 | 总销售额 | 可用库存 |\n";
-    $content .= "| --- | --- | --- | --- |\n";
-    foreach ($stockShortageSkus as $sku) {
-        $content .= sprintf("| %s | %d | $%.2f | %d |\n", 
-            $sku['sku'], 
-            $sku['sales_count'], 
-            $sku['total_sales'], 
-            $sku['available_stock'] ?? 0
-        );
-    }
-    $content .= "\n";
-}
 
 // 如果没有数据，添加提示信息
 if (empty($content)) {
