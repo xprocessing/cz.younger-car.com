@@ -249,17 +249,19 @@ if (!empty($oldStockSkus)) {
 
 // 3. 从order_profit和inventory_details表，根据sku的近30天销量，判断库存是否不足
 
-
+echo $content;
 // 如果没有数据，添加提示信息
 if (empty($content)) {
     $content = "暂无异常数据需要推送\n";
+    //结束程序
+    exit;
+}
+else{
+    $content.="更多库存信息，请访问：https://cz.younger-car.com/admin-panel/inventory_details.php?action=inventory_alert";
 }
 
 
-echo $content;
-
-
-$mobileList = ["18868725001"];
+$mobileList = ["18868725001","18868268995","13868380570"];
 //$content = "缺货预警：有缺货sku...[点击查看](https://cz.younger-car.com/admin-panel/inventory_details.php?action=inventory_alert)";
 
 // 3. 调用推送方法，获取标准化执行结果
