@@ -225,10 +225,10 @@ if (!empty($lossOrders)) {
     $content .= "\n";
 }
 
-// 2. 从inventory_details表获取库龄超过180天sku
+// 2. 从inventory_details表获取库龄超过180天sku，且库存可用量大于10
 $sql2 = "SELECT sku, average_age, product_valid_num 
          FROM inventory_details 
-         WHERE average_age > 180";
+         WHERE average_age > 180 AND product_valid_num > 10";
 $stmt2 = $db->prepare($sql2);
 $stmt2->execute();
 $oldStockSkus = $stmt2->fetchAll();
