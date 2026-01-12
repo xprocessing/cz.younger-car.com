@@ -88,9 +88,21 @@
             ctx.closePath();
             ctx.fill();
             
+            // 计算扇区中心点
+            const labelAngle = startAngle + sliceAngle / 2;
+            const textRadius = radius * 0.6; // 文本距离圆心的距离
+            const textX = centerX + Math.cos(labelAngle) * textRadius;
+            const textY = centerY + Math.sin(labelAngle) * textRadius;
+            
+            // 绘制扇区内百分比
+            const percentage = ((item.value / total) * 100).toFixed(1) + '%';
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(percentage, textX, textY + 4);
+            
             // 绘制扇形标签（仅在画布足够大时显示）
             if (width > 300) {
-                const labelAngle = startAngle + sliceAngle / 2;
                 const labelX = centerX + Math.cos(labelAngle) * (radius + 15);
                 const labelY = centerY + Math.sin(labelAngle) * (radius + 15);
                 
@@ -98,10 +110,6 @@
                 ctx.font = '10px Arial';
                 ctx.textAlign = 'center';
                 ctx.fillText(item.label, labelX, labelY);
-                
-                // 绘制百分比
-                const percentage = ((item.value / total) * 100).toFixed(1) + '%';
-                ctx.fillText(percentage, labelX, labelY + 12);
             }
             
             startAngle += sliceAngle;
@@ -126,7 +134,7 @@
                 ctx.fillStyle = '#333';
                 ctx.font = '10px Arial';
                 ctx.textAlign = 'left';
-                ctx.fillText(item.label + ': ' + ((item.value / total) * 100).toFixed(1) + '%', itemX + 18, itemY + 10);
+                ctx.fillText(item.label, itemX + 18, itemY + 10);
             });
         }
     }
