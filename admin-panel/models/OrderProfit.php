@@ -854,4 +854,108 @@ class OrderProfit {
         $stmt = $this->db->query($sql, [$last30DaysStart, $endDate]);
         return $stmt->fetchAll();
     }
+    
+    // 获取各平台销售额占比数据
+    public function getPlatformSalesPercentage($startDate = null, $endDate = null) {
+        $sql = "SELECT s.platform_name, SUM(CAST(REPLACE(REPLACE(REPLACE(op.order_total_amount, '$', ''), ',', ''), '%', '') AS DECIMAL(10,2))) as total_sales
+                FROM order_profit op
+                LEFT JOIN store s ON op.store_id = s.store_id
+                WHERE 1=1";
+        
+        $params = [];
+        
+        if ($startDate) {
+            $sql .= " AND DATE(op.global_purchase_time) >= ?";
+            $params[] = $startDate;
+        }
+        
+        if ($endDate) {
+            $sql .= " AND DATE(op.global_purchase_time) <= ?";
+            $params[] = $endDate;
+        }
+        
+        $sql .= " GROUP BY s.platform_name
+                  ORDER BY total_sales DESC";
+        
+        $stmt = $this->db->query($sql, $params);
+        return $stmt->fetchAll();
+    }
+    
+    // 获取各平台订单总量占比数据
+    public function getPlatformOrderCountPercentage($startDate = null, $endDate = null) {
+        $sql = "SELECT s.platform_name, COUNT(*) as order_count
+                FROM order_profit op
+                LEFT JOIN store s ON op.store_id = s.store_id
+                WHERE 1=1";
+        
+        $params = [];
+        
+        if ($startDate) {
+            $sql .= " AND DATE(op.global_purchase_time) >= ?";
+            $params[] = $startDate;
+        }
+        
+        if ($endDate) {
+            $sql .= " AND DATE(op.global_purchase_time) <= ?";
+            $params[] = $endDate;
+        }
+        
+        $sql .= " GROUP BY s.platform_name
+                  ORDER BY order_count DESC";
+        
+        $stmt = $this->db->query($sql, $params);
+        return $stmt->fetchAll();
+    }
+    
+    // 获取各平台毛利润占比数据
+    public function getPlatformProfitPercentage($startDate = null, $endDate = null) {
+        $sql = "SELECT s.platform_name, SUM(CAST(REPLACE(REPLACE(REPLACE(op.profit_amount, '$', ''), ',', ''), '%', '') AS DECIMAL(10,2))) as total_profit
+                FROM order_profit op
+                LEFT JOIN store s ON op.store_id = s.store_id
+                WHERE 1=1";
+        
+        $params = [];
+        
+        if ($startDate) {
+            $sql .= " AND DATE(op.global_purchase_time) >= ?";
+            $params[] = $startDate;
+        }
+        
+        if ($endDate) {
+            $sql .= " AND DATE(op.global_purchase_time) <= ?";
+            $params[] = $endDate;
+        }
+        
+        $sql .= " GROUP BY s.platform_name
+                  ORDER BY total_profit DESC";
+        
+        $stmt = $this->db->query($sql, $params);
+        return $stmt->fetchAll();
+    }
+    
+    // 获取各平台广告费占比数据
+    public function getPlatformCostPercentage($startDate = null, $endDate = null) {
+        $sql = "SELECT s.platform_name, SUM(c.cost) as total_cost
+                FROM costs c
+                LEFT JOIN store s ON c.store_name = s.store_name
+                WHERE 1=1";
+        
+        $params = [];
+        
+        if ($startDate) {
+            $sql .= " AND c.date >= ?";
+            $params[] = $startDate;
+        }
+        
+        if ($endDate) {
+            $sql .= " AND c.date <= ?";
+            $params[] = $endDate;
+        }
+        
+        $sql .= " GROUP BY s.platform_name
+                  ORDER BY total_cost DESC";
+        
+        $stmt = $this->db->query($sql, $params);
+        return $stmt->fetchAll();
+    }
 }

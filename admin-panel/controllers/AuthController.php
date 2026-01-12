@@ -62,6 +62,26 @@ class AuthController {
             redirect(APP_URL . '/login.php');
         }
         
+        // 获取饼图数据
+        require_once APP_ROOT . '/models/OrderProfit.php';
+        $orderProfitModel = new OrderProfit();
+        
+        // 获取最近30天的数据
+        $endDate = date('Y-m-d');
+        $startDate = date('Y-m-d', strtotime('-30 days'));
+        
+        // 获取各平台销售额占比
+        $platformSales = $orderProfitModel->getPlatformSalesPercentage($startDate, $endDate);
+        
+        // 获取各平台订单总量占比
+        $platformOrders = $orderProfitModel->getPlatformOrderCountPercentage($startDate, $endDate);
+        
+        // 获取各平台毛利润占比
+        $platformProfits = $orderProfitModel->getPlatformProfitPercentage($startDate, $endDate);
+        
+        // 获取各平台广告费占比
+        $platformCosts = $orderProfitModel->getPlatformCostPercentage($startDate, $endDate);
+        
         $success = getSuccess();
         $user = getCurrentUser();
         

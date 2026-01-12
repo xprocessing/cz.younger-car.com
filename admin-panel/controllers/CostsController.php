@@ -89,6 +89,8 @@ class CostsController {
         
         // 验证数值字段
         $cost = trim($_POST['cost']);
+        // 替换逗号为小数点，支持国际化数字格式
+        $cost = str_replace(',', '.', $cost);
         // 检查是否是有效的数字格式：只能包含数字、一个小数点，连字符只能在开头
         if (!preg_match('/^-?\d+(\.\d+)?$/', $cost)) {
             showError('日均广告花费必须是有效的数字');
@@ -188,6 +190,8 @@ class CostsController {
         
         // 验证数值字段
         $cost = trim($_POST['cost']);
+        // 替换逗号为小数点，支持国际化数字格式
+        $cost = str_replace(',', '.', $cost);
         // 检查是否是有效的数字格式：只能包含数字、一个小数点，连字符只能在开头
         if (!preg_match('/^-?\d+(\.\d+)?$/', $cost)) {
             showError('日均广告花费必须是有效的数字');
@@ -411,6 +415,8 @@ class CostsController {
         
         // 验证数值字段
         $cost = trim($row[2]);
+        // 替换逗号为小数点，支持国际化数字格式
+        $cost = str_replace(',', '.', $cost);
         if (!preg_match('/^-?\d+(\.\d+)?$/', $cost)) {
             $errors[] = "第 {$rowCount} 行：日均广告花费不是有效的数字";
             $errorCount++;
