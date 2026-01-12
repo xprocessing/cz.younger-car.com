@@ -70,29 +70,7 @@
                 </a>
             </div>
             
-            <?php if (hasPermission('users.view')): ?>
-            <div class="nav-item">
-                <a href="<?php echo APP_URL; ?>/users.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : ''; ?>">
-                    <i class="fa fa-users"></i> 用户管理
-                </a>
-            </div>
-            <?php endif; ?>
-            
-            <?php if (hasPermission('roles.view')): ?>
-            <div class="nav-item">
-                <a href="<?php echo APP_URL; ?>/roles.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'roles.php' ? 'active' : ''; ?>">
-                    <i class="fa fa-user-circle"></i> 角色管理
-                </a>
-            </div>
-            <?php endif; ?>
-            
-            <?php if (hasPermission('permissions.view')): ?>
-            <div class="nav-item">
-                <a href="<?php echo APP_URL; ?>/permissions.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'permissions.php' ? 'active' : ''; ?>">
-                    <i class="fa fa-key"></i> 权限管理
-                </a>
-            </div>
-            <?php endif; ?>
+           
             
             <?php if (isLoggedIn()): ?>
             <div class="nav-item">
@@ -169,6 +147,29 @@
             <div class="nav-item">
                 <a href="<?php echo APP_URL; ?>/costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'costs.php' ? 'active' : ''; ?>">
                     <i class="fa fa-list"></i> 广告费
+                </a>
+            </div>
+            <?php endif; ?>
+             <?php if (hasPermission('users.view')): ?>
+            <div class="nav-item">
+                <a href="<?php echo APP_URL; ?>/users.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : ''; ?>">
+                    <i class="fa fa-users"></i> 用户管理
+                </a>
+            </div>
+            <?php endif; ?>
+            
+            <?php if (hasPermission('roles.view')): ?>
+            <div class="nav-item">
+                <a href="<?php echo APP_URL; ?>/roles.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'roles.php' ? 'active' : ''; ?>">
+                    <i class="fa fa-user-circle"></i> 角色管理
+                </a>
+            </div>
+            <?php endif; ?>
+            
+            <?php if (hasPermission('permissions.view')): ?>
+            <div class="nav-item">
+                <a href="<?php echo APP_URL; ?>/permissions.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'permissions.php' ? 'active' : ''; ?>">
+                    <i class="fa fa-key"></i> 权限管理
                 </a>
             </div>
             <?php endif; ?>
