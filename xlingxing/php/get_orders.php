@@ -12,7 +12,7 @@ try {
     $apiClient = new LingXingApiClient();
     //当前时间戳，按秒
     $currentTimestamp = time();
-    $nDaysAgo=$_GET['nDaysAgo'] ?? 1;
+    $nDaysAgo=$_GET['nDaysAgo'] ?? 2;
     $oneDaysAgoTimestamp = $currentTimestamp - ($nDaysAgo * 24 * 60 * 60);
     $nDaysAgoTimestamp = $currentTimestamp - (($nDaysAgo+2) * 24 * 60 * 60);
 
@@ -20,7 +20,7 @@ try {
     // 调用POST接口示例
     $orderParams = [
         'offset' => 0,
-        'length' => 100,
+        'length' => 200,
         'order_status' => 6,
         'date_type' => 'global_purchase_time',
        'start_time' => $nDaysAgoTimestamp,
