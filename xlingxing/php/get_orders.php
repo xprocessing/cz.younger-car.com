@@ -12,6 +12,7 @@ try {
     $apiClient = new LingXingApiClient();
     //当前时间戳，按秒
     $currentTimestamp = time();
+    $nDaysAgo=$_GET['nDaysAgo'] ?? 1;
     $oneDaysAgoTimestamp = $currentTimestamp - ($nDaysAgo * 24 * 60 * 60);
     $nDaysAgoTimestamp = $currentTimestamp - (($nDaysAgo+2) * 24 * 60 * 60);
 
