@@ -21,7 +21,7 @@ try {
     $orderParams = [
         'offset' => 0,
         'length' => 100,
-        'order_status' => 4,
+        'order_status' => 6,
         'date_type' => 'global_purchase_time',
         'start_time' => $twoDaysAgoTimestamp,
         'end_time' => $currentTimestamp 
