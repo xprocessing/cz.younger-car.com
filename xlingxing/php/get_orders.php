@@ -12,9 +12,8 @@ try {
     $apiClient = new LingXingApiClient();
     //当前时间戳，按秒
     $currentTimestamp = time();
-    //前天的时间戳，按秒
-    $twoDaysAgoTimestamp = $currentTimestamp - (5 * 24 * 60 * 60);
-    //格式化为日期时间字符串
+    $oneDaysAgoTimestamp = $currentTimestamp - ($nDaysAgo * 24 * 60 * 60);
+    $nDaysAgoTimestamp = $currentTimestamp - (($nDaysAgo+2) * 24 * 60 * 60);
 
    
     // 调用POST接口示例
@@ -23,8 +22,8 @@ try {
         'length' => 100,
         'order_status' => 6,
         'date_type' => 'global_purchase_time',
-        'start_time' => $twoDaysAgoTimestamp,
-        'end_time' => $currentTimestamp 
+       'start_time' => $nDaysAgoTimestamp,
+        'end_time' => $oneDaysAgoTimestamp
     ];
     $orders = $apiClient->post('/pb/mp/order/v2/list', $orderParams);
     //print_r("订单数据：" . PHP_EOL);
