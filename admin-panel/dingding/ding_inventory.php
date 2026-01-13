@@ -17,23 +17,26 @@ $options = [
 
 $db = new PDO($dsn, DB_USER, DB_PASS, $options);
 
-// 2. 从inventory_details表获取库龄超过180天sku，且库存可用量大于10
-$sql2 = "SELECT sku, average_age, product_valid_num 
-         FROM inventory_details 
-         WHERE average_age > 180 AND product_valid_num > 10";
+// 2. 从inventory_details表获取库龄超过180天sku，且库存可用量大于10。增加仓库名称字段，通过wid对应warehouses表中name，按可用库存从高到低排序
+$sql2 = "SELECT i.sku, i.average_age, i.product_valid_num, w.name as warehouse_name
+         FROM inventory_details i
+         JOIN warehouses w ON i.wid = w.wid
+         WHERE i.average_age > 180 AND i.product_valid_num > 10
+         ORDER BY i.product_valid_num DESC";
 $stmt2 = $db->prepare($sql2);
 $stmt2->execute();
 $oldStockSkus = $stmt2->fetchAll();
 
 if (!empty($oldStockSkus)) {
     $content .= "### 库龄超过180天的SKU\n";
-    $content .= "| SKU | 平均库龄(天) | 可用库存 |\n";
-    $content .= "| --- | --- | --- |\n";
+    $content .= "| SKU | 平均库龄(天) | 可用库存 | 仓库名称 |\n";
+    $content .= "| --- | --- | --- | --- |\n";
     foreach ($oldStockSkus as $sku) {
-        $content .= sprintf("| %s | %d | %d |\n", 
+        $content .= sprintf("| %s | %d | %d | %s |\n", 
             $sku['sku'], 
             $sku['average_age'], 
-            $sku['product_valid_num']
+            $sku['product_valid_num'],
+            $sku['warehouse_name']
         );
     }
     $content .= "\n";
