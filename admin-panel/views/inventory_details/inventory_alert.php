@@ -14,11 +14,14 @@
 <!-- 批量查询表单 -->
 <div class="card mb-3">
     <div class="card-body">
-        <h5 class="card-title">批量查询SKU</h5>
+        <h5 class="card-title">批量查询SKU（支持模糊查询）</h5>
         <form method="post" action="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert">
             <div class="form-group">
-                <label for="batch_sku">输入SKU（每行一个）</label>
-                <textarea class="form-control" id="batch_sku" name="batch_sku" rows="4" placeholder="例如：\n SKU001 \n SKU002 \n SKU003"></textarea>
+                <label for="batch_sku">输入SKU（每行一个，支持模糊查询）</label>
+                <textarea class="form-control" id="batch_sku" name="batch_sku" rows="4" placeholder="例如：
+ SKU001 
+ SKU002 
+ 003"></textarea>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary mr-2">批量查询</button>

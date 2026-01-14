@@ -297,7 +297,7 @@ class InventoryDetails {
         return $stmt->fetchAll();
     }
     
-    // 根据SKU列表批量获取库存预警数据
+    // 根据SKU列表批量获取库存预警数据（支持模糊查询）
     public function getInventoryAlertBySkuList($skuList, $limit = null, $offset = 0, &$totalCount = null) {
         if (empty($skuList)) {
             $totalCount = 0;
@@ -306,8 +306,17 @@ class InventoryDetails {
         
         $thirtyDaysAgo = date('Y-m-d 00:00:00', strtotime('-30 days'));
         
-        // 构建IN子句的参数占位符
-        $placeholders = implode(',', array_fill(0, count($skuList), '?'));
+        // 构建模糊查询条件
+        $likeConditions = [];
+        $fuzzySkuList = [];
+        
+        foreach ($skuList as $sku) {
+            $likeConditions[] = "?";
+            $fuzzySkuList[] = '%' . $sku . '%';
+        }
+        
+        $likePlaceholders = implode(' OR i.sku LIKE ', $likeConditions);
+        $likePlaceholdersOp = implode(' OR op.local_sku LIKE ', $likeConditions);
         
         // 获取总记录数
         $countSql = "SELECT COUNT(*) as total_count
@@ -315,21 +324,21 @@ class InventoryDetails {
                          SELECT 
                                 combined_data.sku
                          FROM (
-                             -- 从inventory_details获取指定SKU的所有仓库数据
+                             -- 从inventory_details获取匹配SKU的所有仓库数据
                              SELECT i.sku COLLATE utf8mb4_unicode_ci as sku,
                                     i.wid,
                                     i.product_valid_num,
                                     i.product_onway
                              FROM inventory_details i
-                             WHERE i.sku IN ($placeholders)
+                             WHERE i.sku LIKE $likePlaceholders
                              UNION ALL
-                             -- 从order_profit获取指定SKU最近30天的出库记录
+                             -- 从order_profit获取匹配SKU最近30天的出库记录
                              SELECT op.local_sku COLLATE utf8mb4_unicode_ci as sku,
                                     0 as wid,
                                     0 as product_valid_num,
                                     0 as product_onway
                              FROM order_profit op
-                             WHERE op.local_sku IN ($placeholders)
+                             WHERE op.local_sku LIKE $likePlaceholdersOp
                              AND op.global_purchase_time >= ?
                          ) AS combined_data
                          LEFT JOIN (
@@ -348,7 +357,7 @@ class InventoryDetails {
                      ) AS subquery";
         
         // 准备参数列表
-        $countParams = array_merge($skuList, $skuList, [$thirtyDaysAgo, $thirtyDaysAgo]);
+        $countParams = array_merge($fuzzySkuList, $fuzzySkuList, [$thirtyDaysAgo, $thirtyDaysAgo]);
         $countStmt = $this->db->query($countSql, $countParams);
         $totalCount = $countStmt->fetchColumn();
         
@@ -363,21 +372,21 @@ class InventoryDetails {
                        COALESCE(p.product_name, '') as product_name,
                        COALESCE(p.pic_url, '') as product_image
                 FROM (
-                    -- 从inventory_details获取指定SKU的所有仓库数据
+                    -- 从inventory_details获取匹配SKU的所有仓库数据
                     SELECT i.sku COLLATE utf8mb4_unicode_ci as sku,
                            i.wid,
                            i.product_valid_num,
                            i.product_onway
                     FROM inventory_details i
-                    WHERE i.sku IN ($placeholders)
+                    WHERE i.sku LIKE $likePlaceholders
                     UNION ALL
-                    -- 从order_profit获取指定SKU最近30天的出库记录
+                    -- 从order_profit获取匹配SKU最近30天的出库记录
                     SELECT op.local_sku COLLATE utf8mb4_unicode_ci as sku,
                            0 as wid,
                            0 as product_valid_num,
                            0 as product_onway
                     FROM order_profit op
-                    WHERE op.local_sku IN ($placeholders)
+                    WHERE op.local_sku LIKE $likePlaceholdersOp
                     AND op.global_purchase_time >= ?
                 ) AS combined_data
                 LEFT JOIN (
@@ -394,7 +403,7 @@ class InventoryDetails {
                 ORDER BY combined_data.sku ASC";
         
         // 准备参数列表
-        $params = array_merge($skuList, $skuList, [$thirtyDaysAgo, $thirtyDaysAgo]);
+        $params = array_merge($fuzzySkuList, $fuzzySkuList, [$thirtyDaysAgo, $thirtyDaysAgo]);
         
         // 添加分页
         if ($limit) {
