@@ -358,7 +358,7 @@ class InventoryDetails {
                          HAVING SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_valid_num ELSE 0 END) > 0 OR 
                                 SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_onway ELSE 0 END) > 0 OR 
                                 SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_valid_num ELSE 0 END) > 0 OR 
-                                SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_onway ELSE 0 END) > 0 OR 
+                                SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.quantity_receive ELSE 0 END) > 0 OR 
                                 COALESCE(MAX(op.outbound_30days), 0) > 0
                      ) AS subquery";
         
@@ -382,7 +382,8 @@ class InventoryDetails {
                     SELECT i.sku COLLATE utf8mb4_unicode_ci as sku,
                            i.wid,
                            i.product_valid_num,
-                           i.product_onway
+                           i.product_onway,
+                           i.quantity_receive
                     FROM inventory_details i
                     WHERE i.sku LIKE $likePlaceholders
                     UNION ALL
