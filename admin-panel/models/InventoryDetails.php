@@ -247,4 +247,60 @@ class InventoryDetails {
         $stmt = $this->db->query($sql, [$thirtyDaysAgo, $thirtyDaysAgo]);
         return $stmt->fetchAll();
     }
+    
+    // 根据SKU列表批量获取库存预警数据
+    public function getInventoryAlertBySkuList($skuList) {
+        if (empty($skuList)) {
+            return [];
+        }
+        
+        $thirtyDaysAgo = date('Y-m-d 00:00:00', strtotime('-30 days'));
+        
+        // 构建IN子句的参数占位符
+        $placeholders = implode(',', array_fill(0, count($skuList), '?'));
+        
+        $sql = "SELECT 
+                       combined_data.sku,
+                       SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_valid_num ELSE 0 END) as product_valid_num_excluding_wenzhou,
+                       SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_onway ELSE 0 END) as product_onway_excluding_wenzhou,
+                       SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_valid_num ELSE 0 END) as product_valid_num_wenzhou,
+                       SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_onway ELSE 0 END) as product_onway_wenzhou,
+                       COALESCE(MAX(op.outbound_30days), 0) as outbound_30days,
+                       COALESCE(p.product_name, '') as product_name,
+                       COALESCE(p.pic_url, '') as product_image
+                FROM (
+                    -- 从inventory_details获取指定SKU的所有仓库数据
+                    SELECT i.sku COLLATE utf8mb4_unicode_ci as sku,
+                           i.wid,
+                           i.product_valid_num,
+                           i.product_onway
+                    FROM inventory_details i
+                    WHERE i.sku IN ($placeholders)
+                    UNION ALL
+                    -- 从order_profit获取指定SKU最近30天的出库记录
+                    SELECT op.local_sku COLLATE utf8mb4_unicode_ci as sku,
+                           0 as wid,
+                           0 as product_valid_num,
+                           0 as product_onway
+                    FROM order_profit op
+                    WHERE op.local_sku IN ($placeholders)
+                    AND op.global_purchase_time >= ?
+                ) AS combined_data
+                LEFT JOIN (
+                    SELECT local_sku COLLATE utf8mb4_unicode_ci as local_sku,
+                           COUNT(*) as outbound_30days
+                    FROM order_profit
+                    WHERE global_purchase_time >= ?
+                    GROUP BY local_sku
+                ) op ON combined_data.sku = op.local_sku
+                LEFT JOIN products p ON combined_data.sku = p.sku
+                GROUP BY combined_data.sku
+                ORDER BY combined_data.sku ASC";
+        
+        // 准备参数列表
+        $params = array_merge($skuList, $skuList, [$thirtyDaysAgo, $thirtyDaysAgo]);
+        
+        $stmt = $this->db->query($sql, $params);
+        return $stmt->fetchAll();
+    }
 }

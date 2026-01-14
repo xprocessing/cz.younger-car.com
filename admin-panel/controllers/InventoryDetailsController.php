@@ -234,7 +234,29 @@ class InventoryDetailsController {
         header('Cache-Control: post-check=0, pre-check=0', false);
         header('Pragma: no-cache');
         
-        $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert();
+        // 检查是否提交了批量查询表单
+        $batchSku = null;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['batch_sku'])) {
+            // 获取SKU列表（每行一个）
+            $batchSku = trim($_POST['batch_sku']);
+            // 按行分割，并过滤掉空行
+            $skuList = array_filter(explode("\n", $batchSku), function($item) {
+                return !empty(trim($item));
+            });
+            // 去除每个SKU的前后空格
+            $skuList = array_map('trim', $skuList);
+            
+            // 调用批量查询方法
+            $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlertBySkuList($skuList);
+            
+            // 保存批量查询的SKU列表到会话中，用于导出功能
+            $_SESSION['batch_sku_list'] = $skuList;
+        } else {
+            // 如果没有提交批量查询，则获取所有库存预警数据
+            $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert();
+            // 清除会话中的批量查询数据
+            unset($_SESSION['batch_sku_list']);
+        }
         
         // 再次过滤掉全零的SKU，作为双重保障
         $filteredInventoryAlerts = [];
@@ -260,7 +282,14 @@ class InventoryDetailsController {
             redirect(APP_URL . '/dashboard.php');
         }
         
-        $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert();
+        // 检查会话中是否有批量查询的SKU列表
+        if (isset($_SESSION['batch_sku_list']) && !empty($_SESSION['batch_sku_list'])) {
+            // 使用批量查询方法获取数据
+            $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlertBySkuList($_SESSION['batch_sku_list']);
+        } else {
+            // 如果没有批量查询，则获取所有库存预警数据
+            $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert();
+        }
         
         // 再次过滤掉全零的SKU，作为双重保障
         $filteredInventoryAlerts = [];

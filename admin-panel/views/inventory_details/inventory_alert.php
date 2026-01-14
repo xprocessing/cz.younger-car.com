@@ -10,37 +10,31 @@
     </div>
 </div>
 
+<!-- 批量查询表单 -->
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">批量查询SKU</h5>
+        <form method="post" action="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert">
+            <div class="form-group">
+                <label for="batch_sku">输入SKU（每行一个）</label>
+                <textarea class="form-control" id="batch_sku" name="batch_sku" rows="6" placeholder="例如：\nSKU001\nSKU002\nSKU003"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary mr-2">批量查询</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('batch_sku').value = '';">清空</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <?php if (!empty($inventoryAlerts)): ?>
     <div class="row mb-3">
-        <div class="col-md-3">
-            <div class="card bg-primary text-white">
-                <div class="card-body">
-                    <h5 class="card-title">SKU总数</h5>
-                    <h2 class="mb-0"><?php echo count($inventoryAlerts); ?></h2>
-                </div>
-            </div>
-        </div>
+       
         <div class="col-md-3">
             <div class="card bg-success text-white">
                 <div class="card-body">
                     <h5 class="card-title">总可用量（不含温州仓）</h5>
                     <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_valid_num_excluding_wenzhou'))); ?></h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <h5 class="card-title">总可用量（温州仓）</h5>
-                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_valid_num_wenzhou'))); ?></h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card bg-info text-white">
-                <div class="card-body">
-                    <h5 class="card-title">最近30天总出库量</h5>
-                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'outbound_30days'))); ?></h2>
                 </div>
             </div>
         </div>
@@ -53,6 +47,14 @@
             </div>
         </div>
         <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">总可用量（温州仓）</h5>
+                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_valid_num_wenzhou'))); ?></h2>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-3">
             <div class="card bg-warning text-dark">
                 <div class="card-body">
                     <h5 class="card-title">总调拨在途（温州仓）</h5>
@@ -60,6 +62,24 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">最近30天总出库量</h5>
+                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'outbound_30days'))); ?></h2>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">SKU总数</h5>
+                    <h2 class="mb-0"><?php echo count($inventoryAlerts); ?></h2>
+                </div>
+            </div>
+        </div>
+        
+       
     </div>
 
     <div class="card mb-3">
