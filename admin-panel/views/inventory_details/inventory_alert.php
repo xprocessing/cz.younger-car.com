@@ -35,7 +35,7 @@
             <div class="card bg-success text-white">
                 <div class="card-body">
                     <h5 class="card-title">总可用量（不含温州仓）</h5>
-                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_valid_num_excluding_wenzhou'))); ?></h2>
+                    <h2 class="mb-0"><?php echo number_format($totalStats['product_valid_num_excluding_wenzhou']); ?></h2>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
             <div class="card bg-warning text-dark">
                 <div class="card-body">
                     <h5 class="card-title">总调拨在途（不含温州仓）</h5>
-                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_onway_excluding_wenzhou'))); ?></h2>
+                    <h2 class="mb-0"><?php echo number_format($totalStats['product_onway_excluding_wenzhou']); ?></h2>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
             <div class="card bg-success text-white">
                 <div class="card-body">
                     <h5 class="card-title">总可用量（温州仓）</h5>
-                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_valid_num_wenzhou'))); ?></h2>
+                    <h2 class="mb-0"><?php echo number_format($totalStats['product_valid_num_wenzhou']); ?></h2>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
             <div class="card bg-warning text-dark">
                 <div class="card-body">
                     <h5 class="card-title">总调拨在途（温州仓）</h5>
-                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_onway_wenzhou'))); ?></h2>
+                    <h2 class="mb-0"><?php echo number_format($totalStats['product_onway_wenzhou']); ?></h2>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
             <div class="card bg-info text-white">
                 <div class="card-body">
                     <h5 class="card-title">最近30天总出库量</h5>
-                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'outbound_30days'))); ?></h2>
+                    <h2 class="mb-0"><?php echo number_format($totalStats['outbound_30days']); ?></h2>
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@
             <div class="card bg-primary text-white">
                 <div class="card-body">
                     <h5 class="card-title">SKU总数</h5>
-                    <h2 class="mb-0"><?php echo count($inventoryAlerts); ?></h2>
+                    <h2 class="mb-0"><?php echo $totalStats['sku_count']; ?></h2>
                 </div>
             </div>
         </div>

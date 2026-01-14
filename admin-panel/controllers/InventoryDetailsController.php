@@ -287,6 +287,41 @@ class InventoryDetailsController {
         }
         $inventoryAlerts = $filteredInventoryAlerts;
         
+        // 获取所有数据的统计信息，用于显示在卡片中
+        // 无论是否分页，都获取所有数据的总和
+        $totalStats = [];
+        
+        // 检查是否有批量查询条件
+        $hasBatchQuery = false;
+        $skuList = [];
+        
+        // 如果是POST请求且有批量查询数据
+        if (isset($batchSku) && !empty($batchSku)) {
+            $hasBatchQuery = true;
+        }
+        // 或者会话中有批量查询的SKU列表
+        elseif (isset($_SESSION['batch_sku_list']) && !empty($_SESSION['batch_sku_list'])) {
+            $hasBatchQuery = true;
+            $skuList = $_SESSION['batch_sku_list'];
+        }
+        
+        // 根据是否有批量查询条件，获取对应的统计数据
+        if ($hasBatchQuery) {
+            // 如果有批量查询条件，获取所有符合条件的SKU的统计数据
+            $allInventoryAlerts = $this->inventoryDetailsModel->getInventoryAlertBySkuList($skuList);
+        } else {
+            // 否则获取所有库存预警数据的统计信息
+            $allInventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert();
+        }
+        
+        // 计算所有数据的总和
+        $totalStats['product_valid_num_excluding_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_valid_num_excluding_wenzhou'));
+        $totalStats['product_onway_excluding_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_onway_excluding_wenzhou'));
+        $totalStats['product_valid_num_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_valid_num_wenzhou'));
+        $totalStats['product_onway_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_onway_wenzhou'));
+        $totalStats['outbound_30days'] = array_sum(array_column($allInventoryAlerts, 'outbound_30days'));
+        $totalStats['sku_count'] = count($allInventoryAlerts);
+        
         $title = '库存预警（海外仓）';
         
         // 准备分页相关的变量
