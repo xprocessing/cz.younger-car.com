@@ -419,7 +419,27 @@ CREATE TABLE `inventory_details` (
   KEY `idx_sku_wid` (`sku`,`wid`) USING BTREE COMMENT 'SKU+仓库ID联合索引，提升业务查询效率'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='库存详情表-原生JSON格式存储，适配MySQL5.7.40，无语法错误';
 
----创建唯一索引 仓库id+sku唯一索引。
+--- 创建AIGC模板表
+CREATE TABLE IF NOT EXISTS aigc_templates (
+    -- 主键id，自增整数
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    -- 模板名称，非空，最大100字符
+    name VARCHAR(100) NOT NULL COMMENT '模板名称',
+    -- 模板类型，用于区分不同功能的模板
+    template_type ENUM('remove_defect', 'crop', 'resize', 'watermark', 'face_swap', 'multi_angle', 'custom') NOT NULL COMMENT '模板类型',
+    -- 模板参数，JSON格式存储具体配置
+    params JSON NOT NULL COMMENT '模板参数（JSON格式）',
+    -- 模板描述，允许为空
+    description TEXT DEFAULT NULL COMMENT '模板描述',
+    -- 创建时间，默认当前时间
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    -- 更新时间，默认当前时间，更新时自动刷新
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    -- 设置主键
+    PRIMARY KEY (id),
+    -- 添加唯一索引
+    UNIQUE KEY uk_name_type (name, template_type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理模板表';
 ALTER TABLE `inventory_details`
 ADD UNIQUE KEY `uk_wid_sku` (`wid`, `sku`);
 
@@ -604,3 +624,5 @@ CREATE TABLE IF NOT EXISTS costs (
     -- 可选：添加联合索引，避免同一平台、店铺、日期的重复数据
     UNIQUE KEY uk_platform_store_date (platform_name, store_name, date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='广告花费数据表';
+
+--创建
