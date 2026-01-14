@@ -74,8 +74,11 @@ try {
 
     // 开启事务
     $pdo->beginTransaction();
-
+// 跳过 quantity_receive 为 0 或空字符串的记录
     foreach ($newArray as $row) {
+        if (empty($row['quantity_receive']) && $row['quantity_receive'] !== '0') {
+            continue;
+        }
         $stmt->execute([
             ':wid' => $row['wid'],
             ':sku' => $row['sku'],
@@ -97,7 +100,7 @@ try {
 
 
 
-//测试链接https://cz.younger-car.com/xlingxing/php/get_purchaseOrderList2db.php?nDaysAgo=200
+//测试链接https://cz.younger-car.com/xlingxing/php/get_purchaseOrderList2db.php?nDaysAgo=300
 
 
 ?>

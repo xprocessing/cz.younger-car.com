@@ -361,7 +361,7 @@ class InventoryDetailsController {
         $filteredInventoryAlerts = [];
         foreach ($inventoryAlerts as $alert) {
             if ($alert['product_valid_num_excluding_wenzhou'] > 0 || $alert['product_onway_excluding_wenzhou'] > 0 || 
-                $alert['product_valid_num_wenzhou'] > 0 || $alert['product_onway_wenzhou'] > 0 || $alert['outbound_30days'] > 0) {
+                $alert['product_valid_num_wenzhou'] > 0 || $alert['quantity_receive_wenzhou'] > 0 || $alert['outbound_30days'] > 0) {
                 $filteredInventoryAlerts[] = $alert;
             }
         }
