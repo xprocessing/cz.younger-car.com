@@ -66,11 +66,10 @@ try {
         ]
     );
 
-    // 准备SQL：根据wid+sku联合主键更新quantity_receive
-    $sql = "INSERT INTO inventory_details (wid, sku, quantity_receive)
-            VALUES (:wid, :sku, :quantity_receive)
-            ON DUPLICATE KEY UPDATE
-                quantity_receive = VALUES(quantity_receive)";
+    // 准备SQL：仅更新已存在的wid+sku对应的quantity_receive
+    $sql = "UPDATE inventory_details 
+            SET quantity_receive = :quantity_receive
+            WHERE wid = :wid AND sku = :sku";
     $stmt = $pdo->prepare($sql);
 
     // 开启事务
