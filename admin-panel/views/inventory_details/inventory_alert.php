@@ -1,8 +1,11 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4><?php echo $title; ?></h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/inventory_details.php" class="btn btn-outline-secondary">
+        <a href="<?php echo APP_URL; ?>/inventory_details.php" class="btn btn-outline-secondary mr-2">
             <i class="fa fa-arrow-left"></i> 返回列表
+        </a>
+        <a href="<?php echo APP_URL; ?>/inventory_details.php?action=export_inventory_alert" class="btn btn-outline-primary">
+            <i class="fa fa-download"></i> 导出数据
         </a>
     </div>
 </div>

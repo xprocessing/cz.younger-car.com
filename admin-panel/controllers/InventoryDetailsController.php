@@ -251,4 +251,60 @@ class InventoryDetailsController {
         include VIEWS_DIR . '/inventory_details/inventory_alert.php';
         include VIEWS_DIR . '/layouts/footer.php';
     }
+    
+    // 导出库存预警数据
+    public function exportInventoryAlert() {
+        if (!hasPermission('inventory_details.view')) {
+            showError('您没有权限访问此页面');
+            redirect(APP_URL . '/dashboard.php');
+        }
+        
+        $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert();
+        
+        // 再次过滤掉全零的SKU，作为双重保障
+        $filteredInventoryAlerts = [];
+        foreach ($inventoryAlerts as $alert) {
+            if ($alert['product_valid_num'] > 0 || $alert['quantity_receive'] > 0 || $alert['product_onway'] > 0 || $alert['outbound_30days'] > 0) {
+                $filteredInventoryAlerts[] = $alert;
+            }
+        }
+        $inventoryAlerts = $filteredInventoryAlerts;
+        
+        // 设置CSV输出头
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="inventory_alert_export_' . date('Y-m-d_H-i-s') . '.csv"');
+        
+        // 打开输出流
+        $output = fopen('php://output', 'w');
+        
+        // 设置UTF-8 BOM，解决中文乱码问题
+        fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+        
+        // 写入CSV头部
+        $header = [
+            'SKU',
+            '商品名称',
+            '可用量',
+            '待到货量',
+            '调拨在途',
+            '最近30天出库量'
+        ];
+        fputcsv($output, $header);
+        
+        // 写入数据
+        foreach ($inventoryAlerts as $alert) {
+            $row = [
+                $alert['sku'],
+                $alert['product_name'] ?? '',
+                $alert['product_valid_num'],
+                $alert['quantity_receive'],
+                $alert['product_onway'],
+                $alert['outbound_30days']
+            ];
+            fputcsv($output, $row);
+        }
+        
+        fclose($output);
+        exit;
+    }
 }

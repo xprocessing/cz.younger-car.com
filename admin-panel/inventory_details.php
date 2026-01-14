@@ -34,6 +34,9 @@ switch ($action) {
     case 'inventory_alert':
         $inventoryDetailsController->inventoryAlert();
         break;
+    case 'export_inventory_alert':
+        $inventoryDetailsController->exportInventoryAlert();
+        break;
     default:
         $inventoryDetailsController->index();
         break;

@@ -1,4 +1,5 @@
 <?php
+require_once APP_ROOT . '/config/config.php';
 require_once APP_ROOT . '/includes/database.php';
 
 class AIGC {
