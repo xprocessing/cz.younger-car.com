@@ -17,7 +17,7 @@
         <form method="post" action="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert">
             <div class="form-group">
                 <label for="batch_sku">输入SKU（每行一个）</label>
-                <textarea class="form-control" id="batch_sku" name="batch_sku" rows="6" placeholder="例如：\nSKU001\nSKU002\nSKU003"></textarea>
+                <textarea class="form-control" id="batch_sku" name="batch_sku" rows="4" placeholder="例如：\n SKU001 \n SKU002 \n SKU003"></textarea>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary mr-2">批量查询</button>
