@@ -23,8 +23,16 @@
         <div class="col-md-3">
             <div class="card bg-success text-white">
                 <div class="card-body">
-                    <h5 class="card-title">总可用量</h5>
-                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_valid_num'))); ?></h2>
+                    <h5 class="card-title">总可用量（不含温州仓）</h5>
+                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_valid_num_excluding_wenzhou'))); ?></h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">总可用量（温州仓）</h5>
+                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_valid_num_wenzhou'))); ?></h2>
                 </div>
             </div>
         </div>
@@ -39,8 +47,16 @@
         <div class="col-md-3">
             <div class="card bg-warning text-dark">
                 <div class="card-body">
-                    <h5 class="card-title">总调拨在途</h5>
-                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_onway'))); ?></h2>
+                    <h5 class="card-title">总调拨在途（不含温州仓）</h5>
+                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_onway_excluding_wenzhou'))); ?></h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">总调拨在途（温州仓）</h5>
+                    <h2 class="mb-0"><?php echo number_format(array_sum(array_column($inventoryAlerts, 'product_onway_wenzhou'))); ?></h2>
                 </div>
             </div>
         </div>
@@ -56,9 +72,10 @@
                             <th>SKU</th>
                             <th>商品名称</th>
                             <th>商品图片</th>
-                            <th>可用量</th>
-                            <th>待到货量</th>
-                            <th>调拨在途</th>
+                            <th>可用量（不含温州仓）</th>
+                            <th>调拨在途（不含温州仓）</th>
+                            <th>可用量（温州仓）</th>
+                            <th>调拨在途（温州仓）</th>
                             <th>最近30天出库量</th>
                         </tr>
                     </thead>
@@ -79,7 +96,7 @@
                                 </td>
                                 <td>
                                     <?php 
-                                    $productValidNum = $item['product_valid_num'];
+                                    $productValidNum = $item['product_valid_num_excluding_wenzhou'];
                                     $outbound30Days = $item['outbound_30days'];
                                     if ($productValidNum > 0 && $outbound30Days > 0) {
                                         $daysOfStock = round($productValidNum / $outbound30Days * 30, 1);
@@ -95,8 +112,10 @@
                                     }
                                     ?>
                                 </td>
-                                <td><?php echo number_format($item['quantity_receive']); ?></td>
-                                <td><?php echo number_format($item['product_onway']); ?></td>
+
+                                <td><?php echo number_format($item['product_onway_excluding_wenzhou']); ?></td>
+                                <td><?php echo number_format($item['product_valid_num_wenzhou']); ?></td>
+                                <td><?php echo number_format($item['product_onway_wenzhou']); ?></td>
                                 <td><?php echo number_format($item['outbound_30days']); ?></td>
                             </tr>
                         <?php endforeach; ?>

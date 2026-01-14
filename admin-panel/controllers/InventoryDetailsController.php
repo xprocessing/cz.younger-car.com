@@ -284,9 +284,10 @@ class InventoryDetailsController {
         $header = [
             'SKU',
             '商品名称',
-            '可用量',
-            '待到货量',
-            '调拨在途',
+            '可用量（不含温州仓）',
+            '调拨在途（不含温州仓）',
+            '可用量（温州仓）',
+            '调拨在途（温州仓）',
             '最近30天出库量'
         ];
         fputcsv($output, $header);
@@ -296,9 +297,10 @@ class InventoryDetailsController {
             $row = [
                 $alert['sku'],
                 $alert['product_name'] ?? '',
-                $alert['product_valid_num'],
-                $alert['quantity_receive'],
-                $alert['product_onway'],
+                $alert['product_valid_num_excluding_wenzhou'],
+                $alert['product_onway_excluding_wenzhou'],
+                $alert['product_valid_num_wenzhou'],
+                $alert['product_onway_wenzhou'],
                 $alert['outbound_30days']
             ];
             fputcsv($output, $row);

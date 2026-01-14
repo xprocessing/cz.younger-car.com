@@ -206,26 +206,27 @@ class InventoryDetails {
     public function getInventoryAlert() {
         $thirtyDaysAgo = date('Y-m-d 00:00:00', strtotime('-30 days'));
         
-        $sql = "SELECT combined_data.sku,
-                       SUM(combined_data.product_valid_num) as product_valid_num,
-                       SUM(combined_data.quantity_receive) as quantity_receive,
-                       SUM(combined_data.product_onway) as product_onway,
+        $sql = "SELECT 
+                       combined_data.sku,
+                       SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_valid_num ELSE 0 END) as product_valid_num_excluding_wenzhou,
+                       SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_onway ELSE 0 END) as product_onway_excluding_wenzhou,
+                       SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_valid_num ELSE 0 END) as product_valid_num_wenzhou,
+                       SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_onway ELSE 0 END) as product_onway_wenzhou,
                        COALESCE(MAX(op.outbound_30days), 0) as outbound_30days,
                        COALESCE(p.product_name, '') as product_name,
                        COALESCE(p.pic_url, '') as product_image
                 FROM (
-                    -- 从inventory_details获取基础数据
+                    -- 从inventory_details获取所有仓库数据
                     SELECT i.sku COLLATE utf8mb4_unicode_ci as sku,
+                           i.wid,
                            i.product_valid_num,
-                           i.quantity_receive,
                            i.product_onway
                     FROM inventory_details i
-                    WHERE i.wid != 5693
                     UNION ALL
                     -- 从order_profit获取最近30天有出库记录的SKU
                     SELECT op.local_sku COLLATE utf8mb4_unicode_ci as sku,
+                           0 as wid,
                            0 as product_valid_num,
-                           0 as quantity_receive,
                            0 as product_onway
                     FROM order_profit op
                     WHERE op.global_purchase_time >= ?
@@ -239,7 +240,8 @@ class InventoryDetails {
                 ) op ON combined_data.sku = op.local_sku
                 LEFT JOIN products p ON combined_data.sku = p.sku
                 GROUP BY combined_data.sku
-                HAVING product_valid_num > 0 OR quantity_receive > 0 OR product_onway > 0 OR outbound_30days > 0
+                HAVING product_valid_num_excluding_wenzhou > 0 OR product_onway_excluding_wenzhou > 0 OR 
+                       product_valid_num_wenzhou > 0 OR product_onway_wenzhou > 0 OR outbound_30days > 0
                 ORDER BY outbound_30days DESC, combined_data.sku ASC";
         
         $stmt = $this->db->query($sql, [$thirtyDaysAgo, $thirtyDaysAgo]);
