@@ -285,7 +285,7 @@ class InventoryDetailsController {
         $filteredInventoryAlerts = [];
         foreach ($inventoryAlerts as $alert) {
             if ($alert['product_valid_num_excluding_wenzhou'] > 0 || $alert['product_onway_excluding_wenzhou'] > 0 || 
-                $alert['product_valid_num_wenzhou'] > 0 || $alert['product_onway_wenzhou'] > 0 || $alert['outbound_30days'] > 0) {
+                $alert['product_valid_num_wenzhou'] > 0 || $alert['quantity_receive_wenzhou'] > 0 || $alert['outbound_30days'] > 0) {
                 $filteredInventoryAlerts[] = $alert;
             }
         }
@@ -320,7 +320,7 @@ class InventoryDetailsController {
         $totalStats['product_valid_num_excluding_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_valid_num_excluding_wenzhou'));
         $totalStats['product_onway_excluding_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_onway_excluding_wenzhou'));
         $totalStats['product_valid_num_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_valid_num_wenzhou'));
-        $totalStats['product_onway_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_onway_wenzhou'));
+        $totalStats['quantity_receive_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'quantity_receive_wenzhou'));
         $totalStats['outbound_30days'] = array_sum(array_column($allInventoryAlerts, 'outbound_30days'));
         $totalStats['sku_count'] = count($allInventoryAlerts);
         
@@ -384,7 +384,7 @@ class InventoryDetailsController {
             '可用量（不含温州仓）',
             '调拨在途（不含温州仓）',
             '可用量（温州仓）',
-            '调拨在途（温州仓）',
+            '待到货量（温州仓）',
             '最近30天出库量'
         ];
         fputcsv($output, $header);
@@ -397,7 +397,7 @@ class InventoryDetailsController {
                 $alert['product_valid_num_excluding_wenzhou'],
                 $alert['product_onway_excluding_wenzhou'],
                 $alert['product_valid_num_wenzhou'],
-                $alert['product_onway_wenzhou'],
+                $alert['quantity_receive_wenzhou'],
                 $alert['outbound_30days']
             ];
             fputcsv($output, $row);

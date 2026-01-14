@@ -86,7 +86,7 @@ try {
     // 提交事务
     $pdo->commit();
 
-    echo json_encode(['status' => 'success', 'message' => '库存入库数量已更新'], JSON_UNESCAPED_UNICODE);
+    echo json_encode(['status' => 'success', 'message' => '库存入库数量已更新' . count($newArray) . '条'], JSON_UNESCAPED_UNICODE);
 } catch (PDOException $e) {
     // 回滚事务
     if (isset($pdo) && $pdo->inTransaction()) {
@@ -97,6 +97,7 @@ try {
 
 
 
+//测试链接https://cz.younger-car.com/xlingxing/php/get_purchaseOrderList2db.php?nDaysAgo=200
 
 
 ?>

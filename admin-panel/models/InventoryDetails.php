@@ -216,14 +216,16 @@ class InventoryDetails {
                              SELECT i.sku COLLATE utf8mb4_unicode_ci as sku,
                                     i.wid,
                                     i.product_valid_num,
-                                    i.product_onway
+                                    i.product_onway,
+                                    i.quantity_receive
                              FROM inventory_details i
                              UNION ALL
                              -- 从order_profit获取最近30天有出库记录的SKU
                              SELECT op.local_sku COLLATE utf8mb4_unicode_ci as sku,
                                     0 as wid,
                                     0 as product_valid_num,
-                                    0 as product_onway
+                                    0 as product_onway,
+                                    0 as quantity_receive
                              FROM order_profit op
                              WHERE op.global_purchase_time >= ?
                          ) AS combined_data
@@ -238,7 +240,7 @@ class InventoryDetails {
                          HAVING SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_valid_num ELSE 0 END) > 0 OR 
                                 SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_onway ELSE 0 END) > 0 OR 
                                 SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_valid_num ELSE 0 END) > 0 OR 
-                                SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_onway ELSE 0 END) > 0 OR 
+                                SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.quantity_receive ELSE 0 END) > 0 OR 
                                 COALESCE(MAX(op.outbound_30days), 0) > 0
                      ) AS subquery";
         
@@ -251,7 +253,7 @@ class InventoryDetails {
                        SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_valid_num ELSE 0 END) as product_valid_num_excluding_wenzhou,
                        SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_onway ELSE 0 END) as product_onway_excluding_wenzhou,
                        SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_valid_num ELSE 0 END) as product_valid_num_wenzhou,
-                       SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_onway ELSE 0 END) as product_onway_wenzhou,
+                       SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.quantity_receive ELSE 0 END) as quantity_receive_wenzhou,
                        COALESCE(MAX(op.outbound_30days), 0) as outbound_30days,
                        COALESCE(p.product_name, '') as product_name,
                        COALESCE(p.pic_url, '') as product_image
@@ -267,7 +269,8 @@ class InventoryDetails {
                     SELECT op.local_sku COLLATE utf8mb4_unicode_ci as sku,
                            0 as wid,
                            0 as product_valid_num,
-                           0 as product_onway
+                           0 as product_onway,
+                           0 as quantity_receive
                     FROM order_profit op
                     WHERE op.global_purchase_time >= ?
                 ) AS combined_data
@@ -281,7 +284,7 @@ class InventoryDetails {
                 LEFT JOIN products p ON combined_data.sku = p.sku
                 GROUP BY combined_data.sku
                 HAVING product_valid_num_excluding_wenzhou > 0 OR product_onway_excluding_wenzhou > 0 OR 
-                       product_valid_num_wenzhou > 0 OR product_onway_wenzhou > 0 OR outbound_30days > 0
+                       product_valid_num_wenzhou > 0 OR quantity_receive_wenzhou > 0 OR outbound_30days > 0
                 ORDER BY outbound_30days DESC, combined_data.sku ASC";
         
         $params = [$thirtyDaysAgo, $thirtyDaysAgo];
@@ -336,7 +339,8 @@ class InventoryDetails {
                              SELECT op.local_sku COLLATE utf8mb4_unicode_ci as sku,
                                     0 as wid,
                                     0 as product_valid_num,
-                                    0 as product_onway
+                                    0 as product_onway,
+                                    0 as quantity_receive
                              FROM order_profit op
                              WHERE op.local_sku LIKE $likePlaceholdersOp
                              AND op.global_purchase_time >= ?
@@ -367,7 +371,7 @@ class InventoryDetails {
                        SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_valid_num ELSE 0 END) as product_valid_num_excluding_wenzhou,
                        SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_onway ELSE 0 END) as product_onway_excluding_wenzhou,
                        SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_valid_num ELSE 0 END) as product_valid_num_wenzhou,
-                       SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_onway ELSE 0 END) as product_onway_wenzhou,
+                       SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.quantity_receive ELSE 0 END) as quantity_receive_wenzhou,
                        COALESCE(MAX(op.outbound_30days), 0) as outbound_30days,
                        COALESCE(p.product_name, '') as product_name,
                        COALESCE(p.pic_url, '') as product_image
@@ -384,7 +388,8 @@ class InventoryDetails {
                     SELECT op.local_sku COLLATE utf8mb4_unicode_ci as sku,
                            0 as wid,
                            0 as product_valid_num,
-                           0 as product_onway
+                           0 as product_onway,
+                           0 as quantity_receive
                     FROM order_profit op
                     WHERE op.local_sku LIKE $likePlaceholdersOp
                     AND op.global_purchase_time >= ?

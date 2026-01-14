@@ -62,7 +62,7 @@
             <div class="card bg-warning text-dark">
                 <div class="card-body">
                     <h5 class="card-title">总待到货量（温州仓）</h5>
-                    <h2 class="mb-0"><?php echo number_format($totalStats['product_onway_wenzhou']); ?></h2>
+                    <h2 class="mb-0"><?php echo number_format($totalStats['quantity_receive_wenzhou']); ?></h2>
                 </div>
             </div>
         </div>
@@ -149,7 +149,7 @@
 
                                 <td><?php echo number_format($item['product_onway_excluding_wenzhou']); ?></td>
                                 <td><?php echo number_format($item['product_valid_num_wenzhou']); ?></td>
-                                <td><?php echo number_format($item['product_onway_wenzhou']); ?></td>
+                                <td><?php echo number_format($item['quantity_receive_wenzhou']); ?></td>
                                 <td><?php echo number_format($item['outbound_30days']); ?></td>
                             </tr>
                         <?php endforeach; ?>
