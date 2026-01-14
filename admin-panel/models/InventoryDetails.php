@@ -203,9 +203,49 @@ class InventoryDetails {
         return $stmt->fetchAll();
     }
     
-    public function getInventoryAlert() {
+    public function getInventoryAlert($limit = null, $offset = 0, &$totalCount = null) {
         $thirtyDaysAgo = date('Y-m-d 00:00:00', strtotime('-30 days'));
         
+        // 获取总记录数
+        $countSql = "SELECT COUNT(*) as total_count
+                     FROM (
+                         SELECT 
+                                combined_data.sku
+                         FROM (
+                             -- 从inventory_details获取所有仓库数据
+                             SELECT i.sku COLLATE utf8mb4_unicode_ci as sku,
+                                    i.wid,
+                                    i.product_valid_num,
+                                    i.product_onway
+                             FROM inventory_details i
+                             UNION ALL
+                             -- 从order_profit获取最近30天有出库记录的SKU
+                             SELECT op.local_sku COLLATE utf8mb4_unicode_ci as sku,
+                                    0 as wid,
+                                    0 as product_valid_num,
+                                    0 as product_onway
+                             FROM order_profit op
+                             WHERE op.global_purchase_time >= ?
+                         ) AS combined_data
+                         LEFT JOIN (
+                             SELECT local_sku COLLATE utf8mb4_unicode_ci as local_sku,
+                                    COUNT(*) as outbound_30days
+                             FROM order_profit
+                             WHERE global_purchase_time >= ?
+                             GROUP BY local_sku
+                         ) op ON combined_data.sku = op.local_sku
+                         GROUP BY combined_data.sku
+                         HAVING SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_valid_num ELSE 0 END) > 0 OR 
+                                SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_onway ELSE 0 END) > 0 OR 
+                                SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_valid_num ELSE 0 END) > 0 OR 
+                                SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_onway ELSE 0 END) > 0 OR 
+                                COALESCE(MAX(op.outbound_30days), 0) > 0
+                     ) AS subquery";
+        
+        $countStmt = $this->db->query($countSql, [$thirtyDaysAgo, $thirtyDaysAgo]);
+        $totalCount = $countStmt->fetchColumn();
+        
+        // 主查询
         $sql = "SELECT 
                        combined_data.sku,
                        SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_valid_num ELSE 0 END) as product_valid_num_excluding_wenzhou,
@@ -244,13 +284,23 @@ class InventoryDetails {
                        product_valid_num_wenzhou > 0 OR product_onway_wenzhou > 0 OR outbound_30days > 0
                 ORDER BY outbound_30days DESC, combined_data.sku ASC";
         
-        $stmt = $this->db->query($sql, [$thirtyDaysAgo, $thirtyDaysAgo]);
+        $params = [$thirtyDaysAgo, $thirtyDaysAgo];
+        
+        // 添加分页
+        if ($limit) {
+            $sql .= " LIMIT ? OFFSET ?";
+            $params[] = $limit;
+            $params[] = $offset;
+        }
+        
+        $stmt = $this->db->query($sql, $params);
         return $stmt->fetchAll();
     }
     
     // 根据SKU列表批量获取库存预警数据
-    public function getInventoryAlertBySkuList($skuList) {
+    public function getInventoryAlertBySkuList($skuList, $limit = null, $offset = 0, &$totalCount = null) {
         if (empty($skuList)) {
+            $totalCount = 0;
             return [];
         }
         
@@ -259,6 +309,50 @@ class InventoryDetails {
         // 构建IN子句的参数占位符
         $placeholders = implode(',', array_fill(0, count($skuList), '?'));
         
+        // 获取总记录数
+        $countSql = "SELECT COUNT(*) as total_count
+                     FROM (
+                         SELECT 
+                                combined_data.sku
+                         FROM (
+                             -- 从inventory_details获取指定SKU的所有仓库数据
+                             SELECT i.sku COLLATE utf8mb4_unicode_ci as sku,
+                                    i.wid,
+                                    i.product_valid_num,
+                                    i.product_onway
+                             FROM inventory_details i
+                             WHERE i.sku IN ($placeholders)
+                             UNION ALL
+                             -- 从order_profit获取指定SKU最近30天的出库记录
+                             SELECT op.local_sku COLLATE utf8mb4_unicode_ci as sku,
+                                    0 as wid,
+                                    0 as product_valid_num,
+                                    0 as product_onway
+                             FROM order_profit op
+                             WHERE op.local_sku IN ($placeholders)
+                             AND op.global_purchase_time >= ?
+                         ) AS combined_data
+                         LEFT JOIN (
+                             SELECT local_sku COLLATE utf8mb4_unicode_ci as local_sku,
+                                    COUNT(*) as outbound_30days
+                             FROM order_profit
+                             WHERE global_purchase_time >= ?
+                             GROUP BY local_sku
+                         ) op ON combined_data.sku = op.local_sku
+                         GROUP BY combined_data.sku
+                         HAVING SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_valid_num ELSE 0 END) > 0 OR 
+                                SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_onway ELSE 0 END) > 0 OR 
+                                SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_valid_num ELSE 0 END) > 0 OR 
+                                SUM(CASE WHEN combined_data.wid = 5693 THEN combined_data.product_onway ELSE 0 END) > 0 OR 
+                                COALESCE(MAX(op.outbound_30days), 0) > 0
+                     ) AS subquery";
+        
+        // 准备参数列表
+        $countParams = array_merge($skuList, $skuList, [$thirtyDaysAgo, $thirtyDaysAgo]);
+        $countStmt = $this->db->query($countSql, $countParams);
+        $totalCount = $countStmt->fetchColumn();
+        
+        // 主查询
         $sql = "SELECT 
                        combined_data.sku,
                        SUM(CASE WHEN combined_data.wid != 5693 THEN combined_data.product_valid_num ELSE 0 END) as product_valid_num_excluding_wenzhou,
@@ -295,10 +389,19 @@ class InventoryDetails {
                 ) op ON combined_data.sku = op.local_sku
                 LEFT JOIN products p ON combined_data.sku = p.sku
                 GROUP BY combined_data.sku
+                HAVING product_valid_num_excluding_wenzhou > 0 OR product_onway_excluding_wenzhou > 0 OR 
+                       product_valid_num_wenzhou > 0 OR product_onway_wenzhou > 0 OR outbound_30days > 0
                 ORDER BY combined_data.sku ASC";
         
         // 准备参数列表
         $params = array_merge($skuList, $skuList, [$thirtyDaysAgo, $thirtyDaysAgo]);
+        
+        // 添加分页
+        if ($limit) {
+            $sql .= " LIMIT ? OFFSET ?";
+            $params[] = $limit;
+            $params[] = $offset;
+        }
         
         $stmt = $this->db->query($sql, $params);
         return $stmt->fetchAll();

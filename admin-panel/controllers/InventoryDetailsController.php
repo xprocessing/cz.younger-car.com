@@ -234,6 +234,11 @@ class InventoryDetailsController {
         header('Cache-Control: post-check=0, pre-check=0', false);
         header('Pragma: no-cache');
         
+        // 分页参数处理
+        $page = max(1, (int)($_GET['page'] ?? 1));
+        $limit = max(1, min(500, (int)($_GET['limit'] ?? 100))); // 每页最多500条
+        $offset = ($page - 1) * $limit;
+        
         // 检查是否提交了批量查询表单
         $batchSku = null;
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['batch_sku'])) {
@@ -246,17 +251,29 @@ class InventoryDetailsController {
             // 去除每个SKU的前后空格
             $skuList = array_map('trim', $skuList);
             
-            // 调用批量查询方法
-            $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlertBySkuList($skuList);
+            // 调用批量查询方法，添加分页支持
+            $totalCount = 0;
+            $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlertBySkuList($skuList, $limit, $offset, $totalCount);
             
-            // 保存批量查询的SKU列表到会话中，用于导出功能
+            // 保存批量查询的SKU列表到会话中，用于导出功能和分页
             $_SESSION['batch_sku_list'] = $skuList;
         } else {
-            // 如果没有提交批量查询，则获取所有库存预警数据
-            $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert();
-            // 清除会话中的批量查询数据
-            unset($_SESSION['batch_sku_list']);
+            // 检查会话中是否有批量查询的SKU列表
+            if (isset($_SESSION['batch_sku_list']) && !empty($_SESSION['batch_sku_list'])) {
+                // 使用会话中的SKU列表进行查询
+                $totalCount = 0;
+                $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlertBySkuList($_SESSION['batch_sku_list'], $limit, $offset, $totalCount);
+            } else {
+                // 如果没有批量查询，则获取所有库存预警数据，添加分页支持
+                $totalCount = 0;
+                $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert($limit, $offset, $totalCount);
+                // 清除会话中的批量查询数据
+                unset($_SESSION['batch_sku_list']);
+            }
         }
+        
+        // 计算总页数
+        $totalPages = ceil($totalCount / $limit);
         
         // 再次过滤掉全零的SKU，作为双重保障
         $filteredInventoryAlerts = [];
@@ -269,6 +286,16 @@ class InventoryDetailsController {
         $inventoryAlerts = $filteredInventoryAlerts;
         
         $title = '库存预警（海外仓）';
+        
+        // 准备分页相关的变量
+        $pagination = [
+            'totalCount' => $totalCount,
+            'totalPages' => $totalPages,
+            'currentPage' => $page,
+            'pageSize' => $limit,
+            'nextPage' => $page < $totalPages ? $page + 1 : null,
+            'prevPage' => $page > 1 ? $page - 1 : null
+        ];
         
         include VIEWS_DIR . '/layouts/header.php';
         include VIEWS_DIR . '/inventory_details/inventory_alert.php';

@@ -853,7 +853,7 @@
                                     </td>
                                     <td data-field="small_image_url">
                                         <?php if (!empty($item['small_image_url'])): ?>
-                                            <div style="display: inline-block; position: relative; width: 50px; height: 50px; overflow: hidden;">
+                                            <div style="display: inline-block; position: relative; width: 50px; height: 50px; ">
                                                 <img src="<?php echo htmlspecialchars($item['small_image_url']); ?>" 
                                                      alt="预览图" 
                                                      class="img-thumbnail" 

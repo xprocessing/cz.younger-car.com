@@ -144,6 +144,61 @@
             </div>
         </div>
     </div>
+    
+    <?php if (isset($pagination) && $pagination['totalPages'] > 1): ?>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="text-muted">
+                共 <?php echo number_format($pagination['totalCount']); ?> 条记录，每页显示 <?php echo $pagination['pageSize']; ?> 条，共 <?php echo $pagination['totalPages']; ?> 页
+            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <?php if ($pagination['prevPage']): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert&page=<?php echo $pagination['prevPage']; ?>&limit=<?php echo $pagination['pageSize']; ?>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </span>
+                        </li>
+                    <?php endif; ?>
+                    
+                    <?php 
+                    // 显示页码，最多显示10个页码
+                    $startPage = max(1, $pagination['currentPage'] - 4);
+                    $endPage = min($pagination['totalPages'], $startPage + 9);
+                    if ($endPage - $startPage < 9) {
+                        $startPage = max(1, $endPage - 9);
+                    }
+                    
+                    for ($i = $startPage; $i <= $endPage; $i++): ?>
+                        <li class="page-item <?php echo $i == $pagination['currentPage'] ? 'active' : ''; ?>">
+                            <a class="page-link" href="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert&page=<?php echo $i; ?>&limit=<?php echo $pagination['pageSize']; ?>">
+                                <?php echo $i; ?>
+                            </a>
+                        </li>
+                    <?php endfor; ?>
+                    
+                    <?php if ($pagination['nextPage']): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert&page=<?php echo $pagination['nextPage']; ?>&limit=<?php echo $pagination['pageSize']; ?>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </span>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
+        </div>
+    <?php endif; ?>
 <?php else: ?>
     <div class="alert alert-info">
         <i class="fa fa-info-circle"></i> 没有找到库存数据
