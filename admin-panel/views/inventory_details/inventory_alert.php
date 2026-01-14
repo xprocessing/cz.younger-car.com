@@ -61,7 +61,7 @@
          <div class="col-md-2">
             <div class="card bg-warning text-dark">
                 <div class="card-body">
-                    <h5 class="card-title">总调拨在途（温州仓）</h5>
+                    <h5 class="card-title">总待到货量（温州仓）</h5>
                     <h2 class="mb-0"><?php echo number_format($totalStats['product_onway_wenzhou']); ?></h2>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                             <th>可用量<br>（不含温州仓）</th>
                             <th>调拨在途<br>（不含温州仓）</th>
                             <th>可用量<br>（温州仓）</th>
-                            <th>调拨在途<br>（温州仓）</th>
+                            <th>待到货量<br>（温州仓）</th>
                             <th>最近30天出库量</th>
                         </tr>
                     </thead>
