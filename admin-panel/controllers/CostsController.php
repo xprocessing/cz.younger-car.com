@@ -114,7 +114,8 @@ class CostsController {
             'platform_name' => $_POST['platform_name'],
             'store_name' => $_POST['store_name'],
             'cost' => $_POST['cost'],
-            'date' => $_POST['date']
+            'date' => $_POST['date'],
+            'remark' => $_POST['remark'] ?? null
         ];
         
         if ($this->costsModel->create($data)) {
@@ -217,7 +218,8 @@ class CostsController {
             'platform_name' => $_POST['platform_name'],
             'store_name' => $_POST['store_name'],
             'cost' => $_POST['cost'],
-            'date' => $_POST['date']
+            'date' => $_POST['date'],
+            'remark' => $_POST['remark'] ?? null
         ];
         
         if ($this->costsModel->update($id, $data)) {
@@ -448,7 +450,8 @@ class CostsController {
             'platform_name' => trim($row[0]),
             'store_name' => trim($row[1]),
             'cost' => trim($row[2]),
-            'date' => trim($row[3])
+            'date' => trim($row[3]),
+            'remark' => isset($row[4]) ? trim($row[4]) : null
         ];
         
         $successCount++;
@@ -488,6 +491,7 @@ class CostsController {
             '店铺名称',
             '日均广告花费（美元）',
             '日期',
+            '备注',
             '创建时间',
             '更新时间'
         ];
@@ -500,6 +504,7 @@ class CostsController {
                 $cost['store_name'],
                 $cost['cost'],
                 $cost['date'],
+                $cost['remark'] ?? '',
                 $cost['create_at'],
                 $cost['update_at']
             ];

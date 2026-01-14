@@ -95,12 +95,13 @@
                 <h5 class="mb-0">CSV格式说明</h5>
             </div>
             <div class="card-body">
-                <h6>字段顺序（共4列）：</h6>
+                <h6>字段顺序（共5列）：</h6>
                 <ol class="list-unstyled">
                     <li><strong>平台名称</strong> - platform_name</li>
                     <li><strong>店铺名称</strong> - store_name</li>
                     <li><strong>日广告花费</strong> - cost</li>
                     <li><strong>日期</strong> - date</li>
+                    <li><strong>备注</strong> - remark（可选）</li>
                     <li>特别注意：平台名字和店铺名字必须大小写一致，具体参照<a href="<?php echo APP_URL; ?>/store.php" target="_blank">店铺列表</a></li>
                 </ol>
             </div>
@@ -112,10 +113,10 @@
             </div>
             <div class="card-body">
                 <h6>CSV示例：</h6>
-                <pre class="bg-light p-2 rounded small"><code>平台名称,店铺名称,日广告花费,日期
-Amazon-FBA,Shop001,299.50,2024-01-15
-eBay,Shop002,149.75,2024-01-15
-Shopify,Shop003,89.99,2024-01-15</code></pre>
+                <pre class="bg-light p-2 rounded small"><code>平台名称,店铺名称,日广告花费,日期,备注
+Amazon-FBA,Shop001,299.50,2024-01-15,亚马逊广告推广
+eBay,Shop002,149.75,2024-01-15,eBay促销活动
+Shopify,Shop003,89.99,2024-01-15,Shopify店铺推广</code></pre>
                 
                 <div class="mt-3">
                     <button class="btn btn-sm btn-outline-primary w-100" onclick="downloadTemplate()">
@@ -148,10 +149,10 @@ Shopify,Shop003,89.99,2024-01-15</code></pre>
 <script>
 // 下载模板文件
 function downloadTemplate() {
-    const csvContent = `平台名称,店铺名称,日广告花费,日期
-Amazon-FBA,Shop001,299.50,2024-01-15
-eBay,Shop002,149.75,2024-01-15
-Shopify,Shop003,89.99,2024-01-15`;
+    const csvContent = `平台名称,店铺名称,日广告花费,日期,备注
+Amazon-FBA,Shop001,299.50,2024-01-15,亚马逊广告推广
+eBay,Shop002,149.75,2024-01-15,eBay促销活动
+Shopify,Shop003,89.99,2024-01-15,Shopify店铺推广`;
     
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
@@ -196,8 +197,8 @@ document.getElementById('excel_file').addEventListener('change', function(e) {
         }
         
         const headerColumns = lines[0].split(',').length;
-        if (headerColumns !== 4) {
-            alert('文件格式不正确，应有4列，实际有' + headerColumns + '列');
+        if (headerColumns !== 5) {
+            alert('文件格式不正确，应有5列，实际有' + headerColumns + '列');
             e.target.value = '';
             return;
         }

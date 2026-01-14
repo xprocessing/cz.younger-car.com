@@ -61,6 +61,17 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="remark" class="form-label">备注</label>
+                                <textarea class="form-control" id="remark" name="remark" rows="3"
+                                          placeholder="请输入备注信息" maxlength="255"><?php echo htmlspecialchars($cost['remark'] ?? ''); ?></textarea>
+                                <div class="form-text">可选，最多255个字符</div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label">更新时间</label>
                         <div class="form-control-plaintext">

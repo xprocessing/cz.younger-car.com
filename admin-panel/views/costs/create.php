@@ -56,6 +56,17 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="remark" class="form-label">备注</label>
+                                <textarea class="form-control" id="remark" name="remark" rows="3"
+                                          placeholder="请输入备注信息" maxlength="255"></textarea>
+                                <div class="form-text">可选，最多255个字符</div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a href="<?php echo APP_URL; ?>/costs.php" class="btn btn-secondary me-md-2">
                             <i class="fa fa-times"></i> 取消
@@ -117,11 +128,12 @@ function setSampleData() {
     document.getElementById('store_name').value = 'US Store 1';
     document.getElementById('cost').value = '250.50';
     document.getElementById('date').value = new Date().toISOString().slice(0, 10);
+    document.getElementById('remark').value = '示例备注信息';
 }
 
 // 清空表单
 function clearForm() {
-    document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"]').forEach(input => {
+    document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], textarea').forEach(input => {
         input.value = '';
     });
 }

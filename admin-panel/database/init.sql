@@ -581,7 +581,7 @@ ALTER TABLE `cz_data`.`car_data` DROP INDEX `uk_make_year_trim`, ADD UNIQUE `uk_
 
 
 
--- 创建 costs 数据表（如果不存在）
+-- 创建 店铺广告费costs 数据表（如果不存在）
 CREATE TABLE IF NOT EXISTS costs (
     -- 主键 id，自增整数
     id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -593,6 +593,8 @@ CREATE TABLE IF NOT EXISTS costs (
     cost DECIMAL(10, 2) NOT NULL COMMENT '日广告花费（美元）',
     -- 日期，按天存储，格式YYYY-MM-DD
     date DATE NOT NULL COMMENT '数据日期（YYYY-MM-DD）',
+    -- 备注字段，允许为空，最大255字符
+    remark VARCHAR(255) DEFAULT NULL COMMENT '备注信息',
     -- 创建时间，默认当前时间，格式YYYY-MM-DD HH:MM:SS
     create_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     -- 更新时间，默认当前时间，更新时自动刷新

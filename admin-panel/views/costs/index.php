@@ -86,6 +86,7 @@
                         <th>店铺名称</th>
                         <th>日广告花费（美元）</th>
                         <th>日期</th>
+                        <th>备注</th>
                         <th>创建时间</th>
                         <th>更新时间</th>
                         <th>操作</th>
@@ -100,6 +101,7 @@
                                 <td><?php echo htmlspecialchars($cost['store_name']); ?></td>
                                 <td>$<?php echo $cost['cost']; ?></td>
                                 <td><?php echo $cost['date']; ?></td>
+                                <td><?php echo htmlspecialchars($cost['remark'] ?? ''); ?></td>
                                 <td><?php echo $cost['create_at']; ?></td>
                                 <td><?php echo $cost['update_at']; ?></td>
                                 <td>
@@ -117,7 +119,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="8" class="text-center">暂无数据</td>
+                            <td colspan="9" class="text-center">暂无数据</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

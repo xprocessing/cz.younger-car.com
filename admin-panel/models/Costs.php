@@ -40,12 +40,13 @@ class Costs {
     
     // 创建成本记录
     public function create($data) {
-        $sql = "INSERT INTO costs (platform_name, store_name, cost, date, create_at, update_at) VALUES (?, ?, ?, ?, NOW(), NOW())";
+        $sql = "INSERT INTO costs (platform_name, store_name, cost, date, remark, create_at, update_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())";
         $params = [
             $data['platform_name'],
             $data['store_name'],
             $data['cost'],
-            $data['date']
+            $data['date'],
+            $data['remark'] ?? null
         ];
         
         return $this->db->query($sql, $params);
@@ -53,12 +54,13 @@ class Costs {
     
     // 更新成本记录
     public function update($id, $data) {
-        $sql = "UPDATE costs SET platform_name = ?, store_name = ?, cost = ?, date = ?, update_at = NOW() WHERE id = ?";
+        $sql = "UPDATE costs SET platform_name = ?, store_name = ?, cost = ?, date = ?, remark = ?, update_at = NOW() WHERE id = ?";
         $params = [
             $data['platform_name'],
             $data['store_name'],
             $data['cost'],
             $data['date'],
+            $data['remark'] ?? null,
             $id
         ];
         
@@ -171,16 +173,17 @@ class Costs {
             return true;
         }
         
-        $sql = "INSERT INTO costs (platform_name, store_name, cost, date, create_at, update_at) VALUES ";
+        $sql = "INSERT INTO costs (platform_name, store_name, cost, date, remark, create_at, update_at) VALUES ";
         $params = [];
         $values = [];
         
         foreach ($data as $row) {
-            $values[] = "(?, ?, ?, ?, NOW(), NOW())";
+            $values[] = "(?, ?, ?, ?, ?, NOW(), NOW())";
             $params[] = $row['platform_name'];
             $params[] = $row['store_name'];
             $params[] = $row['cost'];
             $params[] = $row['date'];
+            $params[] = $row['remark'] ?? null;
         }
         
         $sql .= implode(", ", $values);
