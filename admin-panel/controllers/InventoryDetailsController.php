@@ -251,12 +251,20 @@ class InventoryDetailsController {
             // 去除每个SKU的前后空格
             $skuList = array_map('trim', $skuList);
             
-            // 调用批量查询方法，添加分页支持
-            $totalCount = 0;
-            $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlertBySkuList($skuList, $limit, $offset, $totalCount);
-            
-            // 保存批量查询的SKU列表到会话中，用于导出功能和分页
-            $_SESSION['batch_sku_list'] = $skuList;
+            // 只有当SKU列表不为空时才进行批量查询
+            if (!empty($skuList)) {
+                // 调用批量查询方法，添加分页支持
+                $totalCount = 0;
+                $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlertBySkuList($skuList, $limit, $offset, $totalCount);
+                
+                // 保存批量查询的SKU列表到会话中，用于导出功能和分页
+                $_SESSION['batch_sku_list'] = $skuList;
+            } else {
+                // 如果SKU列表为空，清除会话中的批量查询数据，并查询所有数据
+                unset($_SESSION['batch_sku_list']);
+                $totalCount = 0;
+                $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert($limit, $offset, $totalCount);
+            }
         } else {
             // 检查会话中是否有批量查询的SKU列表
             if (isset($_SESSION['batch_sku_list']) && !empty($_SESSION['batch_sku_list'])) {
