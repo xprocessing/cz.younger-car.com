@@ -1,11 +1,12 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4><?php echo $title; ?></h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/inventory_details.php" class="btn btn-outline-secondary mr-2">
-            <i class="fa fa-arrow-left"></i> 返回列表
-        </a>
+        
         <a href="<?php echo APP_URL; ?>/inventory_details.php?action=export_inventory_alert" class="btn btn-outline-primary">
             <i class="fa fa-download"></i> 导出数据
+        </a>
+        <a href="<?php echo APP_URL; ?>/inventory_details.php" class="btn btn-outline-secondary mr-2">
+            <i class="fa fa-arrow-left"></i> 返回列表
         </a>
     </div>
 </div>
@@ -111,7 +112,17 @@
                                 <td><?php echo htmlspecialchars(mb_strlen($item['product_name'] ?? '') > 20 ? mb_substr($item['product_name'] ?? '', 0, 20) . '...' : ($item['product_name'] ?? '')); ?></td>
                                 <td>
                                     <?php if (!empty($item['product_image'])): ?>
-                                        <img src="<?php echo $item['product_image']; ?>" alt="商品图片" style="max-width: 50px; max-height: 50px;">
+                                        <div class="product-image-container" style="position: relative; display: inline-block; max-width: 50px; max-height: 50px;">
+                                            <img src="<?php echo $item['product_image']; ?>" alt="商品图片" style="max-width: 50px; max-height: 50px;">
+                                            <div class="product-image-zoom" style="position: absolute; top: -100px; left: 0; z-index: 1000; display: none; max-width: 150px; max-height: 150px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); background-color: white; padding: 5px;">
+                                                <img src="<?php echo $item['product_image']; ?>" alt="商品图片放大" style="max-width: 100%; max-height: 100%;">
+                                            </div>
+                                            <style>
+                                                .product-image-container:hover .product-image-zoom {
+                                                    display: block;
+                                                }
+                                            </style>
+                                        </div>
                                     <?php endif; ?>
                                 </td>
                                 <td>
