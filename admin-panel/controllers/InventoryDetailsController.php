@@ -269,17 +269,13 @@ class InventoryDetailsController {
                     $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert($limit, $offset, $totalCount);
                 }
         } else {
-            // 检查会话中是否有批量查询的SKU列表
-            if (isset($_SESSION['batch_sku_list']) && !empty($_SESSION['batch_sku_list'])) {
-                // 如果有，继续使用这些条件进行查询
-                $skuList = $_SESSION['batch_sku_list'];
-                $totalCount = 0;
-                $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlertBySkuList($skuList, $limit, $offset, $totalCount);
-            } else {
-                // 否则查询所有数据
-                $totalCount = 0;
-                $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert($limit, $offset, $totalCount);
-            }
+            // 当用户直接打开或刷新页面（GET请求）时，总是查询所有数据，不使用会话中的批量查询条件
+            // 清除会话中的批量查询数据，确保下次打开页面时显示所有数据
+            unset($_SESSION['batch_sku_list']);
+            
+            // 查询所有数据
+            $totalCount = 0;
+            $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert($limit, $offset, $totalCount);
         }
         
         // 计算总页数
@@ -301,13 +297,14 @@ class InventoryDetailsController {
         
         // 确保$hasBatchQuery和$skuList变量在前面的处理中已经正确设置
         // 如果是POST请求且有批量查询数据，$hasBatchQuery应该已经被设置为true
-        // 如果会话中有批量查询的SKU列表，我们需要确保$skuList被正确设置
+        // 由于在GET请求时已经清除了会话中的批量查询数据，所以这里不需要再检查会话
         if (!isset($hasBatchQuery)) {
             $hasBatchQuery = false;
         }
         
-        if ($hasBatchQuery && empty($skuList) && isset($_SESSION['batch_sku_list'])) {
-            $skuList = $_SESSION['batch_sku_list'];
+        // 只有在有批量查询标记的情况下，才需要确保$skuList变量被正确设置
+        if ($hasBatchQuery && empty($skuList)) {
+            $skuList = [];
         }
         
         // 根据是否有批量查询条件，获取对应的统计数据
