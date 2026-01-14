@@ -49,6 +49,53 @@ foreach ($orders['data'] as $order) {
 // 打印新数组
 print_r($newArray);
 
+//连接数据库，用$newArray 的数据 更新inventory_details数据表中wid,sku对应的quantity_receive字段
+
+// 引入数据库配置文件
+require_once __DIR__ . '/../../admin-panel/config/config.php';
+
+try {
+    // 创建PDO实例
+    $pdo = new PDO(
+        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
+        DB_USER,
+        DB_PASS,
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]
+    );
+
+    // 准备SQL：根据wid+sku联合主键更新quantity_receive
+    $sql = "INSERT INTO inventory_details (wid, sku, quantity_receive)
+            VALUES (:wid, :sku, :quantity_receive)
+            ON DUPLICATE KEY UPDATE
+                quantity_receive = VALUES(quantity_receive)";
+    $stmt = $pdo->prepare($sql);
+
+    // 开启事务
+    $pdo->beginTransaction();
+
+    foreach ($newArray as $row) {
+        $stmt->execute([
+            ':wid' => $row['wid'],
+            ':sku' => $row['sku'],
+            ':quantity_receive' => $row['quantity_receive'],
+        ]);
+    }
+
+    // 提交事务
+    $pdo->commit();
+
+    echo json_encode(['status' => 'success', 'message' => '库存入库数量已更新'], JSON_UNESCAPED_UNICODE);
+} catch (PDOException $e) {
+    // 回滚事务
+    if (isset($pdo) && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+    echo json_encode(['status' => 'error', 'message' => '数据库错误：' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+}
+
 
 
 
