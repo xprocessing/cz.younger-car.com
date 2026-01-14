@@ -239,7 +239,8 @@ class InventoryDetailsController {
         // 再次过滤掉全零的SKU，作为双重保障
         $filteredInventoryAlerts = [];
         foreach ($inventoryAlerts as $alert) {
-            if ($alert['product_valid_num'] > 0 || $alert['quantity_receive'] > 0 || $alert['product_onway'] > 0 || $alert['outbound_30days'] > 0) {
+            if ($alert['product_valid_num_excluding_wenzhou'] > 0 || $alert['product_onway_excluding_wenzhou'] > 0 || 
+                $alert['product_valid_num_wenzhou'] > 0 || $alert['product_onway_wenzhou'] > 0 || $alert['outbound_30days'] > 0) {
                 $filteredInventoryAlerts[] = $alert;
             }
         }
@@ -264,7 +265,8 @@ class InventoryDetailsController {
         // 再次过滤掉全零的SKU，作为双重保障
         $filteredInventoryAlerts = [];
         foreach ($inventoryAlerts as $alert) {
-            if ($alert['product_valid_num'] > 0 || $alert['quantity_receive'] > 0 || $alert['product_onway'] > 0 || $alert['outbound_30days'] > 0) {
+            if ($alert['product_valid_num_excluding_wenzhou'] > 0 || $alert['product_onway_excluding_wenzhou'] > 0 || 
+                $alert['product_valid_num_wenzhou'] > 0 || $alert['product_onway_wenzhou'] > 0 || $alert['outbound_30days'] > 0) {
                 $filteredInventoryAlerts[] = $alert;
             }
         }
