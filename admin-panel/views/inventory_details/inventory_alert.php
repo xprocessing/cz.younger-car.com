@@ -30,7 +30,7 @@
 <?php if (!empty($inventoryAlerts)): ?>
     <div class="row mb-3">
        
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="card bg-success text-white">
                 <div class="card-body">
                     <h5 class="card-title">总可用量（不含温州仓）</h5>
@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="card bg-warning text-dark">
                 <div class="card-body">
                     <h5 class="card-title">总调拨在途（不含温州仓）</h5>
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="card bg-success text-white">
                 <div class="card-body">
                     <h5 class="card-title">总可用量（温州仓）</h5>
@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-         <div class="col-md-3">
+         <div class="col-md-2">
             <div class="card bg-warning text-dark">
                 <div class="card-body">
                     <h5 class="card-title">总调拨在途（温州仓）</h5>
@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="card bg-info text-white">
                 <div class="card-body">
                     <h5 class="card-title">最近30天总出库量</h5>
@@ -70,7 +70,7 @@
                 </div>
             </div>
         </div>
-         <div class="col-md-3">
+         <div class="col-md-2">
             <div class="card bg-primary text-white">
                 <div class="card-body">
                     <h5 class="card-title">SKU总数</h5>

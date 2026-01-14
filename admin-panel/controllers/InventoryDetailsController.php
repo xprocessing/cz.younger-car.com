@@ -266,18 +266,12 @@ class InventoryDetailsController {
                 $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert($limit, $offset, $totalCount);
             }
         } else {
-            // 检查会话中是否有批量查询的SKU列表
-            if (isset($_SESSION['batch_sku_list']) && !empty($_SESSION['batch_sku_list'])) {
-                // 使用会话中的SKU列表进行查询
-                $totalCount = 0;
-                $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlertBySkuList($_SESSION['batch_sku_list'], $limit, $offset, $totalCount);
-            } else {
-                // 如果没有批量查询，则获取所有库存预警数据，添加分页支持
-                $totalCount = 0;
-                $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert($limit, $offset, $totalCount);
-                // 清除会话中的批量查询数据
-                unset($_SESSION['batch_sku_list']);
-            }
+            // 在GET请求时，默认查询所有数据，不使用会话中的批量查询条件
+            // 这样可以确保用户刷新页面或导航后返回时看到的是所有数据
+            $totalCount = 0;
+            $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert($limit, $offset, $totalCount);
+            // 清除会话中的批量查询数据
+            unset($_SESSION['batch_sku_list']);
         }
         
         // 计算总页数
