@@ -35,5 +35,22 @@ try {
 }
 
 
+//提取获取的数据 data.data数组中每一数据 对应的  item_list 数组中每一个数据的wid,sku,quantity_receive 组成一个新的数组。
+$newArray = [];
+foreach ($orders['data']['data'] as $order) {
+    foreach ($order['item_list'] as $item) {
+        $newArray[] = [
+            'wid' => $item['wid'],
+            'sku' => $item['sku'],
+            'quantity_receive' => $item['quantity_receive'],
+        ];
+    }
+}
+// 打印新数组
+print_r($newArray);
+
+
+
+
 
 ?>
