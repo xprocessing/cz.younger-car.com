@@ -262,7 +262,8 @@ class InventoryDetails {
                     SELECT i.sku COLLATE utf8mb4_unicode_ci as sku,
                            i.wid,
                            i.product_valid_num,
-                           i.product_onway
+                           i.product_onway,
+                           i.quantity_receive
                     FROM inventory_details i
                     UNION ALL
                     -- 从order_profit获取最近30天有出库记录的SKU
@@ -331,7 +332,8 @@ class InventoryDetails {
                              SELECT i.sku COLLATE utf8mb4_unicode_ci as sku,
                                     i.wid,
                                     i.product_valid_num,
-                                    i.product_onway
+                                    i.product_onway,
+                                    i.quantity_receive
                              FROM inventory_details i
                              WHERE i.sku LIKE $likePlaceholders
                              UNION ALL
@@ -404,7 +406,7 @@ class InventoryDetails {
                 LEFT JOIN products p ON combined_data.sku = p.sku
                 GROUP BY combined_data.sku
                 HAVING product_valid_num_excluding_wenzhou > 0 OR product_onway_excluding_wenzhou > 0 OR 
-                       product_valid_num_wenzhou > 0 OR product_onway_wenzhou > 0 OR outbound_30days > 0
+                       product_valid_num_wenzhou > 0 OR quantity_receive_wenzhou > 0 OR outbound_30days > 0
                 ORDER BY combined_data.sku ASC";
         
         // 准备参数列表
