@@ -5,7 +5,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">任务详情</h1>
         <a href="<?php echo APP_URL; ?>/aigc.php?action=taskHistory" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-arrow-left fa-sm text-white-50"></i> 返回任务历史
+            <i class="fas fa-arrow-left fa-sm text-white-50"></i> 返回生成结果
         </a>
     </div>
 

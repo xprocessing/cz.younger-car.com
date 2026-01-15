@@ -417,7 +417,7 @@
                 <li><a href="#multi-angle"><i class="fas fa-sync-alt"></i> 多角度图片</a></li>
                 <li><a href="#image-to-image"><i class="fas fa-exchange-alt"></i> 图生图</a></li>
                 <li><a href="#text-to-image"><i class="fas fa-font"></i> 文生图</a></li>
-                <li><a href="<?php echo APP_URL; ?>/aigc.php?action=taskHistory"><i class="fas fa-history"></i> 任务历史</a></li>
+
             </ul>
         </aside>
         

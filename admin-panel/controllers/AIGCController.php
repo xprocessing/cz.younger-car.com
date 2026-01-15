@@ -295,11 +295,9 @@ class AIGCController {
             $this->aigcModel->updateTaskStatus($task_id, 'completed', $success_count, $failed_count);
         }
         
-        // 显示处理结果
-        $title = '图片处理结果';
-        include VIEWS_DIR . '/layouts/header.php';
-        include VIEWS_DIR . '/aigc/result.php';
-        include VIEWS_DIR . '/layouts/footer.php';
+        // 处理完成后跳转到任务历史页面，显示所有任务结果
+        redirect(APP_URL . '/aigc.php?action=taskHistory');
+        exit();
     }
     
     // 模板管理相关方法已废弃

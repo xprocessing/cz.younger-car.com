@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <!-- 页面标题 -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">任务历史</h1>
+        <h1 class="h3 mb-0 text-gray-800">生成结果</h1>
         <a href="<?php echo APP_URL; ?>/aigc.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-arrow-left fa-sm text-white-50"></i> 返回处理页面
         </a>
@@ -12,7 +12,7 @@
     <div class="card shadow mb-4">
         <!-- 卡片标题 -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">任务列表</h6>
+            <h6 class="m-0 font-weight-bold text-primary">生成结果列表</h6>
         </div>
         <!-- 卡片内容 -->
         <div class="card-body">
