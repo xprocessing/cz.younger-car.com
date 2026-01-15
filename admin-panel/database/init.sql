@@ -425,63 +425,35 @@ DROP TABLE IF EXISTS aigc_templates;
 -- 创建AIGC任务表（合并结果表字段，仅保存图像URL）
 CREATE TABLE IF NOT EXISTS aigc_tasks (
     -- 主键id，自增整数
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    task_id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '任务ID',
     -- 用户ID，关联users表
-    user_id INT NOT NULL COMMENT '用户ID',
-    -- 任务名称，非空，最大100字符
-    task_name VARCHAR(100) NOT NULL COMMENT '任务名称',
+    user_id INT NOT NULL COMMENT '用户ID',   
     -- 任务类型，用于区分不同功能的任务
-    task_type ENUM('remove_defect', 'crop_png', 'crop_white_bg', 'resize', 'watermark', 'face_swap', 'multi_angle', 'text_to_image', 'image_to_image', 'custom') NOT NULL COMMENT '任务类型',
+    task_type ENUM('remove_defect', 'crop_png', 'crop_white_bg', 'resize', 'watermark', 'face_swap', 'multi_angle', 'other') NOT NULL COMMENT '任务类型',
     -- 任务状态
     task_status ENUM('pending', 'processing', 'completed', 'failed') NOT NULL DEFAULT 'pending' COMMENT '任务状态',
     -- 任务参数，JSON格式存储具体配置
-    task_params JSON NOT NULL COMMENT '任务参数（JSON格式）',
-    -- 原始图片名称
-    original_filename VARCHAR(255) DEFAULT NULL COMMENT '原始文件名',
-    -- 原始图片路径（相对于服务器）
+    task_params JSON NOT NULL COMMENT '任务参数（JSON格式）',  
+    -- 原始图片路径（网络地址）
     original_path VARCHAR(255) DEFAULT NULL COMMENT '原始文件路径',
     -- 处理结果状态
     process_status ENUM('success', 'failed') DEFAULT NULL COMMENT '处理状态',
     -- 处理结果URL（保存图像URL，不存储base64）
-    result_url VARCHAR(255) DEFAULT NULL COMMENT '处理结果图像URL',
-    -- 错误信息（如果处理失败）
-    error_message TEXT DEFAULT NULL COMMENT '错误信息',
-    -- 成功处理的图片数量
-    success_count INT UNSIGNED DEFAULT 0 COMMENT '成功数量',
-    -- 失败处理的图片数量
-    failed_count INT UNSIGNED DEFAULT 0 COMMENT '失败数量',
-    -- 总处理图片数量
-    total_count INT UNSIGNED DEFAULT 0 COMMENT '总数量',
+    result_url VARCHAR(255) DEFAULT NULL COMMENT '处理结果图像URL（用json存储多张）',
+    -- api返回信息/错误信息（如果处理失败）
+    result_data TEXT DEFAULT NULL COMMENT '处理结果数据（JSON格式）',   
     -- 开始处理时间
     started_at DATETIME DEFAULT NULL COMMENT '开始时间',
     -- 处理完成时间
     completed_at DATETIME DEFAULT NULL COMMENT '完成时间',
-    -- 创建时间，默认当前时间
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    -- 更新时间，默认当前时间，更新时自动刷新
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    
     -- 设置主键
-    PRIMARY KEY (id),
+    PRIMARY KEY (task_id),
     -- 添加外键约束
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    -- 添加索引
-    INDEX idx_user_status (user_id, task_status),
-    INDEX idx_created_at (created_at),
-    INDEX idx_process_status (process_status)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理任务表（合并结果表）';
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+   
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理任务表）';
 
--- 创建AIGC任务结果表，用于存储每个任务的具体结果
-CREATE TABLE IF NOT EXISTS aigc_task_results (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    task_id INT UNSIGNED NOT NULL,
-    original_filename VARCHAR(255) NOT NULL,
-    original_path VARCHAR(255) NOT NULL,
-    process_status ENUM('success','failed') NOT NULL,
-    result_url VARCHAR(255) DEFAULT NULL,
-    error_message TEXT DEFAULT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (task_id) REFERENCES aigc_tasks(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AIGC任务结果表';
 
 
 
