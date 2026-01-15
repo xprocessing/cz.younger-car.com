@@ -1,685 +1,867 @@
-
-
-<div class="container-fluid">
-    <!-- 页面标题 -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">AI图片处理</h1>
-        <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-download fa-sm text-white-50"></i> 下载模板
-        </a>
-    </div>
-
-    <!-- 成功/错误消息 -->
-    <?php if (isset($_SESSION['success_msg'])): ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?php echo $_SESSION['success_msg']; ?>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <?php unset($_SESSION['success_msg']); ?>
-    <?php endif; ?>
-
-    <?php if (isset($_SESSION['error_msg'])): ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <?php echo $_SESSION['error_msg']; ?>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <?php unset($_SESSION['error_msg']); ?>
-    <?php endif; ?>
-
-    <div class="row">
-        <!-- 图片上传和处理选项 -->
-        <div class="col-xl-8 col-lg-7">
-            <div class="card shadow mb-4">
-                <!-- 卡片标题 -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">批量图片处理</h6>
-                </div>
-                <!-- 卡片内容 -->
-                <div class="card-body">
-                    <form action="<?php echo APP_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
-                        <!-- 图片上传 -->
-                        <div class="form-group">
-                            <label for="images">选择图片（支持批量上传）</label>
-                            <input type="file" class="form-control-file" id="images" name="images[]" multiple accept="image/*" required>
-                            <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
-                        </div>
-
-                        <!-- 处理类型选择 -->
-                        <div class="form-group">
-                            <label>处理类型</label>
-                            <div class="row">
-                                <!-- 1. 批量去除瑕疵 -->
-                                <div class="col-md-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="remove_defect" name="process_types[]" value="remove_defect">
-                                                <label class="form-check-label h6" for="remove_defect">1. 批量去除瑕疵，调整亮度对比度</label>
-                                            </div>
-                                            <!-- 批量去除瑕疵参数 -->
-                                            <div id="remove_defect_params" class="mt-3">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="remove_defect_width">宽度（像素）</label>
-                                                            <input type="number" class="form-control" id="remove_defect_width" name="remove_defect_width" value="1200" min="100" max="4096">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="remove_defect_height">高度（像素）</label>
-                                                            <input type="number" class="form-control" id="remove_defect_height" name="remove_defect_height" value="1200" min="100" max="4096">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 2. 批量抠图 - 导出PNG -->
-                                <div class="col-md-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="crop_png" name="process_types[]" value="crop_png">
-                                                <label class="form-check-label h6" for="crop_png">2. 批量抠图 - 导出PNG</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 3. 批量抠图 - 导出白底图 -->
-                                <div class="col-md-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="crop_white_bg" name="process_types[]" value="crop_white_bg">
-                                                <label class="form-check-label h6" for="crop_white_bg">3. 批量抠图 - 导出白底图</label>
-                                            </div>
-                                            <!-- 批量抠图 - 导出白底图参数 -->
-                                            <div id="crop_white_bg_params" class="mt-3">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="crop_white_bg_width">宽度（像素）</label>
-                                                            <input type="number" class="form-control" id="crop_white_bg_width" name="crop_white_bg_width" value="800" min="100" max="4096">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="crop_white_bg_height">高度（像素）</label>
-                                                            <input type="number" class="form-control" id="crop_white_bg_height" name="crop_white_bg_height" value="800" min="100" max="4096">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="crop_white_bg_subject_ratio">主体占比（%）</label>
-                                                            <input type="number" class="form-control" id="crop_white_bg_subject_ratio" name="crop_white_bg_subject_ratio" value="80" min="50" max="95">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 4. 批量改尺寸 -->
-                                <div class="col-md-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="resize" name="process_types[]" value="resize">
-                                                <label class="form-check-label h6" for="resize">4. 批量改尺寸</label>
-                                            </div>
-                                            <!-- 批量改尺寸参数 -->
-                                            <div id="resize_params" class="mt-3">
-                                                <div class="form-group">
-                                                    <label>改尺寸方式</label>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="resize_type" id="resize_ratio" value="ratio" checked>
-                                                        <label class="form-check-label" for="resize_ratio">按比例</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="resize_type" id="resize_pixel" value="pixel">
-                                                        <label class="form-check-label" for="resize_pixel">按像素</label>
-                                                    </div>
-                                                </div>
-
-                                                <!-- 比例选择 -->
-                                                <div id="ratio_options" class="mt-2">
-                                                    <div class="form-group">
-                                                        <label for="resize_ratio_select">选择比例</label>
-                                                        <select class="form-control" id="resize_ratio_select" name="resize_ratio">
-                                                            <option value="4:3">4:3</option>
-                                                            <option value="3:4">3:4</option>
-                                                            <option value="16:9">16:9</option>
-                                                            <option value="9:16">9:16</option>
-                                                            <option value="1:1">1:1</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <!-- 像素选择 -->
-                                                <div id="pixel_options" class="mt-2" style="display: none;">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label for="resize_width">宽度（像素）</label>
-                                                                <select class="form-control" id="resize_width" name="resize_width">
-                                                                    <option value="1920">1920</option>
-                                                                    <option value="1200">1200</option>
-                                                                    <option value="800">800</option>
-                                                                    <option value="400">400</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label for="resize_height">高度（像素）</label>
-                                                                <select class="form-control" id="resize_height" name="resize_height">
-                                                                    <option value="1080">1080</option>
-                                                                    <option value="1200">1200</option>
-                                                                    <option value="800">800</option>
-                                                                    <option value="400">400</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 5. 批量打水印 -->
-                                <div class="col-md-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="watermark" name="process_types[]" value="watermark">
-                                                <label class="form-check-label h6" for="watermark">5. 批量打水印</label>
-                                            </div>
-                                            <!-- 批量打水印参数 -->
-                                            <div id="watermark_params" class="mt-3">
-                                                <div class="form-group">
-                                                    <label for="watermark_position">水印位置</label>
-                                                    <select class="form-control" id="watermark_position" name="watermark_position">
-                                                        <option value="左上">左上</option>
-                                                        <option value="右上">右上</option>
-                                                        <option value="左下">左下</option>
-                                                        <option value="右下">右下</option>
-                                                        <option value="居中">居中</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>水印类型</label>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="watermark_type" id="text_watermark" value="text" checked>
-                                                        <label class="form-check-label" for="text_watermark">文字水印</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="watermark_type" id="image_watermark" value="image">
-                                                        <label class="form-check-label" for="image_watermark">图片水印</label>
-                                                    </div>
-                                                </div>
-
-                                                <!-- 文字水印参数 -->
-                                                <div id="text_watermark_params" class="mt-2">
-                                                    <div class="form-group">
-                                                        <label for="watermark_text">水印文字</label>
-                                                        <input type="text" class="form-control" id="watermark_text" name="watermark_text" placeholder="请输入水印文字">
-                                                    </div>
-                                                </div>
-
-                                                <!-- 图片水印参数 -->
-                                                <div id="image_watermark_params" class="mt-2" style="display: none;">
-                                                    <div class="form-group">
-                                                        <label for="watermark_image">选择水印图片</label>
-                                                        <input type="file" class="form-control-file" id="watermark_image" name="watermark_image" accept="image/*">
-                                                        <small class="form-text text-muted">建议使用PNG格式的透明图片</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 6. 批量模特换脸 -->
-                                <div class="col-md-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="face_swap" name="process_types[]" value="face_swap">
-                                                <label class="form-check-label h6" for="face_swap">6. 批量模特换脸</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 7. 生成多角度图片 -->
-                                <div class="col-md-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="multi_angle" name="process_types[]" value="multi_angle">
-                                                <label class="form-check-label h6" for="multi_angle">7. 生成多角度图片</label>
-                                            </div>
-                                            <!-- 生成多角度图片参数 -->
-                                            <div id="multi_angle_params" class="mt-3">
-                                                <div class="form-group">
-                                                    <label for="angles">选择角度（逗号分隔）</label>
-                                                    <input type="text" class="form-control" id="angles" name="angles" value="30,60,90,120,150,180" placeholder="例如：30,60,90,120,150,180">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 8. 使用自定义模板 -->
-                                <div class="col-md-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="use_template" name="process_types[]" value="use_template">
-                                                <label class="form-check-label h6" for="use_template">8. 使用自定义模板</label>
-                                            </div>
-                                            <!-- 使用自定义模板参数 -->
-                                            <div id="use_template_params" class="mt-3">
-                                                <div class="form-group">
-                                                    <label for="template_id">选择模板</label>
-                                                    <select class="form-control" id="template_id" name="template_id">
-                                                        <option value="">请选择模板</option>
-                                                        <?php foreach ($templates as $template): ?>
-                                                            <option value="<?php echo $template['id']; ?>">
-                                                                <?php echo htmlspecialchars($template['name']); ?> (<?php echo $template['template_type']; ?>)
-                                                            </option>
-                                                        <?php endforeach; ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 9. 文生图 -->
-                                <div class="col-md-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="text_to_image" name="process_types[]" value="text_to_image">
-                                                <label class="form-check-label h6" for="text_to_image">9. 文生图</label>
-                                            </div>
-                                            <!-- 文生图参数 -->
-                                            <div id="text_to_image_params" class="mt-3">
-                                                <div class="form-group">
-                                                    <label for="text_prompt">文字描述</label>
-                                                    <textarea class="form-control" id="text_prompt" name="text_prompt" rows="3" placeholder="请输入图片描述，例如：一只可爱的猫咪在阳光下玩耍"></textarea>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="image_width">图片宽度（像素）</label>
-                                                            <input type="number" class="form-control" id="image_width" name="image_width" value="1024" min="256" max="2048">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="image_height">图片高度（像素）</label>
-                                                            <input type="number" class="form-control" id="image_height" name="image_height" value="1024" min="256" max="2048">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 10. 图生图 -->
-                                <div class="col-md-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="image_to_image" name="process_types[]" value="image_to_image">
-                                                <label class="form-check-label h6" for="image_to_image">10. 图生图</label>
-                                            </div>
-                                            <!-- 图生图参数 -->
-                                            <div id="image_to_image_params" class="mt-3">
-                                                <div class="form-group">
-                                                    <label for="image_prompt">图片描述</label>
-                                                    <textarea class="form-control" id="image_prompt" name="image_prompt" rows="3" placeholder="请输入图片修改描述，例如：将这只猫变成一只狗"></textarea>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="image_strength">相似度（0-1，值越小越接近原图）</label>
-                                                    <input type="number" step="0.1" class="form-control" id="image_strength" name="image_strength" value="0.5" min="0" max="1">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 动态参数设置（保留容器用于JavaScript兼容性） -->
-                        <div id="dynamic_params" style="display: none;">
-                            <!-- 1. 批量去除瑕疵参数 -->
-                            <div id="remove_defect_params" style="display: none;">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="width">宽度（像素）</label>
-                                            <input type="number" class="form-control" id="width" name="width" value="1200" min="100" max="4096">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="height">高度（像素）</label>
-                                            <input type="number" class="form-control" id="height" name="height" value="1200" min="100" max="4096">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 3. 批量抠图 - 导出白底图参数 -->
-                            <div id="crop_white_bg_params" style="display: none;">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="width">宽度（像素）</label>
-                                            <input type="number" class="form-control" id="width" name="width" value="800" min="100" max="4096">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="height">高度（像素）</label>
-                                            <input type="number" class="form-control" id="height" name="height" value="800" min="100" max="4096">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="subject_ratio">主体占比（%）</label>
-                                            <input type="number" class="form-control" id="subject_ratio" name="subject_ratio" value="80" min="50" max="95">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 4. 批量改尺寸参数 -->
-                            <div id="resize_params" style="display: none;">
-                                <div class="form-group">
-                                    <label>改尺寸方式</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="resize_type" id="resize_ratio" value="ratio" checked>
-                                        <label class="form-check-label" for="resize_ratio">按比例</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="resize_type" id="resize_pixel" value="pixel">
-                                        <label class="form-check-label" for="resize_pixel">按像素</label>
-                                    </div>
-                                </div>
-
-                                <!-- 比例选择 -->
-                                <div id="ratio_options" style="display: block;">
-                                    <div class="form-group">
-                                        <label for="resize_ratio">选择比例</label>
-                                        <select class="form-control" id="resize_ratio" name="resize_ratio">
-                                            <option value="4:3">4:3</option>
-                                            <option value="3:4">3:4</option>
-                                            <option value="16:9">16:9</option>
-                                            <option value="9:16">9:16</option>
-                                            <option value="1:1">1:1</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- 像素选择 -->
-                                <div id="pixel_options" style="display: none;">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="resize_width">宽度（像素）</label>
-                                                <select class="form-control" id="resize_width" name="resize_width">
-                                                    <option value="1920">1920</option>
-                                                    <option value="1200">1200</option>
-                                                    <option value="800">800</option>
-                                                    <option value="400">400</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="resize_height">高度（像素）</label>
-                                                <select class="form-control" id="resize_height" name="resize_height">
-                                                    <option value="1080">1080</option>
-                                                    <option value="1200">1200</option>
-                                                    <option value="800">800</option>
-                                                    <option value="400">400</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 5. 批量打水印参数 -->
-                            <div id="watermark_params" style="display: none;">
-                                <div class="form-group">
-                                    <label for="watermark_position">水印位置</label>
-                                    <select class="form-control" id="watermark_position" name="watermark_position">
-                                        <option value="左上">左上</option>
-                                        <option value="右上">右上</option>
-                                        <option value="左下">左下</option>
-                                        <option value="右下">右下</option>
-                                        <option value="居中">居中</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>水印类型</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="watermark_type" id="text_watermark" value="text" checked>
-                                        <label class="form-check-label" for="text_watermark">文字水印</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="watermark_type" id="image_watermark" value="image">
-                                        <label class="form-check-label" for="image_watermark">图片水印</label>
-                                    </div>
-                                </div>
-
-                                <!-- 文字水印参数 -->
-                                <div id="text_watermark_params" style="display: block;">
-                                    <div class="form-group">
-                                        <label for="watermark_text">水印文字</label>
-                                        <input type="text" class="form-control" id="watermark_text" name="watermark_text" placeholder="请输入水印文字">
-                                    </div>
-                                </div>
-
-                                <!-- 图片水印参数 -->
-                                <div id="image_watermark_params" style="display: none;">
-                                    <div class="form-group">
-                                        <label for="watermark_image">选择水印图片</label>
-                                        <input type="file" class="form-control-file" id="watermark_image" name="watermark_image" accept="image/*">
-                                        <small class="form-text text-muted">建议使用PNG格式的透明图片</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 7. 生成多角度图片参数 -->
-                            <div id="multi_angle_params" style="display: none;">
-                                <div class="form-group">
-                                    <label for="angles">选择角度（逗号分隔）</label>
-                                    <input type="text" class="form-control" id="angles" name="angles" value="30,60,90,120,150,180" placeholder="例如：30,60,90,120,150,180">
-                                </div>
-                            </div>
-
-                            <!-- 8. 使用自定义模板 -->
-                            <div id="use_template_params" style="display: none;">
-                                <div class="form-group">
-                                    <label for="template_id">选择模板</label>
-                                    <select class="form-control" id="template_id" name="template_id">
-                                        <option value="">请选择模板</option>
-                                        <?php foreach ($templates as $template): ?>
-                                            <option value="<?php echo $template['id']; ?>">
-                                                <?php echo htmlspecialchars($template['name']); ?> (<?php echo $template['template_type']; ?>)
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 提交按钮 -->
-                        <button type="submit" class="btn btn-primary">开始处理</button>
-                    </form>
-                </div>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoAI GC - AI图片处理</title>
+    <!-- 引入Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <!-- 引入Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 自定义样式 -->
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #00cec9;
+            --dark-bg: #1a1a2e;
+            --darker-bg: #16213e;
+            --card-bg: #1f2833;
+            --text-color: #ffffff;
+            --text-secondary: #b3b3b3;
+            --border-color: #2c3e50;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* 侧边栏样式 */
+        .sidebar {
+            width: 250px;
+            background-color: var(--darker-bg);
+            padding: 20px 0;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .sidebar-header h2 {
+            color: var(--text-color);
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            flex-grow: 1;
+        }
+        
+        .sidebar-nav li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar-nav a:hover {
+            background-color: rgba(108, 92, 231, 0.1);
+            color: var(--text-color);
+            border-left-color: var(--primary-color);
+        }
+        
+        .sidebar-nav a.active {
+            background-color: rgba(108, 92, 231, 0.2);
+            color: var(--text-color);
+            border-left-color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .sidebar-nav a i {
+            margin-right: 12px;
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* 主内容区域样式 */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .content-header {
+            margin-bottom: 30px;
+        }
+        
+        .content-header h1 {
+            color: var(--text-color);
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            background-color: rgba(108, 92, 231, 0.1);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 20px;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .card-header h3 {
+            color: var(--text-color);
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        /* 表单样式 */
+        .form-group label {
+            color: var(--text-color);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 4px;
+            padding: 10px 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+            box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.25);
+        }
+        
+        .form-control::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        /* 按钮样式 */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
+        }
+        
+        /* 上传区域样式 */
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(108, 92, 231, 0.1);
+        }
+        
+        .upload-area i {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        /* 进度条样式 */
+        .progress {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            height: 8px;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+        }
+        
+        /* 图片预览样式 */
+        .image-preview {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        
+        /* 任务历史样式 */
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .task-item:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .task-info {
+            flex-grow: 1;
+        }
+        
+        .task-title {
+            color: var(--text-color);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .task-date {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .sidebar-nav {
+                display: flex;
+                overflow-x: auto;
+            }
+            
+            .sidebar-nav li {
+                margin-bottom: 0;
+                margin-right: 5px;
+            }
+            
+            .sidebar-nav a {
+                padding: 10px 15px;
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+            }
+            
+            .sidebar-nav a:hover,
+            .sidebar-nav a.active {
+                border-left: none;
+                border-bottom-color: var(--primary-color);
+            }
+        }
+        
+        /* 错误/成功消息样式 */
+        .alert {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 4px;
+        }
+        
+        .alert-success {
+            background-color: rgba(40, 167, 69, 0.1);
+            border-color: rgba(40, 167, 69, 0.5);
+        }
+        
+        .alert-danger {
+            background-color: rgba(220, 53, 69, 0.1);
+            border-color: rgba(220, 53, 69, 0.5);
+        }
+        
+        /* 快速模板样式 */
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .template-item {
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .template-item:hover {
+            background-color: rgba(108, 92, 231, 0.1);
+            border-color: var(--primary-color);
+        }
+        
+        .template-item h4 {
+            color: var(--text-color);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .template-item p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>NeoAI GC</h2>
             </div>
-        </div>
-
-        <!-- 自定义模板管理 -->
-        <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4">
-                <!-- 卡片标题 -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">自定义模板</h6>
-                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addTemplateModal">
-                        <i class="fas fa-plus"></i> 添加模板
+            <ul class="sidebar-nav">
+                <li><a href="#" class="active"><i class="fas fa-home"></i> 工作台</a></li>
+                <li><a href="#"><i class="fas fa-font"></i> 文生图</a></li>
+                <li><a href="#"><i class="fas fa-exchange-alt"></i> 图生图</a></li>
+                <li><a href="#"><i class="fas fa-cut"></i> 批量抠图</a></li>
+                <li><a href="#"><i class="fas fa-user-circle"></i> 智能换脸</a></li>
+                <li><a href="#"><i class="fas fa-history"></i> 任务历史</a></li>
+            </ul>
+        </aside>
+        
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 成功/错误消息 -->
+            <?php if (isset($_SESSION['success_msg'])): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <?php echo $_SESSION['success_msg']; ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <!-- 卡片内容 -->
-                <div class="card-body">
-                    <?php if (empty($templates)): ?>
-                        <p class="text-center text-muted">暂无自定义模板</p>
-                    <?php else: ?>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>名称</th>
-                                        <th>类型</th>
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($templates as $template): ?>
-                                        <tr>
-                                            <td><?php echo htmlspecialchars($template['name']); ?></td>
-                                            <td><?php echo htmlspecialchars($template['template_type']); ?></td>
-                                            <td>
-                                                <button class="btn btn-sm btn-info" onclick="editTemplate(<?php echo $template['id']; ?>)">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <a href="<?php echo APP_URL; ?>/aigc.php?action=deleteTemplate&id=<?php echo $template['id']; ?>" 
-                                                   class="btn btn-sm btn-danger" 
-                                                   onclick="return confirm('确定要删除这个模板吗？');">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                <?php unset($_SESSION['success_msg']); ?>
+            <?php endif; ?>
+            
+            <?php if (isset($_SESSION['error_msg'])): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?php echo $_SESSION['error_msg']; ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <?php unset($_SESSION['error_msg']); ?>
+            <?php endif; ?>
+            
+            <!-- 工作台内容 -->
+            <section id="workspace" class="content-section active">
+                <div class="content-header">
+                    <h1>AI图片处理工作台</h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>批量图片处理</h3>
+                            </div>
+                            <div class="card-body">
+                                <form action="<?php echo APP_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
+                                    <!-- 图片上传 -->
+                                    <div class="form-group">
+                                        <label for="images">选择图片（支持批量上传）</label>
+                                        <div class="upload-area">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>拖拽图片到此处或点击上传</p>
+                                            <input type="file" class="form-control-file" id="images" name="images[]" multiple accept="image/*" style="display: none;" required>
+                                            <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('images').click()">选择图片</button>
+                                        </div>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                    </div>
+                                    
+                                    <!-- 处理类型选择 -->
+                                    <div class="form-group">
+                                        <label>处理类型</label>
+                                        <div class="row">
+                                            <!-- 1. 批量去除瑕疵 -->
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="remove_defect" name="process_types[]" value="remove_defect">
+                                                            <label class="form-check-label" for="remove_defect">批量去除瑕疵，调整亮度对比度</label>
+                                                        </div>
+                                                        <!-- 批量去除瑕疵参数 -->
+                                                        <div id="remove_defect_params" class="mt-3">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="remove_defect_width">宽度（像素）</label>
+                                                                        <input type="number" class="form-control" id="remove_defect_width" name="remove_defect_width" value="1200" min="100" max="4096">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="remove_defect_height">高度（像素）</label>
+                                                                        <input type="number" class="form-control" id="remove_defect_height" name="remove_defect_height" value="1200" min="100" max="4096">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- 2. 批量抠图 - 导出PNG -->
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="crop_png" name="process_types[]" value="crop_png">
+                                                            <label class="form-check-label" for="crop_png">批量抠图 - 导出PNG</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- 3. 批量抠图 - 导出白底图 -->
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="crop_white_bg" name="process_types[]" value="crop_white_bg">
+                                                            <label class="form-check-label" for="crop_white_bg">批量抠图 - 导出白底图</label>
+                                                        </div>
+                                                        <!-- 批量抠图 - 导出白底图参数 -->
+                                                        <div id="crop_white_bg_params" class="mt-3">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label for="crop_white_bg_width">宽度（像素）</label>
+                                                                        <input type="number" class="form-control" id="crop_white_bg_width" name="crop_white_bg_width" value="800" min="100" max="4096">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label for="crop_white_bg_height">高度（像素）</label>
+                                                                        <input type="number" class="form-control" id="crop_white_bg_height" name="crop_white_bg_height" value="800" min="100" max="4096">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label for="crop_white_bg_subject_ratio">主体占比（%）</label>
+                                                                        <input type="number" class="form-control" id="crop_white_bg_subject_ratio" name="crop_white_bg_subject_ratio" value="80" min="50" max="95">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- 4. 批量改尺寸 -->
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="resize" name="process_types[]" value="resize">
+                                                            <label class="form-check-label" for="resize">批量改尺寸</label>
+                                                        </div>
+                                                        <!-- 批量改尺寸参数 -->
+                                                        <div id="resize_params" class="mt-3">
+                                                            <div class="form-group">
+                                                                <label>改尺寸方式</label>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="resize_type" id="resize_ratio" value="ratio" checked>
+                                                                    <label class="form-check-label" for="resize_ratio">按比例</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="resize_type" id="resize_pixel" value="pixel">
+                                                                    <label class="form-check-label" for="resize_pixel">按像素</label>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <!-- 比例选择 -->
+                                                            <div id="ratio_options" class="mt-2">
+                                                                <div class="form-group">
+                                                                    <label for="resize_ratio_select">选择比例</label>
+                                                                    <select class="form-control" id="resize_ratio_select" name="resize_ratio">
+                                                                        <option value="4:3">4:3</option>
+                                                                        <option value="3:4">3:4</option>
+                                                                        <option value="16:9">16:9</option>
+                                                                        <option value="9:16">9:16</option>
+                                                                        <option value="1:1">1:1</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <!-- 像素选择 -->
+                                                            <div id="pixel_options" class="mt-2" style="display: none;">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label for="resize_width">宽度（像素）</label>
+                                                                            <select class="form-control" id="resize_width" name="resize_width">
+                                                                                <option value="1920">1920</option>
+                                                                                <option value="1200">1200</option>
+                                                                                <option value="800">800</option>
+                                                                                <option value="400">400</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label for="resize_height">高度（像素）</label>
+                                                                            <select class="form-control" id="resize_height" name="resize_height">
+                                                                                <option value="1080">1080</option>
+                                                                                <option value="1200">1200</option>
+                                                                                <option value="800">800</option>
+                                                                                <option value="400">400</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- 5. 批量打水印 -->
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="watermark" name="process_types[]" value="watermark">
+                                                            <label class="form-check-label" for="watermark">批量打水印</label>
+                                                        </div>
+                                                        <!-- 批量打水印参数 -->
+                                                        <div id="watermark_params" class="mt-3">
+                                                            <div class="form-group">
+                                                                <label for="watermark_position">水印位置</label>
+                                                                <select class="form-control" id="watermark_position" name="watermark_position">
+                                                                    <option value="左上">左上</option>
+                                                                    <option value="右上">右上</option>
+                                                                    <option value="左下">左下</option>
+                                                                    <option value="右下">右下</option>
+                                                                    <option value="居中">居中</option>
+                                                                </select>
+                                                            </div>
+                                                            
+                                                            <div class="form-group">
+                                                                <label>水印类型</label>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="watermark_type" id="text_watermark" value="text" checked>
+                                                                    <label class="form-check-label" for="text_watermark">文字水印</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="watermark_type" id="image_watermark" value="image">
+                                                                    <label class="form-check-label" for="image_watermark">图片水印</label>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <!-- 文字水印参数 -->
+                                                            <div id="text_watermark_params" class="mt-2">
+                                                                <div class="form-group">
+                                                                    <label for="watermark_text">水印文字</label>
+                                                                    <input type="text" class="form-control" id="watermark_text" name="watermark_text" placeholder="请输入水印文字">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <!-- 图片水印参数 -->
+                                                            <div id="image_watermark_params" class="mt-2" style="display: none;">
+                                                                <div class="form-group">
+                                                                    <label for="watermark_image">选择水印图片</label>
+                                                                    <input type="file" class="form-control-file" id="watermark_image" name="watermark_image" accept="image/*">
+                                                                    <small class="form-text text-muted">建议使用PNG格式的透明图片</small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- 6. 批量模特换脸 -->
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="face_swap" name="process_types[]" value="face_swap">
+                                                            <label class="form-check-label" for="face_swap">批量模特换脸</label>
+                                                        </div>
+                                                        <!-- 批量模特换脸参数 -->
+                                                        <div id="face_swap_params" class="mt-3">
+                                                            <div class="form-group">
+                                                                <label for="model_image">选择模特图片</label>
+                                                                <input type="file" class="form-control-file" id="model_image" name="model_image" accept="image/*">
+                                                                <small class="form-text text-muted">请选择一张包含清晰人脸的模特图片</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- 7. 生成多角度图片 -->
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="multi_angle" name="process_types[]" value="multi_angle">
+                                                            <label class="form-check-label" for="multi_angle">生成多角度图片</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- 8. 图生图 -->
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="image_to_image" name="process_types[]" value="image_to_image">
+                                                            <label class="form-check-label" for="image_to_image">图生图</label>
+                                                        </div>
+                                                        <!-- 图生图参数 -->
+                                                        <div id="image_to_image_params" class="mt-3">
+                                                            <div class="form-group">
+                                                                <label for="image_prompt">图片描述</label>
+                                                                <textarea class="form-control" id="image_prompt" name="image_prompt" rows="3" placeholder="请输入图片描述"></textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="image_strength">图像相似度（0-1）</label>
+                                                                <input type="number" class="form-control" id="image_strength" name="image_strength" value="0.5" min="0" max="1" step="0.1">
+                                                                <small class="form-text text-muted">数值越大，生成的图片与原图越相似</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- 9. 文生图 -->
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="text_to_image" name="process_types[]" value="text_to_image">
+                                                            <label class="form-check-label" for="text_to_image">文生图</label>
+                                                        </div>
+                                                        <!-- 文生图参数 -->
+                                                        <div id="text_to_image_params" class="mt-3">
+                                                            <div class="form-group">
+                                                                <label for="text_prompt">图片描述</label>
+                                                                <textarea class="form-control" id="text_prompt" name="text_prompt" rows="3" placeholder="请输入图片描述"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 提交按钮 -->
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">开始处理</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    <?php endif; ?>
+                    </div>
+                    
+                    <!-- 右侧信息栏 -->
+                    <div class="col-md-4">
+                        <!-- 快速模板 -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>快速模板</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="template-grid">
+                                    <div class="template-item" data-type="ecommerce">
+                                        <h4>电商产品图</h4>
+                                        <p>快速生成适合电商平台的产品图片</p>
+                                    </div>
+                                    <div class="template-item" data-type="social">
+                                        <h4>社交媒体图</h4>
+                                        <p>生成适合社交媒体分享的图片</p>
+                                    </div>
+                                    <div class="template-item" data-type="banner">
+                                        <h4>广告横幅</h4>
+                                        <p>创建吸引人的广告横幅图片</p>
+                                    </div>
+                                    <div class="template-item" data-type="illustration">
+                                        <h4>插画创作</h4>
+                                        <p>生成艺术风格的插画作品</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 任务历史 -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>最近任务</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="task-item">
+                                    <div class="task-info">
+                                        <div class="task-title">批量抠图任务</div>
+                                        <div class="task-date">2024-01-15 14:30</div>
+                                    </div>
+                                    <div class="task-status">
+                                        <span class="badge badge-success">已完成</span>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-info">
+                                        <div class="task-title">文生图生成</div>
+                                        <div class="task-date">2024-01-15 13:45</div>
+                                    </div>
+                                    <div class="task-status">
+                                        <span class="badge badge-success">已完成</span>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-info">
+                                        <div class="task-title">批量改尺寸</div>
+                                        <div class="task-date">2024-01-15 12:20</div>
+                                    </div>
+                                    <div class="task-status">
+                                        <span class="badge badge-success">已完成</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </section>
+        </main>
     </div>
-</div>
-
-<!-- 添加模板模态框 -->
-<div class="modal fade" id="addTemplateModal" tabindex="-1" role="dialog" aria-labelledby="addTemplateModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addTemplateModalLabel">添加自定义模板</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="<?php echo APP_URL; ?>/aigc.php?action=createTemplate" method="POST">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="template_name">模板名称</label>
-                        <input type="text" class="form-control" id="template_name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="template_type">模板类型</label>
-                        <select class="form-control" id="template_type" name="template_type" required>
-                            <option value="remove_defect">1. 批量去除瑕疵</option>
-                            <option value="crop">2. 批量抠图</option>
-                            <option value="resize">3. 批量改尺寸</option>
-                            <option value="watermark">4. 批量打水印</option>
-                            <option value="face_swap">5. 批量模特换脸</option>
-                            <option value="multi_angle">6. 生成多角度图片</option>
-                            <option value="custom">7. 自定义</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="template_params">模板参数（JSON格式）</label>
-                        <textarea class="form-control" id="template_params" name="params" rows="5" required placeholder="{\"width\": 1200, \"height\": 1200}"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="template_description">模板描述</label>
-                        <textarea class="form-control" id="template_description" name="description" rows="2"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="submit" class="btn btn-primary">保存模板</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- JavaScript 用于动态显示参数表单 -->
-<script>
-    // 处理类型切换逻辑已移除，因为现在所有选项都直接展示
     
-    // 改尺寸方式切换
-    const resizeTypeRadios = document.querySelectorAll('input[name="resize_type"]');
-    resizeTypeRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            const ratioOptions = document.getElementById('ratio_options');
-            const pixelOptions = document.getElementById('pixel_options');
+    <!-- 引入JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 侧边栏导航
+        $(document).ready(function() {
+            $('.sidebar-nav a').click(function(e) {
+                e.preventDefault();
+                
+                // 移除所有active类
+                $('.sidebar-nav a').removeClass('active');
+                $('.content-section').removeClass('active');
+                
+                // 添加active类到当前点击的导航项
+                $(this).addClass('active');
+                
+                // 显示对应的内容区域
+                const target = $(this).attr('href');
+                $(target).addClass('active');
+            });
             
-            if (this.value === 'ratio') {
-                ratioOptions.style.display = 'block';
-                pixelOptions.style.display = 'none';
-            } else {
-                ratioOptions.style.display = 'none';
-                pixelOptions.style.display = 'block';
-            }
-        });
-    });
-    
-    // 水印类型切换
-    const watermarkTypeRadios = document.querySelectorAll('input[name="watermark_type"]');
-    watermarkTypeRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            const textParams = document.getElementById('text_watermark_params');
-            const imageParams = document.getElementById('image_watermark_params');
+            // 改尺寸方式切换
+            $('input[name="resize_type"]').change(function() {
+                const ratioOptions = $('#ratio_options');
+                const pixelOptions = $('#pixel_options');
+                
+                if (this.value === 'ratio') {
+                    ratioOptions.show();
+                    pixelOptions.hide();
+                } else {
+                    ratioOptions.hide();
+                    pixelOptions.show();
+                }
+            });
             
-            if (this.value === 'text') {
-                textParams.style.display = 'block';
-                imageParams.style.display = 'none';
-            } else {
-                textParams.style.display = 'none';
-                imageParams.style.display = 'block';
-            }
+            // 水印类型切换
+            $('input[name="watermark_type"]').change(function() {
+                const textParams = $('#text_watermark_params');
+                const imageParams = $('#image_watermark_params');
+                
+                if (this.value === 'text') {
+                    textParams.show();
+                    imageParams.hide();
+                } else {
+                    textParams.hide();
+                    imageParams.show();
+                }
+            });
+            
+            // 拖拽上传功能
+            const uploadArea = $('.upload-area');
+            const fileInput = $('#images');
+            
+            uploadArea.on('dragover', function(e) {
+                e.preventDefault();
+                $(this).css('border-color', '#6c5ce7');
+            });
+            
+            uploadArea.on('dragleave', function(e) {
+                e.preventDefault();
+                $(this).css('border-color', '#2c3e50');
+            });
+            
+            uploadArea.on('drop', function(e) {
+                e.preventDefault();
+                $(this).css('border-color', '#2c3e50');
+                
+                const files = e.originalEvent.dataTransfer.files;
+                fileInput[0].files = files;
+            });
+            
+            // 点击上传功能
+            uploadArea.on('click', function() {
+                fileInput.click();
+            });
+            
+            // 快速模板选择
+            $('.template-item').click(function() {
+                const templateType = $(this).data('type');
+                alert('模板功能开发中，敬请期待！');
+            });
         });
-    });
-    
-    // 编辑模板功能
-    function editTemplate(id) {
-        // 这里可以实现编辑模板的功能
-        alert('编辑模板功能开发中...');
-    }
-</script>
-
-<?php include VIEWS_DIR . '/layouts/footer.php'; ?>
+    </script>
+</body>
+</html>
