@@ -419,7 +419,7 @@ CREATE TABLE `inventory_details` (
   KEY `idx_sku_wid` (`sku`,`wid`) USING BTREE COMMENT 'SKU+仓库ID联合索引，提升业务查询效率'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='库存详情表-原生JSON格式存储，适配MySQL5.7.40，无语法错误';
 
---- 创建AIGC模板表
+-- 创建AIGC模板表
 CREATE TABLE IF NOT EXISTS aigc_templates (
     -- 主键id，自增整数
     id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -441,12 +441,12 @@ CREATE TABLE IF NOT EXISTS aigc_templates (
     UNIQUE KEY uk_name_type (name, template_type)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理模板表';
 
---- 创建AIGC任务表
+-- 创建AIGC任务表
 CREATE TABLE IF NOT EXISTS aigc_tasks (
     -- 主键id，自增整数
     id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
     -- 用户ID，关联users表
-    user_id INT UNSIGNED NOT NULL COMMENT '用户ID',
+    user_id INT NOT NULL COMMENT '用户ID',
     -- 任务名称，非空，最大100字符
     task_name VARCHAR(100) NOT NULL COMMENT '任务名称',
     -- 任务类型，用于区分不同功能的任务
@@ -478,7 +478,7 @@ CREATE TABLE IF NOT EXISTS aigc_tasks (
     INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理任务表';
 
---- 创建AIGC任务结果表
+-- 创建AIGC任务结果表
 CREATE TABLE IF NOT EXISTS aigc_task_results (
     -- 主键id，自增整数
     id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
