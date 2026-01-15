@@ -401,34 +401,7 @@
                 <?php unset($_SESSION['error_msg']); ?>
             <?php endif; ?>
             
-            <!-- 工作台内容 -->
-            <section id="workspace" class="content-section active">
-                <div class="content-header">
-                    <h1>AI图片处理工作台</h1>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <p>欢迎使用NeoAI GC图片处理工具！</p>
-                                <p>请从左侧导航选择您需要的图片处理功能：</p>
-                                <ul class="list-unstyled">
-                                    <li><i class="fas fa-magic feature-icon"></i> <strong>批量去瑕疵</strong> - 自动去除图片中的瑕疵，调整亮度对比度</li>
-                                    <li><i class="fas fa-cut feature-icon"></i> <strong>批量抠图(PNG)</strong> - 批量将图片主体从背景中分离，导出透明背景图片</li>
-                                    <li><i class="fas fa-image feature-icon"></i> <strong>批量抠图(白底)</strong> - 批量将图片主体从背景中分离，导出白色背景图片</li>
-                                    <li><i class="fas fa-expand-arrows-alt feature-icon"></i> <strong>批量改尺寸</strong> - 按比例或像素批量调整图片尺寸</li>
-                                    <li><i class="fas fa-stamp feature-icon"></i> <strong>批量打水印</strong> - 为图片添加文字或图片水印</li>
-                                    <li><i class="fas fa-user-circle feature-icon"></i> <strong>智能换脸</strong> - 将图片中的人脸替换为指定人脸</li>
-                                    <li><i class="fas fa-sync-alt feature-icon"></i> <strong>多角度图片</strong> - 生成物体的多角度视图</li>
-                                    <li><i class="fas fa-exchange-alt feature-icon"></i> <strong>图生图</strong> - 根据图片和描述生成新图片</li>
-                                    <li><i class="fas fa-font feature-icon"></i> <strong>文生图</strong> - 根据文字描述生成图片</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+           
             
             <!-- 1. 批量去除瑕疵 -->
             <section id="remove-defect" class="content-section">
