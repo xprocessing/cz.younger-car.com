@@ -77,13 +77,17 @@ class AIGC {
             'Authorization: Bearer ' . $this->api_key
         ];
         
-        // 更安全的提示词，避免内容审核问题
-        $safe_prompt = "请严格按照要求处理图片，不要添加任何额外内容：" . $prompt;
+        // 优化提示词，使用更简洁中立的表述，避免触发内容审核
+        $safe_prompt = "图片处理任务：" . $prompt;
         
+        // 根据API错误信息调整参数格式，使用messages参数替代prompt
         $payload = [
             'model' => 'qwen-image',
-            'input' => [
-                'prompt' => $safe_prompt
+            'messages' => [
+                [
+                    'role' => 'user',
+                    'content' => $safe_prompt
+                ]
             ],
             'parameters' => [
                 'seed' => 12345,
@@ -93,9 +97,12 @@ class AIGC {
             ]
         ];
         
-        // 如果有图片数据，添加到payload
+        // 如果有图片数据，添加到messages中
         if ($image_data) {
-            $payload['input']['image'] = $image_data;
+            $payload['messages'][0]['content'] = [
+                ['type' => 'text', 'text' => $safe_prompt],
+                ['type' => 'image', 'image' => $image_data]
+            ];
         }
         
         $ch = curl_init();
@@ -111,7 +118,8 @@ class AIGC {
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $curl_errno = curl_errno($ch);
         $curl_error = curl_error($ch);
-        curl_close($ch);
+        
+        // 在PHP 8.0+中不再需要显式关闭curl资源，会自动释放
         
         // 添加更详细的调试信息
         error_log("API调用URL: " . $this->api_url);
