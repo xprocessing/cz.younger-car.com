@@ -68,7 +68,7 @@
                                         <div class="mt-3 text-center">
                                             <a href="data:image/jpeg;base64,<?php echo $result['result']; ?>" 
                                                class="btn btn-sm btn-primary" 
-                                               download="processed_<?php echo basename($result['original_image']); ?>">
+                                               download="processed_<?php echo $result['original_image'] ? basename($result['original_image']) : 'text_to_image_' . date('YmdHis') . '_' . $index; ?>">
                                                 <i class="fas fa-download"></i> 下载
                                             </a>
                                             <button class="btn btn-sm btn-secondary" 

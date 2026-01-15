@@ -290,7 +290,7 @@ class AIGCController {
             foreach ($results as $result) {
                 $this->aigcModel->saveTaskResult(
                     $task_id,
-                    basename($result['original_image']),
+                    $result['original_image'] ? basename($result['original_image']) : 'text_to_image',
                     $result['processed'] ? 'success' : 'failed',
                     $result['processed'] ? $result['result'] : null,
                     $result['processed'] ? null : $result['error']
