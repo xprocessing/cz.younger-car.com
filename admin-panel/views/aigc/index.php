@@ -364,12 +364,17 @@
                 <h2>NeoAI GC</h2>
             </div>
             <ul class="sidebar-nav">
-                <li><a href="#" class="active"><i class="fas fa-home"></i> 工作台</a></li>
-                <li><a href="#"><i class="fas fa-font"></i> 文生图</a></li>
-                <li><a href="#"><i class="fas fa-exchange-alt"></i> 图生图</a></li>
-                <li><a href="#"><i class="fas fa-cut"></i> 批量抠图</a></li>
-                <li><a href="#"><i class="fas fa-user-circle"></i> 智能换脸</a></li>
-                <li><a href="#"><i class="fas fa-history"></i> 任务历史</a></li>
+                <li><a href="#workspace" class="active"><i class="fas fa-home"></i> 工作台</a></li>
+                <li><a href="#remove-defect"><i class="fas fa-magic"></i> 批量去瑕疵</a></li>
+                <li><a href="#crop-png"><i class="fas fa-cut"></i> 批量抠图(PNG)</a></li>
+                <li><a href="#crop-white"><i class="fas fa-image"></i> 批量抠图(白底)</a></li>
+                <li><a href="#resize"><i class="fas fa-expand-arrows-alt"></i> 批量改尺寸</a></li>
+                <li><a href="#watermark"><i class="fas fa-stamp"></i> 批量打水印</a></li>
+                <li><a href="#face-swap"><i class="fas fa-user-circle"></i> 智能换脸</a></li>
+                <li><a href="#multi-angle"><i class="fas fa-sync-alt"></i> 多角度图片</a></li>
+                <li><a href="#image-to-image"><i class="fas fa-exchange-alt"></i> 图生图</a></li>
+                <li><a href="#text-to-image"><i class="fas fa-font"></i> 文生图</a></li>
+                <li><a href="#task-history"><i class="fas fa-history"></i> 任务历史</a></li>
             </ul>
         </aside>
         
@@ -403,299 +408,67 @@
                 </div>
                 
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>欢迎使用NeoAI GC图片处理工具！</p>
+                                <p>请从左侧导航选择您需要的图片处理功能：</p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-magic feature-icon"></i> <strong>批量去瑕疵</strong> - 自动去除图片中的瑕疵，调整亮度对比度</li>
+                                    <li><i class="fas fa-cut feature-icon"></i> <strong>批量抠图(PNG)</strong> - 批量将图片主体从背景中分离，导出透明背景图片</li>
+                                    <li><i class="fas fa-image feature-icon"></i> <strong>批量抠图(白底)</strong> - 批量将图片主体从背景中分离，导出白色背景图片</li>
+                                    <li><i class="fas fa-expand-arrows-alt feature-icon"></i> <strong>批量改尺寸</strong> - 按比例或像素批量调整图片尺寸</li>
+                                    <li><i class="fas fa-stamp feature-icon"></i> <strong>批量打水印</strong> - 为图片添加文字或图片水印</li>
+                                    <li><i class="fas fa-user-circle feature-icon"></i> <strong>智能换脸</strong> - 将图片中的人脸替换为指定人脸</li>
+                                    <li><i class="fas fa-sync-alt feature-icon"></i> <strong>多角度图片</strong> - 生成物体的多角度视图</li>
+                                    <li><i class="fas fa-exchange-alt feature-icon"></i> <strong>图生图</strong> - 根据图片和描述生成新图片</li>
+                                    <li><i class="fas fa-font feature-icon"></i> <strong>文生图</strong> - 根据文字描述生成图片</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 1. 批量去除瑕疵 -->
+            <section id="remove-defect" class="content-section">
+                <div class="content-header">
+                    <h1>批量去除瑕疵</h1>
+                </div>
+                
+                <div class="row">
                     <div class="col-md-8">
                         <div class="card">
-                            <div class="card-header">
-                                <h3>批量图片处理</h3>
-                            </div>
                             <div class="card-body">
                                 <form action="<?php echo APP_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="process_types[]" value="remove_defect">
+                                    
                                     <!-- 图片上传 -->
                                     <div class="form-group">
-                                        <label for="images">选择图片（支持批量上传）</label>
+                                        <label for="remove_defect_images">选择图片（支持批量上传）</label>
                                         <div class="upload-area">
                                             <i class="fas fa-cloud-upload-alt"></i>
                                             <p>拖拽图片到此处或点击上传</p>
-                                            <input type="file" class="form-control-file" id="images" name="images[]" multiple accept="image/*" style="display: none;" required>
-                                            <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('images').click()">选择图片</button>
+                                            <input type="file" class="form-control-file" id="remove_defect_images" name="images[]" multiple accept="image/*" style="display: none;" required>
+                                            <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('remove_defect_images').click()">选择图片</button>
                                         </div>
                                         <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
                                     </div>
                                     
-                                    <!-- 处理类型选择 -->
+                                    <!-- 参数设置 -->
                                     <div class="form-group">
-                                        <label>处理类型</label>
+                                        <label>参数设置</label>
                                         <div class="row">
-                                            <!-- 1. 批量去除瑕疵 -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="remove_defect" name="process_types[]" value="remove_defect">
-                                                            <label class="form-check-label" for="remove_defect">批量去除瑕疵，调整亮度对比度</label>
-                                                        </div>
-                                                        <!-- 批量去除瑕疵参数 -->
-                                                        <div id="remove_defect_params" class="mt-3">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label for="remove_defect_width">宽度（像素）</label>
-                                                                        <input type="number" class="form-control" id="remove_defect_width" name="remove_defect_width" value="1200" min="100" max="4096">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label for="remove_defect_height">高度（像素）</label>
-                                                                        <input type="number" class="form-control" id="remove_defect_height" name="remove_defect_height" value="1200" min="100" max="4096">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="remove_defect_width">宽度（像素）</label>
+                                                    <input type="number" class="form-control" id="remove_defect_width" name="remove_defect_width" value="1200" min="100" max="4096">
                                                 </div>
                                             </div>
-                                            
-                                            <!-- 2. 批量抠图 - 导出PNG -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="crop_png" name="process_types[]" value="crop_png">
-                                                            <label class="form-check-label" for="crop_png">批量抠图 - 导出PNG</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- 3. 批量抠图 - 导出白底图 -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="crop_white_bg" name="process_types[]" value="crop_white_bg">
-                                                            <label class="form-check-label" for="crop_white_bg">批量抠图 - 导出白底图</label>
-                                                        </div>
-                                                        <!-- 批量抠图 - 导出白底图参数 -->
-                                                        <div id="crop_white_bg_params" class="mt-3">
-                                                            <div class="row">
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group">
-                                                                        <label for="crop_white_bg_width">宽度（像素）</label>
-                                                                        <input type="number" class="form-control" id="crop_white_bg_width" name="crop_white_bg_width" value="800" min="100" max="4096">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group">
-                                                                        <label for="crop_white_bg_height">高度（像素）</label>
-                                                                        <input type="number" class="form-control" id="crop_white_bg_height" name="crop_white_bg_height" value="800" min="100" max="4096">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group">
-                                                                        <label for="crop_white_bg_subject_ratio">主体占比（%）</label>
-                                                                        <input type="number" class="form-control" id="crop_white_bg_subject_ratio" name="crop_white_bg_subject_ratio" value="80" min="50" max="95">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- 4. 批量改尺寸 -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="resize" name="process_types[]" value="resize">
-                                                            <label class="form-check-label" for="resize">批量改尺寸</label>
-                                                        </div>
-                                                        <!-- 批量改尺寸参数 -->
-                                                        <div id="resize_params" class="mt-3">
-                                                            <div class="form-group">
-                                                                <label>改尺寸方式</label>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="resize_type" id="resize_ratio" value="ratio" checked>
-                                                                    <label class="form-check-label" for="resize_ratio">按比例</label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="resize_type" id="resize_pixel" value="pixel">
-                                                                    <label class="form-check-label" for="resize_pixel">按像素</label>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <!-- 比例选择 -->
-                                                            <div id="ratio_options" class="mt-2">
-                                                                <div class="form-group">
-                                                                    <label for="resize_ratio_select">选择比例</label>
-                                                                    <select class="form-control" id="resize_ratio_select" name="resize_ratio">
-                                                                        <option value="4:3">4:3</option>
-                                                                        <option value="3:4">3:4</option>
-                                                                        <option value="16:9">16:9</option>
-                                                                        <option value="9:16">9:16</option>
-                                                                        <option value="1:1">1:1</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <!-- 像素选择 -->
-                                                            <div id="pixel_options" class="mt-2" style="display: none;">
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label for="resize_width">宽度（像素）</label>
-                                                                            <select class="form-control" id="resize_width" name="resize_width">
-                                                                                <option value="1920">1920</option>
-                                                                                <option value="1200">1200</option>
-                                                                                <option value="800">800</option>
-                                                                                <option value="400">400</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label for="resize_height">高度（像素）</label>
-                                                                            <select class="form-control" id="resize_height" name="resize_height">
-                                                                                <option value="1080">1080</option>
-                                                                                <option value="1200">1200</option>
-                                                                                <option value="800">800</option>
-                                                                                <option value="400">400</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- 5. 批量打水印 -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="watermark" name="process_types[]" value="watermark">
-                                                            <label class="form-check-label" for="watermark">批量打水印</label>
-                                                        </div>
-                                                        <!-- 批量打水印参数 -->
-                                                        <div id="watermark_params" class="mt-3">
-                                                            <div class="form-group">
-                                                                <label for="watermark_position">水印位置</label>
-                                                                <select class="form-control" id="watermark_position" name="watermark_position">
-                                                                    <option value="左上">左上</option>
-                                                                    <option value="右上">右上</option>
-                                                                    <option value="左下">左下</option>
-                                                                    <option value="右下">右下</option>
-                                                                    <option value="居中">居中</option>
-                                                                </select>
-                                                            </div>
-                                                            
-                                                            <div class="form-group">
-                                                                <label>水印类型</label>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="watermark_type" id="text_watermark" value="text" checked>
-                                                                    <label class="form-check-label" for="text_watermark">文字水印</label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="watermark_type" id="image_watermark" value="image">
-                                                                    <label class="form-check-label" for="image_watermark">图片水印</label>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <!-- 文字水印参数 -->
-                                                            <div id="text_watermark_params" class="mt-2">
-                                                                <div class="form-group">
-                                                                    <label for="watermark_text">水印文字</label>
-                                                                    <input type="text" class="form-control" id="watermark_text" name="watermark_text" placeholder="请输入水印文字">
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <!-- 图片水印参数 -->
-                                                            <div id="image_watermark_params" class="mt-2" style="display: none;">
-                                                                <div class="form-group">
-                                                                    <label for="watermark_image">选择水印图片</label>
-                                                                    <input type="file" class="form-control-file" id="watermark_image" name="watermark_image" accept="image/*">
-                                                                    <small class="form-text text-muted">建议使用PNG格式的透明图片</small>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- 6. 批量模特换脸 -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="face_swap" name="process_types[]" value="face_swap">
-                                                            <label class="form-check-label" for="face_swap">批量模特换脸</label>
-                                                        </div>
-                                                        <!-- 批量模特换脸参数 -->
-                                                        <div id="face_swap_params" class="mt-3">
-                                                            <div class="form-group">
-                                                                <label for="model_image">选择模特图片</label>
-                                                                <input type="file" class="form-control-file" id="model_image" name="model_image" accept="image/*">
-                                                                <small class="form-text text-muted">请选择一张包含清晰人脸的模特图片</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- 7. 生成多角度图片 -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="multi_angle" name="process_types[]" value="multi_angle">
-                                                            <label class="form-check-label" for="multi_angle">生成多角度图片</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- 8. 图生图 -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="image_to_image" name="process_types[]" value="image_to_image">
-                                                            <label class="form-check-label" for="image_to_image">图生图</label>
-                                                        </div>
-                                                        <!-- 图生图参数 -->
-                                                        <div id="image_to_image_params" class="mt-3">
-                                                            <div class="form-group">
-                                                                <label for="image_prompt">图片描述</label>
-                                                                <textarea class="form-control" id="image_prompt" name="image_prompt" rows="3" placeholder="请输入图片描述"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="image_strength">图像相似度（0-1）</label>
-                                                                <input type="number" class="form-control" id="image_strength" name="image_strength" value="0.5" min="0" max="1" step="0.1">
-                                                                <small class="form-text text-muted">数值越大，生成的图片与原图越相似</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- 9. 文生图 -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="text_to_image" name="process_types[]" value="text_to_image">
-                                                            <label class="form-check-label" for="text_to_image">文生图</label>
-                                                        </div>
-                                                        <!-- 文生图参数 -->
-                                                        <div id="text_to_image_params" class="mt-3">
-                                                            <div class="form-group">
-                                                                <label for="text_prompt">图片描述</label>
-                                                                <textarea class="form-control" id="text_prompt" name="text_prompt" rows="3" placeholder="请输入图片描述"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="remove_defect_height">高度（像素）</label>
+                                                    <input type="number" class="form-control" id="remove_defect_height" name="remove_defect_height" value="1200" min="100" max="4096">
                                                 </div>
                                             </div>
                                         </div>
@@ -710,9 +483,542 @@
                         </div>
                     </div>
                     
-                    <!-- 右侧信息栏 -->
                     <div class="col-md-4">
-                        <!-- 快速模板 -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>功能说明</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>自动检测并去除图片中的瑕疵、划痕、污渍等，同时调整亮度和对比度，使图片更加清晰美观。</p>
+                                <p><strong>适用场景：</strong>产品图片修复、老照片修复、商品图片优化等。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 2. 批量抠图 - 导出PNG -->
+            <section id="crop-png" class="content-section">
+                <div class="content-header">
+                    <h1>批量抠图(PNG)</h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="<?php echo APP_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="process_types[]" value="crop_png">
+                                    
+                                    <!-- 图片上传 -->
+                                    <div class="form-group">
+                                        <label for="crop_png_images">选择图片（支持批量上传）</label>
+                                        <div class="upload-area">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>拖拽图片到此处或点击上传</p>
+                                            <input type="file" class="form-control-file" id="crop_png_images" name="images[]" multiple accept="image/*" style="display: none;" required>
+                                            <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('crop_png_images').click()">选择图片</button>
+                                        </div>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                    </div>
+                                    
+                                    <!-- 提交按钮 -->
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">开始处理</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>功能说明</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>自动识别图片中的主体，将其从背景中分离出来，导出透明背景的PNG格式图片。</p>
+                                <p><strong>适用场景：</strong>电商产品图片、设计素材制作、广告创意等。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 3. 批量抠图 - 导出白底图 -->
+            <section id="crop-white" class="content-section">
+                <div class="content-header">
+                    <h1>批量抠图(白底)</h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="<?php echo APP_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="process_types[]" value="crop_white_bg">
+                                    
+                                    <!-- 图片上传 -->
+                                    <div class="form-group">
+                                        <label for="crop_white_images">选择图片（支持批量上传）</label>
+                                        <div class="upload-area">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>拖拽图片到此处或点击上传</p>
+                                            <input type="file" class="form-control-file" id="crop_white_images" name="images[]" multiple accept="image/*" style="display: none;" required>
+                                            <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('crop_white_images').click()">选择图片</button>
+                                        </div>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                    </div>
+                                    
+                                    <!-- 参数设置 -->
+                                    <div class="form-group">
+                                        <label>参数设置</label>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="crop_white_bg_width">宽度（像素）</label>
+                                                    <input type="number" class="form-control" id="crop_white_bg_width" name="crop_white_bg_width" value="800" min="100" max="4096">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="crop_white_bg_height">高度（像素）</label>
+                                                    <input type="number" class="form-control" id="crop_white_bg_height" name="crop_white_bg_height" value="800" min="100" max="4096">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="crop_white_bg_subject_ratio">主体占比（%）</label>
+                                                    <input type="number" class="form-control" id="crop_white_bg_subject_ratio" name="crop_white_bg_subject_ratio" value="80" min="50" max="95">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 提交按钮 -->
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">开始处理</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>功能说明</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>自动识别图片中的主体，将其从背景中分离出来，并放置在白色背景上。</p>
+                                <p><strong>适用场景：</strong>电商平台产品展示、产品目录制作等。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 4. 批量改尺寸 -->
+            <section id="resize" class="content-section">
+                <div class="content-header">
+                    <h1>批量改尺寸</h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="<?php echo APP_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="process_types[]" value="resize">
+                                    
+                                    <!-- 图片上传 -->
+                                    <div class="form-group">
+                                        <label for="resize_images">选择图片（支持批量上传）</label>
+                                        <div class="upload-area">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>拖拽图片到此处或点击上传</p>
+                                            <input type="file" class="form-control-file" id="resize_images" name="images[]" multiple accept="image/*" style="display: none;" required>
+                                            <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('resize_images').click()">选择图片</button>
+                                        </div>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                    </div>
+                                    
+                                    <!-- 参数设置 -->
+                                    <div class="form-group">
+                                        <label>改尺寸方式</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="resize_type" id="resize_ratio" value="ratio" checked>
+                                            <label class="form-check-label" for="resize_ratio">按比例</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="resize_type" id="resize_pixel" value="pixel">
+                                            <label class="form-check-label" for="resize_pixel">按像素</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 比例选择 -->
+                                    <div id="ratio_options">
+                                        <div class="form-group">
+                                            <label for="resize_ratio_select">选择比例</label>
+                                            <select class="form-control" id="resize_ratio_select" name="resize_ratio">
+                                                <option value="4:3">4:3</option>
+                                                <option value="3:4">3:4</option>
+                                                <option value="16:9">16:9</option>
+                                                <option value="9:16">9:16</option>
+                                                <option value="1:1">1:1</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 像素选择 -->
+                                    <div id="pixel_options" style="display: none;">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="resize_width">宽度（像素）</label>
+                                                    <select class="form-control" id="resize_width" name="resize_width">
+                                                        <option value="1920">1920</option>
+                                                        <option value="1200">1200</option>
+                                                        <option value="800">800</option>
+                                                        <option value="400">400</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="resize_height">高度（像素）</label>
+                                                    <select class="form-control" id="resize_height" name="resize_height">
+                                                        <option value="1080">1080</option>
+                                                        <option value="1200">1200</option>
+                                                        <option value="800">800</option>
+                                                        <option value="400">400</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 提交按钮 -->
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">开始处理</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>功能说明</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>批量调整图片尺寸，可以选择按比例或按固定像素进行调整。</p>
+                                <p><strong>适用场景：</strong>网站图片优化、社交媒体图片准备、印刷品制作等。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 5. 批量打水印 -->
+            <section id="watermark" class="content-section">
+                <div class="content-header">
+                    <h1>批量打水印</h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="<?php echo APP_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="process_types[]" value="watermark">
+                                    
+                                    <!-- 图片上传 -->
+                                    <div class="form-group">
+                                        <label for="watermark_images">选择图片（支持批量上传）</label>
+                                        <div class="upload-area">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>拖拽图片到此处或点击上传</p>
+                                            <input type="file" class="form-control-file" id="watermark_images" name="images[]" multiple accept="image/*" style="display: none;" required>
+                                            <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('watermark_images').click()">选择图片</button>
+                                        </div>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                    </div>
+                                    
+                                    <!-- 参数设置 -->
+                                    <div class="form-group">
+                                        <label for="watermark_position">水印位置</label>
+                                        <select class="form-control" id="watermark_position" name="watermark_position">
+                                            <option value="左上">左上</option>
+                                            <option value="右上">右上</option>
+                                            <option value="左下">左下</option>
+                                            <option value="右下">右下</option>
+                                            <option value="居中">居中</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>水印类型</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="watermark_type" id="text_watermark" value="text" checked>
+                                            <label class="form-check-label" for="text_watermark">文字水印</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="watermark_type" id="image_watermark" value="image">
+                                            <label class="form-check-label" for="image_watermark">图片水印</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 文字水印参数 -->
+                                    <div id="text_watermark_params">
+                                        <div class="form-group">
+                                            <label for="watermark_text">水印文字</label>
+                                            <input type="text" class="form-control" id="watermark_text" name="watermark_text" placeholder="请输入水印文字">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 图片水印参数 -->
+                                    <div id="image_watermark_params" style="display: none;">
+                                        <div class="form-group">
+                                            <label for="watermark_image">选择水印图片</label>
+                                            <input type="file" class="form-control-file" id="watermark_image" name="watermark_image" accept="image/*">
+                                            <small class="form-text text-muted">建议使用PNG格式的透明图片</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 提交按钮 -->
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">开始处理</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>功能说明</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>批量为图片添加文字或图片水印，保护图片版权或添加品牌标识。</p>
+                                <p><strong>适用场景：</strong>图片版权保护、品牌推广、产品图片标识等。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 6. 批量模特换脸 -->
+            <section id="face-swap" class="content-section">
+                <div class="content-header">
+                    <h1>智能换脸</h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="<?php echo APP_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="process_types[]" value="face_swap">
+                                    
+                                    <!-- 图片上传 -->
+                                    <div class="form-group">
+                                        <label for="face_swap_images">选择图片（支持批量上传）</label>
+                                        <div class="upload-area">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>拖拽图片到此处或点击上传</p>
+                                            <input type="file" class="form-control-file" id="face_swap_images" name="images[]" multiple accept="image/*" style="display: none;" required>
+                                            <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('face_swap_images').click()">选择图片</button>
+                                        </div>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                    </div>
+                                    
+                                    <!-- 模特图片 -->
+                                    <div class="form-group">
+                                        <label for="model_image">选择模特图片</label>
+                                        <input type="file" class="form-control-file" id="model_image" name="model_image" accept="image/*" required>
+                                        <small class="form-text text-muted">请选择一张包含清晰人脸的模特图片</small>
+                                    </div>
+                                    
+                                    <!-- 提交按钮 -->
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">开始处理</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>功能说明</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>将图片中的人脸替换为指定模特的人脸，保持其他部分不变。</p>
+                                <p><strong>适用场景：</strong>时尚电商产品展示、广告创意、虚拟试衣等。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 7. 生成多角度图片 -->
+            <section id="multi-angle" class="content-section">
+                <div class="content-header">
+                    <h1>多角度图片</h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="<?php echo APP_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="process_types[]" value="multi_angle">
+                                    
+                                    <!-- 图片上传 -->
+                                    <div class="form-group">
+                                        <label for="multi_angle_images">选择图片（支持批量上传）</label>
+                                        <div class="upload-area">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>拖拽图片到此处或点击上传</p>
+                                            <input type="file" class="form-control-file" id="multi_angle_images" name="images[]" multiple accept="image/*" style="display: none;" required>
+                                            <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('multi_angle_images').click()">选择图片</button>
+                                        </div>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                    </div>
+                                    
+                                    <!-- 提交按钮 -->
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">开始处理</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>功能说明</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>根据一张图片生成物体的多角度视图，帮助用户更全面地了解产品。</p>
+                                <p><strong>适用场景：</strong>电商产品展示、产品设计、3D建模辅助等。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 8. 图生图 -->
+            <section id="image-to-image" class="content-section">
+                <div class="content-header">
+                    <h1>图生图</h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="<?php echo APP_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="process_types[]" value="image_to_image">
+                                    
+                                    <!-- 图片上传 -->
+                                    <div class="form-group">
+                                        <label for="image_to_image_images">选择图片（支持批量上传）</label>
+                                        <div class="upload-area">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>拖拽图片到此处或点击上传</p>
+                                            <input type="file" class="form-control-file" id="image_to_image_images" name="images[]" multiple accept="image/*" style="display: none;" required>
+                                            <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('image_to_image_images').click()">选择图片</button>
+                                        </div>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                    </div>
+                                    
+                                    <!-- 参数设置 -->
+                                    <div class="form-group">
+                                        <label for="image_prompt">图片描述</label>
+                                        <textarea class="form-control" id="image_prompt" name="image_prompt" rows="4" placeholder="请输入图片描述" required></textarea>
+                                        <small class="form-text text-muted">描述您希望图片如何变化，例如：将这只猫变成一只狗</small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="image_strength">图像相似度（0-1）</label>
+                                        <input type="number" step="0.1" class="form-control" id="image_strength" name="image_strength" value="0.5" min="0" max="1">
+                                        <small class="form-text text-muted">数值越大，生成的图片与原图越相似</small>
+                                    </div>
+                                    
+                                    <!-- 提交按钮 -->
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">开始处理</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>功能说明</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>根据上传的图片和文字描述，生成新的图片。您可以控制生成图片与原图的相似度。</p>
+                                <p><strong>适用场景：</strong>图片风格转换、创意设计、图像修复等。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 9. 文生图 -->
+            <section id="text-to-image" class="content-section">
+                <div class="content-header">
+                    <h1>文生图</h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="<?php echo APP_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="process_types[]" value="text_to_image">
+                                    
+                                    <!-- 参数设置 -->
+                                    <div class="form-group">
+                                        <label for="text_prompt">输入提示词</label>
+                                        <textarea class="form-control" id="text_prompt" name="text_prompt" rows="4" placeholder="描述你想要生成的图片，例如：一只可爱的猫咪坐在窗台上..." required></textarea>
+                                        <small class="form-text text-muted">越详细的描述会得到越准确的图片结果</small>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="image_width">图片宽度（像素）</label>
+                                                <input type="number" class="form-control" id="image_width" name="image_width" value="1024" min="256" max="2048">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="image_height">图片高度（像素）</label>
+                                                <input type="number" class="form-control" id="image_height" name="image_height" value="1024" min="256" max="2048">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 提交按钮 -->
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">生成图片</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-header">
                                 <h3>快速模板</h3>
@@ -738,12 +1044,19 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- 任务历史 -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 10. 任务历史 -->
+            <section id="task-history" class="content-section">
+                <div class="content-header">
+                    <h1>任务历史</h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3>最近任务</h3>
-                            </div>
                             <div class="card-body">
                                 <div class="task-item">
                                     <div class="task-info">
@@ -803,8 +1116,8 @@
             
             // 改尺寸方式切换
             $('input[name="resize_type"]').change(function() {
-                const ratioOptions = $('#ratio_options');
-                const pixelOptions = $('#pixel_options');
+                const ratioOptions = $(this).closest('.content-section').find('#ratio_options');
+                const pixelOptions = $(this).closest('.content-section').find('#pixel_options');
                 
                 if (this.value === 'ratio') {
                     ratioOptions.show();
@@ -817,8 +1130,8 @@
             
             // 水印类型切换
             $('input[name="watermark_type"]').change(function() {
-                const textParams = $('#text_watermark_params');
-                const imageParams = $('#image_watermark_params');
+                const textParams = $(this).closest('.content-section').find('#text_watermark_params');
+                const imageParams = $(this).closest('.content-section').find('#image_watermark_params');
                 
                 if (this.value === 'text') {
                     textParams.show();
@@ -830,30 +1143,34 @@
             });
             
             // 拖拽上传功能
-            const uploadArea = $('.upload-area');
-            const fileInput = $('#images');
-            
-            uploadArea.on('dragover', function(e) {
-                e.preventDefault();
-                $(this).css('border-color', '#6c5ce7');
-            });
-            
-            uploadArea.on('dragleave', function(e) {
-                e.preventDefault();
-                $(this).css('border-color', '#2c3e50');
-            });
-            
-            uploadArea.on('drop', function(e) {
-                e.preventDefault();
-                $(this).css('border-color', '#2c3e50');
+            $('.upload-area').each(function() {
+                const uploadArea = $(this);
+                const fileInput = uploadArea.find('input[type="file"]');
                 
-                const files = e.originalEvent.dataTransfer.files;
-                fileInput[0].files = files;
-            });
-            
-            // 点击上传功能
-            uploadArea.on('click', function() {
-                fileInput.click();
+                uploadArea.on('dragover', function(e) {
+                    e.preventDefault();
+                    $(this).css('border-color', '#6c5ce7');
+                });
+                
+                uploadArea.on('dragleave', function(e) {
+                    e.preventDefault();
+                    $(this).css('border-color', '#2c3e50');
+                });
+                
+                uploadArea.on('drop', function(e) {
+                    e.preventDefault();
+                    $(this).css('border-color', '#2c3e50');
+                    
+                    const files = e.originalEvent.dataTransfer.files;
+                    if (fileInput.length > 0) {
+                        fileInput[0].files = files;
+                    }
+                });
+                
+                // 点击上传功能
+                uploadArea.on('click', function() {
+                    fileInput.click();
+                });
             });
             
             // 快速模板选择
