@@ -18,6 +18,9 @@ switch ($action) {
     case 'taskDetail':
         $controller->taskDetail();
         break;
+    case 'getTaskDetail':
+        $controller->getTaskDetail();
+        break;
     default:
         // 默认重定向到首页
         header('Location: ' . APP_URL . '/aigc.php');

@@ -337,4 +337,30 @@ class AIGCController {
         include VIEWS_DIR . '/aigc/task_detail.php';
         include VIEWS_DIR . '/layouts/footer.php';
     }
+    
+    // 获取任务详情的JSON数据（用于AJAX请求）
+    public function getTaskDetail() {
+        if (!isLoggedIn()) {
+            echo json_encode(['success' => false, 'message' => '未登录']);
+            exit();
+        }
+        
+        $task_id = (int)($_GET['id'] ?? 0);
+        if ($task_id <= 0) {
+            echo json_encode(['success' => false, 'message' => '无效的任务ID']);
+            exit();
+        }
+        
+        $task = $this->aigcModel->getTaskById($task_id);
+        $results = $this->aigcModel->getTaskResults($task_id);
+        
+        if (!$task) {
+            echo json_encode(['success' => false, 'message' => '任务不存在']);
+            exit();
+        }
+        
+        // 返回JSON数据
+        echo json_encode(['success' => true, 'task' => $task, 'results' => $results]);
+        exit();
+    }
 }
