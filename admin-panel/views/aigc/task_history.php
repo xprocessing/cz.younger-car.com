@@ -25,10 +25,13 @@
                             <tr>
                                 <th>任务名称</th>
                                 <th>任务类型</th>
-                                <th>状态</th>
+                                <th>任务状态</th>
+                                <th>处理状态</th>
                                 <th>总数量</th>
                                 <th>成功</th>
                                 <th>失败</th>
+                                <th>开始时间</th>
+                                <th>完成时间</th>
                                 <th>创建时间</th>
                                 <th>操作</th>
                             </tr>
@@ -54,21 +57,32 @@
                                         ?>
                                     </td>
                                     <td>
-                                        <span class="badge badge-<?php echo $task['status'] == 'completed' ? 'success' : ($task['status'] == 'failed' ? 'danger' : 'warning'); ?>">
+                                        <span class="badge badge-<?php echo $task['task_status'] == 'completed' ? 'success' : ($task['task_status'] == 'failed' ? 'danger' : 'warning'); ?>">
                                             <?php 
-                                                $statusMap = [
+                                                $taskStatusMap = [
                                                     'pending' => '等待处理',
                                                     'processing' => '处理中',
                                                     'completed' => '已完成',
                                                     'failed' => '失败'
                                                 ];
-                                                echo $statusMap[$task['status']] ?? $task['status'];
+                                                echo $taskStatusMap[$task['task_status']] ?? $task['task_status'];
                                             ?>
                                         </span>
+                                    </td>
+                                    <td>
+                                        <?php if (isset($task['process_status'])): ?>
+                                            <span class="badge badge-<?php echo $task['process_status'] == 'success' ? 'success' : 'danger'; ?>">
+                                                <?php echo $task['process_status'] == 'success' ? '处理成功' : '处理失败'; ?>
+                                            </span>
+                                        <?php else: ?>
+                                            <span class="badge badge-secondary">未设置</span>
+                                        <?php endif; ?>
                                     </td>
                                     <td><?php echo $task['total_count']; ?></td>
                                     <td><?php echo $task['success_count']; ?></td>
                                     <td><?php echo $task['failed_count']; ?></td>
+                                    <td><?php echo isset($task['started_at']) ? date('Y-m-d H:i:s', strtotime($task['started_at'])) : '-'; ?></td>
+                                    <td><?php echo isset($task['completed_at']) ? date('Y-m-d H:i:s', strtotime($task['completed_at'])) : '-'; ?></td>
                                     <td><?php echo date('Y-m-d H:i:s', strtotime($task['created_at'])); ?></td>
                                     <td>
                                         <button class="btn btn-sm btn-primary view-task-btn" data-task-id="<?php echo $task['id']; ?>">
@@ -175,7 +189,16 @@
             html += '</div>';
             html += '<div class="col-md-3">';
             html += '<p><strong>任务状态:</strong></p>';
-            html += '<p><span class="badge badge-' + (task.status == 'completed' ? 'success' : (task.status == 'failed' ? 'danger' : 'warning')) + '">' + (statusMap[task.status] || task.status) + '</span></p>';
+            html += '<p><span class="badge badge-' + (task.task_status == 'completed' ? 'success' : (task.task_status == 'failed' ? 'danger' : 'warning')) + '">' + (statusMap[task.task_status] || task.task_status) + '</span></p>';
+            html += '</div>';
+            
+            html += '<div class="col-md-3">';
+            html += '<p><strong>处理状态:</strong></p>';
+            if (task.process_status) {
+                html += '<p><span class="badge badge-' + (task.process_status == 'success' ? 'success' : 'danger') + '">' + (task.process_status == 'success' ? '处理成功' : '处理失败') + '</span></p>';
+            } else {
+                html += '<p><span class="badge badge-secondary">未设置</span></p>';
+            }
             html += '</div>';
             html += '<div class="col-md-3">';
             html += '<p><strong>处理数量:</strong></p>';
