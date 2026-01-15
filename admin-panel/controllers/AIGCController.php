@@ -88,88 +88,144 @@ class AIGCController {
         }
         
         // 处理图片
-        $process_type = $_POST['process_type'] ?? '';
-        $results = [];
+        $process_types = $_POST['process_types'] ?? [];
+        $all_results = [];
         
-        switch ($process_type) {
-            case 'remove_defect':
-                // 批量去除瑕疵，调整亮度对比度
-                $width = (int)($_POST['width'] ?? 1200);
-                $height = (int)($_POST['height'] ?? 1200);
-                $results = $this->aigcModel->batchRemoveDefect($processed_images, $width, $height);
-                break;
-                
-            case 'crop_png':
-                // 批量抠图 - 导出PNG
-                $results = $this->aigcModel->batchCropToPNG($processed_images);
-                break;
-                
-            case 'crop_white_bg':
-                // 批量抠图 - 导出白底图
-                $width = (int)($_POST['width'] ?? 800);
-                $height = (int)($_POST['height'] ?? 800);
-                $subject_ratio = (float)($_POST['subject_ratio'] ?? 0.8);
-                $results = $this->aigcModel->batchCropToWhiteBackground($processed_images, $width, $height, $subject_ratio);
-                break;
-                
-            case 'resize':
-                // 批量改尺寸
-                $resize_option = [];
-                if (!empty($_POST['resize_ratio'])) {
-                    $resize_option['ratio'] = $_POST['resize_ratio'];
-                } elseif (!empty($_POST['resize_width']) && !empty($_POST['resize_height'])) {
-                    $resize_option['width'] = (int)$_POST['resize_width'];
-                    $resize_option['height'] = (int)$_POST['resize_height'];
-                }
-                $results = $this->aigcModel->batchResize($processed_images, $resize_option);
-                break;
-                
-            case 'watermark':
-                // 批量打水印
-                $watermark_option = [
-                    'position' => $_POST['watermark_position'] ?? '右下角'
-                ];
-                
-                if (!empty($_POST['watermark_text'])) {
-                    $watermark_option['text'] = $_POST['watermark_text'];
-                } elseif (!empty($_FILES['watermark_image']['tmp_name'])) {
-                    $watermark_image = $_FILES['watermark_image'];
-                    if ($watermark_image['error'] === UPLOAD_ERR_OK) {
-                        $watermark_option['image_path'] = $watermark_image['tmp_name'];
+        if (empty($process_types)) {
+            showError('请至少选择一种处理类型');
+            redirect(APP_URL . '/aigc.php');
+        }
+        
+        // 对于每种选中的处理类型执行处理
+        foreach ($process_types as $process_type) {
+            switch ($process_type) {
+                case 'remove_defect':
+                    // 批量去除瑕疵，调整亮度对比度
+                    $width = (int)($_POST['remove_defect_width'] ?? 1200);
+                    $height = (int)($_POST['remove_defect_height'] ?? 1200);
+                    $results = $this->aigcModel->batchRemoveDefect($processed_images, $width, $height);
+                    break;
+                    
+                case 'crop_png':
+                    // 批量抠图 - 导出PNG
+                    $results = $this->aigcModel->batchCropToPNG($processed_images);
+                    break;
+                    
+                case 'crop_white_bg':
+                    // 批量抠图 - 导出白底图
+                    $width = (int)($_POST['crop_white_bg_width'] ?? 800);
+                    $height = (int)($_POST['crop_white_bg_height'] ?? 800);
+                    $subject_ratio = (float)($_POST['crop_white_bg_subject_ratio'] ?? 0.8);
+                    $results = $this->aigcModel->batchCropToWhiteBackground($processed_images, $width, $height, $subject_ratio);
+                    break;
+                    
+                case 'resize':
+                    // 批量改尺寸
+                    $resize_option = [];
+                    if (!empty($_POST['resize_ratio'])) {
+                        $resize_option['ratio'] = $_POST['resize_ratio'];
+                    } elseif (!empty($_POST['resize_width']) && !empty($_POST['resize_height'])) {
+                        $resize_option['width'] = (int)$_POST['resize_width'];
+                        $resize_option['height'] = (int)$_POST['resize_height'];
                     }
-                }
-                
-                $results = $this->aigcModel->batchAddWatermark($processed_images, $watermark_option);
-                break;
-                
-            case 'face_swap':
-                // 批量模特换脸
-                $face_option = [];
-                // 这里可以根据实际需求添加更多换脸参数
-                $results = $this->aigcModel->batchFaceSwap($processed_images, $face_option);
-                break;
-                
-            case 'multi_angle':
-                // 生成多角度图片
-                $angles = explode(',', $_POST['angles'] ?? '30,60,90,120,150,180');
-                $angles = array_map('intval', $angles);
-                $results = $this->aigcModel->batchGenerateMultiAngle($processed_images, $angles);
-                break;
-                
-            case 'use_template':
-                // 使用模板批量处理
-                $template_id = (int)($_POST['template_id'] ?? 0);
-                if ($template_id > 0) {
-                    $results = $this->aigcModel->batchProcessWithTemplate($processed_images, $template_id);
-                } else {
-                    showError('请选择有效的模板');
-                    redirect(APP_URL . '/aigc.php');
-                }
-                break;
-                
-            default:
-                showError('请选择有效的处理类型');
-                redirect(APP_URL . '/aigc.php');
+                    $results = $this->aigcModel->batchResize($processed_images, $resize_option);
+                    break;
+                    
+                case 'watermark':
+                    // 批量打水印
+                    $watermark_option = [
+                        'position' => $_POST['watermark_position'] ?? '右下角'
+                    ];
+                    
+                    if (!empty($_POST['watermark_text'])) {
+                        $watermark_option['text'] = $_POST['watermark_text'];
+                    } elseif (!empty($_FILES['watermark_image']['tmp_name'])) {
+                        $watermark_image = $_FILES['watermark_image'];
+                        if ($watermark_image['error'] === UPLOAD_ERR_OK) {
+                            $watermark_option['image_path'] = $watermark_image['tmp_name'];
+                        }
+                    }
+                    
+                    $results = $this->aigcModel->batchAddWatermark($processed_images, $watermark_option);
+                    break;
+                    
+                case 'face_swap':
+                    // 批量模特换脸
+                    $face_option = [];
+                    // 这里可以根据实际需求添加更多换脸参数
+                    $results = $this->aigcModel->batchFaceSwap($processed_images, $face_option);
+                    break;
+                    
+                case 'multi_angle':
+                    // 生成多角度图片
+                    $angles = explode(',', $_POST['angles'] ?? '30,60,90,120,150,180');
+                    $angles = array_map('intval', $angles);
+                    $results = $this->aigcModel->batchGenerateMultiAngle($processed_images, $angles);
+                    break;
+                    
+                case 'use_template':
+                    // 使用模板批量处理
+                    $template_id = (int)($_POST['template_id'] ?? 0);
+                    if ($template_id > 0) {
+                        $results = $this->aigcModel->batchProcessWithTemplate($processed_images, $template_id);
+                    } else {
+                        showError('请选择有效的模板');
+                        redirect(APP_URL . '/aigc.php');
+                    }
+                    break;
+                    
+                case 'text_to_image':
+                    // 文生图
+                    $text_prompt = $_POST['text_prompt'] ?? '';
+                    $image_width = (int)($_POST['image_width'] ?? 1024);
+                    $image_height = (int)($_POST['image_height'] ?? 1024);
+                    
+                    if (empty($text_prompt)) {
+                        showError('请输入文生图的文字描述');
+                        redirect(APP_URL . '/aigc.php');
+                    }
+                    
+                    // 文生图不需要原始图片，所以我们直接生成新图片
+                    $results = $this->aigcModel->textToImage($text_prompt, $image_width, $image_height);
+                    break;
+                    
+                case 'image_to_image':
+                    // 图生图
+                    $image_prompt = $_POST['image_prompt'] ?? '';
+                    $image_strength = (float)($_POST['image_strength'] ?? 0.5);
+                    
+                    if (empty($image_prompt)) {
+                        showError('请输入图生图的文字描述');
+                        redirect(APP_URL . '/aigc.php');
+                    }
+                    
+                    $results = $this->aigcModel->imageToImage($processed_images, $image_prompt, $image_strength);
+                    break;
+                    
+                default:
+                    // 跳过无效的处理类型
+                    continue 2;
+            }
+            
+            // 将当前处理类型的结果添加到所有结果中
+            if (!empty($results)) {
+                $all_results[$process_type] = $results;
+            }
+        }
+        
+        // 如果没有任何处理结果
+        if (empty($all_results)) {
+            showError('所有处理类型都处理失败');
+            redirect(APP_URL . '/aigc.php');
+        }
+        
+        // 将所有结果合并为一个数组，用于显示
+        $results = [];
+        foreach ($all_results as $type => $type_results) {
+            foreach ($type_results as $result) {
+                $result['process_type'] = $type;
+                $results[] = $result;
+            }
         }
         
         // 清理临时文件

@@ -349,4 +349,44 @@ class AIGC {
         // 解码并保存文件
         return file_put_contents($output_path, base64_decode($base64_string));
     }
+    
+    // 文生图
+    public function textToImage($prompt, $width = 1024, $height = 1024) {
+        $results = [];
+        
+        // 文生图不需要原始图片，直接调用API
+        $api_prompt = "请根据以下描述生成一张高质量图片：{$prompt}，图片尺寸为{$width}x{$height}像素，保持图片清晰，色彩鲜艳。";
+        
+        $response = $this->callAliyunAPI($api_prompt);
+        $results[] = [
+            'original_image' => null,
+            'processed' => $response['success'],
+            'result' => $response['success'] ? $response['data'] : null,
+            'error' => $response['success'] ? null : $response['error']
+        ];
+        
+        return $results;
+    }
+    
+    // 图生图
+    public function imageToImage($images, $prompt, $strength = 0.5) {
+        $results = [];
+        
+        foreach ($images as $index => $image) {
+            $image_data = base64_encode(file_get_contents($image));
+            // 根据strength参数生成不同的提示词，strength值越小，生成的图片越接近原图
+            $strength_prompt = "根据原图生成新图片，相似度为{$strength}（值越小越接近原图），";
+            $api_prompt = "{$strength_prompt}新图片的描述：{$prompt}，保持图片质量清晰。";
+            
+            $response = $this->callAliyunAPI($api_prompt, $image_data);
+            $results[] = [
+                'original_image' => $image,
+                'processed' => $response['success'],
+                'result' => $response['success'] ? $response['data'] : null,
+                'error' => $response['success'] ? null : $response['error']
+            ];
+        }
+        
+        return $results;
+    }
 }
