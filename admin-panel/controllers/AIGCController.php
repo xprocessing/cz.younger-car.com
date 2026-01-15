@@ -16,7 +16,6 @@ class AIGCController {
             redirect(APP_URL . '/login.php');
         }
         
-        $templates = $this->aigcModel->getAllTemplates();
         $title = 'AI图片处理';
         
         include VIEWS_DIR . '/layouts/header.php';
@@ -205,15 +204,10 @@ class AIGCController {
                     $results = $this->aigcModel->batchGenerateMultiAngle($processed_images, $angles);
                     break;
                     
+                // 模板功能已废弃，不再支持
                 case 'use_template':
-                    // 使用模板批量处理
-                    $template_id = (int)($_POST['template_id'] ?? 0);
-                    if ($template_id > 0) {
-                        $results = $this->aigcModel->batchProcessWithTemplate($processed_images, $template_id);
-                    } else {
-                        showError('请选择有效的模板');
-                        redirect(APP_URL . '/aigc.php');
-                    }
+                    showError('模板功能已废弃，不再支持');
+                    redirect(APP_URL . '/aigc.php');
                     break;
                     
                 case 'image_to_image':
