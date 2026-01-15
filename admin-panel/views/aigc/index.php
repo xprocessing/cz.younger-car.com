@@ -104,6 +104,48 @@
             overflow-y: auto;
         }
         
+        /* 内容区域显示/隐藏 */
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        /* 快速操作项样式 */
+        .quick-action-item {
+            display: block;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 15px;
+            background-color: rgba(108, 92, 231, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-action-item:hover {
+            background-color: rgba(108, 92, 231, 0.2);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+            color: var(--text-color);
+        }
+        
+        .quick-action-item i {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .quick-action-item span {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
         .content-header {
             margin-bottom: 30px;
         }
@@ -401,7 +443,57 @@
                 <?php unset($_SESSION['error_msg']); ?>
             <?php endif; ?>
             
-           
+            <!-- 0. 工作台 -->
+            <section id="workspace" class="content-section active">
+                <div class="content-header">
+                    <h1>工作台</h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h3>欢迎使用 NeoAI GC</h3>
+                                        <p>您可以通过左侧导航选择需要的图片处理功能。</p>
+                                        <p>NeoAI GC 提供了丰富的图片处理工具，帮助您快速完成各种图片编辑任务。</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h3>快速操作</h3>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <a href="#remove-defect" class="quick-action-item">
+                                                    <i class="fas fa-magic"></i>
+                                                    <span>批量去瑕疵</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <a href="#crop-png" class="quick-action-item">
+                                                    <i class="fas fa-cut"></i>
+                                                    <span>批量抠图</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <a href="#resize" class="quick-action-item">
+                                                    <i class="fas fa-expand-arrows-alt"></i>
+                                                    <span>批量改尺寸</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <a href="#watermark" class="quick-action-item">
+                                                    <i class="fas fa-stamp"></i>
+                                                    <span>批量打水印</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             
             <!-- 1. 批量去除瑕疵 -->
             <section id="remove-defect" class="content-section">
@@ -1070,22 +1162,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        // 侧边栏导航
+        // 侧边栏导航和快速操作
         $(document).ready(function() {
-            $('.sidebar-nav a').click(function(e) {
+            // 导航点击处理函数
+            function handleNavigationClick(e) {
                 e.preventDefault();
                 
                 // 移除所有active类
                 $('.sidebar-nav a').removeClass('active');
                 $('.content-section').removeClass('active');
                 
-                // 添加active类到当前点击的导航项
-                $(this).addClass('active');
-                
                 // 显示对应的内容区域
                 const target = $(this).attr('href');
                 $(target).addClass('active');
-            });
+                
+                // 如果是侧边栏导航项，添加active类
+                if ($(this).parents('.sidebar-nav').length > 0) {
+                    $(this).addClass('active');
+                } else {
+                    // 如果是快速操作项，同步更新侧边栏导航的active状态
+                    $('.sidebar-nav a[href="' + target + '"]').addClass('active');
+                }
+            }
+            
+            // 侧边栏导航点击事件
+            $('.sidebar-nav a').click(handleNavigationClick);
+            
+            // 快速操作项点击事件
+            $('.quick-action-item').click(handleNavigationClick);
             
             // 改尺寸方式切换
             $('input[name="resize_type"]').change(function() {
