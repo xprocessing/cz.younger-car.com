@@ -30,7 +30,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h5 class="card-title">
-                                        <?php echo basename($result['original_image']); ?>
+                                        <?php echo $result['original_image'] ? basename($result['original_image']) : '文生图'; ?>
                                         <span class="badge badge-<?php echo $result['processed'] ? 'success' : 'danger'; ?>">
                                             <?php echo $result['processed'] ? '处理成功' : '处理失败'; ?>
                                         </span>
@@ -44,10 +44,16 @@
                                     <?php else: ?>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h6>原图</h6>
+                                                <h6><?php echo $result['original_image'] ? '原图' : '文生图'; ?></h6>
                                                 <div class="img-container">
-                                                    <img src="<?php echo APP_URL; ?>/public/temp/<?php echo basename($result['original_image']); ?>" 
-                                                         class="img-thumbnail" alt="原图" style="max-width: 100%; max-height: 300px;">
+                                                    <?php if ($result['original_image']): ?>
+                                                        <img src="<?php echo APP_URL; ?>/public/temp/<?php echo basename($result['original_image']); ?>" 
+                                                             class="img-thumbnail" alt="原图" style="max-width: 100%; max-height: 300px;">
+                                                    <?php else: ?>
+                                                        <div class="text-center" style="height: 300px; line-height: 300px; background-color: #f8f9fa;">
+                                                            <span class="text-muted">文生图（无原图）</span>
+                                                        </div>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

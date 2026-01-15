@@ -71,22 +71,7 @@ class AIGC {
     
     // 调用阿里云百炼API处理图片
     public function callAliyunAPI($prompt, $image_data = null) {
-        // 启用模拟API响应，绕过内容审核问题
-        // 实际环境中可以注释掉这部分，使用真实API调用
-        if ($image_data === null) {
-            // 文生图模拟响应，返回一个示例图片的base64编码
-            // 使用一个简单的SVG图片作为示例
-            $svg_image = '<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024"><rect width="1024" height="1024" fill="#f0f0f0"/><text x="512" y="512" font-size="64" text-anchor="middle" dy=".3em" fill="#333">文生图示例</text><text x="512" y="600" font-size="32" text-anchor="middle" dy=".3em" fill="#666">这是一个模拟生成的图片</text></svg>';
-            $image_data = base64_encode($svg_image);
-        }
-        
-        return [
-            'success' => true,
-            'data' => $image_data, // 返回图片数据作为模拟结果
-            'message' => '这是一个模拟的API响应，实际环境中将调用真实的阿里云API'
-        ];
-        
-        /* 实际API调用代码（暂时注释）
+        // 实际API调用代码
         $headers = [
             'Content-Type: application/json',
             'Authorization: Bearer ' . $this->api_key
@@ -161,6 +146,20 @@ class AIGC {
                 'response' => $result
             ];
         }
+        
+        /* 模拟API响应（需要时可以启用）
+        if ($image_data === null) {
+            // 文生图模拟响应，返回一个示例图片的base64编码
+            // 使用一个简单的SVG图片作为示例
+            $svg_image = '<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024"><rect width="1024" height="1024" fill="#f0f0f0"/><text x="512" y="512" font-size="64" text-anchor="middle" dy=".3em" fill="#333">文生图示例</text><text x="512" y="600" font-size="32" text-anchor="middle" dy=".3em" fill="#666">这是一个模拟生成的图片</text></svg>';
+            $image_data = base64_encode($svg_image);
+        }
+        
+        return [
+            'success' => true,
+            'data' => $image_data, // 返回图片数据作为模拟结果
+            'message' => '这是一个模拟的API响应，实际环境中将调用真实的阿里云API'
+        ];
         */
     }
     
