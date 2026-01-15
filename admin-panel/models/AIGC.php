@@ -74,35 +74,49 @@ class AIGC {
         // 实际API调用代码
         $headers = [
             'Content-Type: application/json',
-            'Authorization: Bearer ' . $this->api_key
+            'Authorization: Bearer ' . $this->api_key,
+            'x-dashscope-sse: enable' // 添加SSE支持头，与stream=true匹配
         ];
         
         // 优化提示词，使用更简洁中立的表述，避免触发内容审核
         $safe_prompt = "图片处理任务：" . $prompt;
         
-        // 根据API错误信息调整参数格式，使用messages参数替代prompt
+        // 根据阿里云API文档调整参数格式
         $payload = [
-            'model' => 'qwen-image',
-            'messages' => [
-                [
-                    'role' => 'user',
-                    'content' => $safe_prompt
+            'model' => 'wan2.6-image', // 使用正确的模型名称
+            'input' => [
+                'messages' => [
+                    [
+                        'role' => 'user',
+                        'content' => []
+                    ]
                 ]
             ],
             'parameters' => [
-                'seed' => 12345,
-                'temperature' => 0.7,
-                'top_p' => 0.9,
-                'max_tokens' => 1024
+                'prompt_extend' => true,
+                'watermark' => false,
+                'n' => 1,
+                'enable_interleave' => false,
+                'size' => '1024*1024',
+                'stream' => true // 添加stream=true参数，API要求必须为true
             ]
         ];
         
-        // 如果有图片数据，添加到messages中
+        // 添加文本提示词
+        $payload['input']['messages'][0]['content'][] = [
+            'text' => $safe_prompt
+        ];
+        
+        // 如果有图片数据，添加到content中
         if ($image_data) {
-            $payload['messages'][0]['content'] = [
-                ['type' => 'text', 'text' => $safe_prompt],
-                ['type' => 'image', 'image' => $image_data]
+            $payload['input']['messages'][0]['content'][] = [
+                'image' => $image_data
             ];
+            // 对于有图片的情况，设置正确的参数
+            $payload['parameters']['enable_interleave'] = false;
+        } else {
+            // 对于没有图片的情况（文生图），设置正确的参数
+            $payload['parameters']['enable_interleave'] = true;
         }
         
         $ch = curl_init();
