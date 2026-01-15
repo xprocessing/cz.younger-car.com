@@ -29,25 +29,25 @@ function redirect($url) {
 
 // 显示错误信息
 function showError($message) {
-    $_SESSION['error'] = $message;
+    $_SESSION['error_msg'] = $message;
 }
 
 // 显示成功信息
 function showSuccess($message) {
-    $_SESSION['success'] = $message;
+    $_SESSION['success_msg'] = $message;
 }
 
 // 获取错误信息
 function getError() {
-    $error = $_SESSION['error'] ?? '';
-    unset($_SESSION['error']);
+    $error = $_SESSION['error_msg'] ?? '';
+    unset($_SESSION['error_msg']);
     return $error;
 }
 
 // 获取成功信息
 function getSuccess() {
-    $success = $_SESSION['success'] ?? '';
-    unset($_SESSION['success']);
+    $success = $_SESSION['success_msg'] ?? '';
+    unset($_SESSION['success_msg']);
     return $success;
 }
 

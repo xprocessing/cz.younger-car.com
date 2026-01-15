@@ -35,7 +35,7 @@ class AIGCController {
         }
         
         // 验证文件上传
-        if (empty($_FILES['images']['tmp_name'])) {
+        if (!isset($_FILES['images']) || !isset($_FILES['images']['tmp_name']) || !is_array($_FILES['images']['tmp_name']) || empty($_FILES['images']['tmp_name'])) {
             showError('请选择要上传的图片');
             redirect(APP_URL . '/aigc.php');
         }
