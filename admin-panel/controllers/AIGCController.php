@@ -1,12 +1,15 @@
 <?php
 require_once APP_ROOT . '/models/AIGC.php';
 require_once APP_ROOT . '/helpers/functions.php';
+require_once APP_ROOT . '/includes/Logger.php';
 
 class AIGCController {
     private $aigcModel;
+    private $logger;
     
     public function __construct() {
         $this->aigcModel = new AIGC();
+        $this->logger = Logger::getInstance();
         session_start();
     }
     
@@ -102,200 +105,54 @@ class AIGCController {
             $processed_images = [];
         }
         
-        // 处理图片
-        $all_results = [];
-        
-        if (empty($process_types)) {
-            showError('请至少选择一种处理类型');
-            redirect(APP_URL . '/aigc.php');
-        }
-        
-        // 对于每种选中的处理类型执行处理
-        foreach ($process_types as $process_type) {
-            // 处理文生图类型（不需要上传图片）
-            if ($process_type === 'text_to_image') {
-                $text_prompt = $_POST['text_prompt'] ?? '';
-                $image_width = (int)($_POST['image_width'] ?? 1024);
-                $image_height = (int)($_POST['image_height'] ?? 1024);
-                
-                if (empty($text_prompt)) {
-                    showError('请输入文生图的文字描述');
-                    redirect(APP_URL . '/aigc.php');
-                }
-                
-                // 文生图不需要原始图片
-                $results = $this->aigcModel->textToImage($text_prompt, $image_width, $image_height);
-                
-                // 将结果添加到所有结果中
-                if (!empty($results)) {
-                    $all_results[$process_type] = $results;
-                }
-                
-                continue;
-            }
-            
-            // 如果不是文生图类型，需要确保有图片可以处理
-            if (empty($processed_images)) {
-                continue;
-            }
-            
-            switch ($process_type) {
-                case 'remove_defect':
-                    // 批量去除瑕疵，调整亮度对比度
-                    $width = (int)($_POST['remove_defect_width'] ?? 1200);
-                    $height = (int)($_POST['remove_defect_height'] ?? 1200);
-                    $results = $this->aigcModel->batchRemoveDefect($processed_images, $width, $height);
-                    break;
-                    
-                case 'crop_png':
-                    // 批量抠图 - 导出PNG
-                    $results = $this->aigcModel->batchCropToPNG($processed_images);
-                    break;
-                    
-                case 'crop_white_bg':
-                    // 批量抠图 - 导出白底图
-                    $width = (int)($_POST['crop_white_bg_width'] ?? 800);
-                    $height = (int)($_POST['crop_white_bg_height'] ?? 800);
-                    $subject_ratio = (float)($_POST['crop_white_bg_subject_ratio'] ?? 0.8);
-                    $results = $this->aigcModel->batchCropToWhiteBackground($processed_images, $width, $height, $subject_ratio);
-                    break;
-                    
-                case 'resize':
-                    // 批量改尺寸
-                    $resize_option = [];
-                    if (!empty($_POST['resize_ratio'])) {
-                        $resize_option['ratio'] = $_POST['resize_ratio'];
-                    } elseif (!empty($_POST['resize_width']) && !empty($_POST['resize_height'])) {
-                        $resize_option['width'] = (int)$_POST['resize_width'];
-                        $resize_option['height'] = (int)$_POST['resize_height'];
-                    }
-                    $results = $this->aigcModel->batchResize($processed_images, $resize_option);
-                    break;
-                    
-                case 'watermark':
-                    // 批量打水印
-                    $watermark_option = [
-                        'position' => $_POST['watermark_position'] ?? '右下角'
-                    ];
-                    
-                    if (!empty($_POST['watermark_text'])) {
-                        $watermark_option['text'] = $_POST['watermark_text'];
-                    } elseif (!empty($_FILES['watermark_image']['tmp_name'])) {
-                        $watermark_image = $_FILES['watermark_image'];
-                        if ($watermark_image['error'] === UPLOAD_ERR_OK) {
-                            $watermark_option['image_path'] = $watermark_image['tmp_name'];
-                        }
-                    }
-                    
-                    $results = $this->aigcModel->batchAddWatermark($processed_images, $watermark_option);
-                    break;
-                    
-                case 'face_swap':
-                    // 批量模特换脸
-                    $face_option = [];
-                    // 这里可以根据实际需求添加更多换脸参数
-                    $results = $this->aigcModel->batchFaceSwap($processed_images, $face_option);
-                    break;
-                    
-                case 'multi_angle':
-                    // 生成多角度图片
-                    $angles = explode(',', $_POST['angles'] ?? '30,60,90,120,150,180');
-                    $angles = array_map('intval', $angles);
-                    $results = $this->aigcModel->batchGenerateMultiAngle($processed_images, $angles);
-                    break;
-                    
-                // 模板功能已废弃，不再支持
-                case 'use_template':
-                    showError('模板功能已废弃，不再支持');
-                    redirect(APP_URL . '/aigc.php');
-                    break;
-                    
-                case 'image_to_image':
-                    // 图生图
-                    $image_prompt = $_POST['image_prompt'] ?? '';
-                    $image_strength = (float)($_POST['image_strength'] ?? 0.5);
-                    
-                    if (empty($image_prompt)) {
-                        showError('请输入图生图的文字描述');
-                        redirect(APP_URL . '/aigc.php');
-                    }
-                    
-                    $results = $this->aigcModel->imageToImage($processed_images, $image_prompt, $image_strength);
-                    break;
-                    
-                default:
-                    // 跳过无效的处理类型
-                    continue 2;
-            }
-            
-            // 将当前处理类型的结果添加到所有结果中
-            if (!empty($results)) {
-                $all_results[$process_type] = $results;
-            }
-        }
-        
-        // 如果没有任何处理结果
-        if (empty($all_results)) {
-            showError('所有处理类型都处理失败');
-            redirect(APP_URL . '/aigc.php');
-        }
-        
-        // 将所有结果合并为一个数组，用于显示
-        $results = [];
-        foreach ($all_results as $type => $type_results) {
-            foreach ($type_results as $result) {
-                $result['process_type'] = $type;
-                $results[] = $result;
-            }
-        }
-        
-        // 清理临时文件
-        foreach ($processed_images as $image_path) {
-            if (file_exists($image_path)) {
-                unlink($image_path);
-            }
-        }
-        
         // 保存任务结果到数据库
         $user_id = $_SESSION['user_id'];
         $task_name = "图片处理任务 - " . date('Y-m-d H:i:s');
         $task_params = [
             'process_types' => $process_types,
             'processed_images_count' => count($processed_images),
-            'params' => $_POST
+            'params' => $_POST,
+            'images' => $processed_images // 保存临时图片路径
         ];
         
-        // 计算成功和失败的数量
-        $success_count = 0;
-        $failed_count = 0;
-        foreach ($results as $result) {
-            if ($result['processed']) {
-                $success_count++;
-            } else {
-                $failed_count++;
-            }
-        }
-        
         // 创建任务
-        $task_id = $this->aigcModel->createTask($user_id, $task_name, $process_types[0], $task_params, count($results));
+        $task_id = $this->aigcModel->createTask($user_id, $task_name, $process_types[0], $task_params, count($processed_images) > 0 ? count($processed_images) : 1);
         
-        // 保存每个结果
-        if ($task_id) {
-            foreach ($results as $result) {
-                $this->aigcModel->saveTaskResult(
-                    $task_id,
-                    $result['original_image'] ? basename($result['original_image']) : 'text_to_image',
-                    $result['processed'] ? 'success' : 'failed',
-                    $result['processed'] ? $result['result'] : null,
-                    $result['processed'] ? null : $result['error']
-                );
-            }
-            
-            // 更新任务状态
-            $this->aigcModel->updateTaskStatus($task_id, 'completed', $success_count, $failed_count);
+        if (!$task_id) {
+            $this->logger->error("创建任务失败", [
+                'user_id' => $user_id,
+                'task_name' => $task_name,
+                'process_types' => $process_types
+            ]);
+            showError('创建任务失败');
+            redirect(APP_URL . '/aigc.php');
         }
         
-        // 处理完成后跳转到任务历史页面，显示所有任务结果
+        // 记录任务创建成功
+        $this->logger->task("create", $task_id, $task_name, $process_types[0], $user_id, [
+            'processed_images_count' => count($processed_images),
+            'process_types' => $process_types
+        ]);
+        
+        // 使用异步处理图片，提高用户体验
+        // 创建一个临时文件来存储处理参数
+        $temp_task_file = APP_ROOT . '/public/temp/task_' . $task_id . '.json';
+        file_put_contents($temp_task_file, json_encode([
+            'task_id' => $task_id,
+            'process_types' => $process_types,
+            'processed_images' => $processed_images,
+            'post_params' => $_POST,
+            'user_id' => $user_id
+        ]));
+        
+        // 启动异步处理进程
+        $php_executable = PHP_BINARY;
+        $worker_script = APP_ROOT . '/admin-panel/scripts/process_images_worker.php';
+        
+        // 使用exec启动异步进程
+        exec("$php_executable $worker_script $temp_task_file > /dev/null 2>&1 &");
+        
+        // 立即返回任务历史页面，用户可以在那里查看进度
         redirect(APP_URL . '/aigc.php?action=taskHistory');
         exit();
     }

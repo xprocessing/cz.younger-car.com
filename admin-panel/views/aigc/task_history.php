@@ -26,7 +26,6 @@
                                 <th>任务名称</th>
                                 <th>任务类型</th>
                                 <th>任务状态</th>
-                                <th>处理状态</th>
                                 <th>总数量</th>
                                 <th>成功</th>
                                 <th>失败</th>
@@ -59,24 +58,15 @@
                                     <td>
                                         <span class="badge badge-<?php echo $task['task_status'] == 'completed' ? 'success' : ($task['task_status'] == 'failed' ? 'danger' : 'warning'); ?>">
                                             <?php 
-                                                $taskStatusMap = [
+                                                $statusMap = [
                                                     'pending' => '等待处理',
                                                     'processing' => '处理中',
                                                     'completed' => '已完成',
                                                     'failed' => '失败'
                                                 ];
-                                                echo $taskStatusMap[$task['task_status']] ?? $task['task_status'];
+                                                echo $statusMap[$task['task_status']] ?? $task['task_status'];
                                             ?>
                                         </span>
-                                    </td>
-                                    <td>
-                                        <?php if (isset($task['process_status'])): ?>
-                                            <span class="badge badge-<?php echo $task['process_status'] == 'success' ? 'success' : 'danger'; ?>">
-                                                <?php echo $task['process_status'] == 'success' ? '处理成功' : '处理失败'; ?>
-                                            </span>
-                                        <?php else: ?>
-                                            <span class="badge badge-secondary">未设置</span>
-                                        <?php endif; ?>
                                     </td>
                                     <td><?php echo $task['total_count']; ?></td>
                                     <td><?php echo $task['success_count']; ?></td>
@@ -193,14 +183,6 @@
             html += '</div>';
             
             html += '<div class="col-md-3">';
-            html += '<p><strong>处理状态:</strong></p>';
-            if (task.process_status) {
-                html += '<p><span class="badge badge-' + (task.process_status == 'success' ? 'success' : 'danger') + '">' + (task.process_status == 'success' ? '处理成功' : '处理失败') + '</span></p>';
-            } else {
-                html += '<p><span class="badge badge-secondary">未设置</span></p>';
-            }
-            html += '</div>';
-            html += '<div class="col-md-3">';
             html += '<p><strong>处理数量:</strong></p>';
             html += '<p>' + task.total_count + '</p>';
             html += '</div>';
@@ -235,51 +217,40 @@
                     html += '<div class="card">';
                     html += '<div class="card-header">';
                     html += '<h6 class="card-title">';
-                    html += result.original_filename;
-                    html += '<span class="badge badge-' + (result.status == 'success' ? 'success' : 'danger') + '">';
-                    html += result.status == 'success' ? '处理成功' : '处理失败';
+                    html += result.original_filename || '未知文件名';
+                    html += '<span class="badge badge-' + (result.process_status == 'success' ? 'success' : 'danger') + '">';
+                    html += result.process_status == 'success' ? '处理成功' : '处理失败';
                     html += '</span>';
                     html += '</h6>';
                     html += '</div>';
                     html += '<div class="card-body">';
                     
-                    if (result.status == 'failed') {
+                    if (result.process_status == 'failed') {
                         html += '<div class="alert alert-danger" role="alert">';
-                        html += '错误信息：' + result.error_message;
+                        html += '错误信息：' + (result.error_message || '未知错误');
                         html += '</div>';
                     } else {
                         html += '<div class="row">';
                         html += '<div class="col-md-12">';
                         html += '<h6>处理结果</h6>';
-                        html += '<div class="img-container">';
-                        html += '<img src="data:image/jpeg;base64,' + result.result_data + '" ';
+                        html += '<div class="img-container text-center">';
+                        html += '<img src="' + result.result_url + '" ';
                         html += 'class="img-thumbnail" alt="处理后" style="max-width: 100%; max-height: 300px;">';
                         html += '</div>';
                         html += '</div>';
                         html += '</div>';
                         html += '<div class="mt-3 text-center">';
-                        html += '<a href="data:image/jpeg;base64,' + result.result_data + '" ';
-                        html += 'class="btn btn-sm btn-primary" ';
-                        html += 'download="processed_' + result.original_filename + '">';
-                        html += '<i class="fas fa-download"></i> 下载';
-                        html += '</a>';
-                        html += '<button class="btn btn-sm btn-secondary ml-2" ';
-                        html += 'onclick="viewImage(\'data:image/jpeg;base64,' + result.result_data + '\')">';
+                        html += '<button class="btn btn-sm btn-secondary mr-2" ';
+                        html += 'onclick="viewImage(\'' + result.result_url + '\')">';
                         html += '<i class="fas fa-eye"></i> 预览';
                         html += '</button>';
-                        html += '<a href="data:image/jpeg;base64,' + result.result_data + '" class="btn btn-sm btn-primary ml-2" download="processed_' + result.original_filename + '">';
+                        html += '<a href="' + result.result_url + '" ';
+                        html += 'class="btn btn-sm btn-primary" ';
+                        html += 'download="processed_' + (result.original_filename || 'image_' + index + '.jpg') + '">';
                         html += '<i class="fas fa-download"></i> 下载';
                         html += '</a>';
                         html += '</div>';
-                        html += '</div>';
-                        html += '</div>';
-                        html += '</div>';
-                    } else {
-                        html += '<div class="alert alert-danger" role="alert">';
-                        html += '错误信息：' + result.error_message;
-                        html += '</div>';
                     }
-                    html += '</div>';
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
@@ -309,13 +280,11 @@
                                 </button>
                             </div>
                             <div class="modal-body text-center">
-                                <img id="previewImage" src="" alt="预览图片" class="img-fluid">
+                                <img id="previewImage" src="" class="img-fluid" alt="图片预览">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                <a id="downloadPreviewLink" href="" class="btn btn-primary" download>
-                                    <i class="fas fa-download"></i> 下载
-                                </a>
+                                <a id="downloadPreviewLink" href="" class="btn btn-primary" download>下载图片</a>
                             </div>
                         </div>
                     </div>
@@ -324,9 +293,11 @@
             $('body').append(modalHTML);
         }
         
+        // 设置预览图片
         previewImage.src = imageData;
         downloadPreviewLink.href = imageData;
         
+        // 显示模态框
         $('#imagePreviewModal').modal('show');
     }
 </script>

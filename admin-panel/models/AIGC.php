@@ -1,18 +1,21 @@
 <?php
 require_once APP_ROOT . '/config/config.php';
 require_once APP_ROOT . '/includes/database.php';
+require_once APP_ROOT . '/includes/Logger.php';
 
 class AIGC {
     private $db;
     private $api_id;
     private $api_key;
     private $api_url;
+    private $logger;
     
     public function __construct() {
         $this->db = Database::getInstance();
         $this->api_id = ALIYUN_API_ID;
         $this->api_key = ALIYUN_API_KEY;
         $this->api_url = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation';
+        $this->logger = Logger::getInstance();
     }
     
     // 模板功能已废弃，相关方法已删除
@@ -20,11 +23,11 @@ class AIGC {
     // 调用阿里云百炼API处理图片
     public function callAliyunAPI($prompt, $image_data = null, $max_retries = 3, $retry_delay = 1000) {
         // 优化提示词，使用更简洁中立的表述，避免触发内容审核
-        $safe_prompt = "图片处理任务：" . $prompt;
+        $safe_prompt = $prompt;
         
         // 根据阿里云API文档调整参数格式
         $payload = [
-            'model' => 'wan2.6-image', // 使用正确的模型名称
+            'model' => 'qwen-image-edit-plus', // 使用用户指定的模型
             'input' => [
                 'messages' => [
                     [
@@ -34,18 +37,11 @@ class AIGC {
                 ]
             ],
             'parameters' => [
+                'n' => 2, // 生成2张图片
+                'negative_prompt' => '低质量',
                 'prompt_extend' => true,
-                'watermark' => false,
-                'n' => 1,
-                'enable_interleave' => true, // 文生图时设置为true
-                'size' => '1024*1024',
-                'stream' => true // 添加stream=true参数，API要求必须为true
+                'watermark' => false
             ]
-        ];
-        
-        // 添加文本提示词
-        $payload['input']['messages'][0]['content'][] = [
-            'text' => $safe_prompt
         ];
         
         // 如果有图片数据，添加到content中
@@ -53,17 +49,16 @@ class AIGC {
             $payload['input']['messages'][0]['content'][] = [
                 'image' => $image_data
             ];
-            // 对于有图片的情况，设置正确的参数
-            $payload['parameters']['enable_interleave'] = false;
-        } else {
-            // 对于没有图片的情况（文生图），设置正确的参数
-            $payload['parameters']['enable_interleave'] = true;
         }
+        
+        // 添加文本提示词
+        $payload['input']['messages'][0]['content'][] = [
+            'text' => $safe_prompt
+        ];
         
         $headers = [
             'Content-Type: application/json',
-            'Authorization: Bearer ' . $this->api_key,
-            'x-dashscope-sse: enable' // 添加SSE支持头，与stream=true匹配
+            'Authorization: Bearer ' . $this->api_key
         ];
         
         $retry_count = 0;
@@ -97,171 +92,103 @@ class AIGC {
             
             // 在PHP 8.0+中不再需要显式关闭curl资源，会自动释放
             
-            // 添加更详细的调试信息
-            error_log("[API调用] URL: " . $this->api_url);
-            error_log("[API调用] 请求头: " . json_encode($headers));
-            error_log("[API调用] 请求参数: " . json_encode($payload, JSON_UNESCAPED_UNICODE));
-            error_log("[API调用] HTTP状态码: " . $http_code);
-            error_log("[API调用] CURL错误码: " . $curl_errno);
-            error_log("[API调用] CURL错误信息: " . $curl_error);
-            error_log("[API调用] 响应长度: " . strlen($response ?? ''));
-            error_log("[API调用] 执行时间: " . $execution_time . "ms");
+            // 记录API调用日志
+            $this->logger->apiCall(
+                $this->api_url,
+                'POST',
+                json_encode($payload, JSON_UNESCAPED_UNICODE),
+                substr($response, 0, 1000) . (strlen($response) > 1000 ? '...' : ''),
+                $http_code,
+                $execution_time
+            );
             
-            if (!empty($response)) {
-                error_log("[API调用] 响应内容: " . substr($response, 0, 1000) . (strlen($response) > 1000 ? '...' : ''));
-            } else {
-                error_log("[API调用] 空响应");
-            }
+            // 记录详细的调试信息
+            $this->logger->debug("API调用详情", [
+                'headers' => $headers,
+                'curl_errno' => $curl_errno,
+                'curl_error' => $curl_error,
+                'response_length' => strlen($response ?? ''),
+                'full_response' => $response
+            ]);
             
             // 检查CURL错误
             if ($curl_errno !== 0) {
                 $last_error = "CURL错误 ({$curl_errno}): {$curl_error}";
-                error_log("[API调用] 失败: {$last_error}");
+                $this->logger->error("API调用失败", [
+                    'error' => $last_error,
+                    'retry_count' => $retry_count
+                ]);
                 $retry_count++;
                 continue;
             }
             
             // 检查HTTP状态码
             if ($http_code === 200) {
-                // 处理流式响应（SSE格式）
-                if (strpos($response, 'event:result') !== false) {
-                    error_log("[API调用] 处理SSE格式响应");
-                    
-                    // 分割SSE事件
-                    $events = explode("\n\n", $response);
-                    $final_result = null;
-                    
-                    foreach ($events as $event) {
-                        if (empty(trim($event))) continue;
-                        
-                        // 提取data字段
-                        if (preg_match('/data:({.*})/s', $event, $matches)) {
-                            $data = trim($matches[1]);
-                            if (empty($data)) continue;
-                            
-                            // 解析单个data块的JSON
-                            $event_result = json_decode($data, true);
-                            if (json_last_error() !== JSON_ERROR_NONE) {
-                                error_log("[API调用] SSE数据块JSON解析错误: " . json_last_error_msg() . "，数据: " . $data);
-                                continue;
-                            }
-                            
-                            // 保存最后一个结果
-                            $final_result = $event_result;
-                            
-                            // 检查是否是最终结果
-                            if (isset($event_result['output']['finished']) && $event_result['output']['finished'] === true) {
-                                break;
-                            }
-                        }
-                    }
-                    
-                    // 检查是否有有效的结果
-                    if ($final_result) {
-                        // 解析成功响应 - 检查是否有图像URL
-                        if (isset($final_result['output']['choices'][0]['message']['content'])) {
-                            $content = $final_result['output']['choices'][0]['message']['content'];
-                            $images = [];
-                            
-                            // 提取所有图像URL
-                            foreach ($content as $item) {
-                                if (isset($item['image'])) {
-                                    // 清理可能存在的反引号和空格
-                                    $image_url = trim($item['image'], " `\n\r");
-                                    $images[] = $image_url;
-                                } elseif (isset($item['type']) && $item['type'] === 'image' && isset($item['image_url'])) {
-                                    // 另一种可能的图像URL格式
-                                    $image_url = trim($item['image_url'], " `\n\r");
-                                    $images[] = $image_url;
-                                }
-                            }
-                            
-                            if (!empty($images)) {
-                                error_log("[API调用] 成功获取 " . count($images) . " 个图像URL");
-                                return [
-                                    'success' => true,
-                                    'data' => $images[0], // 返回第一张图像
-                                    'all_images' => $images,
-                                    'usage' => $final_result['usage'] ?? [],
-                                    'request_id' => $final_result['request_id'] ?? '',
-                                    'execution_time' => $execution_time
-                                ];
-                            }
-                        }
-                        
-                        // 检查是否是文本响应（这可能是API的中间状态）
-                        if (isset($final_result['output']['choices'][0]['message']['content'])) {
-                            error_log("[API调用] SSE响应解析成功，但未找到图像URL，这可能是API的中间状态或提示词问题");
-                            // 对于文生图任务，如果得到文本响应，可能是提示词需要优化
-                            return [
-                                'success' => false,
-                                'error' => 'API返回文本响应而非图像，请检查提示词是否明确要求生成图像',
-                                'response' => $final_result,
-                                'execution_time' => $execution_time
-                            ];
-                        }
-                    }
-                    
-                    error_log("[API调用] SSE响应解析完成，但未找到有效结果");
-                    return [
-                        'success' => false,
-                        'error' => 'SSE响应解析失败，未找到有效结果',
-                        'response' => $response,
-                        'execution_time' => $execution_time
-                    ];
-                } else {
-                    // 非SSE格式响应，尝试常规JSON解析
-                    $result = json_decode($response, true);
-                    
-                    // 检查JSON解析是否成功
+                // 尝试常规JSON解析
+                $result = json_decode($response, true);
+                
+                // 检查JSON解析是否成功
                     if (json_last_error() !== JSON_ERROR_NONE) {
-                        error_log("[API调用] JSON解析错误: " . json_last_error_msg());
+                        $this->logger->error("JSON解析错误", [
+                            'error_msg' => json_last_error_msg()
+                        ]);
                         $last_error = "API响应格式错误: JSON解析失败";
                         $retry_count++;
                         continue;
                     }
-                    
-                    // 解析成功响应 - 阿里云OSS图像链接格式
-                    if (isset($result['output']['choices'][0]['message']['content'])) {
-                        $content = $result['output']['choices'][0]['message']['content'];
-                        $images = [];
-                        
-                        // 提取所有图像URL
-                    foreach ($content as $item) {
-                        if (isset($item['image'])) {
-                            // 清理可能存在的反引号和空格
-                            $image_url = trim($item['image'], " `\n\r");
-                            $images[] = $image_url;
-                        }
-                    }
-                        
-                        if (!empty($images)) {
-                            error_log("[API调用] 成功获取 " . count($images) . " 个图像URL");
-                            return [
-                                'success' => true,
-                                'data' => $images[0], // 返回第一张图像
-                                'all_images' => $images,
-                                'usage' => $result['usage'] ?? [],
-                                'request_id' => $result['request_id'] ?? '',
-                                'execution_time' => $execution_time
-                            ];
-                        }
-                    }
-                }
                 
-                // 处理流式响应错误
-                if (strpos($response, 'event:error') !== false) {
-                    error_log("[API调用] SSE流式响应错误");
+                // 检查是否是错误响应
+                if (isset($result['code']) && $result['code'] !== 200) {
+                    $this->logger->error("API错误响应", [
+                        'message' => $result['message'],
+                        'code' => $result['code']
+                    ]);
                     return [
                         'success' => false,
-                        'error' => 'SSE流式响应错误',
-                        'response' => $response,
+                        'error' => $result['message'],
+                        'error_code' => $result['code'],
+                        'response' => $result,
                         'execution_time' => $execution_time
                     ];
                 }
                 
+                // 解析成功响应 - 阿里云OSS图像链接格式
+                if (isset($result['output']['choices'])) {
+                    $images = [];
+                    
+                    // 提取所有图像URL
+                    foreach ($result['output']['choices'] as $choice) {
+                        if (isset($choice['message']['content'])) {
+                            foreach ($choice['message']['content'] as $item) {
+                                if (isset($item['image'])) {
+                                    // 清理可能存在的反引号和空格
+                                    $image_url = trim($item['image'], " `\n\r");
+                                    $images[] = $image_url;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (!empty($images)) {
+                        $this->logger->info("API调用成功", [
+                            'image_count' => count($images),
+                            'execution_time' => $execution_time
+                        ]);
+                        return [
+                            'success' => true,
+                            'data' => $images[0], // 返回第一张图像
+                            'all_images' => $images,
+                            'usage' => $result['usage'] ?? [],
+                            'request_id' => $result['request_id'] ?? '',
+                            'execution_time' => $execution_time
+                        ];
+                    }
+                }
+                
                 // 如果以上格式都不匹配
-                error_log("[API调用] 未知响应格式");
+                $this->logger->error("API未知响应格式", [
+                    'response' => $result
+                ]);
                 return [
                     'success' => false,
                     'error' => 'API返回格式错误',
@@ -274,7 +201,11 @@ class AIGC {
                 $error_msg = isset($error_result['message']) ? $error_result['message'] : 'API调用失败';
                 $error_code = isset($error_result['code']) ? $error_result['code'] : 'UnknownError';
                 
-                error_log("[API调用] 失败: HTTP {$http_code}, 错误码: {$error_code}, 消息: {$error_msg}");
+                $this->logger->error("API调用失败", [
+                    'http_code' => $http_code,
+                    'error_code' => $error_code,
+                    'error_msg' => $error_msg
+                ]);
                 
                 // 检查是否是可以重试的错误
                 $retryable_errors = ['RequestTimeOut', 'ServiceUnavailable', 'InternalServerError'];
@@ -296,7 +227,10 @@ class AIGC {
         }
         
         // 所有重试都失败
-        error_log("[API调用] 所有 {$max_retries} 次重试都失败");
+        $this->logger->error("所有API调用重试都失败", [
+            'max_retries' => $max_retries,
+            'last_error' => $last_error
+        ]);
         return [
             'success' => false,
             'error' => $last_error ?? 'API调用失败，已重试 ' . $max_retries . ' 次',
@@ -357,7 +291,9 @@ class AIGC {
                     'error' => $e->getMessage()
                 ];
                 
-                error_log("图片处理异常 ({$image}): " . $e->getMessage());
+                $this->logger->exception($e, "图片处理异常", [
+                    'image' => $image
+                ]);
             }
         }
         
@@ -528,16 +464,14 @@ class AIGC {
     }
     
     // 创建新任务
-    public function createTask($user_id, $task_name, $task_type, $task_params, $total_count = 0, $original_filename = null, $original_path = null) {
-        $sql = "INSERT INTO aigc_tasks (user_id, task_name, task_type, task_status, task_params, total_count, original_filename, original_path, started_at) VALUES (?, ?, ?, 'processing', ?, ?, ?, ?, NOW())";
+    public function createTask($user_id, $task_name, $task_type, $task_params, $total_count = 0) {
+        $sql = "INSERT INTO aigc_tasks (user_id, task_name, task_type, task_status, task_params, total_count, started_at) VALUES (?, ?, ?, 'processing', ?, ?, NOW())";
         $params = [
             $user_id,
             $task_name,
             $task_type,
             json_encode($task_params),
-            $total_count,
-            $original_filename,
-            $original_path
+            $total_count
         ];
         
         $result = $this->db->query($sql, $params);
@@ -572,15 +506,15 @@ class AIGC {
         return $this->db->query($sql, $params);
     }
     
-    // 保存任务结果（合并到任务表中）
+    // 保存任务结果到结果表中
     public function saveTaskResult($task_id, $original_filename, $process_status, $result_url = null, $error_message = null) {
-        $sql = "UPDATE aigc_tasks SET original_filename = ?, process_status = ?, result_url = ?, error_message = ? WHERE id = ?";
+        $sql = "INSERT INTO aigc_task_results (task_id, original_filename, process_status, result_url, error_message) VALUES (?, ?, ?, ?, ?)";
         $params = [
+            $task_id,
             $original_filename,
             $process_status,
             $result_url,
-            $error_message,
-            $task_id
+            $error_message
         ];
         
         return $this->db->query($sql, $params);
@@ -600,13 +534,11 @@ class AIGC {
         return $stmt->fetch();
     }
     
-    // 获取任务的结果（现在直接从任务表中获取）
+    // 获取任务的结果（从结果表中获取）
     public function getTaskResults($task_id) {
-        $sql = "SELECT id, original_filename, original_path, process_status, result_url, error_message, created_at FROM aigc_tasks WHERE id = ?";
+        $sql = "SELECT id, original_filename, original_path, process_status, result_url, error_message, created_at FROM aigc_task_results WHERE task_id = ? ORDER BY created_at DESC";
         $stmt = $this->db->query($sql, [$task_id]);
-        $result = $stmt->fetch();
-        // 返回数组格式，保持与原方法兼容
-        return $result ? [$result] : [];
+        return $stmt->fetchAll();
     }
     
     // 文生图

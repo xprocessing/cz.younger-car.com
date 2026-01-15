@@ -470,8 +470,18 @@ CREATE TABLE IF NOT EXISTS aigc_tasks (
     INDEX idx_process_status (process_status)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理任务表（合并结果表）';
 
--- 删除原任务结果表
-DROP TABLE IF EXISTS aigc_task_results;
+-- 创建AIGC任务结果表，用于存储每个任务的具体结果
+CREATE TABLE IF NOT EXISTS aigc_task_results (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    task_id INT UNSIGNED NOT NULL,
+    original_filename VARCHAR(255) NOT NULL,
+    original_path VARCHAR(255) NOT NULL,
+    process_status ENUM('success','failed') NOT NULL,
+    result_url VARCHAR(255) DEFAULT NULL,
+    error_message TEXT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (task_id) REFERENCES aigc_tasks(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AIGC任务结果表';
 
 
 
