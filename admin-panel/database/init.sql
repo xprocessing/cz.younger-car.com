@@ -419,29 +419,10 @@ CREATE TABLE `inventory_details` (
   KEY `idx_sku_wid` (`sku`,`wid`) USING BTREE COMMENT 'SKU+仓库ID联合索引，提升业务查询效率'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='库存详情表-原生JSON格式存储，适配MySQL5.7.40，无语法错误';
 
--- 创建AIGC模板表
-CREATE TABLE IF NOT EXISTS aigc_templates (
-    -- 主键id，自增整数
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    -- 模板名称，非空，最大100字符
-    name VARCHAR(100) NOT NULL COMMENT '模板名称',
-    -- 模板类型，用于区分不同功能的模板
-    template_type ENUM('remove_defect', 'crop', 'resize', 'watermark', 'face_swap', 'multi_angle', 'custom') NOT NULL COMMENT '模板类型',
-    -- 模板参数，JSON格式存储具体配置
-    params JSON NOT NULL COMMENT '模板参数（JSON格式）',
-    -- 模板描述，允许为空
-    description TEXT DEFAULT NULL COMMENT '模板描述',
-    -- 创建时间，默认当前时间
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    -- 更新时间，默认当前时间，更新时自动刷新
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    -- 设置主键
-    PRIMARY KEY (id),
-    -- 添加唯一索引
-    UNIQUE KEY uk_name_type (name, template_type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理模板表';
+-- 删除AIGC模板表（如果存在）
+DROP TABLE IF EXISTS aigc_templates;
 
--- 创建AIGC任务表
+-- 创建AIGC任务表（合并结果表字段，仅保存图像URL）
 CREATE TABLE IF NOT EXISTS aigc_tasks (
     -- 主键id，自增整数
     id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -452,9 +433,19 @@ CREATE TABLE IF NOT EXISTS aigc_tasks (
     -- 任务类型，用于区分不同功能的任务
     task_type ENUM('remove_defect', 'crop_png', 'crop_white_bg', 'resize', 'watermark', 'face_swap', 'multi_angle', 'text_to_image', 'image_to_image', 'custom') NOT NULL COMMENT '任务类型',
     -- 任务状态
-    status ENUM('pending', 'processing', 'completed', 'failed') NOT NULL DEFAULT 'pending' COMMENT '任务状态',
+    task_status ENUM('pending', 'processing', 'completed', 'failed') NOT NULL DEFAULT 'pending' COMMENT '任务状态',
     -- 任务参数，JSON格式存储具体配置
     task_params JSON NOT NULL COMMENT '任务参数（JSON格式）',
+    -- 原始图片名称
+    original_filename VARCHAR(255) DEFAULT NULL COMMENT '原始文件名',
+    -- 原始图片路径（相对于服务器）
+    original_path VARCHAR(255) DEFAULT NULL COMMENT '原始文件路径',
+    -- 处理结果状态
+    process_status ENUM('success', 'failed') DEFAULT NULL COMMENT '处理状态',
+    -- 处理结果URL（保存图像URL，不存储base64）
+    result_url VARCHAR(255) DEFAULT NULL COMMENT '处理结果图像URL',
+    -- 错误信息（如果处理失败）
+    error_message TEXT DEFAULT NULL COMMENT '错误信息',
     -- 成功处理的图片数量
     success_count INT UNSIGNED DEFAULT 0 COMMENT '成功数量',
     -- 失败处理的图片数量
@@ -474,37 +465,16 @@ CREATE TABLE IF NOT EXISTS aigc_tasks (
     -- 添加外键约束
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     -- 添加索引
-    INDEX idx_user_status (user_id, status),
-    INDEX idx_created_at (created_at)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理任务表';
+    INDEX idx_user_status (user_id, task_status),
+    INDEX idx_created_at (created_at),
+    INDEX idx_process_status (process_status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理任务表（合并结果表）';
 
--- 创建AIGC任务结果表
-CREATE TABLE IF NOT EXISTS aigc_task_results (
-    -- 主键id，自增整数
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    -- 任务ID，关联aigc_tasks表
-    task_id INT UNSIGNED NOT NULL COMMENT '任务ID',
-    -- 原始图片名称
-    original_filename VARCHAR(255) NOT NULL COMMENT '原始文件名',
-    -- 原始图片路径（相对于服务器）
-    original_path VARCHAR(255) DEFAULT NULL COMMENT '原始文件路径',
-    -- 处理结果状态
-    status ENUM('success', 'failed') NOT NULL COMMENT '处理状态',
-    -- 处理结果数据（base64编码）
-    result_data LONGTEXT DEFAULT NULL COMMENT '处理结果数据（base64）',
-    -- 处理结果路径（如果保存为文件）
-    result_path VARCHAR(255) DEFAULT NULL COMMENT '处理结果路径',
-    -- 错误信息（如果处理失败）
-    error_message TEXT DEFAULT NULL COMMENT '错误信息',
-    -- 创建时间，默认当前时间
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    -- 设置主键
-    PRIMARY KEY (id),
-    -- 添加外键约束
-    FOREIGN KEY (task_id) REFERENCES aigc_tasks(id) ON DELETE CASCADE,
-    -- 添加索引
-    INDEX idx_task_id_status (task_id, status)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理任务结果表';
+-- 删除原任务结果表
+DROP TABLE IF EXISTS aigc_task_results;
+
+
+
 ALTER TABLE `inventory_details`
 ADD UNIQUE KEY `uk_wid_sku` (`wid`, `sku`);
 
