@@ -71,15 +71,27 @@ class AIGC {
     
     // 调用阿里云百炼API处理图片
     public function callAliyunAPI($prompt, $image_data = null) {
+        /* 模拟API响应（暂时注释）
+        return [
+            'success' => true,
+            'data' => $image_data, // 直接返回原图数据作为模拟结果
+            'message' => '这是一个模拟的API响应，实际环境中将调用真实的阿里云API'
+        ];
+        */
+        
+        // 实际API调用代码
         $headers = [
             'Content-Type: application/json',
             'Authorization: Bearer ' . $this->api_key
         ];
         
+        // 更安全的提示词，避免内容审核问题
+        $safe_prompt = "请严格按照要求处理图片，不要添加任何额外内容：" . $prompt;
+        
         $payload = [
             'model' => 'qwen-image',
             'input' => [
-                'prompt' => $prompt
+                'prompt' => $safe_prompt
             ],
             'parameters' => [
                 'seed' => 12345,
@@ -105,7 +117,16 @@ class AIGC {
         
         $response = curl_exec($ch);
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curl_errno = curl_errno($ch);
+        $curl_error = curl_error($ch);
         curl_close($ch);
+        
+        // 添加调试信息
+        error_log("API调用URL: " . $this->api_url);
+        error_log("HTTP状态码: " . $http_code);
+        error_log("CURL错误码: " . $curl_errno);
+        error_log("CURL错误信息: " . $curl_error);
+        error_log("API响应: " . substr($response, 0, 1000)); // 只记录前1000个字符
         
         if ($http_code !== 200) {
             return [
