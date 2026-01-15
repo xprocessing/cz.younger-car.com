@@ -131,6 +131,13 @@
                     </a>
                 </div>
             <?php endif; ?>
+             <?php if (isLoggedIn()): ?>
+                <div class="nav-item">
+                    <a href="<?php echo APP_URL; ?>/costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'costs.php' ? 'active' : ''; ?>">
+                        <i class="fa fa-list"></i> 广告费
+                    </a>
+                </div>
+            <?php endif; ?>
             <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
                     <a href="<?php echo APP_URL; ?>/store.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'store.php' ? 'active' : ''; ?>">
@@ -141,14 +148,7 @@
 
 
 
-            <?php if (hasPermission('yunfei.view')): ?>
-                <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/yunfei.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'yunfei.php' ? 'active' : ''; ?>">
-                        <i class="fa fa-truck"></i> 运费管理
-                    </a>
-                </div>
-            <?php endif; ?>
-
+          
 
             <?php if (hasPermission('warehouses.view')): ?>
                 <div class="nav-item">
@@ -164,13 +164,14 @@
                     </a>
                 </div>
             <?php endif; ?>
-            <?php if (isLoggedIn()): ?>
+             <?php if (hasPermission('yunfei.view')): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'costs.php' ? 'active' : ''; ?>">
-                        <i class="fa fa-list"></i> 广告费
+                    <a href="<?php echo APP_URL; ?>/yunfei.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'yunfei.php' ? 'active' : ''; ?>">
+                        <i class="fa fa-truck"></i> 运费管理
                     </a>
                 </div>
             <?php endif; ?>
+
             <?php if (hasPermission('users.view')): ?>
                 <div class="nav-item">
                     <a href="<?php echo APP_URL; ?>/users.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : ''; ?>">
