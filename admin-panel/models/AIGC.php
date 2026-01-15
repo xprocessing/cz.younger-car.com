@@ -166,10 +166,13 @@ class AIGC {
                             // 提取所有图像URL
                             foreach ($content as $item) {
                                 if (isset($item['image'])) {
-                                    $images[] = $item['image'];
+                                    // 清理可能存在的反引号和空格
+                                    $image_url = trim($item['image'], " `\n\r");
+                                    $images[] = $image_url;
                                 } elseif (isset($item['type']) && $item['type'] === 'image' && isset($item['image_url'])) {
                                     // 另一种可能的图像URL格式
-                                    $images[] = $item['image_url'];
+                                    $image_url = trim($item['image_url'], " `\n\r");
+                                    $images[] = $image_url;
                                 }
                             }
                             
@@ -224,11 +227,13 @@ class AIGC {
                         $images = [];
                         
                         // 提取所有图像URL
-                        foreach ($content as $item) {
-                            if (isset($item['image'])) {
-                                $images[] = $item['image'];
-                            }
+                    foreach ($content as $item) {
+                        if (isset($item['image'])) {
+                            // 清理可能存在的反引号和空格
+                            $image_url = trim($item['image'], " `\n\r");
+                            $images[] = $image_url;
                         }
+                    }
                         
                         if (!empty($images)) {
                             error_log("[API调用] 成功获取 " . count($images) . " 个图像URL");
