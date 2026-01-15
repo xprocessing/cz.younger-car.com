@@ -12,18 +12,6 @@ switch ($action) {
     case 'processImages':
         $controller->processImages();
         break;
-    case 'getTemplates':
-        $controller->getTemplates();
-        break;
-    case 'createTemplate':
-        $controller->createTemplate();
-        break;
-    case 'updateTemplate':
-        $controller->updateTemplate();
-        break;
-    case 'deleteTemplate':
-        $controller->deleteTemplate();
-        break;
     case 'taskHistory':
         $controller->taskHistory();
         break;
