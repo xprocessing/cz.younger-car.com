@@ -407,6 +407,7 @@
             </div>
             <ul class="sidebar-nav">
                 <li><a href="#workspace" class="active"><i class="fas fa-home"></i> 工作台</a></li>
+                <li><a href="result.php"><i class="fas fa-images"></i> 处理结果</a></li>
                 <li><a href="#remove-defect"><i class="fas fa-magic"></i> 批量去瑕疵</a></li>
                 <li><a href="#crop-png"><i class="fas fa-cut"></i> 批量抠图(PNG)</a></li>
                 <li><a href="#crop-white"><i class="fas fa-image"></i> 批量抠图(白底)</a></li>
@@ -484,6 +485,12 @@
                                                 <a href="#watermark" class="quick-action-item">
                                                     <i class="fas fa-stamp"></i>
                                                     <span>批量打水印</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <a href="result.php" class="quick-action-item">
+                                                    <i class="fas fa-images"></i>
+                                                    <span>处理结果</span>
                                                 </a>
                                             </div>
                                         </div>
