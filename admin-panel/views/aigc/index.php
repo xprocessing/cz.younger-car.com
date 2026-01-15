@@ -524,7 +524,7 @@
                                             <input type="file" class="form-control-file" id="remove_defect_images" name="images[]" multiple accept="image/*" style="display: none;" required>
                                             <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('remove_defect_images').click()">选择图片</button>
                                         </div>
-                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过2MB</small>
                                     </div>
                                     
                                     <!-- 参数设置 -->
@@ -591,7 +591,7 @@
                                             <input type="file" class="form-control-file" id="crop_png_images" name="images[]" multiple accept="image/*" style="display: none;" required>
                                             <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('crop_png_images').click()">选择图片</button>
                                         </div>
-                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过2MB</small>
                                     </div>
                                     
                                     <!-- 提交按钮 -->
@@ -639,7 +639,7 @@
                                             <input type="file" class="form-control-file" id="crop_white_images" name="images[]" multiple accept="image/*" style="display: none;" required>
                                             <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('crop_white_images').click()">选择图片</button>
                                         </div>
-                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过2MB</small>
                                     </div>
                                     
                                     <!-- 参数设置 -->
@@ -712,7 +712,7 @@
                                             <input type="file" class="form-control-file" id="resize_images" name="images[]" multiple accept="image/*" style="display: none;" required>
                                             <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('resize_images').click()">选择图片</button>
                                         </div>
-                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过2MB</small>
                                     </div>
                                     
                                     <!-- 参数设置 -->
@@ -815,7 +815,7 @@
                                             <input type="file" class="form-control-file" id="watermark_images" name="images[]" multiple accept="image/*" style="display: none;" required>
                                             <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('watermark_images').click()">选择图片</button>
                                         </div>
-                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过2MB</small>
                                     </div>
                                     
                                     <!-- 参数设置 -->
@@ -904,7 +904,7 @@
                                             <input type="file" class="form-control-file" id="face_swap_images" name="images[]" multiple accept="image/*" style="display: none;" required>
                                             <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('face_swap_images').click()">选择图片</button>
                                         </div>
-                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过2MB</small>
                                     </div>
                                     
                                     <!-- 模特图片 -->
@@ -959,7 +959,7 @@
                                             <input type="file" class="form-control-file" id="multi_angle_images" name="images[]" multiple accept="image/*" style="display: none;" required>
                                             <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('multi_angle_images').click()">选择图片</button>
                                         </div>
-                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过2MB</small>
                                     </div>
                                     
                                     <!-- 提交按钮 -->
@@ -1007,7 +1007,7 @@
                                             <input type="file" class="form-control-file" id="image_to_image_images" name="images[]" multiple accept="image/*" style="display: none;" required>
                                             <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('image_to_image_images').click()">选择图片</button>
                                         </div>
-                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过10MB</small>
+                                        <small class="form-text text-muted">支持JPG、PNG、GIF、WebP格式，单张图片不超过2MB</small>
                                     </div>
                                     
                                     <!-- 参数设置 -->

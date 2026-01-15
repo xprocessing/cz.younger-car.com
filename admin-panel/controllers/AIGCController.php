@@ -64,9 +64,9 @@ class AIGCController {
                     continue;
                 }
                 
-                // 验证图片大小（限制10MB）
-                if ($file_size > 10 * 1024 * 1024) {
-                    showError('图片过大：' . $file_name . '，限制10MB');
+                // 验证图片大小（限制2MB）
+                if ($file_size > 2 * 1024 * 1024) {
+                    showError('图片过大：' . $file_name . '，限制2MB');
                     continue;
                 }
                 
