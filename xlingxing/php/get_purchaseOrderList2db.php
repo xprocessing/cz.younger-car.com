@@ -11,6 +11,7 @@ try {
     // 初始化API客户端
     $apiClient = new LingXingApiClient();
     $nDaysAgo = $_GET['nDaysAgo'] ?? 2;
+    $offset = $_GET['offset'] ?? 0;
     // 当前时间戳，按秒
     $currentTimestamp = time();
     $start_date = date('Y-m-d', $currentTimestamp - ($nDaysAgo * 24 * 60 * 60));
@@ -20,7 +21,7 @@ try {
    
     // 调用POST接口示例
     $orderParams = [
-        'offset' => 0,
+        'offset' => $offset,
         'length' => 200,
         'order_status' => 6,       
        'start_date' => $start_date,
@@ -100,7 +101,7 @@ try {
 
 
 
-//测试链接https://cz.younger-car.com/xlingxing/php/get_purchaseOrderList2db.php?nDaysAgo=300
+//测试链接https://cz.younger-car.com/xlingxing/php/get_purchaseOrderList2db.php?nDaysAgo=300&offset=0
 
 
 ?>
