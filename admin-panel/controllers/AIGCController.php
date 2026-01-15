@@ -34,93 +34,76 @@ class AIGCController {
             redirect(APP_URL . '/aigc.php');
         }
         
-        // 添加调试信息
-        error_log("AIGCController::processImages() - 开始处理文件上传");
-        error_log("原始FILES数据: " . print_r($_FILES, true));
-        error_log("原始POST数据: " . print_r($_POST, true));
+        // 获取处理类型
+        $process_types = $_POST['process_types'] ?? [];
         
-        // 验证文件上传
-        if (!isset($_FILES['images']) || !isset($_FILES['images']['tmp_name']) || !is_array($_FILES['images']['tmp_name']) || empty($_FILES['images']['tmp_name'])) {
-            showError('请选择要上传的图片');
-            redirect(APP_URL . '/aigc.php');
-        }
+        // 检查是否包含文生图类型
+        $has_text_to_image = in_array('text_to_image', $process_types);
         
-        $images = $_FILES['images'];
         $processed_images = [];
-        $temp_dir = APP_ROOT . '/public/temp/';
         
-        // 添加调试信息
-        error_log("临时目录: " . $temp_dir);
-        error_log("临时目录是否存在: " . (is_dir($temp_dir) ? '是' : '否'));
-        
-        // 创建临时目录
-        if (!is_dir($temp_dir)) {
-            mkdir($temp_dir, 0755, true);
-        }
-        
-        // 保存上传的图片到临时目录
-        $total_files = count($images['tmp_name']);
-        error_log("总文件数量: " . $total_files);
-        
-        for ($i = 0; $i < $total_files; $i++) {
-            error_log("处理文件 #" . ($i + 1));
-            error_log("错误码: " . $images['error'][$i]);
+        // 如果不是纯文生图请求，需要验证文件上传
+        if (!$has_text_to_image || (count($process_types) > 1 && $has_text_to_image)) {
+            // 验证文件上传
+            if (!isset($_FILES['images']) || !isset($_FILES['images']['tmp_name']) || !is_array($_FILES['images']['tmp_name']) || empty($_FILES['images']['tmp_name'])) {
+                showError('请选择要上传的图片');
+                redirect(APP_URL . '/aigc.php');
+            }
             
-            if ($images['error'][$i] === UPLOAD_ERR_OK) {
-                $file_name = $images['name'][$i];
-                $file_tmp = $images['tmp_name'][$i];
-                $file_type = $images['type'][$i];
-                $file_size = $images['size'][$i];
-                
-                error_log("文件名: " . $file_name);
-                error_log("临时路径: " . $file_tmp);
-                error_log("文件类型: " . $file_type);
-                error_log("文件大小: " . $file_size . " bytes");
-                
-                // 验证图片类型
-                $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-                if (!in_array($file_type, $allowed_types)) {
-                    error_log('不支持的图片格式：' . $file_name);
-                    showError('不支持的图片格式：' . $file_name);
-                    continue;
+            $images = $_FILES['images'];
+            $temp_dir = APP_ROOT . '/public/temp/';
+            
+            // 创建临时目录（如果不存在）
+            if (!is_dir($temp_dir)) {
+                mkdir($temp_dir, 0755, true);
+            }
+            
+            // 保存上传的图片到临时目录
+            for ($i = 0; $i < count($images['tmp_name']); $i++) {
+                if ($images['error'][$i] === UPLOAD_ERR_OK) {
+                    $file_name = $images['name'][$i];
+                    $file_tmp = $images['tmp_name'][$i];
+                    $file_type = $images['type'][$i];
+                    $file_size = $images['size'][$i];
+                    
+                    // 验证图片类型
+                    $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                    if (!in_array($file_type, $allowed_types)) {
+                        showError('不支持的图片格式：' . $file_name);
+                        continue;
+                    }
+                    
+                    // 验证图片大小（限制2MB）
+                    if ($file_size > 2 * 1024 * 1024) {
+                        showError('图片过大：' . $file_name . '，限制2MB');
+                        continue;
+                    }
+                    
+                    // 生成唯一文件名
+                    $unique_name = uniqid() . '_' . $file_name;
+                    $target_path = $temp_dir . $unique_name;
+                    
+                    if (move_uploaded_file($file_tmp, $target_path)) {
+                        $processed_images[] = $target_path;
+                    } else {
+                        showError('上传失败：' . $file_name);
+                    }
                 }
-                
-                // 验证图片大小（限制2MB）
-                if ($file_size > 2 * 1024 * 1024) {
-                    error_log('图片过大：' . $file_name . '，限制2MB');
-                    showError('图片过大：' . $file_name . '，限制2MB');
-                    continue;
-                }
-                
-                // 生成唯一文件名
-                $unique_name = uniqid() . '_' . $file_name;
-                $target_path = $temp_dir . $unique_name;
-                
-                error_log("目标路径: " . $target_path);
-                
-                if (move_uploaded_file($file_tmp, $target_path)) {
-                    $processed_images[] = $target_path;
-                    error_log("文件保存成功: " . $target_path);
-                } else {
-                    error_log('上传失败：' . $file_name);
-                    showError('上传失败：' . $file_name);
-                }
-            } else {
-                error_log("文件上传错误，错误码: " . $images['error'][$i]);
+            }
+            
+            // 如果不是纯文生图请求，需要确保有图片被上传
+            if (empty($processed_images)) {
+                showError('没有有效的图片被上传');
+                redirect(APP_URL . '/aigc.php');
             }
         }
         
-        error_log("处理后的图片数量: " . count($processed_images));
-        error_log("处理后的图片列表: " . print_r($processed_images, true));
-        
-        if (empty($processed_images)) {
-            error_log('没有有效的图片被上传 - processed_images数组为空');
-            showError('没有有效的图片被上传');
-            redirect(APP_URL . '/aigc.php');
+        // 如果只是纯文生图请求，不需要处理上传的图片
+        if ($has_text_to_image && count($process_types) === 1) {
+            $processed_images = [];
         }
         
         // 处理图片
-        $process_types = $_POST['process_types'] ?? [];
         $all_results = [];
         
         if (empty($process_types)) {
@@ -130,6 +113,33 @@ class AIGCController {
         
         // 对于每种选中的处理类型执行处理
         foreach ($process_types as $process_type) {
+            // 处理文生图类型（不需要上传图片）
+            if ($process_type === 'text_to_image') {
+                $text_prompt = $_POST['text_prompt'] ?? '';
+                $image_width = (int)($_POST['image_width'] ?? 1024);
+                $image_height = (int)($_POST['image_height'] ?? 1024);
+                
+                if (empty($text_prompt)) {
+                    showError('请输入文生图的文字描述');
+                    redirect(APP_URL . '/aigc.php');
+                }
+                
+                // 文生图不需要原始图片
+                $results = $this->aigcModel->textToImage($text_prompt, $image_width, $image_height);
+                
+                // 将结果添加到所有结果中
+                if (!empty($results)) {
+                    $all_results[$process_type] = $results;
+                }
+                
+                continue;
+            }
+            
+            // 如果不是文生图类型，需要确保有图片可以处理
+            if (empty($processed_images)) {
+                continue;
+            }
+            
             switch ($process_type) {
                 case 'remove_defect':
                     // 批量去除瑕疵，调整亮度对比度
@@ -204,21 +214,6 @@ class AIGCController {
                         showError('请选择有效的模板');
                         redirect(APP_URL . '/aigc.php');
                     }
-                    break;
-                    
-                case 'text_to_image':
-                    // 文生图
-                    $text_prompt = $_POST['text_prompt'] ?? '';
-                    $image_width = (int)($_POST['image_width'] ?? 1024);
-                    $image_height = (int)($_POST['image_height'] ?? 1024);
-                    
-                    if (empty($text_prompt)) {
-                        showError('请输入文生图的文字描述');
-                        redirect(APP_URL . '/aigc.php');
-                    }
-                    
-                    // 文生图不需要原始图片，所以我们直接生成新图片
-                    $results = $this->aigcModel->textToImage($text_prompt, $image_width, $image_height);
                     break;
                     
                 case 'image_to_image':
