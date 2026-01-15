@@ -350,6 +350,84 @@ class AIGC {
         return file_put_contents($output_path, base64_decode($base64_string));
     }
     
+    // 创建新任务
+    public function createTask($user_id, $task_name, $task_type, $task_params, $total_count = 0) {
+        $sql = "INSERT INTO aigc_tasks (user_id, task_name, task_type, status, task_params, total_count, started_at) VALUES (?, ?, ?, 'processing', ?, ?, NOW())";
+        $params = [
+            $user_id,
+            $task_name,
+            $task_type,
+            json_encode($task_params),
+            $total_count
+        ];
+        
+        $result = $this->db->query($sql, $params);
+        if ($result) {
+            return $this->db->lastInsertId();
+        }
+        return false;
+    }
+    
+    // 更新任务状态
+    public function updateTaskStatus($task_id, $status, $success_count = null, $failed_count = null) {
+        $sql = "UPDATE aigc_tasks SET status = ?";
+        $params = [$status];
+        
+        if ($status == 'completed' || $status == 'failed') {
+            $sql .= ", completed_at = NOW()";
+        }
+        
+        if ($success_count !== null) {
+            $sql .= ", success_count = ?";
+            $params[] = $success_count;
+        }
+        
+        if ($failed_count !== null) {
+            $sql .= ", failed_count = ?";
+            $params[] = $failed_count;
+        }
+        
+        $sql .= " WHERE id = ?";
+        $params[] = $task_id;
+        
+        return $this->db->query($sql, $params);
+    }
+    
+    // 保存任务结果
+    public function saveTaskResult($task_id, $original_filename, $status, $result_data = null, $error_message = null) {
+        $sql = "INSERT INTO aigc_task_results (task_id, original_filename, status, result_data, error_message) VALUES (?, ?, ?, ?, ?)";
+        $params = [
+            $task_id,
+            $original_filename,
+            $status,
+            $result_data,
+            $error_message
+        ];
+        
+        return $this->db->query($sql, $params);
+    }
+    
+    // 获取用户的任务历史
+    public function getUserTasks($user_id, $limit = 20, $offset = 0) {
+        $sql = "SELECT * FROM aigc_tasks WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        $stmt = $this->db->query($sql, [$user_id, $limit, $offset]);
+        return $stmt->fetchAll();
+    }
+    
+    // 获取任务的详细信息
+    public function getTaskById($task_id) {
+        $sql = "SELECT * FROM aigc_tasks WHERE id = ?";
+        $stmt = $this->db->query($sql, [$task_id]);
+        return $stmt->fetch();
+    }
+    
+    // 获取任务的结果
+    public function getTaskResults($task_id) {
+        $sql = "SELECT * FROM aigc_task_results WHERE task_id = ?";
+        $stmt = $this->db->query($sql, [$task_id]);
+        return $stmt->fetchAll();
+    }
+    
     // 文生图
     public function textToImage($prompt, $width = 1024, $height = 1024) {
         $results = [];

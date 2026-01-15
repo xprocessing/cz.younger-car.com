@@ -417,7 +417,7 @@
                 <li><a href="#multi-angle"><i class="fas fa-sync-alt"></i> 多角度图片</a></li>
                 <li><a href="#image-to-image"><i class="fas fa-exchange-alt"></i> 图生图</a></li>
                 <li><a href="#text-to-image"><i class="fas fa-font"></i> 文生图</a></li>
-                <li><a href="#task-history"><i class="fas fa-history"></i> 任务历史</a></li>
+                <li><a href="<?php echo APP_URL; ?>/aigc.php?action=taskHistory"><i class="fas fa-history"></i> 任务历史</a></li>
             </ul>
         </aside>
         
@@ -1120,48 +1120,8 @@
                 </div>
             </section>
             
-            <!-- 10. 任务历史 -->
-            <section id="task-history" class="content-section">
-                <div class="content-header">
-                    <h1>任务历史</h1>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="task-item">
-                                    <div class="task-info">
-                                        <div class="task-title">批量抠图任务</div>
-                                        <div class="task-date">2024-01-15 14:30</div>
-                                    </div>
-                                    <div class="task-status">
-                                        <span class="badge badge-success">已完成</span>
-                                    </div>
-                                </div>
-                                <div class="task-item">
-                                    <div class="task-info">
-                                        <div class="task-title">文生图生成</div>
-                                        <div class="task-date">2024-01-15 13:45</div>
-                                    </div>
-                                    <div class="task-status">
-                                        <span class="badge badge-success">已完成</span>
-                                    </div>
-                                </div>
-                                <div class="task-item">
-                                    <div class="task-info">
-                                        <div class="task-title">批量改尺寸</div>
-                                        <div class="task-date">2024-01-15 12:20</div>
-                                    </div>
-                                    <div class="task-status">
-                                        <span class="badge badge-success">已完成</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
+
         </main>
     </div>
     

@@ -24,6 +24,12 @@ switch ($action) {
     case 'deleteTemplate':
         $controller->deleteTemplate();
         break;
+    case 'taskHistory':
+        $controller->taskHistory();
+        break;
+    case 'taskDetail':
+        $controller->taskDetail();
+        break;
     default:
         // 默认重定向到首页
         header('Location: ' . APP_URL . '/aigc.php');

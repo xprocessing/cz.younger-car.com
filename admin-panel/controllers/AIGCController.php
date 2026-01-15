@@ -235,6 +235,45 @@ class AIGCController {
             }
         }
         
+        // 保存任务结果到数据库
+        $user_id = $_SESSION['user_id'];
+        $task_name = "图片处理任务 - " . date('Y-m-d H:i:s');
+        $task_params = [
+            'process_types' => $process_types,
+            'processed_images_count' => count($processed_images),
+            'params' => $_POST
+        ];
+        
+        // 计算成功和失败的数量
+        $success_count = 0;
+        $failed_count = 0;
+        foreach ($results as $result) {
+            if ($result['processed']) {
+                $success_count++;
+            } else {
+                $failed_count++;
+            }
+        }
+        
+        // 创建任务
+        $task_id = $this->aigcModel->createTask($user_id, $task_name, $process_types[0], $task_params, count($results));
+        
+        // 保存每个结果
+        if ($task_id) {
+            foreach ($results as $result) {
+                $this->aigcModel->saveTaskResult(
+                    $task_id,
+                    basename($result['original_image']),
+                    $result['processed'] ? 'success' : 'failed',
+                    $result['processed'] ? $result['result'] : null,
+                    $result['processed'] ? null : $result['error']
+                );
+            }
+            
+            // 更新任务状态
+            $this->aigcModel->updateTaskStatus($task_id, 'completed', $success_count, $failed_count);
+        }
+        
         // 显示处理结果
         $title = '图片处理结果';
         include VIEWS_DIR . '/layouts/header.php';
@@ -385,5 +424,41 @@ class AIGCController {
         }
         
         redirect(APP_URL . '/aigc.php');
+    }
+    
+    // 显示任务历史页面
+    public function taskHistory() {
+        if (!isLoggedIn()) {
+            redirect(APP_URL . '/login.php');
+        }
+        
+        $user_id = $_SESSION['user_id'];
+        $tasks = $this->aigcModel->getUserTasks($user_id);
+        $title = '任务历史';
+        
+        include VIEWS_DIR . '/layouts/header.php';
+        include VIEWS_DIR . '/aigc/task_history.php';
+        include VIEWS_DIR . '/layouts/footer.php';
+    }
+    
+    // 显示任务详情
+    public function taskDetail() {
+        if (!isLoggedIn()) {
+            redirect(APP_URL . '/login.php');
+        }
+        
+        $task_id = (int)($_GET['id'] ?? 0);
+        if ($task_id <= 0) {
+            showError('无效的任务ID');
+            redirect(APP_URL . '/aigc.php?action=taskHistory');
+        }
+        
+        $task = $this->aigcModel->getTaskById($task_id);
+        $results = $this->aigcModel->getTaskResults($task_id);
+        $title = '任务详情';
+        
+        include VIEWS_DIR . '/layouts/header.php';
+        include VIEWS_DIR . '/aigc/task_detail.php';
+        include VIEWS_DIR . '/layouts/footer.php';
     }
 }
