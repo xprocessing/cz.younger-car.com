@@ -384,10 +384,20 @@ class ShopCostsController {
             redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=import');
         }
         
+        // 调试信息
         if (empty($data)) {
-            showError('没有有效数据可导入');
+            // 记录调试信息
+            $debugInfo = [
+                'rowCount' => $rowCount,
+                'errorCount' => $errorCount,
+                'errors' => $errors
+            ];
+            $_SESSION['import_debug'] = $debugInfo;
+            
             if (!empty($errors)) {
-                $_SESSION['import_errors'] = $errors;
+                showError('没有有效数据可导入，错误信息：' . implode('<br>', $errors));
+            } else {
+                showError('没有有效数据可导入，共处理了 ' . $rowCount . ' 行，但没有通过验证的数据。请检查CSV格式是否正确。');
             }
             redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=import');
         }
