@@ -39,28 +39,28 @@
                 <div class="card-body">
                     <div class="list-group">
                         <a href="#" class="list-group-item list-group-item-action active" data-task-type="remove_defect">
-                            <i class="fas fa-eraser mr-2"></i>批量去瑕疵
+                            <i class="fa fa-eraser mr-2"></i>批量去瑕疵
                         </a>
                         <a href="#" class="list-group-item list-group-item-action" data-task-type="crop_png">
-                            <i class="fas fa-crop-alt mr-2"></i>批量抠图(PNG)
+                            <i class="fa fa-crop mr-2"></i>批量抠图(PNG)
                         </a>
                         <a href="#" class="list-group-item list-group-item-action" data-task-type="crop_white_bg">
-                            <i class="fas fa-crop mr-2"></i>批量抠图(白底)
+                            <i class="fa fa-crop mr-2"></i>批量抠图(白底)
                         </a>
                         <a href="#" class="list-group-item list-group-item-action" data-task-type="resize">
-                            <i class="fas fa-expand-arrows-alt mr-2"></i>批量改尺寸
+                            <i class="fa fa-arrows-alt mr-2"></i>批量改尺寸
                         </a>
                         <a href="#" class="list-group-item list-group-item-action" data-task-type="watermark">
-                            <i class="fas fa-water mr-2"></i>批量打水印
+                            <i class="fa fa-tint mr-2"></i>批量打水印
                         </a>
                         <a href="#" class="list-group-item list-group-item-action" data-task-type="face_swap">
-                            <i class="fas fa-user-circle mr-2"></i>智能换脸
+                            <i class="fa fa-user-circle mr-2"></i>智能换脸
                         </a>
                         <a href="#" class="list-group-item list-group-item-action" data-task-type="image_to_image">
-                            <i class="fas fa-image mr-2"></i>图生图
+                            <i class="fa fa-image mr-2"></i>图生图
                         </a>
                         <a href="#" class="list-group-item list-group-item-action" data-task-type="text_to_image">
-                            <i class="fas fa-file-alt mr-2"></i>文生图
+                            <i class="fa fa-file-text-o mr-2"></i>文生图
                         </a>
                     </div>
                 </div>
