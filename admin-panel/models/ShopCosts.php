@@ -61,7 +61,7 @@ class ShopCosts {
             $data['store_name'],
             $data['cost'],
             $data['cost_type'],
-            $data['date'],
+            $data['cost_date'],
             $data['remark'] ?? null,
             $id
         ];
@@ -134,12 +134,12 @@ class ShopCosts {
         }
         
         if (!empty($startDate)) {
-            $sql .= " AND date >= ?";
+            $sql .= " AND cost_date >= ?";
             $params[] = $startDate;
         }
         
         if (!empty($endDate)) {
-            $sql .= " AND date <= ?";
+            $sql .= " AND cost_date <= ?";
             $params[] = $endDate;
         }
         

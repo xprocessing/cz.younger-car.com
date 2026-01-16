@@ -180,23 +180,23 @@ document.querySelector('form').addEventListener('submit', function(e) {
     const cost = parseFloat(document.getElementById('cost').value) || 0;
     if (cost <= 0) {
         e.preventDefault();
-        alert('日广告花费必须大�?');
+        alert('日广告花费必须大于0');
         document.getElementById('cost').focus();
         return;
     }
 
-    const date = document.getElementById('date').value;
+    const date = document.getElementById('cost_date').value;
     if (!date) {
         e.preventDefault();
         alert('请选择日期');
-        document.getElementById('date').focus();
+        document.getElementById('cost_date').focus();
         return;
     }
 
     const costType = document.getElementById('cost_type').value.trim();
     if (!costType) {
         e.preventDefault();
-        alert('请输入费用类�?);
+        alert('请输入费用类型');
         document.getElementById('cost_type').focus();
         return;
     }

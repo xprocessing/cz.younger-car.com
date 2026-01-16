@@ -109,8 +109,8 @@ class ShopCostsController {
             $_POST['platform_name'],
             $_POST['store_name'],
             $_POST['cost_type'],
-            $_POST['date'],
-            $_POST['date']
+            $_POST['cost_date'],
+            $_POST['cost_date']
         );
         
         if (!empty($existingCost)) {
@@ -209,7 +209,7 @@ class ShopCostsController {
         $cost = str_replace(',', '.', $cost);
         // 检查是否是有效的数字格式：只能包含数字、一个小数点，连字符只能在开头
         if (!preg_match('/^-?\d+(\.\d+)?$/', $cost)) {
-            showError('日均广告花费必须是有效的数字');
+            showError('费用金额必须是有效的数字');
             redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=edit&id=' . $id);
         }
         
@@ -218,8 +218,8 @@ class ShopCostsController {
             $_POST['platform_name'],
             $_POST['store_name'],
             $_POST['cost_type'],
-            $_POST['date'],
-            $_POST['date']
+            $_POST['cost_date'],
+            $_POST['cost_date']
         );
         
         foreach ($existingCosts as $existingCost) {
@@ -234,14 +234,14 @@ class ShopCostsController {
             'store_name' => $_POST['store_name'],
             'cost' => $_POST['cost'],
             'cost_type' => $_POST['cost_type'],
-            'date' => $_POST['date'],
+            'cost_date' => $_POST['cost_date'],
             'remark' => $_POST['remark'] ?? null
         ];
         
         if ($this->shopCostsModel->update($id, $data)) {
-            showSuccess('广告费记录更新成功');
+            showSuccess('费用记录更新成功');
         } else {
-            showError('广告费记录更新失败');
+            showError('费用记录更新失败');
         }
         
         redirect(ADMIN_PANEL_URL . '/shop_costs.php');
@@ -261,14 +261,14 @@ class ShopCostsController {
         
         $cost = $this->shopCostsModel->getById($id);
         if (!$cost) {
-            showError('广告费记录不存在');
+            showError('费用记录不存在');
             redirect(ADMIN_PANEL_URL . '/shop_costs.php');
         }
         
         if ($this->shopCostsModel->delete($id)) {
-            showSuccess('广告费记录删除成功');
+            showSuccess('费用记录删除成功');
         } else {
-            showError('广告费记录删除失败');
+            showError('费用记录删除失败');
         }
         
         redirect(ADMIN_PANEL_URL . '/shop_costs.php');
@@ -310,7 +310,7 @@ class ShopCostsController {
             redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
-        $title = '批量导入广告费记录';
+        $title = '批量导入费用记录';
         
         include VIEWS_DIR . '/layouts/header.php';
         include VIEWS_DIR . '/shop_costs/import.php';
@@ -422,7 +422,7 @@ class ShopCostsController {
         }
         
         if (empty($row[2]) || trim($row[2]) === '') {
-            $errors[] = "第 {$rowCount} 行：日均广告花费不能为空";
+            $errors[] = "第 {$rowCount} 行：费用金额不能为空";
             $errorCount++;
             return;
         }
@@ -444,7 +444,7 @@ class ShopCostsController {
         // 替换逗号为小数点，支持国际化数字格式
         $cost = str_replace(',', '.', $cost);
         if (!preg_match('/^-?\d+(\.\d+)?$/', $cost)) {
-            $errors[] = "第 {$rowCount} 行：日均广告花费不是有效的数字";
+            $errors[] = "第 {$rowCount} 行：费用金额不是有效的数字";
             $errorCount++;
             return;
         }
