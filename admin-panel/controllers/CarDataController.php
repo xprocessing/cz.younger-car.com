@@ -1,6 +1,6 @@
 <?php
-require_once APP_ROOT . '/models/CarData.php';
-require_once APP_ROOT . '/helpers/functions.php';
+require_once ADMIN_PANEL_DIR . '/models/CarData.php';
+require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
 
 class CarDataController {
     private $carDataModel;

@@ -1,6 +1,6 @@
 <?php
-require_once APP_ROOT . '/models/Yunfei.php';
-require_once APP_ROOT . '/helpers/functions.php';
+require_once ADMIN_PANEL_DIR . '/models/Yunfei.php';
+require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
 
 class QueryController {
     private $yunfeiModel;

@@ -1,7 +1,7 @@
 <?php
-require_once APP_ROOT . '/models/AIGC.php';
-require_once APP_ROOT . '/helpers/functions.php';
-require_once APP_ROOT . '/includes/Logger.php';
+require_once ADMIN_PANEL_DIR . '/models/AIGC.php';
+require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
+require_once ADMIN_PANEL_DIR . '/includes/Logger.php';
 
 class AIGCController {
     private $aigcModel;
@@ -60,7 +60,7 @@ class AIGCController {
             $images = $_FILES['images'];
             
             // 创建临时目录（如果不存在）
-            $temp_dir = APP_ROOT . '/public/temp/';
+            $temp_dir = PUBLIC_DIR . '/temp/';
             if (!file_exists($temp_dir)) {
                 mkdir($temp_dir, 0755, true);
             }
@@ -144,7 +144,7 @@ class AIGCController {
         
         // 使用异步处理图片，提高用户体验
         // 创建一个临时文件来存储处理参数
-        $temp_task_file = APP_ROOT . '/public/temp/task_' . $task_id . '.json';
+        $temp_task_file = PUBLIC_DIR . '/temp/task_' . $task_id . '.json';
         file_put_contents($temp_task_file, json_encode([
             'task_id' => $task_id,
             'process_types' => $process_types,
@@ -155,7 +155,7 @@ class AIGCController {
         
         // 启动异步处理进程
         $php_executable = PHP_BINARY;
-        $worker_script = APP_ROOT . '/admin-panel/scripts/process_images_worker.php';
+        $worker_script = ADMIN_PANEL_DIR . '/scripts/process_images_worker.php';
         
         // 使用exec启动异步进程
         exec("$php_executable $worker_script $temp_task_file > /dev/null 2>&1 &");

@@ -1,6 +1,6 @@
 <?php
-require_once APP_ROOT . '/models/Costs.php';
-require_once APP_ROOT . '/helpers/functions.php';
+require_once ADMIN_PANEL_DIR . '/models/Costs.php';
+require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
 
 class CostsController {
     private $costsModel;

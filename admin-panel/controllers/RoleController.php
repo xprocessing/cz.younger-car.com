@@ -1,7 +1,7 @@
 <?php
-require_once APP_ROOT . '/models/Role.php';
-require_once APP_ROOT . '/models/Permission.php';
-require_once APP_ROOT . '/helpers/functions.php';
+require_once ADMIN_PANEL_DIR . '/models/Role.php';
+require_once ADMIN_PANEL_DIR . '/models/Permission.php';
+require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
 
 class RoleController {
     private $roleModel;

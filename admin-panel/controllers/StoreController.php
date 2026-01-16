@@ -1,6 +1,6 @@
 <?php
-require_once APP_ROOT . '/models/Store.php';
-require_once APP_ROOT . '/helpers/functions.php';
+require_once ADMIN_PANEL_DIR . '/models/Store.php';
+require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
 
 class StoreController {
     private $storeModel;

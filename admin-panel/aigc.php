@@ -5,7 +5,7 @@
 require_once __DIR__ . '/../config.php';
 
 // 加载控制器
-require_once APP_ROOT . '/controllers/AIGCController.php';
+require_once ADMIN_PANEL_DIR . '/controllers/AIGCController.php';
 
 // 创建控制器实例
 $aigcController = new AIGCController();

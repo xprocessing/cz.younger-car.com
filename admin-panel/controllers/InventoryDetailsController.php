@@ -1,6 +1,6 @@
 <?php
-require_once APP_ROOT . '/models/InventoryDetails.php';
-require_once APP_ROOT . '/helpers/functions.php';
+require_once ADMIN_PANEL_DIR . '/models/InventoryDetails.php';
+require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
 
 class InventoryDetailsController {
     private $inventoryDetailsModel;

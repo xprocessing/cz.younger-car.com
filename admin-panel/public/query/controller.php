@@ -1,11 +1,11 @@
 <?php
-// 定义必要的常量和配置
-// 从public/query目录向上两级到达admin-panel根目录
-define('APP_ROOT', dirname(dirname(__DIR__)));
-define('APP_URL', 'https://cz.younger-car.com/admin-panel');
-
 // 加载数据库配置
 require_once __DIR__ . '/../../../config.php';
+
+// 定义APP_URL，如果配置中没有定义
+if (!defined('APP_URL')) {
+    define('APP_URL', 'https://cz.younger-car.com/admin-panel');
+}
 
 // 引入admin-panel的核心文件
 require_once __DIR__ . '/../../models/Yunfei.php';

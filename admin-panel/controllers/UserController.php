@@ -1,7 +1,7 @@
 <?php
-require_once APP_ROOT . '/models/User.php';
-require_once APP_ROOT . '/models/Role.php';
-require_once APP_ROOT . '/helpers/functions.php';
+require_once ADMIN_PANEL_DIR . '/models/User.php';
+require_once ADMIN_PANEL_DIR . '/models/Role.php';
+require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
 
 class UserController {
     private $userModel;

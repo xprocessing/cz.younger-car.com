@@ -1,6 +1,6 @@
 <?php
-require_once APP_ROOT . '/models/InventoryDetailsFba.php';
-require_once APP_ROOT . '/helpers/functions.php';
+require_once ADMIN_PANEL_DIR . '/models/InventoryDetailsFba.php';
+require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
 
 class InventoryDetailsFbaController {
     private $inventoryDetailsFbaModel;

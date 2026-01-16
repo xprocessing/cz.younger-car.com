@@ -61,13 +61,13 @@ function getCurrentUserId() {
     return $_SESSION['user_id'] ?? null;
 }
 
-// 获取当前登录用户信息
+// 获取当前用户
 function getCurrentUser() {
-    if (!isLoggedIn()) {
+    if (!isset($_SESSION['user_id'])) {
         return null;
     }
     
-    require_once APP_ROOT . '/models/User.php';
+    require_once ADMIN_PANEL_DIR . '/models/User.php';
     $userModel = new User();
     return $userModel->getById(getCurrentUserId());
 }
@@ -78,7 +78,7 @@ function hasPermission($permissionSlug) {
         return false;
     }
     
-    require_once APP_ROOT . '/models/Permission.php';
+    require_once ADMIN_PANEL_DIR . '/models/Permission.php';
     $permissionModel = new Permission();
     return $permissionModel->checkUserPermission(getCurrentUserId(), $permissionSlug);
 }
@@ -89,7 +89,7 @@ function hasRole($roleName) {
         return false;
     }
     
-    require_once APP_ROOT . '/models/Role.php';
+    require_once ADMIN_PANEL_DIR . '/models/Role.php';
     $roleModel = new Role();
     return $roleModel->checkUserRole(getCurrentUserId(), $roleName);
 }

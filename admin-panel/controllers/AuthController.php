@@ -1,6 +1,6 @@
 <?php
-require_once APP_ROOT . '/models/User.php';
-require_once APP_ROOT . '/helpers/functions.php';
+require_once ADMIN_PANEL_DIR . '/models/User.php';
+require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
 
 class AuthController {
     private $userModel;
@@ -58,12 +58,12 @@ class AuthController {
     
     // 显示仪表盘
     public function dashboard() {
+        // 检查用户是否登录
         if (!isLoggedIn()) {
             redirect(APP_URL . '/login.php');
         }
         
-        // 获取饼图数据
-        require_once APP_ROOT . '/models/OrderProfit.php';
+        require_once ADMIN_PANEL_DIR . '/models/OrderProfit.php';
         $orderProfitModel = new OrderProfit();
         
         // 获取最近30天的数据

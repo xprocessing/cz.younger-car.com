@@ -11,10 +11,8 @@ error_reporting(E_ALL);
 set_time_limit(3600); // 1小时超时
 
 // 初始化应用环境
-if (!defined('APP_ROOT')) {
-    // APP_ROOT指向admin-panel目录
-    define('APP_ROOT', realpath(dirname(__FILE__) . '/..'));
-}
+// 直接从项目根目录包含配置文件
+require_once realpath(dirname(__FILE__) . '/../../config.php');
 
 try {
     // 检查命令行参数
@@ -42,10 +40,10 @@ try {
     $user_id = $task_data['user_id'];
     
     // 包含必要的文件
-    require_once APP_ROOT . '/config.php';
-    require_once APP_ROOT . '/includes/database.php';
-    require_once APP_ROOT . '/models/AIGC.php';
-    require_once APP_ROOT . '/includes/Logger.php';
+    // config.php已在顶部包含
+    require_once ADMIN_PANEL_DIR . '/includes/database.php';
+    require_once ADMIN_PANEL_DIR . '/models/AIGC.php';
+    require_once ADMIN_PANEL_DIR . '/includes/Logger.php';
     
     // 初始化日志记录器
     $logger = Logger::getInstance();
