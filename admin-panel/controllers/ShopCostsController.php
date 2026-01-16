@@ -27,21 +27,21 @@ class ShopCostsController {
         $endDate = $_GET['end_date'] ?? '';
         
         if ($platformName || $storeName || $costType || $startDate || $endDate) {
-            $costs = $this->costsModel->searchWithFilters($platformName, $storeName, $costType, $startDate, $endDate, $limit, $offset);
-            $totalCount = $this->costsModel->getSearchWithFiltersCount($platformName, $storeName, $costType, $startDate, $endDate);
+            $costs = $this->shopCostsModel->searchWithFilters($platformName, $storeName, $costType, $startDate, $endDate, $limit, $offset);
+            $totalCount = $this->shopCostsModel->getSearchWithFiltersCount($platformName, $storeName, $costType, $startDate, $endDate);
         } else {
-            $costs = $this->costsModel->getAll($limit, $offset);
-            $totalCount = $this->costsModel->getCount();
+            $costs = $this->shopCostsModel->getAll($limit, $offset);
+            $totalCount = $this->shopCostsModel->getCount();
         }
         
         $totalPages = ceil($totalCount / $limit);
-        $platformList = $this->costsModel->getPlatformList();
-        $storeList = $this->costsModel->getStoreList();
-        $costTypeList = $this->costsModel->getCostTypeList();
+        $platformList = $this->shopCostsModel->getPlatformList();
+        $storeList = $this->shopCostsModel->getStoreList();
+        $costTypeList = $this->shopCostsModel->getCostTypeList();
         $title = '广告费管理';
         
         include VIEWS_DIR . '/layouts/header.php';
-        include VIEWS_DIR . '/costs/index.php';
+        include VIEWS_DIR . '/shop_costs/index.php';
         include VIEWS_DIR . '/layouts/footer.php';
     }
     
@@ -54,7 +54,7 @@ class ShopCostsController {
         $title = '创建广告费记录';
         
         include VIEWS_DIR . '/layouts/header.php';
-        include VIEWS_DIR . '/costs/create.php';
+        include VIEWS_DIR . '/shop_costs/create.php';
         include VIEWS_DIR . '/layouts/footer.php';
     }
     
@@ -105,7 +105,7 @@ class ShopCostsController {
         }
         
         // 检查记录是否已存在
-        $existingCost = $this->costsModel->getAllWithFilters(
+        $existingCost = $this->shopCostsModel->getAllWithFilters(
             $_POST['platform_name'],
             $_POST['store_name'],
             $_POST['cost_type'],
@@ -127,7 +127,7 @@ class ShopCostsController {
             'remark' => $_POST['remark'] ?? null
         ];
         
-        if ($this->costsModel->create($data)) {
+        if ($this->shopCostsModel->create($data)) {
             showSuccess('广告费记录创建成功');
         } else {
             showError('广告费记录创建失败');
@@ -148,7 +148,7 @@ class ShopCostsController {
             redirect(ADMIN_PANEL_URL . '/shop_costs.php');
         }
         
-        $cost = $this->costsModel->getById($id);
+        $cost = $this->shopCostsModel->getById($id);
         if (!$cost) {
             showError('广告费记录不存在');
             redirect(ADMIN_PANEL_URL . '/shop_costs.php');
@@ -157,7 +157,7 @@ class ShopCostsController {
         $title = '编辑广告费记录';
         
         include VIEWS_DIR . '/layouts/header.php';
-        include VIEWS_DIR . '/costs/edit.php';
+        include VIEWS_DIR . '/shop_costs/edit.php';
         include VIEWS_DIR . '/layouts/footer.php';
     }
     
@@ -238,7 +238,7 @@ class ShopCostsController {
             'remark' => $_POST['remark'] ?? null
         ];
         
-        if ($this->costsModel->update($id, $data)) {
+        if ($this->shopCostsModel->update($id, $data)) {
             showSuccess('广告费记录更新成功');
         } else {
             showError('广告费记录更新失败');
@@ -259,13 +259,13 @@ class ShopCostsController {
             redirect(ADMIN_PANEL_URL . '/shop_costs.php');
         }
         
-        $cost = $this->costsModel->getById($id);
+        $cost = $this->shopCostsModel->getById($id);
         if (!$cost) {
             showError('广告费记录不存在');
             redirect(ADMIN_PANEL_URL . '/shop_costs.php');
         }
         
-        if ($this->costsModel->delete($id)) {
+        if ($this->shopCostsModel->delete($id)) {
             showSuccess('广告费记录删除成功');
         } else {
             showError('广告费记录删除失败');
@@ -290,17 +290,17 @@ class ShopCostsController {
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        $costs = $this->costsModel->searchWithFilters($platformName, $storeName, $costType, $startDate, $endDate, $limit, $offset);
-        $totalCount = $this->costsModel->getSearchWithFiltersCount($platformName, $storeName, $costType, $startDate, $endDate);
+        $costs = $this->shopCostsModel->searchWithFilters($platformName, $storeName, $costType, $startDate, $endDate, $limit, $offset);
+        $totalCount = $this->shopCostsModel->getSearchWithFiltersCount($platformName, $storeName, $costType, $startDate, $endDate);
         
         $totalPages = ceil($totalCount / $limit);
-        $platformList = $this->costsModel->getPlatformList();
-        $storeList = $this->costsModel->getStoreList();
-        $costTypeList = $this->costsModel->getCostTypeList();
+        $platformList = $this->shopCostsModel->getPlatformList();
+        $storeList = $this->shopCostsModel->getStoreList();
+        $costTypeList = $this->shopCostsModel->getCostTypeList();
         $title = '搜索结果';
         
         include VIEWS_DIR . '/layouts/header.php';
-        include VIEWS_DIR . '/costs/index.php';
+        include VIEWS_DIR . '/shop_costs/index.php';
         include VIEWS_DIR . '/layouts/footer.php';
     }
     
@@ -313,7 +313,7 @@ class ShopCostsController {
         $title = '批量导入广告费记录';
         
         include VIEWS_DIR . '/layouts/header.php';
-        include VIEWS_DIR . '/costs/import.php';
+        include VIEWS_DIR . '/shop_costs/import.php';
         include VIEWS_DIR . '/layouts/footer.php';
     }
     
@@ -457,7 +457,7 @@ class ShopCostsController {
         }
         
         // 检查记录是否已存在
-        $existingCosts = $this->costsModel->getAllWithFilters(
+        $existingCosts = $this->shopCostsModel->getAllWithFilters(
             trim($row[0]),
             trim($row[1]),
             trim($row[3]),
@@ -497,7 +497,7 @@ class ShopCostsController {
         $endDate = $_GET['end_date'] ?? '';
         
         // 获取所有符合条件的数据
-        $costs = $this->costsModel->getAllWithFilters($platformName, $storeName, $costType, $startDate, $endDate);
+        $costs = $this->shopCostsModel->getAllWithFilters($platformName, $storeName, $costType, $startDate, $endDate);
         
         // 设置CSV文件头
         $filename = 'costs_export_' . date('YmdHis') . '.csv';
@@ -532,7 +532,7 @@ class ShopCostsController {
                 $cost['store_name'],
                 $cost['cost'],
                 $cost['cost_type'],
-                $cost['date'],
+                $cost['cost_date'],
                 $cost['remark'] ?? '',
                 $cost['create_at'],
                 $cost['update_at']
