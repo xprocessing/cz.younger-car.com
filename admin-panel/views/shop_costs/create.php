@@ -28,7 +28,7 @@
                             <div class="mb-3">
                                 <label for="store_name" class="form-label">店铺名称 <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="store_name" name="store_name" required
-                                       placeholder="请输入店铺名�? maxlength="50">
+                                       placeholder="请输入店铺名" maxlength="50">
                                 <div class="form-text">店铺名称</div>
                             </div>
                         </div>
@@ -153,7 +153,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
     const platformName = document.getElementById('platform_name').value.trim();
     if (!platformName) {
         e.preventDefault();
-        alert('请输入平台名�?);
+        alert('请输入平台名称');
         document.getElementById('platform_name').focus();
         return;
     }
@@ -161,7 +161,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
     const storeName = document.getElementById('store_name').value.trim();
     if (!storeName) {
         e.preventDefault();
-        alert('请输入店铺名�?);
+        alert('请输入店铺名称');
         document.getElementById('store_name').focus();
         return;
     }
@@ -169,7 +169,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
     const cost = parseFloat(document.getElementById('cost').value) || 0;
     if (cost <= 0) {
         e.preventDefault();
-        alert('日广告花费必须大�?');
+        alert('日广告花费必须大于0');
         document.getElementById('cost').focus();
         return;
     }
@@ -185,7 +185,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
     const costType = document.getElementById('cost_type').value.trim();
     if (!costType) {
         e.preventDefault();
-        alert('请输入费用类�?);
+        alert('请输入费用类型');
         document.getElementById('cost_type').focus();
         return;
     }

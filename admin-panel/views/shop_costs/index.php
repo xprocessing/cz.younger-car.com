@@ -16,7 +16,7 @@
             <i class="fa fa-download"></i> 批量导出
         </a>
         <a href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?action=create" class="btn btn-primary">
-            <i class="fa fa-plus"></i> 新增广告费记�?
+            <i class="fa fa-plus"></i> 新增费用
         </a>
     </div>
 </div>
@@ -68,7 +68,7 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <label for="start_date" class="form-label">开始日�?/label>
+                <label for="start_date" class="form-label">开始日期</label>
                 <input type="date" name="start_date" class="form-control" 
                        value="<?php echo $_GET['start_date'] ?? ''; ?>">
             </div>
@@ -79,7 +79,7 @@
             </div>
             <div class="col-md-4 d-flex align-items-end">
                 <button type="submit" class="btn btn-primary me-2">
-                    <i class="fa fa-search"></i> 筛�?
+                    <i class="fa fa-search"></i> 筛选
                 </button>
                 <a href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php" class="btn btn-outline-secondary">
                     <i class="fa fa-refresh"></i> 重置
@@ -128,7 +128,7 @@
                                     </a>
                                     <a href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?action=delete&id=<?php echo $cost['id']; ?>" 
                                        class="btn btn-sm btn-outline-danger" 
-                                       onclick="return confirm('确定要删除这条记录吗�?);">
+                                       onclick="return confirm('确定要删除这条记录吗？');">
                                         <i class="fa fa-trash"></i> 删除
                                     </a>
                                 </td>
