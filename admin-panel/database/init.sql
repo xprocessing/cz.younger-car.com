@@ -618,6 +618,8 @@ CREATE TABLE IF NOT EXISTS aigc_tasks (
     task_id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '任务ID',
     -- 用户ID，关联users表
     user_id INT NOT NULL COMMENT '用户ID',   
+    -- 任务名称
+    task_name VARCHAR(255) NOT NULL COMMENT '任务名称',
     -- 任务类型，用于区分不同功能的任务
     task_type ENUM('remove_defect', 'crop_png', 'crop_white_bg', 'resize', 'watermark', 'face_swap', 'multi_angle', 'other') NOT NULL COMMENT '任务类型',
     -- 任务状态
@@ -643,4 +645,5 @@ CREATE TABLE IF NOT EXISTS aigc_tasks (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
    
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理任务表）';
+
 

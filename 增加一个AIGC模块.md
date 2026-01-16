@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS aigc_tasks (
 1.用户访问aigc.php 选择处理不同的图片处理方式（不要采用拉选择，要求页面左侧导航展示），选择多张图片，执行图片处理
 2.图片上传到服务器接，存储到public/temp目录，返回图片路径https://cz.younger-car.com/admin-panel/public/temp/+图片文件名
 3.根据多张图片的url，批量发起通义千问qwen-image-edit-plus模型处理任务
-4.服务器在后台异步处理任务，每张图创建一个task_id， 调用通义千问qwen-image-edit-plus模型，处理参数为json格式，包含图片url，处理方式（如remove_defect）
+4.服务器在后台异步处理任务，每个api请求创建一个task_id， 调用通义千问qwen-image-edit-plus模型，处理参数为json格式，image字段包含图片url，处理方式（如remove_defect）
 5.任务处理完成后，更新aigc_tasks表，设置状态为completed，保存处理结果URL等
 6.提供入口aigc_task.php,展示任务处理状态和结果列表，可以下载处理结果图片
 

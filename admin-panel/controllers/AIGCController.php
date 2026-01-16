@@ -124,7 +124,7 @@ class AIGCController {
         ];
         
         // 创建任务
-        $task_id = $this->aigcModel->createTask($user_id, $task_name, $process_types[0], $task_params, count($processed_images) > 0 ? count($processed_images) : 1);
+        $task_id = $this->aigcModel->createTask($user_id, $task_name, $process_types[0], $task_params);
         
         if (!$task_id) {
             $this->logger->error("创建任务失败", [

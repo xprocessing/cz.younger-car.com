@@ -541,14 +541,13 @@ class AIGC {
     }
     
     // 创建任务
-    public function createTask($user_id, $task_name, $task_type, $task_params, $total_count) {
-        $sql = "INSERT INTO aigc_tasks (user_id, task_name, task_type, task_params, task_status, total_count, started_at) VALUES (?, ?, ?, ?, 'processing', ?, NOW())";
+    public function createTask($user_id, $task_name, $task_type, $task_params) {
+        $sql = "INSERT INTO aigc_tasks (user_id, task_name, task_type, task_params, task_status, started_at) VALUES (?, ?, ?, ?, 'processing', NOW())";
         $params = [
             $user_id,
             $task_name,
             $task_type,
-            json_encode($task_params),
-            $total_count
+            json_encode($task_params)
         ];
         
         $stmt = $this->db->query($sql, $params);
@@ -591,14 +590,30 @@ class AIGC {
     
     // 获取用户的任务历史
     public function getUserTasks($user_id, $limit = 20, $offset = 0) {
-        $sql = "SELECT * FROM aigc_tasks WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        $sql = "SELECT t.*, 
+                   COUNT(tr.id) AS total_count, 
+                   SUM(CASE WHEN tr.process_status = 'success' THEN 1 ELSE 0 END) AS success_count, 
+                   SUM(CASE WHEN tr.process_status = 'failed' THEN 1 ELSE 0 END) AS failed_count
+                FROM aigc_tasks t
+                LEFT JOIN aigc_task_results tr ON t.task_id = tr.task_id
+                WHERE t.user_id = ?
+                GROUP BY t.task_id
+                ORDER BY t.started_at DESC 
+                LIMIT ? OFFSET ?";
         $stmt = $this->db->query($sql, [$user_id, $limit, $offset]);
         return $stmt->fetchAll();
     }
     
     // 获取任务的详细信息
     public function getTaskById($task_id) {
-        $sql = "SELECT * FROM aigc_tasks WHERE id = ?";
+        $sql = "SELECT t.*, 
+                   COUNT(tr.id) AS total_count, 
+                   SUM(CASE WHEN tr.process_status = 'success' THEN 1 ELSE 0 END) AS success_count, 
+                   SUM(CASE WHEN tr.process_status = 'failed' THEN 1 ELSE 0 END) AS failed_count
+                FROM aigc_tasks t
+                LEFT JOIN aigc_task_results tr ON t.task_id = tr.task_id
+                WHERE t.task_id = ?
+                GROUP BY t.task_id";
         $stmt = $this->db->query($sql, [$task_id]);
         return $stmt->fetch();
     }
