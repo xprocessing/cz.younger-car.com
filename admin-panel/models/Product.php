@@ -1,5 +1,5 @@
 <?php
-require_once APP_ROOT . '/includes/database.php';
+require_once ADMIN_PANEL_DIR . '/includes/database.php';
 
 class Product {
     private $db;
