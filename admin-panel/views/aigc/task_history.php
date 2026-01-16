@@ -1,5 +1,3 @@
-<?php include VIEWS_DIR . '/layouts/header.php'; ?>
-
 <div class="container-fluid">
     <!-- 页面标题 -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -19,10 +17,14 @@
                 <table class="table table-bordered" id="tasksTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>任务ID</th>
                             <th>任务名称</th>
                             <th>任务类型</th>
                             <th>状态</th>
-                            <th>数量</th>
+                            <th>用户ID</th>
+                            <th>原始路径</th>
+                            <th>处理状态</th>
+                            <th>结果URL</th>
                             <th>开始时间</th>
                             <th>完成时间</th>
                             <th>操作</th>
@@ -30,10 +32,14 @@
                     </thead>
                     <tfoot>
                         <tr>
+                            <th>任务ID</th>
                             <th>任务名称</th>
                             <th>任务类型</th>
                             <th>状态</th>
-                            <th>数量</th>
+                            <th>用户ID</th>
+                            <th>原始路径</th>
+                            <th>处理状态</th>
+                            <th>结果URL</th>
                             <th>开始时间</th>
                             <th>完成时间</th>
                             <th>操作</th>
@@ -42,11 +48,12 @@
                     <tbody>
                         <?php if (empty($tasks)): ?>
                             <tr>
-                                <td colspan="7" class="text-center">暂无任务记录</td>
+                                <td colspan="11" class="text-center">暂无任务记录</td>
                             </tr>
                         <?php else: ?>
                             <?php foreach ($tasks as $task): ?>
                                 <tr>
+                                    <td><?php echo $task['task_id']; ?></td>
                                     <td><?php echo htmlspecialchars($task['task_name']); ?></td>
                                     <td>
                                         <?php 
@@ -59,7 +66,8 @@
                                                 'face_swap' => '智能换脸',
                                                 'multi_angle' => '多角度图片',
                                                 'image_to_image' => '图生图',
-                                                'text_to_image' => '文生图'
+                                                'text_to_image' => '文生图',
+                                                'other' => '其他'
                                             ];
                                             echo $typeMap[$task['task_type']] ?? $task['task_type'];
                                         ?>
@@ -92,23 +100,28 @@
                                         ?>
                                         <span class="badge <?php echo $statusClass; ?>"><?php echo $statusText; ?></span>
                                     </td>
+                                    <td><?php echo $task['user_id']; ?></td>
+                                    <td><?php echo htmlspecialchars($task['original_path'] ?? '-'); ?></td>
                                     <td>
-                                        <?php if ($task['task_status'] === 'completed' || $task['task_status'] === 'failed'): ?>
-                                            <?php echo $task['success_count'] . ' / ' . $task['total_count']; ?>
+                                        <?php if ($task['process_status']): ?>
+                                            <span class="badge badge-<?php echo $task['process_status'] == 'success' ? 'success' : 'danger'; ?>">
+                                                <?php echo $task['process_status'] == 'success' ? '成功' : '失败'; ?>
+                                            </span>
                                         <?php else: ?>
-                                            <?php echo $task['total_count']; ?>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td><?php echo date('Y-m-d H:i:s', strtotime($task['started_at'])); ?></td>
-                                    <td>
-                                        <?php if ($task['completed_at']): ?>
-                                            <?php echo date('Y-m-d H:i:s', strtotime($task['completed_at'])); ?>
-                                        <?php else: ?>
-                                            -</td>
+                                            -
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-info view-task-btn" data-task-id="<?php echo $task['id']; ?>">
+                                        <?php if ($task['result_url']): ?>
+                                            <a href="<?php echo htmlspecialchars($task['result_url']); ?>" target="_blank">查看</a>
+                                        <?php else: ?>
+                                            -
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?php echo $task['started_at'] ? date('Y-m-d H:i:s', strtotime($task['started_at'])) : '-'; ?></td>
+                                    <td><?php echo $task['completed_at'] ? date('Y-m-d H:i:s', strtotime($task['completed_at'])) : '-'; ?></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info view-task-btn" data-task-id="<?php echo $task['task_id']; ?>">
                                             <i class="fas fa-eye"></i> 查看
                                         </button>
                                     </td>

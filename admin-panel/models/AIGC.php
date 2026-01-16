@@ -635,7 +635,7 @@ class AIGC {
     // 获取任务的结果
     public function getTaskResults($task_id) {
         // 由于不再使用结果表，直接从任务表中获取结果
-        $sql = "SELECT task_id, task_name, task_type, task_status, process_status, result_url, result_data, started_at, completed_at 
+        $sql = "SELECT * 
                 FROM aigc_tasks 
                 WHERE task_id = ?";
         $stmt = $this->db->query($sql, [$task_id]);

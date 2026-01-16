@@ -1,5 +1,3 @@
-<?php include VIEWS_DIR . '/layouts/header.php'; ?>
-
 <div class="container-fluid">
     <!-- 页面标题 -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
