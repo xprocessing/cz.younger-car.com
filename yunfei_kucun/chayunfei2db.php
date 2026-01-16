@@ -445,7 +445,7 @@ $shisuanyunfei = json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
 $global_order_no = $orderNumber;
 
 //将$shisuanyunfei $global_order_no，存入yunfei数据表
-include '../admin-panel/config/config.php';
+include '../config.php';
 /*
 try {
     $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
