@@ -422,38 +422,6 @@ CREATE TABLE `inventory_details` (
 -- 删除AIGC模板表（如果存在）
 DROP TABLE IF EXISTS aigc_templates;
 
--- 创建AIGC任务表（合并结果表字段，仅保存图像URL）
-CREATE TABLE IF NOT EXISTS aigc_tasks (
-    -- 主键id，自增整数
-    task_id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '任务ID',
-    -- 用户ID，关联users表
-    user_id INT NOT NULL COMMENT '用户ID',   
-    -- 任务类型，用于区分不同功能的任务
-    task_type ENUM('remove_defect', 'crop_png', 'crop_white_bg', 'resize', 'watermark', 'face_swap', 'multi_angle', 'other') NOT NULL COMMENT '任务类型',
-    -- 任务状态
-    task_status ENUM('pending', 'processing', 'completed', 'failed') NOT NULL DEFAULT 'pending' COMMENT '任务状态',
-    -- 任务参数，JSON格式存储具体配置
-    task_params JSON NOT NULL COMMENT '任务参数（JSON格式）',  
-    -- 原始图片路径（网络地址）
-    original_path VARCHAR(255) DEFAULT NULL COMMENT '原始文件路径',
-    -- 处理结果状态
-    process_status ENUM('success', 'failed') DEFAULT NULL COMMENT '处理状态',
-    -- 处理结果URL（保存图像URL，不存储base64）
-    result_url VARCHAR(255) DEFAULT NULL COMMENT '处理结果图像URL',
-    -- api返回信息/错误信息（如果处理失败）
-    result_data TEXT DEFAULT NULL COMMENT '处理结果数据（JSON格式）',   
-    -- 开始处理时间
-    started_at DATETIME DEFAULT NULL COMMENT '开始时间',
-    -- 处理完成时间
-    completed_at DATETIME DEFAULT NULL COMMENT '完成时间',
-    
-    -- 设置主键
-    PRIMARY KEY (task_id),
-    -- 添加外键约束
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-   
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理任务表）';
-
 
 
 
@@ -643,3 +611,36 @@ CREATE TABLE IF NOT EXISTS costs (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='广告花费数据表';
 
 --创建
+
+-- 创建AIGC任务表（合并结果表字段，仅保存图像URL）
+CREATE TABLE IF NOT EXISTS aigc_tasks (
+    -- 主键id，自增整数
+    task_id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '任务ID',
+    -- 用户ID，关联users表
+    user_id INT NOT NULL COMMENT '用户ID',   
+    -- 任务类型，用于区分不同功能的任务
+    task_type ENUM('remove_defect', 'crop_png', 'crop_white_bg', 'resize', 'watermark', 'face_swap', 'multi_angle', 'other') NOT NULL COMMENT '任务类型',
+    -- 任务状态
+    task_status ENUM('pending', 'processing', 'completed', 'failed') NOT NULL DEFAULT 'pending' COMMENT '任务状态',
+    -- 任务参数，JSON格式存储具体配置
+    task_params JSON NOT NULL COMMENT '任务参数（JSON格式）',  
+    -- 原始图片路径（网络地址）
+    original_path VARCHAR(255) DEFAULT NULL COMMENT '原始文件路径',
+    -- 处理结果状态
+    process_status ENUM('success', 'failed') DEFAULT NULL COMMENT '处理状态',
+    -- 处理结果URL（保存图像URL，不存储base64）
+    result_url VARCHAR(255) DEFAULT NULL COMMENT '处理结果图像URL',
+    -- api返回信息/错误信息（如果处理失败）
+    result_data TEXT DEFAULT NULL COMMENT '处理结果数据（JSON格式）',   
+    -- 开始处理时间
+    started_at DATETIME DEFAULT NULL COMMENT '开始时间',
+    -- 处理完成时间
+    completed_at DATETIME DEFAULT NULL COMMENT '完成时间',
+    
+    -- 设置主键
+    PRIMARY KEY (task_id),
+    -- 添加外键约束
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+   
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI图片处理任务表）';
+
