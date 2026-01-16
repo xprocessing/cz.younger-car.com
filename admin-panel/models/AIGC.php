@@ -575,14 +575,14 @@ class AIGC {
     
     // 更新任务状态
     public function updateTaskStatus($task_id, $status, $success_count = 0, $failed_count = 0) {
-        $sql = "UPDATE aigc_tasks SET task_status = ?, success_count = ?, failed_count = ?";
-        $params = [$status, $success_count, $failed_count];
+        $sql = "UPDATE aigc_tasks SET task_status = ?";
+        $params = [$status];
         
         if ($status === 'completed') {
             $sql .= ", completed_at = NOW()";
         }
         
-        $sql .= " WHERE id = ?";
+        $sql .= " WHERE task_id = ?";
         $params[] = $task_id;
         
         return $this->db->query($sql, $params);
