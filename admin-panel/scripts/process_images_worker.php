@@ -198,14 +198,25 @@ try {
         }
     }
     
-    // 保存每个结果
-    foreach ($results as $result) {
+    // 只保存第一个结果到aigc_tasks表
+    if (!empty($results)) {
+        $first_result = $results[0];
+        
         $aigcModel->saveTaskResult(
             $task_id,
-            $result['original_image'] ? basename($result['original_image']) : 'text_to_image',
-            $result['processed'] ? 'success' : 'failed',
-            $result['processed'] ? $result['result'] : null,
-            $result['processed'] ? null : $result['error']
+            $first_result['original_image'] ? basename($first_result['original_image']) : 'text_to_image',
+            $first_result['processed'] ? 'success' : 'failed',
+            $first_result['processed'] ? $first_result['result'] : null,
+            $first_result['processed'] ? null : $first_result['error']
+        );
+    } else {
+        // 如果没有结果，保存默认失败状态
+        $aigcModel->saveTaskResult(
+            $task_id,
+            'no_image',
+            'failed',
+            null,
+            '没有处理结果'
         );
     }
     

@@ -561,13 +561,17 @@ class AIGC {
     
     // 保存任务结果
     public function saveTaskResult($task_id, $original_filename, $process_status, $result_url = null, $error_message = null) {
-        $sql = "INSERT INTO aigc_task_results (task_id, original_filename, process_status, result_url, error_message) VALUES (?, ?, ?, ?, ?)";
+        // 直接更新aigc_tasks表中的结果字段
+        $sql = "UPDATE aigc_tasks SET process_status = ?, result_url = ?, result_data = ? WHERE task_id = ?";
         $params = [
-            $task_id,
-            $original_filename,
             $process_status,
             $result_url,
-            $error_message
+            // 将结果数据存储为JSON格式
+            json_encode([
+                'original_filename' => $original_filename,
+                'error_message' => $error_message
+            ]),
+            $task_id
         ];
         
         return $this->db->query($sql, $params);
@@ -590,14 +594,13 @@ class AIGC {
     
     // 获取用户的任务历史
     public function getUserTasks($user_id, $limit = 20, $offset = 0) {
+        // 不再联表查询，直接从aigc_tasks表获取数据
         $sql = "SELECT t.*, 
-                   COUNT(tr.id) AS total_count, 
-                   SUM(CASE WHEN tr.process_status = 'success' THEN 1 ELSE 0 END) AS success_count, 
-                   SUM(CASE WHEN tr.process_status = 'failed' THEN 1 ELSE 0 END) AS failed_count
+                   1 AS total_count, 
+                   (CASE WHEN t.process_status = 'success' THEN 1 ELSE 0 END) AS success_count, 
+                   (CASE WHEN t.process_status = 'failed' THEN 1 ELSE 0 END) AS failed_count
                 FROM aigc_tasks t
-                LEFT JOIN aigc_task_results tr ON t.task_id = tr.task_id
                 WHERE t.user_id = ?
-                GROUP BY t.task_id
                 ORDER BY t.started_at DESC 
                 LIMIT ? OFFSET ?";
         $stmt = $this->db->query($sql, [$user_id, $limit, $offset]);
@@ -606,22 +609,43 @@ class AIGC {
     
     // 获取任务的详细信息
     public function getTaskById($task_id) {
+        // 不再联表查询，直接从aigc_tasks表获取数据
         $sql = "SELECT t.*, 
-                   COUNT(tr.id) AS total_count, 
-                   SUM(CASE WHEN tr.process_status = 'success' THEN 1 ELSE 0 END) AS success_count, 
-                   SUM(CASE WHEN tr.process_status = 'failed' THEN 1 ELSE 0 END) AS failed_count
+                   1 AS total_count, 
+                   (CASE WHEN t.process_status = 'success' THEN 1 ELSE 0 END) AS success_count, 
+                   (CASE WHEN t.process_status = 'failed' THEN 1 ELSE 0 END) AS failed_count
                 FROM aigc_tasks t
-                LEFT JOIN aigc_task_results tr ON t.task_id = tr.task_id
-                WHERE t.task_id = ?
-                GROUP BY t.task_id";
+                WHERE t.task_id = ?";
         $stmt = $this->db->query($sql, [$task_id]);
         return $stmt->fetch();
     }
     
-    // 获取任务的结果（从结果表中获取）
+    // 获取任务的结果
     public function getTaskResults($task_id) {
-        $sql = "SELECT id, original_filename, original_path, process_status, result_url, error_message, created_at FROM aigc_task_results WHERE task_id = ? ORDER BY created_at DESC";
+        // 由于不再使用结果表，直接从任务表中获取结果
+        $sql = "SELECT task_id, task_name, task_type, task_status, process_status, result_url, result_data, started_at, completed_at 
+                FROM aigc_tasks 
+                WHERE task_id = ?";
         $stmt = $this->db->query($sql, [$task_id]);
-        return $stmt->fetchAll();
+        
+        $task = $stmt->fetch();
+        if (!$task) {
+            return [];
+        }
+        
+        // 将结果转换为与原有接口兼容的格式
+        $result_data = json_decode($task['result_data'], true) ?: [];
+        
+        return [
+            [
+                'id' => $task['task_id'],
+                'original_filename' => $result_data['original_filename'] ?? '',
+                'original_path' => '',
+                'process_status' => $task['process_status'],
+                'result_url' => $task['result_url'],
+                'error_message' => $result_data['error_message'] ?? '',
+                'created_at' => $task['started_at']
+            ]
+        ];
     }
 }

@@ -16,13 +16,14 @@ API Key：引用config/config.php中的ALIYUN_API_KEY
 HTTP调用 通义千问qwen-image-edit-plus
 北京地域：POST https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation
 
-
-- 创建AIGC任务表（合并结果表字段，仅保存图像URL）
+-- 创建AIGC任务表（合并结果表字段，仅保存图像URL）
 CREATE TABLE IF NOT EXISTS aigc_tasks (
     -- 主键id，自增整数
     task_id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '任务ID',
     -- 用户ID，关联users表
     user_id INT NOT NULL COMMENT '用户ID',   
+    -- 任务名称
+    task_name VARCHAR(255) NOT NULL COMMENT '任务名称',
     -- 任务类型，用于区分不同功能的任务
     task_type ENUM('remove_defect', 'crop_png', 'crop_white_bg', 'resize', 'watermark', 'face_swap', 'multi_angle', 'other') NOT NULL COMMENT '任务类型',
     -- 任务状态
