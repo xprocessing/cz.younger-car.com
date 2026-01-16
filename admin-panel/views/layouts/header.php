@@ -138,6 +138,21 @@
                     </a>
                 </div>
             <?php endif; ?>
+             <?php if (isLoggedIn()): ?>
+                <div class="nav-item">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/company_costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'company_costs.php' ? 'active' : ''; ?>">
+                        <i class="fa fa-list"></i> 公司费用
+                    </a>
+                </div>
+            <?php endif; ?>
+             <?php if (isLoggedIn()): ?>
+                <div class="nav-item">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/order_other_costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'order_other_costs.php' ? 'active' : ''; ?>">
+                        <i class="fa fa-list"></i> 订单其他费用
+                    </a>
+                </div>
+            <?php endif; ?>
+
             <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
                     <a href="<?php echo ADMIN_PANEL_URL; ?>/aigc.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'aigc.php' ? 'active' : ''; ?>">
