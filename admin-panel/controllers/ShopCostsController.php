@@ -335,8 +335,8 @@ class ShopCostsController {
         $errors = [];
         
         // 处理文件上传
-        if (isset($_FILES['csv_file']) && $_FILES['csv_file']['error'] === UPLOAD_ERR_OK) {
-            $file = $_FILES['csv_file'];
+        if (isset($_FILES['excel_file']) && $_FILES['excel_file']['error'] === UPLOAD_ERR_OK) {
+            $file = $_FILES['excel_file'];
             $allowedExtensions = ['csv'];
             $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
             
