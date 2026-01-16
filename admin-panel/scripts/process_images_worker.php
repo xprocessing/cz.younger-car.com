@@ -42,7 +42,7 @@ try {
     $user_id = $task_data['user_id'];
     
     // 包含必要的文件
-    require_once APP_ROOT . '/config/config.php';
+    require_once APP_ROOT . '/config.php';
     require_once APP_ROOT . '/includes/database.php';
     require_once APP_ROOT . '/models/AIGC.php';
     require_once APP_ROOT . '/includes/Logger.php';

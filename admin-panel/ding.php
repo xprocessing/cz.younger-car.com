@@ -1,7 +1,7 @@
 <?php
 // ===================== 你的核心配置参数 (完全不变 无需修改) =====================
 
-require_once 'config/config.php';
+require_once __DIR__ . '/../config.php';
 /**
  * 1. 获取钉钉全局凭证 access_token
  */

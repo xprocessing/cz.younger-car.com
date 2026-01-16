@@ -1,6 +1,6 @@
 <?php
 // 引入外部配置文件（保持你的原有配置引入逻辑）
-require_once 'config/config.php';
+require_once __DIR__ . '/../config.php';
 
 class DingTalkMsgPusher
 {

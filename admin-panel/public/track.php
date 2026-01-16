@@ -5,7 +5,7 @@ define('APP_ROOT', dirname(__DIR__));
 define('APP_URL', 'https://cz.younger-car.com/admin-panel');
 
 // 加载数据库配置
-require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../../config.php';
 
 // 引入核心文件
 require_once __DIR__ . '/../models/Yunfei.php';

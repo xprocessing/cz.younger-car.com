@@ -2,7 +2,7 @@
 // AIGC图片处理模块入口文件
 
 // 加载配置文件
-require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/../config.php';
 
 // 加载控制器
 require_once APP_ROOT . '/controllers/AIGCController.php';
