@@ -123,7 +123,7 @@
                                     <td><?php echo $task['completed_at'] ? date('Y-m-d H:i:s', strtotime($task['completed_at'])) : '-'; ?></td>
                                     <td>
                                         <button class="btn btn-sm btn-info view-task-btn" data-task-id="<?php echo $task['task_id']; ?>">
-                                            <i class="fas fa-eye"></i> 查看
+                                            <i class="fas fa-eye"></i> 删除
                                         </button>
                                     </td>
                                 </tr>
