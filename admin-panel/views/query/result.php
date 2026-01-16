@@ -106,7 +106,7 @@
                 </div>
                 
                 <div class="text-center mt-4">
-                    <a href="<?php echo APP_URL; ?>/query.php" class="btn btn-primary">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/query.php" class="btn btn-primary">
                         <i class="fa fa-arrow-left"></i> 返回查询
                     </a>
                 </div>

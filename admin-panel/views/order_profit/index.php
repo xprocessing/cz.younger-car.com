@@ -1,10 +1,10 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>订单利润管理</h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/order_profit.php?action=import" class="btn btn-outline-success me-2">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php?action=import" class="btn btn-outline-success me-2">
             <i class="fa fa-upload"></i> 批量导入
         </a>
-        <a href="<?php echo APP_URL; ?>/order_profit.php?action=export<?php 
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php?action=export<?php 
             $exportParams = [];
             if (!empty($_GET['keyword'])) $exportParams[] = 'keyword=' . urlencode($_GET['keyword']);
             if (!empty($_GET['platform_name'])) $exportParams[] = 'platform_name=' . urlencode($_GET['platform_name']);
@@ -18,10 +18,10 @@
         ?>" class="btn btn-outline-primary me-2">
             <i class="fa fa-download"></i> 批量导出
         </a>
-        <a href="<?php echo APP_URL; ?>/order_profit.php?action=stats" class="btn btn-outline-info me-2">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php?action=stats" class="btn btn-outline-info me-2">
             <i class="fa fa-bar-chart"></i> 利润统计
         </a>
-        <a href="<?php echo APP_URL; ?>/order_profit.php?action=create" class="btn btn-primary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php?action=create" class="btn btn-primary">
             <i class="fa fa-plus"></i> 新增订单利润
         </a>
     </div>
@@ -30,7 +30,7 @@
 <!-- 搜索和筛选框 -->
 <div class="card mb-3">
     <div class="card-body">
-        <form method="GET" action="<?php echo APP_URL; ?>/order_profit.php" class="row g-3">
+        <form method="GET" action="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php" class="row g-3">
             <div class="col-md-2">
                 <label for="keyword" class="form-label">关键词搜索</label>
                 <input type="text" name="keyword" class="form-control" placeholder="搜索订单号、SKU..." 
@@ -132,7 +132,7 @@
                     <button type="submit" name="action" value="search" class="btn btn-outline-primary">
                         <i class="fa fa-search"></i> 搜索
                     </button>
-                    <a href="<?php echo APP_URL; ?>/order_profit.php" class="btn btn-outline-secondary">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php" class="btn btn-outline-secondary">
                         <i class="fa fa-refresh"></i> 重置
                     </a>
                 </div>
@@ -150,7 +150,7 @@
         <div class="row g-2">
             <?php 
             // 构建基础URL，保持现有的筛选条件，但排除rate_min和rate_max，因为这些会被快捷筛选覆盖
-            $baseUrl = APP_URL . '/order_profit.php?';
+            $baseUrl = ADMIN_PANEL_URL . '/order_profit.php?';
             $params = [];
             if (!empty($_GET['keyword'])) $params[] = 'keyword=' . urlencode($_GET['keyword']);
             if (!empty($_GET['platform_name'])) $params[] = 'platform_name=' . urlencode($_GET['platform_name']);
@@ -239,7 +239,7 @@ if ($hasFilters): ?>
         echo implode(' | ', $filters);
         ?>
     </div>
-    <a href="<?php echo APP_URL; ?>/order_profit.php" class="btn btn-sm btn-outline-secondary">
+    <a href="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php" class="btn btn-sm btn-outline-secondary">
         <i class="fa fa-times"></i> 清除筛选
     </a>
 </div>
@@ -351,13 +351,13 @@ if ($hasFilters): ?>
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="<?php echo APP_URL; ?>/order_profit.php?action=edit&id=<?php echo $profit['id']; ?>" 
+                                        <a href="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php?action=edit&id=<?php echo $profit['id']; ?>" 
                                            class="btn btn-sm btn-outline-primary" title="编辑">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                         <a href="javascript:void(0);" 
                                            onclick="if(confirm('确定要删除这条订单利润记录吗？')) {
-                                               window.location.href='<?php echo APP_URL; ?>/order_profit.php?action=delete&id=<?php echo $profit['id']; ?>';
+                                               window.location.href='<?php echo ADMIN_PANEL_URL; ?>/order_profit.php?action=delete&id=<?php echo $profit['id']; ?>';
                                            }" 
                                            class="btn btn-sm btn-outline-danger" title="删除">
                                             <i class="fa fa-trash"></i>

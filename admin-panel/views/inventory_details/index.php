@@ -1,13 +1,13 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>库存明细</h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert" class="btn btn-danger me-2">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=inventory_alert" class="btn btn-danger me-2">
             <i class="fa fa-exclamation-triangle"></i> 库存预警
         </a>
-        <a href="<?php echo APP_URL; ?>/inventory_details.php?action=overaged_stats" class="btn btn-warning me-2">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=overaged_stats" class="btn btn-warning me-2">
             <i class="fa fa-clock-o"></i> 库龄统计
         </a>
-        <a href="<?php echo APP_URL; ?>/inventory_details.php?action=create" class="btn btn-primary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=create" class="btn btn-primary">
             <i class="fa fa-plus"></i> 新增库存明细
         </a>
     </div>
@@ -34,7 +34,7 @@ function getSortUrl($field) {
         $params['page'] = $_GET['page'];
     }
     
-    return APP_URL . '/inventory_details.php?' . http_build_query($params);
+    return ADMIN_PANEL_URL . '/inventory_details.php?' . http_build_query($params);
 }
 
 function getSortIcon($field) {
@@ -51,7 +51,7 @@ function getSortIcon($field) {
 
 <div class="card mb-3">
     <div class="card-body">
-        <form method="GET" action="<?php echo APP_URL; ?>/inventory_details.php" class="row g-3">
+        <form method="GET" action="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php" class="row g-3">
             <div class="col-md-4">
                 <label for="keyword" class="form-label">SKU搜索</label>
                 <input type="text" name="keyword" class="form-control" placeholder="搜索SKU..." 
@@ -68,7 +68,7 @@ function getSortIcon($field) {
                     <button type="submit" name="action" value="search" class="btn btn-outline-primary">
                         <i class="fa fa-search"></i> 搜索
                     </button>
-                    <a href="<?php echo APP_URL; ?>/inventory_details.php" class="btn btn-outline-secondary">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php" class="btn btn-outline-secondary">
                         <i class="fa fa-refresh"></i> 重置
                     </a>
                 </div>
@@ -77,7 +77,7 @@ function getSortIcon($field) {
             <div class="col-md-2">
                 <label for="action_clear_sort" class="form-label">&nbsp;</label>
                 <div>
-                    <a href="<?php echo APP_URL; ?>/inventory_details.php<?php echo !empty($keyword) ? '?keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($wid) ? '&wid=' . urlencode($wid) : ''; ?>" class="btn btn-outline-warning">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php<?php echo !empty($keyword) ? '?keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($wid) ? '&wid=' . urlencode($wid) : ''; ?>" class="btn btn-outline-warning">
                         <i class="fa fa-times"></i> 清除排序
                     </a>
                 </div>
@@ -116,7 +116,7 @@ function getSortIcon($field) {
                                 <td><?php echo htmlspecialchars($detail['id']); ?></td>
                                 <td><?php echo htmlspecialchars($detail['wid']); ?></td>
                                 <td><?php echo $detail['warehouse_name']; ?></td>
-                                <td><a href="<?php echo APP_URL; ?>/products.php?keyword=<?php echo $detail['sku']; ?>" target="_blank"><?php echo htmlspecialchars($detail['sku']); ?> </a></td>
+                                <td><a href="<?php echo ADMIN_PANEL_URL; ?>/products.php?keyword=<?php echo $detail['sku']; ?>" target="_blank"><?php echo htmlspecialchars($detail['sku']); ?> </a></td>
                                 <td><?php echo htmlspecialchars($detail['product_name'] ?? ''); ?></td>
                                 <td><?php if (!empty($detail['pic_url'])): ?><div style="display: inline-block; position: relative; width: 50px; height: 50px; "><img src="<?php echo htmlspecialchars($detail['pic_url']); ?>" width="50" height="50" alt="商品图片" style="object-fit: cover; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='scale(3)'; this.style.zIndex='1000'; this.style.position='relative';" onmouseout="this.style.transform='scale(1)'; this.style.zIndex='1'; this.style.position='relative';"></div><?php endif; ?></td>
                                 <td><?php echo number_format($detail['product_valid_num']); ?></td>
@@ -128,7 +128,7 @@ function getSortIcon($field) {
                                 <td><?php echo number_format($detail['stock_price'], 4); ?></td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="<?php echo APP_URL; ?>/inventory_details.php?action=edit&id=<?php echo $detail['id']; ?>" 
+                                        <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=edit&id=<?php echo $detail['id']; ?>" 
                                            class="btn btn-sm btn-outline-primary" title="编辑">
                                             <i class="fa fa-edit"></i>
                                         </a>
@@ -181,7 +181,7 @@ function getSortIcon($field) {
                     <li class="page-item disabled"><span class="page-link">...</span></li>
                 <?php else: ?>
                     <li class="page-item <?php echo $p == $currentPage ? 'active' : ''; ?>">
-                        <a class="page-link" href="<?php echo APP_URL; ?>/inventory_details.php?page=<?php echo $p; ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($wid) ? '&wid=' . urlencode($wid) : ''; ?><?php echo !empty($_GET['sort']) ? '&sort=' . urlencode($_GET['sort']) : ''; ?><?php echo !empty($_GET['order']) ? '&order=' . urlencode($_GET['order']) : ''; ?>">
+                        <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?page=<?php echo $p; ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($wid) ? '&wid=' . urlencode($wid) : ''; ?><?php echo !empty($_GET['sort']) ? '&sort=' . urlencode($_GET['sort']) : ''; ?><?php echo !empty($_GET['order']) ? '&order=' . urlencode($_GET['order']) : ''; ?>">
                             <?php echo $p; ?>
                         </a>
                     </li>
@@ -198,7 +198,7 @@ function getSortIcon($field) {
 <script>
 function confirmDelete(id) {
     if (confirm('确定要删除这条库存明细吗？')) {
-        window.location.href = '<?php echo APP_URL; ?>/inventory_details.php?action=delete&id=' + id;
+        window.location.href = '<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=delete&id=' + id;
     }
 }
 </script>

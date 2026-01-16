@@ -4,7 +4,7 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>用户列表</h5>
                 <?php if (hasPermission('users.create')): ?>
-                    <a href="<?php echo APP_URL; ?>/users.php?action=create" class="btn btn-primary">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/users.php?action=create" class="btn btn-primary">
                         <i class="fa fa-plus"></i> 创建用户
                     </a>
                 <?php endif; ?>
@@ -37,13 +37,13 @@
                                 <td><?php echo $user['created_at']; ?></td>
                                 <td>
                                     <?php if (hasPermission('users.edit')): ?>
-                                        <a href="<?php echo APP_URL; ?>/users.php?action=edit&id=<?php echo $user['id']; ?>" class="btn btn-sm btn-primary">
+                                        <a href="<?php echo ADMIN_PANEL_URL; ?>/users.php?action=edit&id=<?php echo $user['id']; ?>" class="btn btn-sm btn-primary">
                                             <i class="fa fa-edit"></i> 编辑
                                         </a>
                                     <?php endif; ?>
                                     
                                     <?php if (hasPermission('users.delete') && $user['id'] != getCurrentUserId()): ?>
-                                        <a href="<?php echo APP_URL; ?>/users.php?action=delete&id=<?php echo $user['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('确定要删除这个用户吗？');">
+                                        <a href="<?php echo ADMIN_PANEL_URL; ?>/users.php?action=delete&id=<?php echo $user['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('确定要删除这个用户吗？');">
                                             <i class="fa fa-trash"></i> 删除
                                         </a>
                                     <?php endif; ?>

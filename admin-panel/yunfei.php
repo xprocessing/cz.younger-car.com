@@ -21,7 +21,7 @@ switch ($action) {
     case 'edit':
         if (!$id) {
             showError('缺少记录ID');
-            redirect(APP_URL . '/yunfei.php');
+            redirect(ADMIN_PANEL_URL . '/yunfei.php');
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $yunfeiController->editPost($id);
@@ -32,7 +32,7 @@ switch ($action) {
     case 'delete':
         if (!$id) {
             showError('缺少记录ID');
-            redirect(APP_URL . '/yunfei.php');
+            redirect(ADMIN_PANEL_URL . '/yunfei.php');
         }
         $yunfeiController->delete($id);
         break;

@@ -5,7 +5,7 @@
                 <p class="mb-0">请输入订单号查询运费信息</p>
             </div>
             <div class="query-body">
-                <form id="queryForm" method="GET" action="<?php echo APP_URL; ?>/query.php?action=search">
+                <form id="queryForm" method="GET" action="<?php echo ADMIN_PANEL_URL; ?>/query.php?action=search">
                     <div class="mb-4">
                         <label for="order_no" class="form-label">
                             <i class="fa fa-search"></i> 订单号
@@ -80,7 +80,7 @@
             resultDiv.style.display = 'block';
             
             // 发送API请求
-            fetch('<?php echo APP_URL; ?>/query.php?action=api&order_no=' + encodeURIComponent(orderNo))
+            fetch('<?php echo ADMIN_PANEL_URL; ?>/query.php?action=api&order_no=' + encodeURIComponent(orderNo))
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {

@@ -4,14 +4,14 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>运费管理</h5>
                 <?php if (hasPermission('yunfei.create')): ?>
-                    <a href="<?php echo APP_URL; ?>/yunfei.php?action=create" class="btn btn-primary">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/yunfei.php?action=create" class="btn btn-primary">
                         <i class="fa fa-plus"></i> 创建运费记录
                     </a>
                 <?php endif; ?>
             </div>
             <div class="card-body">
                 <!-- 搜索表单 -->
-                <form method="GET" action="<?php echo APP_URL; ?>/yunfei.php" class="mb-4">
+                <form method="GET" action="<?php echo ADMIN_PANEL_URL; ?>/yunfei.php" class="mb-4">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -23,7 +23,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-search"></i> 搜索
                                 </button>
-                                <a href="<?php echo APP_URL; ?>/yunfei.php" class="btn btn-secondary">
+                                <a href="<?php echo ADMIN_PANEL_URL; ?>/yunfei.php" class="btn btn-secondary">
                                     <i class="fa fa-refresh"></i> 重置
                                 </a>
                             </div>
@@ -67,13 +67,13 @@
                                     <td><?php echo $yunfei['create_at']; ?></td>
                                     <td>
                                         <?php if (hasPermission('yunfei.edit')): ?>
-                                            <a href="<?php echo APP_URL; ?>/yunfei.php?action=edit&id=<?php echo $yunfei['id']; ?>" class="btn btn-sm btn-primary">
+                                            <a href="<?php echo ADMIN_PANEL_URL; ?>/yunfei.php?action=edit&id=<?php echo $yunfei['id']; ?>" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-edit"></i> 编辑
                                             </a>
                                         <?php endif; ?>
                                         
                                         <?php if (hasPermission('yunfei.delete')): ?>
-                                            <a href="<?php echo APP_URL; ?>/yunfei.php?action=delete&id=<?php echo $yunfei['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('确定要删除这条运费记录吗？');">
+                                            <a href="<?php echo ADMIN_PANEL_URL; ?>/yunfei.php?action=delete&id=<?php echo $yunfei['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('确定要删除这条运费记录吗？');">
                                                 <i class="fa fa-trash"></i> 删除
                                             </a>
                                         <?php endif; ?>
@@ -90,19 +90,19 @@
                         <ul class="pagination justify-content-center">
                             <?php if ($page > 1): ?>
                                 <li class="page-item">
-                                    <a class="page-link" href="<?php echo APP_URL; ?>/yunfei.php?page=<?php echo $page - 1; ?><?php echo $search ? '&search=' . urlencode($search) : ''; ?>">上一页</a>
+                                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/yunfei.php?page=<?php echo $page - 1; ?><?php echo $search ? '&search=' . urlencode($search) : ''; ?>">上一页</a>
                                 </li>
                             <?php endif; ?>
                             
                             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                                 <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                                    <a class="page-link" href="<?php echo APP_URL; ?>/yunfei.php?page=<?php echo $i; ?><?php echo $search ? '&search=' . urlencode($search) : ''; ?>"><?php echo $i; ?></a>
+                                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/yunfei.php?page=<?php echo $i; ?><?php echo $search ? '&search=' . urlencode($search) : ''; ?>"><?php echo $i; ?></a>
                                 </li>
                             <?php endfor; ?>
                             
                             <?php if ($page < $totalPages): ?>
                                 <li class="page-item">
-                                    <a class="page-link" href="<?php echo APP_URL; ?>/yunfei.php?page=<?php echo $page + 1; ?><?php echo $search ? '&search=' . urlencode($search) : ''; ?>">下一页</a>
+                                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/yunfei.php?page=<?php echo $page + 1; ?><?php echo $search ? '&search=' . urlencode($search) : ''; ?>">下一页</a>
                                 </li>
                             <?php endif; ?>
                         </ul>

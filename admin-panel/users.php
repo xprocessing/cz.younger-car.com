@@ -21,7 +21,7 @@ switch ($action) {
     case 'edit':
         if (!$id) {
             showError('缺少用户ID');
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userController->editPost($id);
@@ -32,7 +32,7 @@ switch ($action) {
     case 'delete':
         if (!$id) {
             showError('缺少用户ID');
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         $userController->delete($id);
         break;

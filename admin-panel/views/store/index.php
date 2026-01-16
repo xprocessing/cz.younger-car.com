@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>店铺管理</h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/store.php?action=create" class="btn btn-primary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/store.php?action=create" class="btn btn-primary">
             <i class="fa fa-plus"></i> 新增店铺
         </a>
     </div>
@@ -10,7 +10,7 @@
 <!-- 搜索框 -->
 <div class="card mb-3">
     <div class="card-body">
-        <form method="GET" action="<?php echo APP_URL; ?>/store.php" class="row g-3">
+        <form method="GET" action="<?php echo ADMIN_PANEL_URL; ?>/store.php" class="row g-3">
             <div class="col-md-6">
                 <label for="keyword" class="form-label">关键词搜索</label>
                 <input type="text" name="keyword" class="form-control" placeholder="搜索店铺ID、店铺名称、平台名称..." 
@@ -22,7 +22,7 @@
                     <button type="submit" name="action" value="search" class="btn btn-outline-primary">
                         <i class="fa fa-search"></i> 搜索
                     </button>
-                    <a href="<?php echo APP_URL; ?>/store.php" class="btn btn-outline-secondary">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/store.php" class="btn btn-outline-secondary">
                         <i class="fa fa-refresh"></i> 重置
                     </a>
                 </div>
@@ -73,7 +73,7 @@
                                 <td><?php echo htmlspecialchars($store['country_code'] ?? '-'); ?></td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="<?php echo APP_URL; ?>/store.php?action=edit&id=<?php echo $store['store_id']; ?>" 
+                                        <a href="<?php echo ADMIN_PANEL_URL; ?>/store.php?action=edit&id=<?php echo $store['store_id']; ?>" 
                                            class="btn btn-sm btn-outline-primary" title="编辑">
                                             <i class="fa fa-edit"></i>
                                         </a>
@@ -132,7 +132,7 @@ function confirmDelete(storeId) {
     if (confirm('确定要删除此店铺吗？此操作不可恢复。')) {
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = '<?php echo APP_URL; ?>/store.php?action=delete';
+        form.action = '<?php echo ADMIN_PANEL_URL; ?>/store.php?action=delete';
         form.innerHTML = '<input type="hidden" name="id" value="' + storeId + '">';
         document.body.appendChild(form);
         form.submit();

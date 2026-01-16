@@ -356,7 +356,7 @@
 
 <div class="card mb-3">
     <div class="card-body">
-        <form method="GET" action="<?php echo APP_URL; ?>/inventory_details_fba.php" class="row g-3">
+        <form method="GET" action="<?php echo ADMIN_PANEL_URL; ?>/inventory_details_fba.php" class="row g-3">
             <div class="col-md-3">
                 <label for="search" class="form-label">关键词搜索</label>
                 <input type="text" name="search" class="form-control" 
@@ -387,7 +387,7 @@
                 <button type="submit" class="btn btn-primary">
                     <i class="fa fa-search"></i> 搜索
                 </button>
-                <a href="<?php echo APP_URL; ?>/inventory_details_fba.php" class="btn btn-secondary">
+                <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details_fba.php" class="btn btn-secondary">
                     <i class="fa fa-refresh"></i> 重置
                 </a>
             </div>
@@ -397,7 +397,7 @@
 
 <div class="card">
     <div class="card-body">
-        <form method="POST" action="<?php echo APP_URL; ?>/inventory_details_fba.php?action=batchDelete" id="batchDeleteForm">
+        <form method="POST" action="<?php echo ADMIN_PANEL_URL; ?>/inventory_details_fba.php?action=batchDelete" id="batchDeleteForm">
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <thead>
@@ -963,7 +963,7 @@
                                     </td>
                                     
                                     <td>
-                                        <a href="<?php echo APP_URL; ?>/inventory_details_fba.php?action=delete&name=<?php echo urlencode($item['name']); ?>&sku=<?php echo urlencode($item['sku']); ?>" 
+                                        <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details_fba.php?action=delete&name=<?php echo urlencode($item['name']); ?>&sku=<?php echo urlencode($item['sku']); ?>" 
                                            class="btn btn-sm btn-danger" 
                                            onclick="return confirm('确定要删除该FBA库存详情记录吗？');">
                                             <i class="fa fa-trash"></i> 删除

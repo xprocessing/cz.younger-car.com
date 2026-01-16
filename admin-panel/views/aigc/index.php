@@ -4,7 +4,7 @@
     <!-- 页面标题 -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">AI图片处理</h1>
-        <a href="<?php echo APP_URL; ?>/aigc.php?action=taskHistory" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/aigc.php?action=taskHistory" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-history fa-sm text-white-50"></i> 任务历史
         </a>
     </div>
@@ -76,7 +76,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">操作面板</h6>
                 </div>
                 <div class="card-body">
-                    <form action="<?php echo APP_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
+                    <form action="<?php echo ADMIN_PANEL_URL; ?>/aigc.php?action=processImages" method="POST" enctype="multipart/form-data">
                         <!-- 任务类型选择 -->
                         <input type="hidden" id="task_type" name="process_types[]" value="remove_defect">
 

@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>仓库管理</h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/warehouses.php?action=create" class="btn btn-primary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/warehouses.php?action=create" class="btn btn-primary">
             <i class="fa fa-plus"></i> 新增仓库
         </a>
     </div>
@@ -9,7 +9,7 @@
 
 <div class="card mb-3">
     <div class="card-body">
-        <form method="GET" action="<?php echo APP_URL; ?>/warehouses.php" class="row g-3">
+        <form method="GET" action="<?php echo ADMIN_PANEL_URL; ?>/warehouses.php" class="row g-3">
             <div class="col-md-6">
                 <label for="keyword" class="form-label">关键词搜索</label>
                 <input type="text" name="keyword" class="form-control" placeholder="搜索仓库名称、T仓库名称、T仓库代码..." 
@@ -21,7 +21,7 @@
                     <button type="submit" name="action" value="search" class="btn btn-outline-primary">
                         <i class="fa fa-search"></i> 搜索
                     </button>
-                    <a href="<?php echo APP_URL; ?>/warehouses.php" class="btn btn-outline-secondary">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/warehouses.php" class="btn btn-outline-secondary">
                         <i class="fa fa-refresh"></i> 重置
                     </a>
                 </div>
@@ -67,7 +67,7 @@
                                 <td><?php echo htmlspecialchars($warehouse['t_status'] ?? '-'); ?></td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="<?php echo APP_URL; ?>/warehouses.php?action=edit&wid=<?php echo $warehouse['wid']; ?>" 
+                                        <a href="<?php echo ADMIN_PANEL_URL; ?>/warehouses.php?action=edit&wid=<?php echo $warehouse['wid']; ?>" 
                                            class="btn btn-sm btn-outline-primary" title="编辑">
                                             <i class="fa fa-edit"></i>
                                         </a>
@@ -120,7 +120,7 @@
                     <li class="page-item disabled"><span class="page-link">...</span></li>
                 <?php else: ?>
                     <li class="page-item <?php echo $p == $currentPage ? 'active' : ''; ?>">
-                        <a class="page-link" href="<?php echo APP_URL; ?>/warehouses.php?page=<?php echo $p; ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?>">
+                        <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/warehouses.php?page=<?php echo $p; ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?>">
                             <?php echo $p; ?>
                         </a>
                     </li>
@@ -137,7 +137,7 @@
 <script>
 function confirmDelete(wid) {
     if (confirm('确定要删除这个仓库吗？')) {
-        window.location.href = '<?php echo APP_URL; ?>/warehouses.php?action=delete&wid=' + wid;
+        window.location.href = '<?php echo ADMIN_PANEL_URL; ?>/warehouses.php?action=delete&wid=' + wid;
     }
 }
 </script>

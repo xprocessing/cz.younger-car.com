@@ -5,7 +5,7 @@
                 <h5>编辑角色</h5>
             </div>
             <div class="card-body">
-                <form action="<?php echo APP_URL; ?>/roles.php?action=edit&id=<?php echo $role['id']; ?>" method="POST">
+                <form action="<?php echo ADMIN_PANEL_URL; ?>/roles.php?action=edit&id=<?php echo $role['id']; ?>" method="POST">
                     <div class="mb-3">
                         <label for="name" class="form-label">角色名称</label>
                         <input type="text" class="form-control" id="name" name="name" value="<?php echo $role['name']; ?>" required>
@@ -39,7 +39,7 @@
                     </div>
                     
                     <button type="submit" class="btn btn-primary">更新角色</button>
-                    <a href="<?php echo APP_URL; ?>/roles.php" class="btn btn-secondary">取消</a>
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/roles.php" class="btn btn-secondary">取消</a>
                 </form>
             </div>
         </div>

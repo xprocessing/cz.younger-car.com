@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录 - <?php echo APP_NAME; ?></title>
-    <link href="<?php echo APP_URL; ?>/public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo ADMIN_PANEL_URL; ?>/public/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
@@ -30,7 +30,7 @@
                 </div>
             <?php endif; ?>
             
-            <form action="<?php echo APP_URL; ?>/login.php" method="POST">
+            <form action="<?php echo ADMIN_PANEL_URL; ?>/login.php" method="POST">
                 <div class="mb-3">
                     <label for="username" class="form-label">用户名</label>
                     <input type="text" class="form-control" id="username" name="username" required>
@@ -44,6 +44,6 @@
         </div>
     </div>
     
-    <script src="<?php echo APP_URL; ?>/public/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo ADMIN_PANEL_URL; ?>/public/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

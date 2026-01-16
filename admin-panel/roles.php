@@ -21,7 +21,7 @@ switch ($action) {
     case 'edit':
         if (!$id) {
             showError('缺少角色ID');
-            redirect(APP_URL . '/roles.php');
+            redirect(ADMIN_PANEL_URL . '/roles.php');
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $roleController->editPost($id);
@@ -32,7 +32,7 @@ switch ($action) {
     case 'delete':
         if (!$id) {
             showError('缺少角色ID');
-            redirect(APP_URL . '/roles.php');
+            redirect(ADMIN_PANEL_URL . '/roles.php');
         }
         $roleController->delete($id);
         break;

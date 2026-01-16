@@ -1,5 +1,5 @@
     </div>
     
-    <script src="<?php echo APP_URL; ?>/public/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo ADMIN_PANEL_URL; ?>/public/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

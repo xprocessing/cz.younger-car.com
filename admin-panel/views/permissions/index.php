@@ -4,7 +4,7 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5>权限列表</h5>
                 <?php if (hasPermission('permissions.create')): ?>
-                    <a href="<?php echo APP_URL; ?>/permissions.php?action=create" class="btn btn-primary">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/permissions.php?action=create" class="btn btn-primary">
                         <i class="fa fa-plus"></i> 创建权限
                     </a>
                 <?php endif; ?>
@@ -34,13 +34,13 @@
                                         <td><?php echo $permission['created_at']; ?></td>
                                         <td>
                                             <?php if (hasPermission('permissions.edit')): ?>
-                                                <a href="<?php echo APP_URL; ?>/permissions.php?action=edit&id=<?php echo $permission['id']; ?>" class="btn btn-sm btn-primary">
+                                                <a href="<?php echo ADMIN_PANEL_URL; ?>/permissions.php?action=edit&id=<?php echo $permission['id']; ?>" class="btn btn-sm btn-primary">
                                                     <i class="fa fa-edit"></i> 编辑
                                                 </a>
                                             <?php endif; ?>
                                             
                                             <?php if (hasPermission('permissions.delete')): ?>
-                                                <a href="<?php echo APP_URL; ?>/permissions.php?action=delete&id=<?php echo $permission['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('确定要删除这个权限吗？');">
+                                                <a href="<?php echo ADMIN_PANEL_URL; ?>/permissions.php?action=delete&id=<?php echo $permission['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('确定要删除这个权限吗？');">
                                                     <i class="fa fa-trash"></i> 删除
                                                 </a>
                                             <?php endif; ?>

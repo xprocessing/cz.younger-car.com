@@ -5,7 +5,7 @@
                 <h5>创建权限</h5>
             </div>
             <div class="card-body">
-                <form action="<?php echo APP_URL; ?>/permissions.php?action=create" method="POST">
+                <form action="<?php echo ADMIN_PANEL_URL; ?>/permissions.php?action=create" method="POST">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -48,7 +48,7 @@
                     </div>
                     
                     <button type="submit" class="btn btn-primary">创建权限</button>
-                    <a href="<?php echo APP_URL; ?>/permissions.php" class="btn btn-secondary">取消</a>
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/permissions.php" class="btn btn-secondary">取消</a>
                 </form>
             </div>
         </div>

@@ -1,10 +1,10 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>商品管理</h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/products.php?action=import" class="btn btn-outline-success me-2">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php?action=import" class="btn btn-outline-success me-2">
             <i class="fa fa-upload"></i> 批量导入
         </a>
-        <a href="<?php echo APP_URL; ?>/products.php?action=export<?php 
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php?action=export<?php 
             $exportParams = [];
             if (!empty($_GET['keyword'])) $exportParams[] = 'keyword=' . urlencode($_GET['keyword']);
             if (!empty($_GET['brand'])) $exportParams[] = 'brand=' . urlencode($_GET['brand']);
@@ -14,10 +14,10 @@
         ?>" class="btn btn-outline-primary me-2">
             <i class="fa fa-download"></i> 批量导出
         </a>
-        <a href="<?php echo APP_URL; ?>/products.php?action=stats" class="btn btn-outline-info me-2">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php?action=stats" class="btn btn-outline-info me-2">
             <i class="fa fa-chart-bar"></i> 商品统计
         </a>
-        <a href="<?php echo APP_URL; ?>/products.php?action=create" class="btn btn-primary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php?action=create" class="btn btn-primary">
             <i class="fa fa-plus"></i> 新增商品
         </a>
     </div>
@@ -25,7 +25,7 @@
 
 <div class="card mb-3">
     <div class="card-body">
-        <form method="GET" action="<?php echo APP_URL; ?>/products.php" class="row g-3">
+        <form method="GET" action="<?php echo ADMIN_PANEL_URL; ?>/products.php" class="row g-3">
             <div class="col-md-2">
                 <label for="keyword" class="form-label">关键词搜索</label>
                 <input type="text" name="keyword" class="form-control" placeholder="搜索SKU、商品名称..." 
@@ -73,7 +73,7 @@
                 <button type="submit" class="btn btn-primary">
                     <i class="fa fa-search"></i> 搜索
                 </button>
-                <a href="<?php echo APP_URL; ?>/products.php" class="btn btn-secondary">
+                <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php" class="btn btn-secondary">
                     <i class="fa fa-refresh"></i> 重置
                 </a>
             </div>
@@ -83,7 +83,7 @@
 
 <div class="card">
     <div class="card-body">
-        <form method="POST" action="<?php echo APP_URL; ?>/products.php?action=batchDelete" id="batchDeleteForm">
+        <form method="POST" action="<?php echo ADMIN_PANEL_URL; ?>/products.php?action=batchDelete" id="batchDeleteForm">
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <thead>
@@ -146,11 +146,11 @@
                                     </td>
                                     <td><?php echo $product['create_time'] ?? ''; ?></td>
                                     <td>
-                                        <a href="<?php echo APP_URL; ?>/products.php?action=edit&id=<?php echo $product['id']; ?>" 
+                                        <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php?action=edit&id=<?php echo $product['id']; ?>" 
                                            class="btn btn-sm btn-primary">
                                             <i class="fa fa-edit"></i> 编辑
                                         </a>
-                                        <a href="<?php echo APP_URL; ?>/products.php?action=delete&id=<?php echo $product['id']; ?>" 
+                                        <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php?action=delete&id=<?php echo $product['id']; ?>" 
                                            class="btn btn-sm btn-danger" 
                                            onclick="return confirm('确定要删除该商品吗？');">
                                             <i class="fa fa-trash"></i> 删除

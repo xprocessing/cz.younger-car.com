@@ -5,7 +5,7 @@
                 <h5>创建运费记录</h5>
             </div>
             <div class="card-body">
-                <form action="<?php echo APP_URL; ?>/yunfei.php?action=create" method="POST">
+                <form action="<?php echo ADMIN_PANEL_URL; ?>/yunfei.php?action=create" method="POST">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -54,7 +54,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fa fa-save"></i> 创建
                             </button>
-                            <a href="<?php echo APP_URL; ?>/yunfei.php" class="btn btn-secondary">
+                            <a href="<?php echo ADMIN_PANEL_URL; ?>/yunfei.php" class="btn btn-secondary">
                                 <i class="fa fa-arrow-left"></i> 返回
                             </a>
                         </div>

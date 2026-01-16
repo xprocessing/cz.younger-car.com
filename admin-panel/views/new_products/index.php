@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>新产品管理</h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/new_products.php?action=create" class="btn btn-primary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/new_products.php?action=create" class="btn btn-primary">
             <i class="fa fa-plus"></i> 新增新产品
         </a>
     </div>
@@ -10,7 +10,7 @@
 <!-- 搜索框 -->
 <div class="card mb-3">
     <div class="card-body">
-        <form method="GET" action="<?php echo APP_URL; ?>/new_products.php" class="row g-3">
+        <form method="GET" action="<?php echo ADMIN_PANEL_URL; ?>/new_products.php" class="row g-3">
             <div class="col-md-8">
                 <input type="text" name="keyword" class="form-control" placeholder="搜索需求编号、需求名称、新产品ID、SKU..." 
                        value="<?php echo $_GET['keyword'] ?? ''; ?>">
@@ -19,7 +19,7 @@
                 <button type="submit" class="btn btn-outline-primary">
                     <i class="fa fa-search"></i> 搜索
                 </button>
-                <a href="<?php echo APP_URL; ?>/new_products.php" class="btn btn-outline-secondary">
+                <a href="<?php echo ADMIN_PANEL_URL; ?>/new_products.php" class="btn btn-outline-secondary">
                     <i class="fa fa-refresh"></i> 重置
                 </a>
             </div>
@@ -84,13 +84,13 @@
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="<?php echo APP_URL; ?>/new_products.php?action=edit&id=<?php echo $product['id']; ?>" 
+                                        <a href="<?php echo ADMIN_PANEL_URL; ?>/new_products.php?action=edit&id=<?php echo $product['id']; ?>" 
                                            class="btn btn-sm btn-outline-primary" title="编辑">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                         <a href="javascript:void(0);" 
                                            onclick="if(confirm('确定要删除这个新产品吗？')) {
-                                               window.location.href='<?php echo APP_URL; ?>/new_products.php?action=delete&id=<?php echo $product['id']; ?>';
+                                               window.location.href='<?php echo ADMIN_PANEL_URL; ?>/new_products.php?action=delete&id=<?php echo $product['id']; ?>';
                                            }" 
                                            class="btn btn-sm btn-outline-danger" title="删除">
                                             <i class="fa fa-trash"></i>
@@ -135,7 +135,7 @@
 <script>
 // 显示进度明细
 function showProcess(id) {
-    fetch('<?php echo APP_URL; ?>/new_products.php?action=get_process&id=' + id)
+    fetch('<?php echo ADMIN_PANEL_URL; ?>/new_products.php?action=get_process&id=' + id)
         .then(response => response.json())
         .then(data => {
             let html = '';

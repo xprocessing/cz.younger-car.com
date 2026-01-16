@@ -4,10 +4,10 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4><?php echo htmlspecialchars($title); ?></h4>
                 <div>
-                    <a href="<?php echo APP_URL; ?>/car_data.php?action=import" class="btn btn-outline-success me-2">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=import" class="btn btn-outline-success me-2">
                         <i class="fa fa-upload"></i> 导入数据
                     </a>
-                    <a href="<?php echo APP_URL; ?>/car_data.php?action=export<?php 
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=export<?php 
                         $exportParams = [];
                         if (!empty($_GET['keyword'])) $exportParams[] = 'keyword=' . urlencode($_GET['keyword']);
                         if (!empty($_GET['make'])) $exportParams[] = 'make=' . urlencode($_GET['make']);
@@ -18,7 +18,7 @@
                     ?>" class="btn btn-outline-primary me-2">
                         <i class="fa fa-download"></i> 导出数据
                     </a>
-                    <a href="<?php echo APP_URL; ?>/car_data.php?action=create" class="btn btn-primary">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=create" class="btn btn-primary">
                         <i class="fa fa-plus"></i> 创建车型数据
                     </a>
                 </div>
@@ -37,9 +37,9 @@
                     function loadModels(makeType, makeValue) {
                         let url = '';
                         if (makeType === 'make') {
-                            url = '<?php echo APP_URL; ?>/car_data.php?action=getModelsByMake&make=' + encodeURIComponent(makeValue);
+                            url = '<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=getModelsByMake&make=' + encodeURIComponent(makeValue);
                         } else {
-                            url = '<?php echo APP_URL; ?>/car_data.php?action=getModelsByMakeCn&make_cn=' + encodeURIComponent(makeValue);
+                            url = '<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=getModelsByMakeCn&make_cn=' + encodeURIComponent(makeValue);
                         }
                         
                         fetch(url)
@@ -75,9 +75,9 @@
                         
                         let url = '';
                         if (make) {
-                            url = '<?php echo APP_URL; ?>/car_data.php?action=getYearsByMakeAndModel&make=' + encodeURIComponent(make) + '&model=' + encodeURIComponent(model);
+                            url = '<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=getYearsByMakeAndModel&make=' + encodeURIComponent(make) + '&model=' + encodeURIComponent(model);
                         } else if (makeCn) {
-                            url = '<?php echo APP_URL; ?>/car_data.php?action=getYearsByMakeCnAndModel&make_cn=' + encodeURIComponent(makeCn) + '&model=' + encodeURIComponent(model);
+                            url = '<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=getYearsByMakeCnAndModel&make_cn=' + encodeURIComponent(makeCn) + '&model=' + encodeURIComponent(model);
                         } else {
                             return;
                         }
@@ -115,9 +115,9 @@
                         
                         let url = '';
                         if (make) {
-                            url = '<?php echo APP_URL; ?>/car_data.php?action=getMarketsByMakeModelAndYear&make=' + encodeURIComponent(make) + '&model=' + encodeURIComponent(model) + '&year=' + encodeURIComponent(year);
+                            url = '<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=getMarketsByMakeModelAndYear&make=' + encodeURIComponent(make) + '&model=' + encodeURIComponent(model) + '&year=' + encodeURIComponent(year);
                         } else if (makeCn) {
-                            url = '<?php echo APP_URL; ?>/car_data.php?action=getMarketsByMakeCnModelAndYear&make_cn=' + encodeURIComponent(makeCn) + '&model=' + encodeURIComponent(model) + '&year=' + encodeURIComponent(year);
+                            url = '<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=getMarketsByMakeCnModelAndYear&make_cn=' + encodeURIComponent(makeCn) + '&model=' + encodeURIComponent(model) + '&year=' + encodeURIComponent(year);
                         } else {
                             return;
                         }
@@ -212,7 +212,7 @@
                     <i class="fa fa-filter"></i> 筛选条件
                 </div>
                 <div class="card-body">
-                    <form method="get" action="<?php echo APP_URL; ?>/car_data.php" class="row g-3">
+                    <form method="get" action="<?php echo ADMIN_PANEL_URL; ?>/car_data.php" class="row g-3">
                         <div class="col-md-2">
                             <label for="keyword" class="form-label">关键词：</label>
                             <input type="text" class="form-control" id="keyword" name="keyword" placeholder="品牌/车型/配置/市场" value="<?php echo htmlspecialchars($keyword ?? ''); ?>">
@@ -268,7 +268,7 @@
                             </button>
                         </div>
                         <div class="col-md-1 align-self-end">
-                            <a href="<?php echo APP_URL; ?>/car_data.php" class="btn btn-secondary">
+                            <a href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php" class="btn btn-secondary">
                                 <i class="fa fa-refresh"></i> 重置
                             </a>
                         </div>
@@ -318,10 +318,10 @@
                                             <td><?php echo htmlspecialchars($carData['create_at']); ?></td>
                                             <td><?php echo htmlspecialchars($carData['update_at'] ?? ''); ?></td>
                                             <td>
-                                                <a href="<?php echo APP_URL; ?>/car_data.php?action=edit&id=<?php echo htmlspecialchars($carData['id']); ?>" class="btn btn-sm btn-info" title="编辑">
+                                                <a href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=edit&id=<?php echo htmlspecialchars($carData['id']); ?>" class="btn btn-sm btn-info" title="编辑">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <a href="<?php echo APP_URL; ?>/car_data.php?action=delete&id=<?php echo htmlspecialchars($carData['id']); ?>" class="btn btn-sm btn-danger" title="删除" onclick="return confirm('确定要删除这条车型数据吗？');">
+                                                <a href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=delete&id=<?php echo htmlspecialchars($carData['id']); ?>" class="btn btn-sm btn-danger" title="删除" onclick="return confirm('确定要删除这条车型数据吗？');">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                             </td>
@@ -337,29 +337,29 @@
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item <?php echo $page == 1 ? 'disabled' : ''; ?>">
-                                    <a class="page-link" href="<?php echo APP_URL; ?>/car_data.php?page=1<?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($make) ? '&make=' . urlencode($make) : ''; ?><?php echo !empty($make_cn) ? '&make_cn=' . urlencode($make_cn) : ''; ?><?php echo !empty($year) ? '&year=' . urlencode($year) : ''; ?><?php echo !empty($market) ? '&market=' . urlencode($market) : ''; ?>">
+                                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?page=1<?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($make) ? '&make=' . urlencode($make) : ''; ?><?php echo !empty($make_cn) ? '&make_cn=' . urlencode($make_cn) : ''; ?><?php echo !empty($year) ? '&year=' . urlencode($year) : ''; ?><?php echo !empty($market) ? '&market=' . urlencode($market) : ''; ?>">
                                         首页
                                     </a>
                                 </li>
                                 <li class="page-item <?php echo $page == 1 ? 'disabled' : ''; ?>">
-                                    <a class="page-link" href="<?php echo APP_URL; ?>/car_data.php?page=<?php echo ($page - 1); ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($make) ? '&make=' . urlencode($make) : ''; ?><?php echo !empty($make_cn) ? '&make_cn=' . urlencode($make_cn) : ''; ?><?php echo !empty($year) ? '&year=' . urlencode($year) : ''; ?><?php echo !empty($market) ? '&market=' . urlencode($market) : ''; ?>">
+                                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?page=<?php echo ($page - 1); ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($make) ? '&make=' . urlencode($make) : ''; ?><?php echo !empty($make_cn) ? '&make_cn=' . urlencode($make_cn) : ''; ?><?php echo !empty($year) ? '&year=' . urlencode($year) : ''; ?><?php echo !empty($market) ? '&market=' . urlencode($market) : ''; ?>">
                                         上一页
                                     </a>
                                 </li>
                                 <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
                                     <li class="page-item <?php echo $page == $i ? 'active' : ''; ?>">
-                                        <a class="page-link" href="<?php echo APP_URL; ?>/car_data.php?page=<?php echo $i; ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($make) ? '&make=' . urlencode($make) : ''; ?><?php echo !empty($make_cn) ? '&make_cn=' . urlencode($make_cn) : ''; ?><?php echo !empty($year) ? '&year=' . urlencode($year) : ''; ?><?php echo !empty($market) ? '&market=' . urlencode($market) : ''; ?>">
+                                        <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?page=<?php echo $i; ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($make) ? '&make=' . urlencode($make) : ''; ?><?php echo !empty($make_cn) ? '&make_cn=' . urlencode($make_cn) : ''; ?><?php echo !empty($year) ? '&year=' . urlencode($year) : ''; ?><?php echo !empty($market) ? '&market=' . urlencode($market) : ''; ?>">
                                             <?php echo $i; ?>
                                         </a>
                                     </li>
                                 <?php endfor; ?>
                                 <li class="page-item <?php echo $page == $totalPages ? 'disabled' : ''; ?>">
-                                    <a class="page-link" href="<?php echo APP_URL; ?>/car_data.php?page=<?php echo ($page + 1); ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($make) ? '&make=' . urlencode($make) : ''; ?><?php echo !empty($make_cn) ? '&make_cn=' . urlencode($make_cn) : ''; ?><?php echo !empty($year) ? '&year=' . urlencode($year) : ''; ?><?php echo !empty($market) ? '&market=' . urlencode($market) : ''; ?>">
+                                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?page=<?php echo ($page + 1); ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($make) ? '&make=' . urlencode($make) : ''; ?><?php echo !empty($make_cn) ? '&make_cn=' . urlencode($make_cn) : ''; ?><?php echo !empty($year) ? '&year=' . urlencode($year) : ''; ?><?php echo !empty($market) ? '&market=' . urlencode($market) : ''; ?>">
                                         下一页
                                     </a>
                                 </li>
                                 <li class="page-item <?php echo $page == $totalPages ? 'disabled' : ''; ?>">
-                                    <a class="page-link" href="<?php echo APP_URL; ?>/car_data.php?page=<?php echo $totalPages; ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($make) ? '&make=' . urlencode($make) : ''; ?><?php echo !empty($make_cn) ? '&make_cn=' . urlencode($make_cn) : ''; ?><?php echo !empty($year) ? '&year=' . urlencode($year) : ''; ?><?php echo !empty($market) ? '&market=' . urlencode($market) : ''; ?>">
+                                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?page=<?php echo $totalPages; ?><?php echo !empty($keyword) ? '&keyword=' . urlencode($keyword) : ''; ?><?php echo !empty($make) ? '&make=' . urlencode($make) : ''; ?><?php echo !empty($make_cn) ? '&make_cn=' . urlencode($make_cn) : ''; ?><?php echo !empty($year) ? '&year=' . urlencode($year) : ''; ?><?php echo !empty($market) ? '&market=' . urlencode($market) : ''; ?>">
                                         末页
                                     </a>
                                 </li>

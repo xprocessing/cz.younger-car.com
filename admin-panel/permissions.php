@@ -21,7 +21,7 @@ switch ($action) {
     case 'edit':
         if (!$id) {
             showError('缺少权限ID');
-            redirect(APP_URL . '/permissions.php');
+            redirect(ADMIN_PANEL_URL . '/permissions.php');
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $permissionController->editPost($id);
@@ -32,7 +32,7 @@ switch ($action) {
     case 'delete':
         if (!$id) {
             showError('缺少权限ID');
-            redirect(APP_URL . '/permissions.php');
+            redirect(ADMIN_PANEL_URL . '/permissions.php');
         }
         $permissionController->delete($id);
         break;
