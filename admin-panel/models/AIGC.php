@@ -19,7 +19,7 @@ class AIGC {
     }
     
     // 调用阿里云百炼API处理图片
-    public function callAliyunAPI($prompt, $image_data = null, $max_retries = 3, $retry_delay = 1000) {
+    public function callAliyunAPI($prompt, $image_data = null, $image_path = null, $max_retries = 3, $retry_delay = 1000) {
         // 优化提示词，使用更简洁中立的表述，避免触发内容审核
         $safe_prompt = $prompt;
         
@@ -44,8 +44,20 @@ class AIGC {
         
         // 如果有图片数据，添加到content中
         if ($image_data) {
+            // 确定图片的MIME类型
+            if ($image_path && file_exists($image_path)) {
+                $file_ext = pathinfo($image_path, PATHINFO_EXTENSION) ?? 'jpg';
+                $mime_type = 'image/' . ($file_ext == 'png' ? 'png' : 'jpg');
+            } else {
+                // 如果没有图片路径或文件不存在，默认使用jpg
+                $mime_type = 'image/jpg';
+            }
+            
+            // 构造完整的Base64图片字符串格式：data:{mime_type};base64,{data}
+            $full_image_data = 'data:' . $mime_type . ';base64,' . $image_data;
+            
             $payload['input']['messages'][0]['content'][] = [
-                'image' => $image_data
+                'image' => $full_image_data
             ];
         }
         
@@ -254,7 +266,7 @@ class AIGC {
                 $prompt = "请去除图片瑕疵，调整亮度对比度，保持{$width}x{$height}像素，返回jpg格式。";
                 
                 // 调用API
-                $response = $this->callAliyunAPI($prompt, $image_data);
+                $response = $this->callAliyunAPI($prompt, $image_data, $image);
                 
                 // 记录结果
                 $results[] = [
@@ -528,7 +540,7 @@ class AIGC {
             $strength_prompt = "根据原图生成新图片，相似度为{$strength}（值越小越接近原图），";
             $api_prompt = "{$strength_prompt}新图片的描述：{$prompt}，保持图片质量清晰。";
             
-            $response = $this->callAliyunAPI($api_prompt, $image_data);
+            $response = $this->callAliyunAPI($api_prompt, $image_data, $image);
             $results[] = [
                 'original_image' => $image,
                 'processed' => $response['success'],
