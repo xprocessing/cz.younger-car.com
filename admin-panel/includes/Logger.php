@@ -27,9 +27,12 @@ class Logger {
     
     private function __construct() {
         // 初始化日志文件路径
-        $log_dir = APP_ROOT . '/logs';
+        $log_dir = APP_ROOT . '/admin-panel/logs';
         if (!is_dir($log_dir)) {
-            mkdir($log_dir, 0777, true);
+            // 尝试创建日志目录，如果失败则使用系统临时目录
+            if (!@mkdir($log_dir, 0777, true)) {
+                $log_dir = sys_get_temp_dir();
+            }
         }
         
         $this->log_file = $log_dir . '/aigc_' . date('Y-m-d') . '.log';
