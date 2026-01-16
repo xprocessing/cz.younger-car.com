@@ -14,7 +14,7 @@ class StoreController {
     public function index() {
         if (!hasPermission('store.view')) {
             showError('您没有权限访问此页面');
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -42,7 +42,7 @@ class StoreController {
     // 显示创建店铺页面
     public function create() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $title = '创建店铺';
@@ -55,44 +55,44 @@ class StoreController {
     // 处理创建店铺请求
     public function createPost() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/store.php');
+            redirect(ADMIN_PANEL_URL . '/store.php');
         }
         
         // 验证必填字段
         if (empty($_POST['store_id'])) {
             showError('店铺ID不能为空');
-            redirect(APP_URL . '/store.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/store.php?action=create');
         }
         
         if (empty($_POST['store_name'])) {
             showError('店铺名称不能为空');
-            redirect(APP_URL . '/store.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/store.php?action=create');
         }
         
         if (empty($_POST['platform_code'])) {
             showError('平台编码不能为空');
-            redirect(APP_URL . '/store.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/store.php?action=create');
         }
         
         if (empty($_POST['platform_name'])) {
             showError('平台名称不能为空');
-            redirect(APP_URL . '/store.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/store.php?action=create');
         }
         
         if (empty($_POST['currency'])) {
             showError('货币类型不能为空');
-            redirect(APP_URL . '/store.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/store.php?action=create');
         }
         
         // 检查店铺ID是否已存在
         $existingStore = $this->storeModel->getById($_POST['store_id']);
         if ($existingStore) {
             showError('店铺ID已存在');
-            redirect(APP_URL . '/store.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/store.php?action=create');
         }
         
         $data = [
@@ -113,24 +113,24 @@ class StoreController {
             showError('店铺创建失败');
         }
         
-        redirect(APP_URL . '/store.php');
+        redirect(ADMIN_PANEL_URL . '/store.php');
     }
     
     // 显示编辑店铺页面
     public function edit() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $storeId = $_GET['id'] ?? '';
         if (empty($storeId)) {
-            redirect(APP_URL . '/store.php');
+            redirect(ADMIN_PANEL_URL . '/store.php');
         }
         
         $store = $this->storeModel->getById($storeId);
         if (!$store) {
             showError('店铺不存在');
-            redirect(APP_URL . '/store.php');
+            redirect(ADMIN_PANEL_URL . '/store.php');
         }
         
         $title = '编辑店铺';
@@ -143,37 +143,37 @@ class StoreController {
     // 处理编辑店铺请求
     public function editPost() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/store.php');
+            redirect(ADMIN_PANEL_URL . '/store.php');
         }
         
         $storeId = $_POST['store_id'] ?? '';
         if (empty($storeId)) {
-            redirect(APP_URL . '/store.php');
+            redirect(ADMIN_PANEL_URL . '/store.php');
         }
         
         // 验证必填字段
         if (empty($_POST['store_name'])) {
             showError('店铺名称不能为空');
-            redirect(APP_URL . '/store.php?action=edit&id=' . $storeId);
+            redirect(ADMIN_PANEL_URL . '/store.php?action=edit&id=' . $storeId);
         }
         
         if (empty($_POST['platform_code'])) {
             showError('平台编码不能为空');
-            redirect(APP_URL . '/store.php?action=edit&id=' . $storeId);
+            redirect(ADMIN_PANEL_URL . '/store.php?action=edit&id=' . $storeId);
         }
         
         if (empty($_POST['platform_name'])) {
             showError('平台名称不能为空');
-            redirect(APP_URL . '/store.php?action=edit&id=' . $storeId);
+            redirect(ADMIN_PANEL_URL . '/store.php?action=edit&id=' . $storeId);
         }
         
         if (empty($_POST['currency'])) {
             showError('货币类型不能为空');
-            redirect(APP_URL . '/store.php?action=edit&id=' . $storeId);
+            redirect(ADMIN_PANEL_URL . '/store.php?action=edit&id=' . $storeId);
         }
         
         $data = [
@@ -193,23 +193,23 @@ class StoreController {
             showError('店铺更新失败');
         }
         
-        redirect(APP_URL . '/store.php');
+        redirect(ADMIN_PANEL_URL . '/store.php');
     }
     
     // 处理删除店铺请求
     public function delete() {
         if (!hasPermission('store.delete')) {
             showError('您没有权限删除店铺');
-            redirect(APP_URL . '/store.php');
+            redirect(ADMIN_PANEL_URL . '/store.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/store.php');
+            redirect(ADMIN_PANEL_URL . '/store.php');
         }
         
         $storeId = $_POST['id'] ?? '';
         if (empty($storeId)) {
-            redirect(APP_URL . '/store.php');
+            redirect(ADMIN_PANEL_URL . '/store.php');
         }
         
         if ($this->storeModel->delete($storeId)) {
@@ -218,6 +218,6 @@ class StoreController {
             showError('店铺删除失败');
         }
         
-        redirect(APP_URL . '/store.php');
+        redirect(ADMIN_PANEL_URL . '/store.php');
     }
 }

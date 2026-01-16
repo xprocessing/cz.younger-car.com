@@ -13,7 +13,7 @@ class WarehouseController {
     public function index() {
         if (!hasPermission('warehouses.view')) {
             showError('您没有权限访问此页面');
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -41,7 +41,7 @@ class WarehouseController {
     public function create() {
         if (!hasPermission('warehouses.create')) {
             showError('您没有权限创建仓库');
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         }
         
         $title = '创建仓库';
@@ -54,37 +54,37 @@ class WarehouseController {
     public function createPost() {
         if (!hasPermission('warehouses.create')) {
             showError('您没有权限创建仓库');
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         }
         
         if (empty($_POST['wid'])) {
             showError('仓库ID不能为空');
-            redirect(APP_URL . '/warehouses.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php?action=create');
         }
         
         if (empty($_POST['name'])) {
             showError('仓库名称不能为空');
-            redirect(APP_URL . '/warehouses.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php?action=create');
         }
         
         if (empty($_POST['type'])) {
             showError('仓库类型不能为空');
-            redirect(APP_URL . '/warehouses.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php?action=create');
         }
         
         if (empty($_POST['sub_type'])) {
             showError('仓库子类型不能为空');
-            redirect(APP_URL . '/warehouses.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php?action=create');
         }
         
         $existingWarehouse = $this->warehouseModel->getById($_POST['wid']);
         if ($existingWarehouse) {
             showError('仓库ID已存在');
-            redirect(APP_URL . '/warehouses.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php?action=create');
         }
         
         $data = [
@@ -104,29 +104,29 @@ class WarehouseController {
         
         if ($this->warehouseModel->create($data)) {
             setSuccess('仓库创建成功');
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         } else {
             showError('仓库创建失败');
-            redirect(APP_URL . '/warehouses.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php?action=create');
         }
     }
     
     public function edit() {
         if (!hasPermission('warehouses.edit')) {
             showError('您没有权限编辑仓库');
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         }
         
         $wid = $_GET['wid'] ?? '';
         if (empty($wid)) {
             showError('仓库ID不能为空');
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         }
         
         $warehouse = $this->warehouseModel->getById($wid);
         if (!$warehouse) {
             showError('仓库不存在');
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         }
         
         $title = '编辑仓库';
@@ -139,32 +139,32 @@ class WarehouseController {
     public function editPost() {
         if (!hasPermission('warehouses.edit')) {
             showError('您没有权限编辑仓库');
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         }
         
         $wid = $_POST['wid'] ?? '';
         if (empty($wid)) {
             showError('仓库ID不能为空');
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         }
         
         if (empty($_POST['name'])) {
             showError('仓库名称不能为空');
-            redirect(APP_URL . '/warehouses.php?action=edit&wid=' . $wid);
+            redirect(ADMIN_PANEL_URL . '/warehouses.php?action=edit&wid=' . $wid);
         }
         
         if (empty($_POST['type'])) {
             showError('仓库类型不能为空');
-            redirect(APP_URL . '/warehouses.php?action=edit&wid=' . $wid);
+            redirect(ADMIN_PANEL_URL . '/warehouses.php?action=edit&wid=' . $wid);
         }
         
         if (empty($_POST['sub_type'])) {
             showError('仓库子类型不能为空');
-            redirect(APP_URL . '/warehouses.php?action=edit&wid=' . $wid);
+            redirect(ADMIN_PANEL_URL . '/warehouses.php?action=edit&wid=' . $wid);
         }
         
         $data = [
@@ -183,29 +183,29 @@ class WarehouseController {
         
         if ($this->warehouseModel->update($wid, $data)) {
             setSuccess('仓库更新成功');
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         } else {
             showError('仓库更新失败');
-            redirect(APP_URL . '/warehouses.php?action=edit&wid=' . $wid);
+            redirect(ADMIN_PANEL_URL . '/warehouses.php?action=edit&wid=' . $wid);
         }
     }
     
     public function delete() {
         if (!hasPermission('warehouses.delete')) {
             showError('您没有权限删除仓库');
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         }
         
         $wid = $_GET['wid'] ?? '';
         if (empty($wid)) {
             showError('仓库ID不能为空');
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         }
         
         $warehouse = $this->warehouseModel->getById($wid);
         if (!$warehouse) {
             showError('仓库不存在');
-            redirect(APP_URL . '/warehouses.php');
+            redirect(ADMIN_PANEL_URL . '/warehouses.php');
         }
         
         if ($this->warehouseModel->delete($wid)) {
@@ -214,6 +214,6 @@ class WarehouseController {
             showError('仓库删除失败');
         }
         
-        redirect(APP_URL . '/warehouses.php');
+        redirect(ADMIN_PANEL_URL . '/warehouses.php');
     }
 }

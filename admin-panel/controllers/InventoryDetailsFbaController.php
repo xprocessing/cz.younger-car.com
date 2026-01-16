@@ -12,13 +12,13 @@ class InventoryDetailsFbaController {
     
     public function index() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         // 检查权限
         if (!hasPermission('inventory_details_fba.view')) {
             showError('您没有权限查看FBA库存详情');
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -60,13 +60,13 @@ class InventoryDetailsFbaController {
     
     public function delete() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         // 检查权限
         if (!hasPermission('inventory_details_fba.delete')) {
             showError('您没有权限删除FBA库存详情');
-            redirect(APP_URL . '/inventory_details_fba.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details_fba.php');
         }
         
         $name = $_GET['name'] ?? '';
@@ -74,13 +74,13 @@ class InventoryDetailsFbaController {
         
         if (empty($name) || empty($sku)) {
             showError('无效的参数');
-            redirect(APP_URL . '/inventory_details_fba.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details_fba.php');
         }
         
         $inventoryDetail = $this->inventoryDetailsFbaModel->getByNameAndSku($name, $sku);
         if (!$inventoryDetail) {
             showError('FBA库存详情记录不存在');
-            redirect(APP_URL . '/inventory_details_fba.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details_fba.php');
         }
         
         if ($this->inventoryDetailsFbaModel->delete($name, $sku)) {
@@ -89,28 +89,28 @@ class InventoryDetailsFbaController {
             showError('FBA库存详情删除失败');
         }
         
-        redirect(APP_URL . '/inventory_details_fba.php');
+        redirect(ADMIN_PANEL_URL . '/inventory_details_fba.php');
     }
     
     public function batchDelete() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         // 检查权限
         if (!hasPermission('inventory_details_fba.delete')) {
             showError('您没有权限批量删除FBA库存详情');
-            redirect(APP_URL . '/inventory_details_fba.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details_fba.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/inventory_details_fba.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details_fba.php');
         }
         
         $records = $_POST['records'] ?? [];
         if (empty($records)) {
             showError('请选择要删除的记录');
-            redirect(APP_URL . '/inventory_details_fba.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details_fba.php');
         }
         
         $successCount = 0;
@@ -125,7 +125,7 @@ class InventoryDetailsFbaController {
         }
         
         showSuccess("成功删除 {$successCount} 条记录");
-        redirect(APP_URL . '/inventory_details_fba.php');
+        redirect(ADMIN_PANEL_URL . '/inventory_details_fba.php');
     }
 }
 ?>

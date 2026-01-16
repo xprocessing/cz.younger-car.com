@@ -13,7 +13,7 @@ class NewProductController {
     // 显示新产品列表
     public function index() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $products = $this->newProductModel->getAll();
@@ -27,7 +27,7 @@ class NewProductController {
     // 显示创建新产品页面
     public function create() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $title = '创建新产品';
@@ -40,24 +40,24 @@ class NewProductController {
     // 处理创建新产品请求
     public function createPost() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/new_products.php');
+            redirect(ADMIN_PANEL_URL . '/new_products.php');
         }
         
         // 验证必填字段
         if (empty($_POST['require_no'])) {
             showError('需求编号不能为空');
-            redirect(APP_URL . '/new_products.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/new_products.php?action=create');
         }
         
         // 检查需求编号是否已存在
         $existingProduct = $this->newProductModel->getByRequireNo($_POST['require_no']);
         if ($existingProduct) {
             showError('需求编号已存在');
-            redirect(APP_URL . '/new_products.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/new_products.php?action=create');
         }
         
         $data = [
@@ -91,25 +91,25 @@ class NewProductController {
             showError('新产品创建失败');
         }
         
-        redirect(APP_URL . '/new_products.php');
+        redirect(ADMIN_PANEL_URL . '/new_products.php');
     }
     
     // 显示编辑新产品页面
     public function edit() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $id = $_GET['id'] ?? 0;
         if (!$id) {
             showError('无效的ID');
-            redirect(APP_URL . '/new_products.php');
+            redirect(ADMIN_PANEL_URL . '/new_products.php');
         }
         
         $product = $this->newProductModel->getById($id);
         if (!$product) {
             showError('新产品不存在');
-            redirect(APP_URL . '/new_products.php');
+            redirect(ADMIN_PANEL_URL . '/new_products.php');
         }
         
         $title = '编辑新产品';
@@ -123,30 +123,30 @@ class NewProductController {
     public function editPost() {
         if (!hasPermission('new_products.edit')) {
             showError('您没有权限编辑新产品');
-            redirect(APP_URL . '/new_products.php');
+            redirect(ADMIN_PANEL_URL . '/new_products.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/new_products.php');
+            redirect(ADMIN_PANEL_URL . '/new_products.php');
         }
         
         $id = $_POST['id'] ?? 0;
         if (!$id) {
             showError('无效的ID');
-            redirect(APP_URL . '/new_products.php');
+            redirect(ADMIN_PANEL_URL . '/new_products.php');
         }
         
         // 验证必填字段
         if (empty($_POST['require_no'])) {
             showError('需求编号不能为空');
-            redirect(APP_URL . '/new_products.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/new_products.php?action=edit&id=' . $id);
         }
         
         // 检查需求编号是否已存在（排除当前记录）
         $existingProduct = $this->newProductModel->getByRequireNo($_POST['require_no']);
         if ($existingProduct && $existingProduct['id'] != $id) {
             showError('需求编号已存在');
-            redirect(APP_URL . '/new_products.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/new_products.php?action=edit&id=' . $id);
         }
         
         $data = [
@@ -178,25 +178,25 @@ class NewProductController {
             showError('新产品更新失败');
         }
         
-        redirect(APP_URL . '/new_products.php');
+        redirect(ADMIN_PANEL_URL . '/new_products.php');
     }
     
     // 删除新产品
     public function delete() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $id = $_GET['id'] ?? 0;
         if (!$id) {
             showError('无效的ID');
-            redirect(APP_URL . '/new_products.php');
+            redirect(ADMIN_PANEL_URL . '/new_products.php');
         }
         
         $product = $this->newProductModel->getById($id);
         if (!$product) {
             showError('新产品不存在');
-            redirect(APP_URL . '/new_products.php');
+            redirect(ADMIN_PANEL_URL . '/new_products.php');
         }
         
         if ($this->newProductModel->delete($id)) {
@@ -205,14 +205,14 @@ class NewProductController {
             showError('新产品删除失败');
         }
         
-        redirect(APP_URL . '/new_products.php');
+        redirect(ADMIN_PANEL_URL . '/new_products.php');
     }
     
     // 搜索新产品
     public function search() {
         if (!hasPermission('new_products.view')) {
             showError('您没有权限搜索新产品');
-            redirect(APP_URL . '/new_products.php');
+            redirect(ADMIN_PANEL_URL . '/new_products.php');
         }
         
         $keyword = $_GET['keyword'] ?? '';

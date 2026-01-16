@@ -13,7 +13,7 @@ class InventoryDetailsController {
     public function index() {
         if (!hasPermission('inventory_details.view')) {
             showError('您没有权限访问此页面');
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -47,7 +47,7 @@ class InventoryDetailsController {
     public function create() {
         if (!hasPermission('inventory_details.create')) {
             showError('您没有权限创建库存明细');
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         }
         
         $title = '创建库存明细';
@@ -60,26 +60,26 @@ class InventoryDetailsController {
     public function createPost() {
         if (!hasPermission('inventory_details.create')) {
             showError('您没有权限创建库存明细');
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         }
         
         if (empty($_POST['wid'])) {
             showError('仓库ID不能为空');
-            redirect(APP_URL . '/inventory_details.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php?action=create');
         }
         
         if (empty($_POST['sku'])) {
             showError('SKU不能为空');
-            redirect(APP_URL . '/inventory_details.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php?action=create');
         }
         
         if (empty($_POST['product_valid_num'])) {
             showError('可用量不能为空');
-            redirect(APP_URL . '/inventory_details.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php?action=create');
         }
         
         $data = [
@@ -96,29 +96,29 @@ class InventoryDetailsController {
         
         if ($this->inventoryDetailsModel->create($data)) {
             setSuccess('库存明细创建成功');
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         } else {
             showError('库存明细创建失败');
-            redirect(APP_URL . '/inventory_details.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php?action=create');
         }
     }
     
     public function edit() {
         if (!hasPermission('inventory_details.edit')) {
             showError('您没有权限编辑库存明细');
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         }
         
         $id = $_GET['id'] ?? '';
         if (empty($id)) {
             showError('库存明细ID不能为空');
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         }
         
         $inventoryDetail = $this->inventoryDetailsModel->getById($id);
         if (!$inventoryDetail) {
             showError('库存明细不存在');
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         }
         
         $title = '编辑库存明细';
@@ -131,32 +131,32 @@ class InventoryDetailsController {
     public function editPost() {
         if (!hasPermission('inventory_details.edit')) {
             showError('您没有权限编辑库存明细');
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         }
         
         $id = $_POST['id'] ?? '';
         if (empty($id)) {
             showError('库存明细ID不能为空');
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         }
         
         if (empty($_POST['wid'])) {
             showError('仓库ID不能为空');
-            redirect(APP_URL . '/inventory_details.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php?action=edit&id=' . $id);
         }
         
         if (empty($_POST['sku'])) {
             showError('SKU不能为空');
-            redirect(APP_URL . '/inventory_details.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php?action=edit&id=' . $id);
         }
         
         if (empty($_POST['product_valid_num'])) {
             showError('可用量不能为空');
-            redirect(APP_URL . '/inventory_details.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php?action=edit&id=' . $id);
         }
         
         $data = [
@@ -173,29 +173,29 @@ class InventoryDetailsController {
         
         if ($this->inventoryDetailsModel->update($id, $data)) {
             setSuccess('库存明细更新成功');
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         } else {
             showError('库存明细更新失败');
-            redirect(APP_URL . '/inventory_details.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php?action=edit&id=' . $id);
         }
     }
     
     public function delete() {
         if (!hasPermission('inventory_details.delete')) {
             showError('您没有权限删除库存明细');
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         }
         
         $id = $_GET['id'] ?? '';
         if (empty($id)) {
             showError('库存明细ID不能为空');
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         }
         
         $inventoryDetail = $this->inventoryDetailsModel->getById($id);
         if (!$inventoryDetail) {
             showError('库存明细不存在');
-            redirect(APP_URL . '/inventory_details.php');
+            redirect(ADMIN_PANEL_URL . '/inventory_details.php');
         }
         
         if ($this->inventoryDetailsModel->delete($id)) {
@@ -204,13 +204,13 @@ class InventoryDetailsController {
             showError('库存明细删除失败');
         }
         
-        redirect(APP_URL . '/inventory_details.php');
+        redirect(ADMIN_PANEL_URL . '/inventory_details.php');
     }
     
     public function overagedStats() {
         if (!hasPermission('inventory_details.view')) {
             showError('您没有权限访问此页面');
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $thresholdDays = $_GET['threshold'] ?? 180;
@@ -226,7 +226,7 @@ class InventoryDetailsController {
     public function inventoryAlert() {
         if (!hasPermission('inventory_details.view')) {
             showError('您没有权限访问此页面');
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         // 添加不缓存头部
@@ -345,7 +345,7 @@ class InventoryDetailsController {
     public function exportInventoryAlert() {
         if (!hasPermission('inventory_details.view')) {
             showError('您没有权限访问此页面');
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         // 检查会话中是否有批量查询的SKU列表

@@ -16,7 +16,7 @@ class AIGCController {
     // 显示AI图片处理模块主页面
     public function index() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         // 使用VIEWS_DIR加载视图
@@ -28,18 +28,18 @@ class AIGCController {
     // 处理图片
     public function processImages() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             showError('无效的请求方法');
-            redirect(APP_URL . '/aigc.php');
+            redirect(ADMIN_PANEL_URL . '/aigc.php');
         }
         
         // 检查是否选择了处理类型
         if (empty($_POST['process_types'])) {
             showError('请选择处理类型');
-            redirect(APP_URL . '/aigc.php');
+            redirect(ADMIN_PANEL_URL . '/aigc.php');
         }
         
         $process_types = $_POST['process_types'];
@@ -53,7 +53,7 @@ class AIGCController {
             // 检查是否上传了图片
             if (empty($_FILES['images']['name'][0])) {
                 showError('请上传图片');
-                redirect(APP_URL . '/aigc.php');
+                redirect(ADMIN_PANEL_URL . '/aigc.php');
             }
             
             // 处理上传的图片
@@ -75,7 +75,7 @@ class AIGCController {
                 // 检查是否上传成功
                 if ($image_error !== UPLOAD_ERR_OK) {
                     showError('图片上传失败: ' . $image_error);
-                    redirect(APP_URL . '/aigc.php');
+                    redirect(ADMIN_PANEL_URL . '/aigc.php');
                 }
                 
                 // 检查文件类型
@@ -84,13 +84,13 @@ class AIGCController {
                 
                 if (!in_array($image_ext, $allowed_exts)) {
                     showError('不支持的图片格式: ' . $image_ext);
-                    redirect(APP_URL . '/aigc.php');
+                    redirect(ADMIN_PANEL_URL . '/aigc.php');
                 }
                 
                 // 检查文件大小
                 if ($image_size > 2 * 1024 * 1024) { // 2MB
                     showError('图片大小不能超过2MB');
-                    redirect(APP_URL . '/aigc.php');
+                    redirect(ADMIN_PANEL_URL . '/aigc.php');
                 }
                 
                 // 生成唯一文件名
@@ -100,7 +100,7 @@ class AIGCController {
                 // 移动图片到临时目录
                 if (!move_uploaded_file($image_tmp, $temp_path)) {
                     showError('保存图片失败');
-                    redirect(APP_URL . '/aigc.php');
+                    redirect(ADMIN_PANEL_URL . '/aigc.php');
                 }
                 
                 // 添加到处理列表
@@ -133,7 +133,7 @@ class AIGCController {
                 'process_types' => $process_types
             ]);
             showError('创建任务失败');
-            redirect(APP_URL . '/aigc.php');
+            redirect(ADMIN_PANEL_URL . '/aigc.php');
         }
         
         // 记录任务创建成功
@@ -161,14 +161,14 @@ class AIGCController {
         exec("$php_executable $worker_script $temp_task_file > /dev/null 2>&1 &");
         
         // 立即返回任务历史页面，用户可以在那里查看进度
-        redirect(APP_URL . '/aigc.php?action=taskHistory');
+        redirect(ADMIN_PANEL_URL . '/aigc.php?action=taskHistory');
         exit();
     }
     
     // 显示任务历史页面
     public function taskHistory() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $user_id = $_SESSION['user_id'];
@@ -184,13 +184,13 @@ class AIGCController {
     // 显示任务详情
     public function taskDetail() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $task_id = (int)($_GET['id'] ?? 0);
         if ($task_id <= 0) {
             showError('无效的任务ID');
-            redirect(APP_URL . '/aigc.php?action=taskHistory');
+            redirect(ADMIN_PANEL_URL . '/aigc.php?action=taskHistory');
         }
         
         $task = $this->aigcModel->getTaskById($task_id);

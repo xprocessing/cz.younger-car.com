@@ -17,7 +17,7 @@ class UserController {
     public function index() {
         if (!hasPermission('users.view')) {
             showError('您没有权限访问此页面');
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $users = $this->userModel->getAll();
@@ -32,7 +32,7 @@ class UserController {
     public function create() {
         if (!hasPermission('users.create')) {
             showError('您没有权限创建用户');
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         
         $roles = $this->roleModel->getAll();
@@ -47,11 +47,11 @@ class UserController {
     public function createPost() {
         if (!hasPermission('users.create')) {
             showError('您没有权限创建用户');
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         
         $username = $_POST['username'] ?? '';
@@ -63,19 +63,19 @@ class UserController {
         
         if (empty($username) || empty($email) || empty($password) || empty($fullName)) {
             showError('用户名、邮箱、密码和姓名不能为空');
-            redirect(APP_URL . '/users.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/users.php?action=create');
         }
         
         // 检查用户名是否已存在
         if ($this->userModel->getByUsername($username)) {
             showError('用户名已存在');
-            redirect(APP_URL . '/users.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/users.php?action=create');
         }
         
         // 检查邮箱是否已存在
         if ($this->userModel->getByEmail($email)) {
             showError('邮箱已存在');
-            redirect(APP_URL . '/users.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/users.php?action=create');
         }
         
         // 加密密码
@@ -96,20 +96,20 @@ class UserController {
         }
         
         showSuccess('用户创建成功');
-        redirect(APP_URL . '/users.php');
+        redirect(ADMIN_PANEL_URL . '/users.php');
     }
     
     // 显示编辑用户页面
     public function edit($id) {
         if (!hasPermission('users.edit')) {
             showError('您没有权限编辑用户');
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         
         $user = $this->userModel->getById($id);
         if (!$user) {
             showError('用户不存在');
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         
         $roles = $this->roleModel->getAll();
@@ -127,17 +127,17 @@ class UserController {
     public function editPost($id) {
         if (!hasPermission('users.edit')) {
             showError('您没有权限编辑用户');
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         
         $user = $this->userModel->getById($id);
         if (!$user) {
             showError('用户不存在');
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         
         $username = $_POST['username'] ?? '';
@@ -149,21 +149,21 @@ class UserController {
         
         if (empty($username) || empty($email) || empty($fullName)) {
             showError('用户名、邮箱和姓名不能为空');
-            redirect(APP_URL . '/users.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/users.php?action=edit&id=' . $id);
         }
         
         // 检查用户名是否已存在（排除当前用户）
         $existingUser = $this->userModel->getByUsername($username);
         if ($existingUser && $existingUser['id'] != $id) {
             showError('用户名已存在');
-            redirect(APP_URL . '/users.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/users.php?action=edit&id=' . $id);
         }
         
         // 检查邮箱是否已存在（排除当前用户）
         $existingEmail = $this->userModel->getByEmail($email);
         if ($existingEmail && $existingEmail['id'] != $id) {
             showError('邮箱已存在');
-            redirect(APP_URL . '/users.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/users.php?action=edit&id=' . $id);
         }
         
         // 更新用户信息
@@ -188,31 +188,31 @@ class UserController {
         }
         
         showSuccess('用户更新成功');
-        redirect(APP_URL . '/users.php');
+        redirect(ADMIN_PANEL_URL . '/users.php');
     }
     
     // 处理删除用户请求
     public function delete($id) {
         if (!hasPermission('users.delete')) {
             showError('您没有权限删除用户');
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         
         $user = $this->userModel->getById($id);
         if (!$user) {
             showError('用户不存在');
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         
         // 不允许删除当前登录用户
         if ($id == getCurrentUserId()) {
             showError('不允许删除当前登录用户');
-            redirect(APP_URL . '/users.php');
+            redirect(ADMIN_PANEL_URL . '/users.php');
         }
         
         $this->userModel->delete($id);
         showSuccess('用户删除成功');
-        redirect(APP_URL . '/users.php');
+        redirect(ADMIN_PANEL_URL . '/users.php');
     }
 }
 ?>

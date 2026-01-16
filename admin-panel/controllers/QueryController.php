@@ -22,21 +22,21 @@ class QueryController {
     // 处理查询请求
     public function search() {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-            redirect(APP_URL . '/query.php');
+            redirect(ADMIN_PANEL_URL . '/query.php');
         }
         
         $orderNo = trim($_GET['order_no'] ?? '');
         
         if (empty($orderNo)) {
             showError('请输入订单号');
-            redirect(APP_URL . '/query.php');
+            redirect(ADMIN_PANEL_URL . '/query.php');
         }
         
         $result = $this->yunfeiModel->getByOrderNo($orderNo);
         
         if (!$result) {
             showError('未找到该订单号的运费信息');
-            redirect(APP_URL . '/query.php');
+            redirect(ADMIN_PANEL_URL . '/query.php');
         }
         
         // 格式化运费数据

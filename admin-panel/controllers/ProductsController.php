@@ -12,7 +12,7 @@ class ProductsController {
     
     public function index() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -42,7 +42,7 @@ class ProductsController {
     public function create() {
         if (!hasPermission('products.create')) {
             showError('您没有权限创建商品');
-            redirect(APP_URL . '/products.php');
+            redirect(ADMIN_PANEL_URL . '/products.php');
         }
         
         $title = '创建商品';
@@ -57,22 +57,22 @@ class ProductsController {
     
     public function createPost() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/products.php');
+            redirect(ADMIN_PANEL_URL . '/products.php');
         }
         
         if (empty($_POST['sku'])) {
             showError('SKU不能为空');
-            redirect(APP_URL . '/products.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/products.php?action=create');
         }
         
         $existingProduct = $this->productsModel->getBySku($_POST['sku']);
         if ($existingProduct) {
             showError('SKU已存在');
-            redirect(APP_URL . '/products.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/products.php?action=create');
         }
         
         $data = [
@@ -103,24 +103,24 @@ class ProductsController {
             showError('商品创建失败');
         }
         
-        redirect(APP_URL . '/products.php');
+        redirect(ADMIN_PANEL_URL . '/products.php');
     }
     
     public function edit() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $id = $_GET['id'] ?? 0;
         if (!$id) {
             showError('无效的ID');
-            redirect(APP_URL . '/products.php');
+            redirect(ADMIN_PANEL_URL . '/products.php');
         }
         
         $product = $this->productsModel->getById($id);
         if (!$product) {
             showError('商品记录不存在');
-            redirect(APP_URL . '/products.php');
+            redirect(ADMIN_PANEL_URL . '/products.php');
         }
         
         $title = '编辑商品';
@@ -136,28 +136,28 @@ class ProductsController {
     public function editPost() {
         if (!hasPermission('products.edit')) {
             showError('您没有权限编辑商品');
-            redirect(APP_URL . '/products.php');
+            redirect(ADMIN_PANEL_URL . '/products.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/products.php');
+            redirect(ADMIN_PANEL_URL . '/products.php');
         }
         
         $id = $_POST['id'] ?? 0;
         if (!$id) {
             showError('无效的ID');
-            redirect(APP_URL . '/products.php');
+            redirect(ADMIN_PANEL_URL . '/products.php');
         }
         
         if (empty($_POST['sku'])) {
             showError('SKU不能为空');
-            redirect(APP_URL . '/products.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/products.php?action=edit&id=' . $id);
         }
         
         $existingProduct = $this->productsModel->getBySku($_POST['sku']);
         if ($existingProduct && $existingProduct['id'] != $id) {
             showError('SKU已存在');
-            redirect(APP_URL . '/products.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/products.php?action=edit&id=' . $id);
         }
         
         $data = [
@@ -188,24 +188,24 @@ class ProductsController {
             showError('商品更新失败');
         }
         
-        redirect(APP_URL . '/products.php');
+        redirect(ADMIN_PANEL_URL . '/products.php');
     }
     
     public function delete() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $id = $_GET['id'] ?? 0;
         if (!$id) {
             showError('无效的ID');
-            redirect(APP_URL . '/products.php');
+            redirect(ADMIN_PANEL_URL . '/products.php');
         }
         
         $product = $this->productsModel->getById($id);
         if (!$product) {
             showError('商品记录不存在');
-            redirect(APP_URL . '/products.php');
+            redirect(ADMIN_PANEL_URL . '/products.php');
         }
         
         if ($this->productsModel->delete($id)) {
@@ -214,33 +214,33 @@ class ProductsController {
             showError('商品删除失败');
         }
         
-        redirect(APP_URL . '/products.php');
+        redirect(ADMIN_PANEL_URL . '/products.php');
     }
     
     public function batchDelete() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/products.php');
+            redirect(ADMIN_PANEL_URL . '/products.php');
         }
         
         $ids = $_POST['ids'] ?? [];
         if (empty($ids)) {
             showError('请选择要删除的记录');
-            redirect(APP_URL . '/products.php');
+            redirect(ADMIN_PANEL_URL . '/products.php');
         }
         
         $count = $this->productsModel->batchDelete($ids);
         showSuccess("成功删除 {$count} 条记录");
-        redirect(APP_URL . '/products.php');
+        redirect(ADMIN_PANEL_URL . '/products.php');
     }
     
     public function search() {
         if (!hasPermission('products.view')) {
             showError('您没有权限搜索商品');
-            redirect(APP_URL . '/products.php');
+            redirect(ADMIN_PANEL_URL . '/products.php');
         }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -269,7 +269,7 @@ class ProductsController {
     
     public function import() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $title = '批量导入商品';
@@ -282,25 +282,25 @@ class ProductsController {
     public function importPost() {
         if (!hasPermission('products.import')) {
             showError('您没有权限导入商品');
-            redirect(APP_URL . '/products.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/products.php?action=import');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_FILES['excel_file'])) {
             showError('请选择要导入的文件');
-            redirect(APP_URL . '/products.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/products.php?action=import');
         }
         
         $file = $_FILES['excel_file'];
         if ($file['error'] !== UPLOAD_ERR_OK) {
             showError('文件上传失败');
-            redirect(APP_URL . '/products.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/products.php?action=import');
         }
         
         $allowedExtensions = ['csv'];
         $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         if (!in_array($fileExtension, $allowedExtensions)) {
             showError('只允许导入CSV格式的文件');
-            redirect(APP_URL . '/products.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/products.php?action=import');
         }
         
         $filePath = $file['tmp_name'];
@@ -308,7 +308,7 @@ class ProductsController {
         
         if (!$handle) {
             showError('无法读取文件');
-            redirect(APP_URL . '/products.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/products.php?action=import');
         }
         
         $data = [];
@@ -377,7 +377,7 @@ class ProductsController {
             if (!empty($errors)) {
                 $_SESSION['import_errors'] = $errors;
             }
-            redirect(APP_URL . '/products.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/products.php?action=import');
         }
         
         try {
@@ -391,12 +391,12 @@ class ProductsController {
             showError('导入失败：' . $e->getMessage());
         }
         
-        redirect(APP_URL . '/products.php');
+        redirect(ADMIN_PANEL_URL . '/products.php');
     }
     
     public function export() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $keyword = $_GET['keyword'] ?? '';
@@ -498,7 +498,7 @@ class ProductsController {
     public function stats() {
         if (!hasPermission('products.view')) {
             showError('您没有权限查看商品统计');
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $categoryStats = $this->productsModel->getCategoryStats();

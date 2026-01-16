@@ -151,10 +151,10 @@ class CarDataController {
     // 显示车型数据列表
     public function index() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         if (!hasPermission('car_data.view')) {
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -197,10 +197,10 @@ class CarDataController {
     // 显示创建车型数据页面
     public function create() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         if (!hasPermission('car_data.create')) {
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $title = '创建车型数据';
@@ -213,14 +213,14 @@ class CarDataController {
     // 处理创建车型数据请求
     public function createPost() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         if (!hasPermission('car_data.create')) {
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/car_data.php');
+            redirect(ADMIN_PANEL_URL . '/car_data.php');
         }
         
         $data = [
@@ -239,23 +239,23 @@ class CarDataController {
             showError('车型数据创建失败');
         }
         
-        redirect(APP_URL . '/car_data.php');
+        redirect(ADMIN_PANEL_URL . '/car_data.php');
     }
     
     // 显示编辑车型数据页面
     public function edit($id) {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         if (!hasPermission('car_data.edit')) {
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $carData = $this->carDataModel->getById($id);
         
         if (!$carData) {
             showError('车型数据不存在');
-            redirect(APP_URL . '/car_data.php');
+            redirect(ADMIN_PANEL_URL . '/car_data.php');
         }
         
         $title = '编辑车型数据';
@@ -268,21 +268,21 @@ class CarDataController {
     // 处理编辑车型数据请求
     public function editPost($id) {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         if (!hasPermission('car_data.edit')) {
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/car_data.php');
+            redirect(ADMIN_PANEL_URL . '/car_data.php');
         }
         
         $carData = $this->carDataModel->getById($id);
         
         if (!$carData) {
             showError('车型数据不存在');
-            redirect(APP_URL . '/car_data.php');
+            redirect(ADMIN_PANEL_URL . '/car_data.php');
         }
         
         $data = [
@@ -301,23 +301,23 @@ class CarDataController {
             showError('车型数据更新失败');
         }
         
-        redirect(APP_URL . '/car_data.php');
+        redirect(ADMIN_PANEL_URL . '/car_data.php');
     }
     
     // 处理删除车型数据请求
     public function delete($id) {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         if (!hasPermission('car_data.delete')) {
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $carData = $this->carDataModel->getById($id);
         
         if (!$carData) {
             showError('车型数据不存在');
-            redirect(APP_URL . '/car_data.php');
+            redirect(ADMIN_PANEL_URL . '/car_data.php');
         }
         
         if ($this->carDataModel->delete($id)) {
@@ -326,16 +326,16 @@ class CarDataController {
             showError('车型数据删除失败');
         }
         
-        redirect(APP_URL . '/car_data.php');
+        redirect(ADMIN_PANEL_URL . '/car_data.php');
     }
     
     // 显示导入车型数据页面
     public function import() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         if (!hasPermission('car_data.create')) {
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $title = '导入车型数据';
@@ -348,14 +348,14 @@ class CarDataController {
     // 处理导入车型数据请求
     public function importPost() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         if (!hasPermission('car_data.create')) {
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/car_data.php');
+            redirect(ADMIN_PANEL_URL . '/car_data.php');
         }
         
         $dataArray = [];
@@ -367,7 +367,7 @@ class CarDataController {
         
         if (!$hasFile && !$hasText) {
             showError('请选择CSV文件或粘贴CSV文本');
-            redirect(APP_URL . '/car_data.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/car_data.php?action=import');
         }
         
         if ($hasFile) {
@@ -377,7 +377,7 @@ class CarDataController {
             
             if ($fileType !== 'csv') {
                 showError('仅支持CSV文件导入');
-                redirect(APP_URL . '/car_data.php?action=import');
+                redirect(ADMIN_PANEL_URL . '/car_data.php?action=import');
             }
             
             $handle = fopen($file['tmp_name'], 'r');
@@ -452,17 +452,17 @@ class CarDataController {
             showError('文件中没有有效数据');
         }
         
-        redirect(APP_URL . '/car_data.php');
+        redirect(ADMIN_PANEL_URL . '/car_data.php');
     }
     
     // 导出车型数据
     public function export() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         // 导出功能仅管理员可使用
         if (!hasRole('admin')) {
-            redirect(APP_URL . '/dashboard.php');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
         }
         
         $keyword = $_GET['keyword'] ?? '';

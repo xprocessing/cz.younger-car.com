@@ -13,7 +13,7 @@ class OrderProfitController {
     // 显示订单利润列表
     public function index() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -50,7 +50,7 @@ class OrderProfitController {
     // 显示创建订单利润页面
     public function create() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $title = '创建订单利润';
@@ -65,24 +65,24 @@ class OrderProfitController {
     public function createPost() {
         if (!hasPermission('order_profit.view')) {
             showError('您没有权限创建订单利润');
-            redirect(APP_URL . '/order_profit.php');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/order_profit.php');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php');
         }
         
         // 验证必填字段
         if (empty($_POST['global_order_no'])) {
             showError('订单号不能为空');
-            redirect(APP_URL . '/order_profit.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php?action=create');
         }
         
         // 检查订单号是否已存在
         $existingProfit = $this->orderProfitModel->getByOrderNo($_POST['global_order_no']);
         if ($existingProfit) {
             showError('订单号已存在');
-            redirect(APP_URL . '/order_profit.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php?action=create');
         }
         
         $data = [
@@ -105,25 +105,25 @@ class OrderProfitController {
             showError('订单利润创建失败');
         }
         
-        redirect(APP_URL . '/order_profit.php');
+        redirect(ADMIN_PANEL_URL . '/order_profit.php');
     }
     
     // 显示编辑订单利润页面
     public function edit() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $id = $_GET['id'] ?? 0;
         if (!$id) {
             showError('无效的ID');
-            redirect(APP_URL . '/order_profit.php');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php');
         }
         
         $profit = $this->orderProfitModel->getById($id);
         if (!$profit) {
             showError('订单利润记录不存在');
-            redirect(APP_URL . '/order_profit.php');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php');
         }
         
         $title = '编辑订单利润';
@@ -137,30 +137,30 @@ class OrderProfitController {
     // 处理编辑订单利润请求
     public function editPost() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(APP_URL . '/order_profit.php');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php');
         }
         
         $id = $_POST['id'] ?? 0;
         if (!$id) {
             showError('无效的ID');
-            redirect(APP_URL . '/order_profit.php');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php');
         }
         
         // 验证必填字段
         if (empty($_POST['global_order_no'])) {
             showError('订单号不能为空');
-            redirect(APP_URL . '/order_profit.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/order_profit.php?action=edit&id=' . $id);
         }
         
         // 检查订单号是否已存在（排除当前记录）
         $existingProfit = $this->orderProfitModel->getByOrderNo($_POST['global_order_no']);
         if ($existingProfit && $existingProfit['id'] != $id) {
             showError('订单号已存在');
-            redirect(APP_URL . '/order_profit.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/order_profit.php?action=edit&id=' . $id);
         }
         
         $data = [
@@ -183,26 +183,26 @@ class OrderProfitController {
             showError('订单利润更新失败');
         }
         
-        redirect(APP_URL . '/order_profit.php');
+        redirect(ADMIN_PANEL_URL . '/order_profit.php');
     }
     
     // 删除订单利润
     public function delete() {
         if (!hasPermission('order_profit.view')) {
             showError('您没有权限删除订单利润');
-            redirect(APP_URL . '/order_profit.php');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php');
         }
         
         $id = $_GET['id'] ?? 0;
         if (!$id) {
             showError('无效的ID');
-            redirect(APP_URL . '/order_profit.php');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php');
         }
         
         $profit = $this->orderProfitModel->getById($id);
         if (!$profit) {
             showError('订单利润记录不存在');
-            redirect(APP_URL . '/order_profit.php');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php');
         }
         
         if ($this->orderProfitModel->delete($id)) {
@@ -211,13 +211,13 @@ class OrderProfitController {
             showError('订单利润删除失败');
         }
         
-        redirect(APP_URL . '/order_profit.php');
+        redirect(ADMIN_PANEL_URL . '/order_profit.php');
     }
     
     // 搜索订单利润
     public function search() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -250,7 +250,7 @@ class OrderProfitController {
     // 统计页面
     public function stats() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $endDate = date('Y-m-d');
@@ -277,7 +277,7 @@ class OrderProfitController {
     // 批量导入页面
     public function import() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         $title = '批量导入订单利润';
@@ -290,18 +290,18 @@ class OrderProfitController {
     // 处理批量导入
     public function importPost() {
         if (!isLoggedIn()) {
-            redirect(APP_URL . '/login.php');
+            redirect(ADMIN_PANEL_URL . '/login.php');
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_FILES['excel_file'])) {
             showError('请选择要导入的文件');
-            redirect(APP_URL . '/order_profit.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php?action=import');
         }
         
         $file = $_FILES['excel_file'];
         if ($file['error'] !== UPLOAD_ERR_OK) {
             showError('文件上传失败');
-            redirect(APP_URL . '/order_profit.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php?action=import');
         }
         
         // 验证文件类型
@@ -309,7 +309,7 @@ class OrderProfitController {
         $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         if (!in_array($fileExtension, $allowedExtensions)) {
             showError('只允许导入CSV格式的文件');
-            redirect(APP_URL . '/order_profit.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php?action=import');
         }
         
         // 简单的CSV处理示例
@@ -318,7 +318,7 @@ class OrderProfitController {
         
         if (!$handle) {
             showError('无法读取文件');
-            redirect(APP_URL . '/order_profit.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php?action=import');
         }
         
         $data = [];
@@ -383,7 +383,7 @@ class OrderProfitController {
             if (!empty($errors)) {
                 $_SESSION['import_errors'] = $errors;
             }
-            redirect(APP_URL . '/order_profit.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php?action=import');
         }
         
         try {
@@ -398,14 +398,14 @@ class OrderProfitController {
             showError('导入失败：' . $e->getMessage());
         }
         
-        redirect(APP_URL . '/order_profit.php');
+        redirect(ADMIN_PANEL_URL . '/order_profit.php');
     }
     
     // 批量导出
     public function export() {
         if (!hasPermission('order_profit.view')) {
             showError('您没有权限导出订单利润');
-            redirect(APP_URL . '/order_profit.php');
+            redirect(ADMIN_PANEL_URL . '/order_profit.php');
         }
         
         // 获取所有筛选参数
