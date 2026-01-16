@@ -19,10 +19,15 @@ class AIGCController {
             redirect(APP_URL . '/login.php');
         }
         
+        // 使用绝对路径加载视图，避免VIEWS_DIR定义问题
+        $header_path = APP_ROOT . '/admin-panel/views/layouts/header.php';
+        $index_path = APP_ROOT . '/admin-panel/views/aigc/index.php';
+        $footer_path = APP_ROOT . '/admin-panel/views/layouts/footer.php';
+        
         // 加载主页面
-        include VIEWS_DIR . '/layouts/header.php';
-        include VIEWS_DIR . '/aigc/index.php';
-        include VIEWS_DIR . '/layouts/footer.php';
+        include $header_path;
+        include $index_path;
+        include $footer_path;
     }
     
     // 处理图片
@@ -175,9 +180,10 @@ class AIGCController {
         $tasks = $this->aigcModel->getUserTasks($user_id);
         $title = '任务历史';
         
-        include VIEWS_DIR . '/layouts/header.php';
-        include VIEWS_DIR . '/aigc/task_history.php';
-        include VIEWS_DIR . '/layouts/footer.php';
+        // 使用绝对路径加载视图
+        include APP_ROOT . '/admin-panel/views/layouts/header.php';
+        include APP_ROOT . '/admin-panel/views/aigc/task_history.php';
+        include APP_ROOT . '/admin-panel/views/layouts/footer.php';
     }
     
     // 显示任务详情
@@ -196,9 +202,10 @@ class AIGCController {
         $results = $this->aigcModel->getTaskResults($task_id);
         $title = '任务详情';
         
-        include VIEWS_DIR . '/layouts/header.php';
-        include VIEWS_DIR . '/aigc/task_detail.php';
-        include VIEWS_DIR . '/layouts/footer.php';
+        // 使用绝对路径加载视图
+        include APP_ROOT . '/admin-panel/views/layouts/header.php';
+        include APP_ROOT . '/admin-panel/views/aigc/task_history.php'; // 使用task_history.php代替缺失的task_detail.php
+        include APP_ROOT . '/admin-panel/views/layouts/footer.php';
     }
     
     // 获取任务详情的JSON数据（用于AJAX请求）

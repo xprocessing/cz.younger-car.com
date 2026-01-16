@@ -9,6 +9,7 @@ if (!defined('APP_ROOT')) {
 // 加载配置文件
 require_once APP_ROOT . '/admin-panel/config/config.php';
 
+
 // 加载控制器
 require_once APP_ROOT . '/admin-panel/controllers/AIGCController.php';
 
