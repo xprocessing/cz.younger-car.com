@@ -15,19 +15,27 @@ set_time_limit(3600); // 1小时超时
 require_once realpath(dirname(__FILE__) . '/../../config.php');
 
 try {
-    // 检查命令行参数
-    if ($argc < 2) {
-        throw new Exception('缺少任务文件参数');
+    // 检查是通过命令行执行还是直接包含
+    if (isset($task_data)) {
+        // 直接包含的情况，task_data已经在控制器中设置
+        $task_file = '';
+    } else {
+        // 命令行执行的情况
+        // 检查命令行参数
+        if ($argc < 2) {
+            throw new Exception('缺少任务文件参数');
+        }
+        
+        $task_file = $argv[1];
+        
+        if (!file_exists($task_file)) {
+            throw new Exception('任务文件不存在: ' . $task_file);
+        }
+        
+        // 读取任务参数
+        $task_data = json_decode(file_get_contents($task_file), true);
     }
     
-    $task_file = $argv[1];
-    
-    if (!file_exists($task_file)) {
-        throw new Exception('任务文件不存在: ' . $task_file);
-    }
-    
-    // 读取任务参数
-    $task_data = json_decode(file_get_contents($task_file), true);
     
     if (!$task_data) {
         throw new Exception('任务文件格式错误');
@@ -211,8 +219,8 @@ try {
         }
     }
     
-    // 删除任务文件
-    if (file_exists($task_file)) {
+    // 删除任务文件（仅在命令行执行时）
+    if (!empty($task_file) && file_exists($task_file)) {
         unlink($task_file);
     }
     
@@ -256,7 +264,7 @@ try {
         }
     }
     
-    if (isset($task_file) && file_exists($task_file)) {
+    if (isset($task_file) && !empty($task_file) && file_exists($task_file)) {
         unlink($task_file);
     }
     

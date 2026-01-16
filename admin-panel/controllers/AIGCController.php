@@ -153,14 +153,19 @@ class AIGCController {
             'user_id' => $user_id
         ]));
         
-        // 启动异步处理进程
-        $php_executable = PHP_BINARY;
-        $worker_script = ADMIN_PANEL_DIR . '/scripts/process_images_worker.php';
+        // 直接执行图片处理（因为exec函数被禁用）
+        // 读取任务参数
+        $task_data = json_decode(file_get_contents($temp_task_file), true);
         
-        // 使用exec启动异步进程
-        exec("$php_executable $worker_script $temp_task_file > /dev/null 2>&1 &");
+        // 包含工作脚本并执行
+        require_once ADMIN_PANEL_DIR . '/scripts/process_images_worker.php';
         
-        // 立即返回任务历史页面，用户可以在那里查看进度
+        // 清理临时文件
+        if (file_exists($temp_task_file)) {
+            unlink($temp_task_file);
+        }
+        
+        // 处理完成后返回任务历史页面
         redirect(ADMIN_PANEL_URL . '/aigc.php?action=taskHistory');
         exit();
     }
