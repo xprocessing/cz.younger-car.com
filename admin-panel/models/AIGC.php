@@ -1,7 +1,7 @@
 <?php
-require_once APP_ROOT . '/admin-panel/config/config.php';
-require_once APP_ROOT . '/admin-panel/includes/database.php';
-require_once APP_ROOT . '/admin-panel/includes/Logger.php';
+require_once APP_ROOT . '/config/config.php';
+require_once APP_ROOT . '/includes/database.php';
+require_once APP_ROOT . '/includes/Logger.php';
 
 class AIGC {
     private $db;

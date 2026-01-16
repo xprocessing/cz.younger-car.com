@@ -12,8 +12,8 @@ set_time_limit(3600); // 1小时超时
 
 // 初始化应用环境
 if (!defined('APP_ROOT')) {
-    // APP_ROOT指向网站根目录
-    define('APP_ROOT', realpath(dirname(__FILE__) . '/../..'));
+    // APP_ROOT指向admin-panel目录
+    define('APP_ROOT', realpath(dirname(__FILE__) . '/..'));
 }
 
 try {
@@ -42,10 +42,10 @@ try {
     $user_id = $task_data['user_id'];
     
     // 包含必要的文件
-    require_once APP_ROOT . '/admin-panel/config/config.php';
-    require_once APP_ROOT . '/admin-panel/includes/database.php';
-    require_once APP_ROOT . '/admin-panel/models/AIGC.php';
-    require_once APP_ROOT . '/admin-panel/includes/Logger.php';
+    require_once APP_ROOT . '/config/config.php';
+    require_once APP_ROOT . '/includes/database.php';
+    require_once APP_ROOT . '/models/AIGC.php';
+    require_once APP_ROOT . '/includes/Logger.php';
     
     // 初始化日志记录器
     $logger = Logger::getInstance();

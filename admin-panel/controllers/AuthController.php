@@ -1,6 +1,6 @@
 <?php
-require_once APP_ROOT . '/admin-panel/models/User.php';
-require_once APP_ROOT . '/admin-panel/helpers/functions.php';
+require_once APP_ROOT . '/models/User.php';
+require_once APP_ROOT . '/helpers/functions.php';
 
 class AuthController {
     private $userModel;
