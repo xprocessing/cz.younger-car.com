@@ -78,7 +78,7 @@ function hasPermission($permissionSlug) {
         return false;
     }
     
-    require_once APP_ROOT . '/models/Permission.php';
+    require_once APP_ROOT . '/admin-panel/models/Permission.php';
     $permissionModel = new Permission();
     return $permissionModel->checkUserPermission(getCurrentUserId(), $permissionSlug);
 }
@@ -89,7 +89,7 @@ function hasRole($roleName) {
         return false;
     }
     
-    require_once APP_ROOT . '/models/Role.php';
+    require_once APP_ROOT . '/admin-panel/models/Role.php';
     $roleModel = new Role();
     return $roleModel->checkUserRole(getCurrentUserId(), $roleName);
 }
