@@ -123,7 +123,8 @@
 
 <!-- JavaScript 用于动态加载参数设置 -->
 <script>
-    $(document).ready(function() {
+    // 确保jQuery加载完成后执行
+    document.addEventListener('DOMContentLoaded', function() {
         // 处理类型导航点击事件
         $('.list-group-item').click(function(e) {
             e.preventDefault();
