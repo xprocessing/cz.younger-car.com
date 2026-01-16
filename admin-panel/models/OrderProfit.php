@@ -943,12 +943,12 @@ class OrderProfit {
         $params = [];
         
         if ($startDate) {
-            $sql .= " AND c.date >= ?";
+            $sql .= " AND c.cost_date >= ?";
             $params[] = $startDate;
         }
         
         if ($endDate) {
-            $sql .= " AND c.date <= ?";
+            $sql .= " AND c.cost_date <= ?";
             $params[] = $endDate;
         }
         
