@@ -169,12 +169,12 @@ class ShopCosts {
         }
         
         if (!empty($startDate)) {
-            $sql .= " AND date >= ?";
+            $sql .= " AND cost_date >= ?";
             $params[] = $startDate;
         }
         
         if (!empty($endDate)) {
-            $sql .= " AND date <= ?";
+            $sql .= " AND cost_date <= ?";
             $params[] = $endDate;
         }
         
