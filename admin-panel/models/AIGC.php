@@ -553,7 +553,7 @@ class AIGC {
         $stmt = $this->db->query($sql, $params);
         
         if ($stmt) {
-            return $this->db->getLastInsertId();
+            return $this->db->lastInsertId();
         }
         
         return false;
