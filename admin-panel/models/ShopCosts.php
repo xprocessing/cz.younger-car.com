@@ -1,7 +1,7 @@
 <?php
 require_once ADMIN_PANEL_DIR . '/includes/database.php';
 
-class Costs {
+class ShopCosts {
     private $db;
     
     public function __construct() {
@@ -17,7 +17,7 @@ class Costs {
     
     // 获取所有成本记录，支持分页
     public function getAll($limit = null, $offset = 0) {
-        $sql = "SELECT * FROM shop_costs ORDER BY date DESC, platform_name, store_name";
+        $sql = "SELECT * FROM shop_costs ORDER BY cost_date DESC, platform_name, store_name";
         $params = [];
         
         if ($limit !== null) {
@@ -40,13 +40,13 @@ class Costs {
     
     // 创建成本记录
     public function create($data) {
-        $sql = "INSERT INTO shop_costs (platform_name, store_name, cost, cost_type, date, remark, create_at, update_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())";
+        $sql = "INSERT INTO shop_costs (platform_name, store_name, cost, cost_type, cost_date, remark, create_at, update_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())";
         $params = [
             $data['platform_name'],
             $data['store_name'],
             $data['cost'],
             $data['cost_type'],
-            $data['date'],
+            $data['cost_date'],
             $data['remark'] ?? null
         ];
         
@@ -55,7 +55,7 @@ class Costs {
     
     // 更新成本记录
     public function update($id, $data) {
-        $sql = "UPDATE shop_costs SET platform_name = ?, store_name = ?, cost = ?, cost_type = ?, date = ?, remark = ?, update_at = NOW() WHERE id = ?";
+        $sql = "UPDATE shop_costs SET platform_name = ?, store_name = ?, cost = ?, cost_type = ?, cost_date = ?, remark = ?, update_at = NOW() WHERE id = ?";
         $params = [
             $data['platform_name'],
             $data['store_name'],
@@ -96,16 +96,16 @@ class Costs {
         }
         
         if (!empty($startDate)) {
-            $sql .= " AND date >= ?";
+            $sql .= " AND cost_date >= ?";
             $params[] = $startDate;
         }
         
         if (!empty($endDate)) {
-            $sql .= " AND date <= ?";
+            $sql .= " AND cost_date <= ?";
             $params[] = $endDate;
         }
         
-        $sql .= " ORDER BY date DESC, platform_name, store_name LIMIT ? OFFSET ?";
+        $sql .= " ORDER BY cost_date DESC, platform_name, store_name LIMIT ? OFFSET ?";
         $params[] = $limit;
         $params[] = $offset;
         
@@ -178,7 +178,7 @@ class Costs {
             $params[] = $endDate;
         }
         
-        $sql .= " ORDER BY date DESC, platform_name, store_name";
+        $sql .= " ORDER BY cost_date DESC, platform_name, store_name";
         
         $stmt = $this->db->query($sql, $params);
         return $stmt->fetchAll();
@@ -190,7 +190,7 @@ class Costs {
             return true;
         }
         
-        $sql = "INSERT INTO shop_costs (platform_name, store_name, cost, cost_type, date, remark, create_at, update_at) VALUES ";
+        $sql = "INSERT INTO shop_costs (platform_name, store_name, cost, cost_type, cost_date, remark, create_at, update_at) VALUES ";
         $params = [];
         $values = [];
         
@@ -200,7 +200,7 @@ class Costs {
             $params[] = $row['store_name'];
             $params[] = $row['cost'];
             $params[] = $row['cost_type'];
-            $params[] = $row['date'];
+            $params[] = $row['cost_date'];
             $params[] = $row['remark'] ?? null;
         }
         

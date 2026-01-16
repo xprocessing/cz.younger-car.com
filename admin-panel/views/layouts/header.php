@@ -133,8 +133,8 @@
             <?php endif; ?>
              <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
-                    <a href="<?php echo ADMIN_PANEL_URL; ?>/costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'costs.php' ? 'active' : ''; ?>">
-                        <i class="fa fa-list"></i> 广告费
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'shop_costs.php' ? 'active' : ''; ?>">
+                        <i class="fa fa-list"></i> 店铺费用
                     </a>
                 </div>
             <?php endif; ?>

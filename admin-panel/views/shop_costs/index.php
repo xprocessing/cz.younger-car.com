@@ -1,10 +1,10 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4><?php echo $title; ?></h4>
     <div>
-        <a href="<?php echo ADMIN_PANEL_URL; ?>/costs.php?action=import" class="btn btn-outline-success me-2">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?action=import" class="btn btn-outline-success me-2">
             <i class="fa fa-upload"></i> 批量导入
         </a>
-        <a href="<?php echo ADMIN_PANEL_URL; ?>/costs.php?action=export<?php 
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?action=export<?php 
             $exportParams = [];
             if (!empty($_GET['platform_name'])) $exportParams[] = 'platform_name=' . urlencode($_GET['platform_name']);
             if (!empty($_GET['store_name'])) $exportParams[] = 'store_name=' . urlencode($_GET['store_name']);
@@ -15,8 +15,8 @@
         ?>" class="btn btn-outline-primary me-2">
             <i class="fa fa-download"></i> 批量导出
         </a>
-        <a href="<?php echo ADMIN_PANEL_URL; ?>/costs.php?action=create" class="btn btn-primary">
-            <i class="fa fa-plus"></i> 新增广告费记录
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?action=create" class="btn btn-primary">
+            <i class="fa fa-plus"></i> 新增广告费记�?
         </a>
     </div>
 </div>
@@ -24,7 +24,7 @@
 <!-- 搜索和筛选框 -->
 <div class="card mb-3">
     <div class="card-body">
-        <form method="GET" action="<?php echo ADMIN_PANEL_URL; ?>/costs.php" class="row g-3">
+        <form method="GET" action="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php" class="row g-3">
             <div class="col-md-2">
                 <label for="platform_name" class="form-label">平台名称</label>
                 <select name="platform_name" class="form-select">
@@ -68,7 +68,7 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <label for="start_date" class="form-label">开始日期</label>
+                <label for="start_date" class="form-label">开始日�?/label>
                 <input type="date" name="start_date" class="form-control" 
                        value="<?php echo $_GET['start_date'] ?? ''; ?>">
             </div>
@@ -79,9 +79,9 @@
             </div>
             <div class="col-md-4 d-flex align-items-end">
                 <button type="submit" class="btn btn-primary me-2">
-                    <i class="fa fa-search"></i> 筛选
+                    <i class="fa fa-search"></i> 筛�?
                 </button>
-                <a href="<?php echo ADMIN_PANEL_URL; ?>/costs.php" class="btn btn-outline-secondary">
+                <a href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php" class="btn btn-outline-secondary">
                     <i class="fa fa-refresh"></i> 重置
                 </a>
             </div>
@@ -99,7 +99,7 @@
                         <th>ID</th>
                         <th>平台名称</th>
                         <th>店铺名称</th>
-                        <th>日广告花费（美元）</th>
+                        <th>日广告花费（美元�?/th>
                         <th>费用类型</th>
                         <th>日期</th>
                         <th>备注</th>
@@ -117,18 +117,18 @@
                                 <td><?php echo htmlspecialchars($cost['store_name']); ?></td>
                                 <td>$<?php echo $cost['cost']; ?></td>
                                 <td><?php echo htmlspecialchars($cost['cost_type']); ?></td>
-                                <td><?php echo $cost['date']; ?></td>
+                                <td><?php echo $cost['cost_date']; ?></td>
                                 <td><?php echo htmlspecialchars($cost['remark'] ?? ''); ?></td>
                                 <td><?php echo $cost['create_at']; ?></td>
                                 <td><?php echo $cost['update_at']; ?></td>
                                 <td>
-                                    <a href="<?php echo ADMIN_PANEL_URL; ?>/costs.php?action=edit&id=<?php echo $cost['id']; ?>" 
+                                    <a href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?action=edit&id=<?php echo $cost['id']; ?>" 
                                        class="btn btn-sm btn-outline-primary me-1">
                                         <i class="fa fa-edit"></i> 编辑
                                     </a>
-                                    <a href="<?php echo ADMIN_PANEL_URL; ?>/costs.php?action=delete&id=<?php echo $cost['id']; ?>" 
+                                    <a href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?action=delete&id=<?php echo $cost['id']; ?>" 
                                        class="btn btn-sm btn-outline-danger" 
-                                       onclick="return confirm('确定要删除这条记录吗？');">
+                                       onclick="return confirm('确定要删除这条记录吗�?);">
                                         <i class="fa fa-trash"></i> 删除
                                     </a>
                                 </td>
@@ -150,7 +150,7 @@
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
             <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
-                <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/costs.php?page=<?php echo $page - 1; ?><?php 
+                <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?page=<?php echo $page - 1; ?><?php 
                     $queryParams = [];
                     if (!empty($_GET['platform_name'])) $queryParams[] = 'platform_name=' . urlencode($_GET['platform_name']);
                     if (!empty($_GET['store_name'])) $queryParams[] = 'store_name=' . urlencode($_GET['store_name']);
@@ -158,7 +158,7 @@
                     if (!empty($_GET['start_date'])) $queryParams[] = 'start_date=' . urlencode($_GET['start_date']);
                     if (!empty($_GET['end_date'])) $queryParams[] = 'end_date=' . urlencode($_GET['end_date']);
                     if (!empty($queryParams)) echo '&' . implode('&', $queryParams);
-                ?>" tabindex="-1">上一页</a>
+                ?>" tabindex="-1">上一�?/a>
             </li>
             <?php 
             $startPage = max(1, $page - 2);
@@ -166,7 +166,7 @@
             
             if ($startPage > 1): ?>
                 <li class="page-item">
-                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/costs.php?page=1<?php 
+                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?page=1<?php 
                         if (!empty($queryParams)) echo '&' . implode('&', $queryParams);
                     ?>">1</a>
                 </li>
@@ -177,7 +177,7 @@
             
             <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
                 <li class="page-item <?php echo ($page == $i) ? 'active' : ''; ?>">
-                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/costs.php?page=<?php echo $i; ?><?php 
+                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?page=<?php echo $i; ?><?php 
                         if (!empty($queryParams)) echo '&' . implode('&', $queryParams);
                     ?>"><?php echo $i; ?></a>
                 </li>
@@ -188,15 +188,15 @@
                     <li class="page-item disabled"><span class="page-link">...</span></li>
                 <?php endif; ?>
                 <li class="page-item">
-                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/costs.php?page=<?php echo $totalPages; ?><?php 
+                    <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?page=<?php echo $totalPages; ?><?php 
                         if (!empty($queryParams)) echo '&' . implode('&', $queryParams);
                     ?>"><?php echo $totalPages; ?></a>
                 </li>
             <?php endif; ?>
             <li class="page-item <?php echo ($page == $totalPages) ? 'disabled' : ''; ?>">
-                <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/costs.php?page=<?php echo $page + 1; ?><?php 
+                <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?page=<?php echo $page + 1; ?><?php 
                     if (!empty($queryParams)) echo '&' . implode('&', $queryParams);
-                ?>">下一页</a>
+                ?>">下一�?/a>
             </li>
         </ul>
     </nav>

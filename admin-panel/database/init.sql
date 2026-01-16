@@ -598,8 +598,8 @@ CREATE TABLE IF NOT EXISTS shop_costs (
     cost DECIMAL(10, 2) NOT NULL COMMENT '费用金额',
     -- 费用类型，非空，最大50字符
     cost_type VARCHAR(50) NOT NULL COMMENT '费用类型（如广告费用、平台租金、其他费用）',
-    -- 日期，按天存储，格式YYYY-MM-DD
-    date DATE NOT NULL COMMENT '数据日期（YYYY-MM-DD）',
+    -- 费用日期，按天存储，格式YYYY-MM-DD
+    cost_date DATE NOT NULL COMMENT '费用日期（YYYY-MM-DD）',
     -- 备注字段，允许为空，最大255字符
     remark VARCHAR(255) DEFAULT NULL COMMENT '备注信息',
     -- 创建时间，默认当前时间，格式YYYY-MM-DD HH:MM:SS
@@ -607,21 +607,20 @@ CREATE TABLE IF NOT EXISTS shop_costs (
     -- 更新时间，默认当前时间，更新时自动刷新
     update_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     -- 设置主键
-    PRIMARY KEY (id),
-    -- 可选：添加联合索引，避免同一平台、店铺、日期的重复数据
-    UNIQUE KEY uk_platform_store_date (platform_name, store_name, date)
+    PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='店铺费用数据表';
 
---创建公司运营费用数据表 company_costs
+-- 创建公司运营费用数据表 company_costs
 CREATE TABLE IF NOT EXISTS company_costs (
     -- 主键 id，自增整数
     id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+      -- 日期，按天存储，格式YYYY-MM-DD
+    cost_date DATE NOT NULL COMMENT '费用日期（YYYY-MM-DD）',
     -- 费用类型，非空，最大50字符
     cost_type VARCHAR(50) NOT NULL COMMENT '费用类型（如租赁费用、人员工资、物业费、网络通信费、软件订阅/系统服务费、其他费用）',
     -- 费用（美元），非空，小数类型（总长度10，小数位2，支持最大99999999.99美元）
     cost DECIMAL(10, 2) NOT NULL COMMENT '费用金额',
-    -- 日期，按天存储，格式YYYY-MM-DD
-    date DATE NOT NULL COMMENT '数据日期（YYYY-MM-DD）',
+  
     -- 备注字段，允许为空，最大255字符
     remark VARCHAR(255) DEFAULT NULL COMMENT '备注信息',
     -- 创建时间，默认当前时间，格式YYYY-MM-DD HH:MM:SS
@@ -633,13 +632,13 @@ CREATE TABLE IF NOT EXISTS company_costs (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='公司运营费用数据表';
 
 
---订单其他费用表：（退货运费，运费补收，运输索赔，其他费用有正有负）
---字段：日期，订单号，平台名称，店铺名称，费用事项，费用金额，备注说明
+-- 订单其他费用表：（退货运费，运费补收，运输索赔，其他费用有正有负）
+-- 字段：日期，订单号，平台名称，店铺名称，费用事项，费用金额，备注说明
 CREATE TABLE IF NOT EXISTS order_other_costs (
     -- 主键 id，自增整数
     id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    -- 日期，按天存储，格式YYYY-MM-DD
-    date DATE NOT NULL COMMENT '数据日期（YYYY-MM-DD）',
+    -- 费用日期，按天存储，格式YYYY-MM-DD
+    cost_date DATE NOT NULL COMMENT '费用日期（YYYY-MM-DD）',
     -- 订单号，非空，最大50字符
     order_id VARCHAR(50) NOT NULL COMMENT '订单号',
     -- 平台名称，非空，最大50字符

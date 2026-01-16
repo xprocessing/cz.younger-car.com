@@ -1,12 +1,12 @@
 <?php
-require_once ADMIN_PANEL_DIR . '/models/Costs.php';
+require_once ADMIN_PANEL_DIR . '/models/ShopCosts.php';
 require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
 
-class CostsController {
-    private $costsModel;
+class ShopCostsController {
+    private $shopCostsModel;
     
     public function __construct() {
-        $this->costsModel = new Costs();
+        $this->shopCostsModel = new ShopCosts();
         session_start();
     }
     
@@ -65,33 +65,33 @@ class CostsController {
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(ADMIN_PANEL_URL . '/costs.php');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php');
         }
         
         // 验证必填字段
         if (empty($_POST['platform_name'])) {
             showError('平台名称不能为空');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=create');
         }
         
         if (empty($_POST['store_name'])) {
             showError('店铺名称不能为空');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=create');
         }
         
         if (empty($_POST['cost'])) {
             showError('日均广告花费不能为空');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=create');
         }
         
-        if (empty($_POST['date'])) {
+        if (empty($_POST['cost_date'])) {
             showError('日期不能为空');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=create');
         }
         
         if (empty($_POST['cost_type'])) {
             showError('费用类型不能为空');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=create');
         }
         
         // 验证数值字段
@@ -101,7 +101,7 @@ class CostsController {
         // 检查是否是有效的数字格式：只能包含数字、一个小数点，连字符只能在开头
         if (!preg_match('/^-?\d+(\.\d+)?$/', $cost)) {
             showError('日均广告花费必须是有效的数字');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=create');
         }
         
         // 检查记录是否已存在
@@ -115,7 +115,7 @@ class CostsController {
         
         if (!empty($existingCost)) {
             showError('该平台、店铺在该日期的记录已存在');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=create');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=create');
         }
         
         $data = [
@@ -123,7 +123,7 @@ class CostsController {
             'store_name' => $_POST['store_name'],
             'cost' => $_POST['cost'],
             'cost_type' => $_POST['cost_type'],
-            'date' => $_POST['date'],
+            'cost_date' => $_POST['cost_date'],
             'remark' => $_POST['remark'] ?? null
         ];
         
@@ -133,7 +133,7 @@ class CostsController {
             showError('广告费记录创建失败');
         }
         
-        redirect(ADMIN_PANEL_URL . '/costs.php');
+        redirect(ADMIN_PANEL_URL . '/shop_costs.php');
     }
     
     // 显示编辑成本页面
@@ -145,13 +145,13 @@ class CostsController {
         $id = $_GET['id'] ?? 0;
         if (!$id) {
             showError('无效的ID');
-            redirect(ADMIN_PANEL_URL . '/costs.php');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php');
         }
         
         $cost = $this->costsModel->getById($id);
         if (!$cost) {
             showError('广告费记录不存在');
-            redirect(ADMIN_PANEL_URL . '/costs.php');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php');
         }
         
         $title = '编辑广告费记录';
@@ -168,39 +168,39 @@ class CostsController {
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect(ADMIN_PANEL_URL . '/costs.php');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php');
         }
         
         $id = $_POST['id'] ?? 0;
         if (!$id) {
             showError('无效的ID');
-            redirect(ADMIN_PANEL_URL . '/costs.php');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php');
         }
         
         // 验证必填字段
         if (empty($_POST['platform_name'])) {
             showError('平台名称不能为空');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=edit&id=' . $id);
         }
         
         if (empty($_POST['store_name'])) {
             showError('店铺名称不能为空');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=edit&id=' . $id);
         }
         
         if (empty($_POST['cost'])) {
             showError('日均广告花费不能为空');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=edit&id=' . $id);
         }
         
-        if (empty($_POST['date'])) {
+        if (empty($_POST['cost_date'])) {
             showError('日期不能为空');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=edit&id=' . $id);
         }
         
         if (empty($_POST['cost_type'])) {
             showError('费用类型不能为空');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=edit&id=' . $id);
         }
         
         // 验证数值字段
@@ -210,11 +210,11 @@ class CostsController {
         // 检查是否是有效的数字格式：只能包含数字、一个小数点，连字符只能在开头
         if (!preg_match('/^-?\d+(\.\d+)?$/', $cost)) {
             showError('日均广告花费必须是有效的数字');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=edit&id=' . $id);
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=edit&id=' . $id);
         }
         
         // 检查记录是否已存在（排除当前记录）
-        $existingCosts = $this->costsModel->getAllWithFilters(
+        $existingCosts = $this->shopCostsModel->getAllWithFilters(
             $_POST['platform_name'],
             $_POST['store_name'],
             $_POST['cost_type'],
@@ -225,7 +225,7 @@ class CostsController {
         foreach ($existingCosts as $existingCost) {
             if ($existingCost['id'] != $id) {
                 showError('该平台、店铺在该日期的记录已存在');
-                redirect(ADMIN_PANEL_URL . '/costs.php?action=edit&id=' . $id);
+                redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=edit&id=' . $id);
             }
         }
         
@@ -244,7 +244,7 @@ class CostsController {
             showError('广告费记录更新失败');
         }
         
-        redirect(ADMIN_PANEL_URL . '/costs.php');
+        redirect(ADMIN_PANEL_URL . '/shop_costs.php');
     }
     
     // 删除成本记录
@@ -256,13 +256,13 @@ class CostsController {
         $id = $_GET['id'] ?? 0;
         if (!$id) {
             showError('无效的ID');
-            redirect(ADMIN_PANEL_URL . '/costs.php');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php');
         }
         
         $cost = $this->costsModel->getById($id);
         if (!$cost) {
             showError('广告费记录不存在');
-            redirect(ADMIN_PANEL_URL . '/costs.php');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php');
         }
         
         if ($this->costsModel->delete($id)) {
@@ -271,7 +271,7 @@ class CostsController {
             showError('广告费记录删除失败');
         }
         
-        redirect(ADMIN_PANEL_URL . '/costs.php');
+        redirect(ADMIN_PANEL_URL . '/shop_costs.php');
     }
     
     // 搜索成本记录
@@ -325,7 +325,7 @@ class CostsController {
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             showError('无效的请求方式');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=import');
         }
         
         $data = [];
@@ -342,7 +342,7 @@ class CostsController {
             
             if (!in_array($fileExtension, $allowedExtensions)) {
                 showError('只允许导入CSV格式的文件');
-                redirect(ADMIN_PANEL_URL . '/costs.php?action=import');
+                redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=import');
             }
             
             $filePath = $file['tmp_name'];
@@ -350,7 +350,7 @@ class CostsController {
             
             if (!$handle) {
                 showError('无法读取文件');
-                redirect(ADMIN_PANEL_URL . '/costs.php?action=import');
+                redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=import');
             }
             
             // 读取表头
@@ -381,7 +381,7 @@ class CostsController {
             }
         } else {
             showError('请选择文件或粘贴CSV内容');
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=import');
         }
         
         if (empty($data)) {
@@ -389,11 +389,11 @@ class CostsController {
             if (!empty($errors)) {
                 $_SESSION['import_errors'] = $errors;
             }
-            redirect(ADMIN_PANEL_URL . '/costs.php?action=import');
+            redirect(ADMIN_PANEL_URL . '/shop_costs.php?action=import');
         }
         
         try {
-            $result = $this->costsModel->batchInsert($data);
+            $result = $this->shopCostsModel->batchInsert($data);
             showSuccess("成功导入 {$successCount} 条记录，跳过 {$errorCount} 条记录");
             
             if (!empty($errors)) {
@@ -403,7 +403,7 @@ class CostsController {
             showError('导入失败：' . $e->getMessage());
         }
         
-        redirect(ADMIN_PANEL_URL . '/costs.php');
+        redirect(ADMIN_PANEL_URL . '/shop_costs.php');
     }
     
     // 处理导入的单行数据
@@ -476,7 +476,7 @@ class CostsController {
             'store_name' => trim($row[1]),
             'cost' => trim($row[2]),
             'cost_type' => trim($row[3]),
-            'date' => trim($row[4]),
+            'cost_date' => trim($row[4]),
             'remark' => isset($row[5]) ? trim($row[5]) : null
         ];
         
