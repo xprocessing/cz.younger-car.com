@@ -439,7 +439,7 @@ CREATE TABLE IF NOT EXISTS aigc_tasks (
     -- 处理结果状态
     process_status ENUM('success', 'failed') DEFAULT NULL COMMENT '处理状态',
     -- 处理结果URL（保存图像URL，不存储base64）
-    result_url VARCHAR(255) DEFAULT NULL COMMENT '处理结果图像URL（用json存储多张）',
+    result_url VARCHAR(255) DEFAULT NULL COMMENT '处理结果图像URL',
     -- api返回信息/错误信息（如果处理失败）
     result_data TEXT DEFAULT NULL COMMENT '处理结果数据（JSON格式）',   
     -- 开始处理时间

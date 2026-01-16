@@ -141,7 +141,7 @@
             <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
                     <a href="<?php echo APP_URL; ?>/aigc.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'aigc.php' ? 'active' : ''; ?>">
-                        <i class="fa fa-money"></i> AI生成
+                        <i class="fa fa-image"></i> AI图片处理
                     </a>
                 </div>
             <?php endif; ?>
