@@ -1,7 +1,7 @@
 <?php
 // AIGC图片处理模块入口文件
 
-// 设置应用根目录
+// 设置APP_ROOT为网站根目录
 if (!defined('APP_ROOT')) {
     define('APP_ROOT', realpath(dirname(__FILE__) . '/../'));
 }
