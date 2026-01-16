@@ -11,7 +11,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
-                <h5 class="mb-0">编辑广告费记�?/h5>
+                <h5 class="mb-0">编辑广告费记录</h5>
             </div>
             <div class="card-body">
                 <form method="POST" action="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?action=edit_post">
@@ -41,14 +41,14 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-3">
-                                <label for="cost" class="form-label">日广告花费（美元�?<span class="text-danger">*</span></label>
+                                <label for="cost" class="form-label">日广告花费（美元）<span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
                                     <input type="number" step="0.01" class="form-control" id="cost" 
                                            name="cost" required placeholder="0.00"
                                            value="<?php echo htmlspecialchars($cost['cost']); ?>">
                                 </div>
-                                <div class="form-text">日广告花费金�?/div>
+                                <div class="form-text">日广告花费金额</div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -57,7 +57,7 @@
                                 <input type="text" class="form-control" id="cost_type" name="cost_type" required
                                        value="<?php echo htmlspecialchars($cost['cost_type']); ?>"
                                        placeholder="请输入费用类型（如广告费用、平台租金、其他费用）" maxlength="50">
-                                <div class="form-text">费用类型，如广告费用、平台租金、其他费�?/div>
+                                <div class="form-text">费用类型，如广告费用、平台租金、其他费用</div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -65,7 +65,7 @@
                                 <label for="cost_date" class="form-label">日期 <span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="cost_date" name="cost_date" required
                                        value="<?php echo $cost['cost_date']; ?>">
-                                <div class="form-text">数据日期，按天存�?/div>
+                                <div class="form-text">数据日期，按天存储</div>
                             </div>
                         </div>
                     </div>

@@ -20,7 +20,7 @@
                             <div class="mb-3">
                                 <label for="platform_name" class="form-label">平台名称 <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="platform_name" name="platform_name" required
-                                       placeholder="请输入平台名称（如Amazon-FBA，Amazon、eBay，Shopify�? maxlength="50">
+                                       placeholder="请输入平台名称（如Amazon-FBA，Amazon、eBay，Shopify）" maxlength="50">
                                 <div class="form-text">平台名称，如Amazon-FBA，Amazon、eBay，Shopify</div>
                             </div>
                         </div>
@@ -137,7 +137,7 @@ function setSampleData() {
     document.getElementById('store_name').value = 'US Store 1';
     document.getElementById('cost').value = '250.50';
     document.getElementById('cost_type').value = '费用类型';
-    document.getElementById('date').value = new Date().toISOString().slice(0, 10);
+    document.getElementById('cost_date').value = new Date().toISOString().slice(0, 10);
     document.getElementById('remark').value = '示例备注信息';
 }
 
@@ -174,11 +174,11 @@ document.querySelector('form').addEventListener('submit', function(e) {
         return;
     }
 
-    const date = document.getElementById('date').value;
+    const date = document.getElementById('cost_date').value;
     if (!date) {
         e.preventDefault();
         alert('请选择日期');
-        document.getElementById('date').focus();
+        document.getElementById('cost_date').focus();
         return;
     }
 
