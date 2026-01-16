@@ -149,7 +149,7 @@ Shopify,Shop003,89.99,店铺费用,2024-01-15,Shopify店铺推广</code></pre>
 <script>
 // 下载模板文件
 function downloadTemplate() {
-    const csvContent = `平台名称,店铺名称,日店铺花费,费用金额（美元）,费用类型,费用日期,备注
+    const csvContent = `平台名称,店铺名称,日店铺花费,费用类型,费用日期,备注
 Amazon-FBA,Shop001,299.50,店铺费用,2024-01-15,亚马逊店铺推广
 eBay,Shop002,149.75,店铺费用,2024-01-15,eBay促销活动
 Shopify,Shop003,89.99,店铺费用,2024-01-15,Shopify店铺推广`;
