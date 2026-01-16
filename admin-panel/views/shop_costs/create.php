@@ -136,7 +136,7 @@ function setSampleData() {
     document.getElementById('platform_name').value = 'Amazon-FBA';
     document.getElementById('store_name').value = 'US Store 1';
     document.getElementById('cost').value = '250.50';
-    document.getElementById('cost_type').value = '广告费用';
+    document.getElementById('cost_type').value = '费用类型';
     document.getElementById('date').value = new Date().toISOString().slice(0, 10);
     document.getElementById('remark').value = '示例备注信息';
 }
@@ -169,7 +169,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
     const cost = parseFloat(document.getElementById('cost').value) || 0;
     if (cost <= 0) {
         e.preventDefault();
-        alert('日广告花费必须大于0');
+        alert('花费必须大于0');
         document.getElementById('cost').focus();
         return;
     }
