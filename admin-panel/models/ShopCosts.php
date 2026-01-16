@@ -105,7 +105,7 @@ class ShopCosts {
             $params[] = $endDate;
         }
         
-        $sql .= " ORDER BY cost_date DESC, platform_name, store_name LIMIT ? OFFSET ?";
+        $sql .= " ORDER BY create_at DESC, platform_name, store_name LIMIT ? OFFSET ?";
         $params[] = $limit;
         $params[] = $offset;
         
@@ -178,7 +178,7 @@ class ShopCosts {
             $params[] = $endDate;
         }
         
-        $sql .= " ORDER BY cost_date DESC, platform_name, store_name";
+        $sql .= " ORDER BY create_at DESC, platform_name, store_name";
         
         $stmt = $this->db->query($sql, $params);
         return $stmt->fetchAll();
