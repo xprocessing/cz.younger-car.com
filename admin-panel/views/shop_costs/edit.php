@@ -23,7 +23,7 @@
                                 <label for="platform_name" class="form-label">平台名称 <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="platform_name" name="platform_name" required
                                        value="<?php echo htmlspecialchars($cost['platform_name']); ?>"
-                                       placeholder="请输入平台名称（如Amazon-FBA，Amazon、eBay，Shopify�? maxlength="50">
+                                       placeholder="请输入平台名称（如Amazon-FBA，Amazon、eBay，Shopify）" maxlength="50">
                                 <div class="form-text">平台名称，如Amazon-FBA，Amazon、eBay，Shopify</div>
                             </div>
                         </div>
@@ -32,7 +32,7 @@
                                 <label for="store_name" class="form-label">店铺名称 <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="store_name" name="store_name" required
                                        value="<?php echo htmlspecialchars($cost['store_name']); ?>"
-                                       placeholder="请输入店铺名�? maxlength="50">
+                                       placeholder="请输入店铺名称" maxlength="50">
                                 <div class="form-text">店铺名称</div>
                             </div>
                         </div>
@@ -75,8 +75,8 @@
                             <div class="mb-3">
                                 <label for="remark" class="form-label">备注</label>
                                 <textarea class="form-control" id="remark" name="remark" rows="3"
-                                          placeholder="请输入备注信�? maxlength="255"><?php echo htmlspecialchars($cost['remark'] ?? ''); ?></textarea>
-                                <div class="form-text">可选，最�?55个字�?/div>
+                                          placeholder="请输入备注信息" maxlength="255"><?php echo htmlspecialchars($cost['remark'] ?? ''); ?></textarea>
+                                <div class="form-text">可选，最多255个字符</div>
                             </div>
                         </div>
                     </div>
@@ -149,9 +149,9 @@
                 <ul class="list-unstyled">
                     <li><strong>平台名称</strong>: 平台名称，如Amazon-FBA，Amazon、eBay，Shopify</li>
                     <li><strong>店铺名称</strong>: 店铺名称</li>
-                    <li><strong>日广告花�?/strong>: 每日广告花费金额（美元）</li>
-                    <li><strong>费用类型</strong>: 费用类型，如广告费用、平台租金、其他费�?/li>
-                    <li><strong>日期</strong>: 数据日期，按天存�?/li>
+                    <li><strong>日广告花费</strong>: 每日广告花费金额（美元）</li>
+                    <li><strong>费用类型</strong>: 费用类型，如广告费用、平台租金、其他费用</li>
+                    <li><strong>日期</strong>: 数据日期，按天存储</li>
                 </ul>
             </div>
         </div>
@@ -164,7 +164,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
     const platformName = document.getElementById('platform_name').value.trim();
     if (!platformName) {
         e.preventDefault();
-        alert('请输入平台名�?);
+        alert('请输入平台名称');
         document.getElementById('platform_name').focus();
         return;
     }
@@ -172,7 +172,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
     const storeName = document.getElementById('store_name').value.trim();
     if (!storeName) {
         e.preventDefault();
-        alert('请输入店铺名�?);
+        alert('请输入店铺名称');
         document.getElementById('store_name').focus();
         return;
     }
