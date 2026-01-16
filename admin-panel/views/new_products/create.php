@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>创建新产品</h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/new_products.php" class="btn btn-secondary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/new_products.php" class="btn btn-secondary">
             <i class="fa fa-arrow-left"></i> 返回列表
         </a>
     </div>
@@ -14,7 +14,7 @@
                 <h5 class="mb-0">基本信息</h5>
             </div>
             <div class="card-body">
-                <form method="POST" action="<?php echo APP_URL; ?>/new_products.php?action=create_post">
+                <form method="POST" action="<?php echo ADMIN_PANEL_URL; ?>/new_products.php?action=create_post">
                     <div class="mb-3">
                         <label for="require_no" class="form-label">需求编号 <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="require_no" name="require_no" required
@@ -96,7 +96,7 @@
                     </div>
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="<?php echo APP_URL; ?>/new_products.php" class="btn btn-secondary me-md-2">
+                        <a href="<?php echo ADMIN_PANEL_URL; ?>/new_products.php" class="btn btn-secondary me-md-2">
                             <i class="fa fa-times"></i> 取消
                         </a>
                         <button type="submit" class="btn btn-primary">

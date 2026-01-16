@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4><?php echo $title; ?></h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/inventory_details.php" class="btn btn-outline-secondary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php" class="btn btn-outline-secondary">
             <i class="fa fa-arrow-left"></i> 返回列表
         </a>
     </div>
@@ -64,7 +64,7 @@
                             <tr>
                                 <td><?php echo $index + 1; ?></td>
                                 <td>
-                                    <a href="<?php echo APP_URL; ?>/products.php?keyword=<?php echo $item['sku']; ?>" target="_blank">
+                                    <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php?keyword=<?php echo $item['sku']; ?>" target="_blank">
                                         <?php echo htmlspecialchars($item['sku']); ?>
                                     </a>
                                 </td>

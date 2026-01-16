@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4><?php echo $title; ?></h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/costs.php" class="btn btn-secondary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/costs.php" class="btn btn-secondary">
             <i class="fa fa-arrow-left"></i> 返回列表
         </a>
     </div>
@@ -14,7 +14,7 @@
                 <h5 class="mb-0">基本信息</h5>
             </div>
             <div class="card-body">
-                <form method="POST" action="<?php echo APP_URL; ?>/costs.php?action=create_post">
+                <form method="POST" action="<?php echo ADMIN_PANEL_URL; ?>/costs.php?action=create_post">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -68,7 +68,7 @@
                     </div>
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="<?php echo APP_URL; ?>/costs.php" class="btn btn-secondary me-md-2">
+                        <a href="<?php echo ADMIN_PANEL_URL; ?>/costs.php" class="btn btn-secondary me-md-2">
                             <i class="fa fa-times"></i> 取消
                         </a>
                         <button type="submit" class="btn btn-primary">
@@ -91,7 +91,7 @@
                     <li><strong>店铺名称</strong>: 店铺名称</li>
                     <li><strong>日广告花费</strong>: 每日广告花费金额（美元）</li>
                     <li><strong>日期</strong>: 数据日期，按天存储</li>
-                    <li>特别注意：平台名字和店铺名字必须大小写一致，具体参照<a href="<?php echo APP_URL; ?>/store.php" target="_blank">店铺列表</a></li>
+                    <li>特别注意：平台名字和店铺名字必须大小写一致，具体参照<a href="<?php echo ADMIN_PANEL_URL; ?>/store.php" target="_blank">店铺列表</a></li>
                 </ul>
             </div>
         </div>
@@ -112,7 +112,7 @@
                     </button>
                 </div>
                 <div class="mb-2">
-                    <a href="<?php echo APP_URL; ?>/costs.php?action=import" class="btn btn-sm btn-outline-success w-100">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/costs.php?action=import" class="btn btn-sm btn-outline-success w-100">
                         <i class="fa fa-upload"></i> 批量导入
                     </a>
                 </div>

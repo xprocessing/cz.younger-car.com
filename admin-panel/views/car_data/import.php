@@ -4,7 +4,7 @@
             <h1 class="page-header">
                 <?php echo htmlspecialchars($title); ?>
                 <div class="float-right">
-                    <a href="<?php echo APP_URL; ?>/car_data.php" class="btn btn-default">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php" class="btn btn-default">
                         <i class="fa fa-arrow-left"></i> 返回列表
                     </a>
                 </div>
@@ -16,7 +16,7 @@
                     <i class="fa fa-upload"></i> 导入车型数据
                 </div>
                 <div class="card-body">
-                    <form method="post" action="<?php echo APP_URL; ?>/car_data.php?action=importPost" enctype="multipart/form-data" class="form-horizontal">
+                    <form method="post" action="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=importPost" enctype="multipart/form-data" class="form-horizontal">
                         <div class="form-group row">
                             <label for="import_file" class="col-sm-2 col-form-label">选择CSV文件：</label>
                             <div class="col-sm-10">
@@ -47,7 +47,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-upload"></i> 开始导入
                                 </button>
-                                <a href="<?php echo APP_URL; ?>/car_data.php?action=export" class="btn btn-info ml-2">
+                                <a href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=export" class="btn btn-info ml-2">
                                     <i class="fa fa-download"></i> 下载模板
                                 </a>
                             </div>

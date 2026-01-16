@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>编辑库存明细</h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/inventory_details.php" class="btn btn-secondary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php" class="btn btn-secondary">
             <i class="fa fa-arrow-left"></i> 返回列表
         </a>
     </div>
@@ -14,7 +14,7 @@
                 <h5 class="mb-0">库存明细信息</h5>
             </div>
             <div class="card-body">
-                <form method="POST" action="<?php echo APP_URL; ?>/inventory_details.php?action=edit_post">
+                <form method="POST" action="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=edit_post">
                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($inventoryDetail['id']); ?>">
                     
                     <div class="row">
@@ -116,7 +116,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-check"></i> 保存
                         </button>
-                        <a href="<?php echo APP_URL; ?>/inventory_details.php" class="btn btn-outline-secondary ms-2">
+                        <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php" class="btn btn-outline-secondary ms-2">
                             <i class="fa fa-times"></i> 取消
                         </a>
                     </div>

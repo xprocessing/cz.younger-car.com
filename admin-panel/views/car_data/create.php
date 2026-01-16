@@ -4,7 +4,7 @@
             <h1 class="page-header">
                 <?php echo htmlspecialchars($title); ?>
                 <div class="float-right">
-                    <a href="<?php echo APP_URL; ?>/car_data.php" class="btn btn-default">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php" class="btn btn-default">
                         <i class="fa fa-arrow-left"></i> 返回列表
                     </a>
                 </div>
@@ -16,7 +16,7 @@
                     <i class="fa fa-plus"></i> 车型数据信息
                 </div>
                 <div class="card-body">
-                    <form method="post" action="<?php echo APP_URL; ?>/car_data.php?action=createPost" class="form-horizontal">
+                    <form method="post" action="<?php echo ADMIN_PANEL_URL; ?>/car_data.php?action=createPost" class="form-horizontal">
                         <div class="form-group row">
                             <label for="make" class="col-sm-2 col-form-label">品牌(英文)：</label>
                             <div class="col-sm-10">
@@ -64,7 +64,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-save"></i> 保存
                                 </button>
-                                <a href="<?php echo APP_URL; ?>/car_data.php" class="btn btn-default ml-2">
+                                <a href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php" class="btn btn-default ml-2">
                                     <i class="fa fa-times"></i> 取消
                                 </a>
                             </div>

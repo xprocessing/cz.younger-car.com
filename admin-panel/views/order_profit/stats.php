@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>最近30天利润统计</h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/order_profit.php" class="btn btn-secondary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php" class="btn btn-secondary">
             <i class="fa fa-arrow-left"></i> 返回列表
         </a>
     </div>

@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>编辑仓库</h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/warehouses.php" class="btn btn-secondary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/warehouses.php" class="btn btn-secondary">
             <i class="fa fa-arrow-left"></i> 返回列表
         </a>
     </div>
@@ -14,7 +14,7 @@
                 <h5 class="mb-0">仓库信息</h5>
             </div>
             <div class="card-body">
-                <form method="POST" action="<?php echo APP_URL; ?>/warehouses.php?action=edit_post">
+                <form method="POST" action="<?php echo ADMIN_PANEL_URL; ?>/warehouses.php?action=edit_post">
                     <input type="hidden" name="wid" value="<?php echo htmlspecialchars($warehouse['wid']); ?>">
                     
                     <div class="row">
@@ -147,7 +147,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-check"></i> 保存
                         </button>
-                        <a href="<?php echo APP_URL; ?>/warehouses.php" class="btn btn-outline-secondary ms-2">
+                        <a href="<?php echo ADMIN_PANEL_URL; ?>/warehouses.php" class="btn btn-outline-secondary ms-2">
                             <i class="fa fa-times"></i> 取消
                         </a>
                     </div>

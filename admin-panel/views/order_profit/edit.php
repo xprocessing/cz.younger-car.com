@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>编辑订单利润</h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/order_profit.php" class="btn btn-secondary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php" class="btn btn-secondary">
             <i class="fa fa-arrow-left"></i> 返回列表
         </a>
     </div>
@@ -14,7 +14,7 @@
                 <h5 class="mb-0">编辑基本信息</h5>
             </div>
             <div class="card-body">
-                <form method="POST" action="<?php echo APP_URL; ?>/order_profit.php?action=edit_post">
+                <form method="POST" action="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php?action=edit_post">
                     <input type="hidden" name="id" value="<?php echo $profit['id']; ?>">
                     
                     <div class="row">
@@ -161,7 +161,7 @@
                     </div>
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="<?php echo APP_URL; ?>/order_profit.php" class="btn btn-secondary me-md-2">
+                        <a href="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php" class="btn btn-secondary me-md-2">
                             <i class="fa fa-times"></i> 取消
                         </a>
                         <button type="button" class="btn btn-outline-info me-md-2" onclick="recalculateProfitRate()">

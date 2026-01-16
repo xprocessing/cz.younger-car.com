@@ -2,10 +2,10 @@
     <h4><?php echo $title; ?></h4>
     <div>
         
-        <a href="<?php echo APP_URL; ?>/inventory_details.php?action=export_inventory_alert" class="btn btn-outline-primary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=export_inventory_alert" class="btn btn-outline-primary">
             <i class="fa fa-download"></i> 导出数据
         </a>
-        <a href="<?php echo APP_URL; ?>/inventory_details.php" class="btn btn-outline-secondary mr-2">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php" class="btn btn-outline-secondary mr-2">
             <i class="fa fa-arrow-left"></i> 返回列表
         </a>
     </div>
@@ -15,7 +15,7 @@
 <div class="card mb-3">
     <div class="card-body">
         <h5 class="card-title">批量查询SKU（支持模糊查询）</h5>
-        <form method="post" action="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert">
+        <form method="post" action="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=inventory_alert">
             <div class="form-group">
                 <label for="batch_sku">输入SKU（每行一个，支持模糊查询）</label>
                 <textarea class="form-control" id="batch_sku" name="batch_sku" rows="4" placeholder="例如：
@@ -108,7 +108,7 @@
                             <tr>
                                 <td><?php echo $index + 1; ?></td>
                                 <td>
-                                    <a href="<?php echo APP_URL; ?>/inventory_details.php?keyword=<?php echo $item['sku']; ?>" target="_blank">
+                                    <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?keyword=<?php echo $item['sku']; ?>" target="_blank">
                                         <?php echo htmlspecialchars($item['sku']); ?>
                                     </a>
                                 </td>
@@ -168,7 +168,7 @@
                 <ul class="pagination">
                     <?php if ($pagination['prevPage']): ?>
                         <li class="page-item">
-                            <a class="page-link" href="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert&page=<?php echo $pagination['prevPage']; ?>&limit=<?php echo $pagination['pageSize']; ?>" aria-label="Previous">
+                            <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=inventory_alert&page=<?php echo $pagination['prevPage']; ?>&limit=<?php echo $pagination['pageSize']; ?>" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -190,7 +190,7 @@
                     
                     for ($i = $startPage; $i <= $endPage; $i++): ?>
                         <li class="page-item <?php echo $i == $pagination['currentPage'] ? 'active' : ''; ?>">
-                            <a class="page-link" href="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert&page=<?php echo $i; ?>&limit=<?php echo $pagination['pageSize']; ?>">
+                            <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=inventory_alert&page=<?php echo $i; ?>&limit=<?php echo $pagination['pageSize']; ?>">
                                 <?php echo $i; ?>
                             </a>
                         </li>
@@ -198,7 +198,7 @@
                     
                     <?php if ($pagination['nextPage']): ?>
                         <li class="page-item">
-                            <a class="page-link" href="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert&page=<?php echo $pagination['nextPage']; ?>&limit=<?php echo $pagination['pageSize']; ?>" aria-label="Next">
+                            <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=inventory_alert&page=<?php echo $pagination['nextPage']; ?>&limit=<?php echo $pagination['pageSize']; ?>" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>

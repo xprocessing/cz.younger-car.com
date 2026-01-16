@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>批量导入商品</h4>
     <div>
-        <a href="<?php echo APP_URL; ?>/products.php" class="btn btn-secondary">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php" class="btn btn-secondary">
             <i class="fa fa-arrow-left"></i> 返回列表
         </a>
     </div>
@@ -14,7 +14,7 @@
                 <h5 class="mb-0">文件上传</h5>
             </div>
             <div class="card-body">
-                <form method="POST" action="<?php echo APP_URL; ?>/products.php?action=import_post" 
+                <form method="POST" action="<?php echo ADMIN_PANEL_URL; ?>/products.php?action=import_post" 
                       enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="excel_file" class="form-label">选择CSV文件</label>
@@ -24,7 +24,7 @@
                     </div>
                     
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="<?php echo APP_URL; ?>/products.php" class="btn btn-secondary me-md-2">
+                        <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php" class="btn btn-secondary me-md-2">
                             <i class="fa fa-times"></i> 取消
                         </a>
                         <button type="submit" class="btn btn-success">
@@ -117,12 +117,12 @@ SKU003,SKU003-001,SPU002,2,品牌B,分类B,示例商品3,http://example.com/img3
             </div>
             <div class="card-body">
                 <div class="mb-2">
-                    <a href="<?php echo APP_URL; ?>/products.php?action=create" class="btn btn-sm btn-outline-info w-100">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php?action=create" class="btn btn-sm btn-outline-info w-100">
                         <i class="fa fa-plus"></i> 手动添加商品
                     </a>
                 </div>
                 <div class="mb-2">
-                    <a href="<?php echo APP_URL; ?>/products.php" class="btn btn-sm btn-outline-secondary w-100">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php" class="btn btn-sm btn-outline-secondary w-100">
                         <i class="fa fa-list"></i> 查看所有商品
                     </a>
                 </div>

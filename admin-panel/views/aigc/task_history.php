@@ -4,7 +4,7 @@
     <!-- 页面标题 -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">任务历史</h1>
-        <a href="<?php echo APP_URL; ?>/aigc.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/aigc.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-arrow-left fa-sm text-white-50"></i> 返回处理页面
         </a>
     </div>
@@ -161,7 +161,7 @@
     // 加载任务详情
     function loadTaskDetail(taskId) {
         $.ajax({
-            url: '<?php echo APP_URL; ?>/aigc.php?action=getTaskDetail',
+            url: '<?php echo ADMIN_PANEL_URL; ?>/aigc.php?action=getTaskDetail',
             type: 'GET',
             data: { id: taskId },
             dataType: 'json',
