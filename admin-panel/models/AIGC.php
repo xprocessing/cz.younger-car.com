@@ -262,8 +262,8 @@ class AIGC {
                 // 读取并编码图片
                 $image_data = base64_encode(file_get_contents($image));
                 
-                // 使用更简洁的提示词，避免触发内容审核
-                $prompt = "请去除图片瑕疵，调整亮度对比度，保持{$width}x{$height}像素，返回jpg格式。";
+                // 使用更详细的提示词，获得更好的生成结果
+                $prompt = "请仔细去除图片中的所有瑕疵（包括划痕、污渍、噪点等），优化整体亮度和对比度，使图片更加清晰明亮，保持{$width}x{$height}像素尺寸，确保主体细节完整，返回高质量jpg格式。";
                 
                 // 调用API
                 $response = $this->callAliyunAPI($prompt, $image_data, $image);
@@ -304,7 +304,7 @@ class AIGC {
                 $image_data = base64_encode(file_get_contents($image));
                 
                 // 生成抠图提示词
-                $prompt = "请将图片中的主体抠出，去除背景，返回PNG格式带透明通道。";
+                $prompt = "请精确抠出图片中的主体，确保边缘光滑自然，完全去除背景，保留主体的所有细节（包括毛发、半透明部分等），返回高质量PNG格式，带完整透明通道。";
                 
                 // 调用API
                 $response = $this->callAliyunAPI($prompt, $image_data);
@@ -348,7 +348,7 @@ class AIGC {
                 $subject_ratio_percent = $subject_ratio * 100;
                 
                 // 生成抠图提示词
-                $prompt = "请将图片中的主体抠出，放置在白色背景上，保持{$width}x{$height}像素，主体占比约{$subject_ratio_percent}%，返回jpg格式。";
+                $prompt = "请精确抠出图片中的主体，确保边缘光滑自然，将主体放置在纯白色背景上，保持{$width}x{$height}像素尺寸，主体居中且占比约{$subject_ratio_percent}%，优化主体亮度和对比度，返回高质量jpg格式。";
                 
                 // 调用API
                 $response = $this->callAliyunAPI($prompt, $image_data);
@@ -390,11 +390,11 @@ class AIGC {
                 
                 // 生成改尺寸提示词
                 if (isset($resize_option['ratio'])) {
-                    $prompt = "请将图片按{$resize_option['ratio']}的比例调整尺寸，保持原始宽高比，返回jpg格式。";
+                    $prompt = "请按{$resize_option['ratio']}的比例调整图片尺寸，严格保持原始宽高比，确保图片清晰无模糊，优化细节和色彩，返回高质量jpg格式。";
                 } elseif (isset($resize_option['width']) && isset($resize_option['height'])) {
                     $width = $resize_option['width'];
                     $height = $resize_option['height'];
-                    $prompt = "请将图片调整为{$width}x{$height}像素，返回jpg格式。";
+                    $prompt = "请将图片精确调整为{$width}x{$height}像素尺寸，保持图片清晰无变形，优化细节和色彩，确保主体完整，返回高质量jpg格式。";
                 } else {
                     throw new Exception("未指定有效的改尺寸参数");
                 }
@@ -440,7 +440,7 @@ class AIGC {
                 // 生成打水印提示词
                 $position = $watermark_option['position'] ?? '右下';
                 if (isset($watermark_option['text'])) {
-                    $prompt = "请在图片的{$position}位置添加文字水印'{$watermark_option['text']}'，返回jpg格式。";
+                    $prompt = "请在图片的{$position}位置添加文字水印'{$watermark_option['text']}'，水印大小适中（约占图片宽度的10%），透明度约30%，不影响主体内容的查看，返回高质量jpg格式。";
                 } else {
                     // 如果是图片水印，这里需要额外处理
                     throw new Exception("图片水印功能未实现");
@@ -485,7 +485,7 @@ class AIGC {
                 $image_data = base64_encode(file_get_contents($image));
                 
                 // 生成换脸提示词
-                $prompt = "请将图片中的人脸替换为目标人脸，保持图片自然，返回jpg格式。";
+                $prompt = "请将图片中的人脸自然替换为目标人脸，确保肤色、光线、角度完全匹配，表情自然协调，无明显拼接痕迹，保持图片整体风格一致，返回高质量jpg格式。";
                 
                 // 调用API
                 $response = $this->callAliyunAPI($prompt, $image_data);
@@ -516,8 +516,8 @@ class AIGC {
         $results = [];
         
         // 文生图不需要原始图片，直接调用API
-        // 使用非常明确的提示词，确保API生成图像
-        $api_prompt = "请根据以下描述生成一张高质量图片：{$prompt}，图片尺寸为{$width}x{$height}像素，保持图片清晰，色彩鲜艳。";
+        // 使用详细的提示词，确保生成高质量图片
+        $api_prompt = "请根据文字描述'{$prompt}'生成高质量图片，确保内容准确，细节丰富，色彩鲜艳，构图合理，光线自然，返回高清图片，尺寸为{$width}x{$height}像素。";
         
         $response = $this->callAliyunAPI($api_prompt);
         $results[] = [
@@ -537,8 +537,8 @@ class AIGC {
         foreach ($images as $index => $image) {
             $image_data = base64_encode(file_get_contents($image));
             // 根据strength参数生成不同的提示词，strength值越小，生成的图片越接近原图
-            $strength_prompt = "根据原图生成新图片，相似度为{$strength}（值越小越接近原图），";
-            $api_prompt = "{$strength_prompt}新图片的描述：{$prompt}，保持图片质量清晰。";
+            $strength_prompt = "基于原图内容，按照'{$prompt}'的描述生成新图片，与原图的相似度为{$strength}（值越小越接近原图），";
+            $api_prompt = "{$strength_prompt}保持图片高清清晰，色彩鲜艳，细节丰富，构图合理，返回高质量图片。";
             
             $response = $this->callAliyunAPI($api_prompt, $image_data, $image);
             $results[] = [
