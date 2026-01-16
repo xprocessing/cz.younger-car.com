@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title ?? APP_NAME; ?></title>
-    <link href="<?php echo APP_URL; ?>/public/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo APP_URL; ?>/public/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?php echo ADMIN_PANEL_URL; ?>/public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo ADMIN_PANEL_URL; ?>/public/css/font-awesome.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
@@ -78,7 +78,7 @@
         </div>
         <div class="nav">
             <div class="nav-item">
-                <a href="<?php echo APP_URL; ?>/dashboard.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : ''; ?>">
+                <a href="<?php echo ADMIN_PANEL_URL; ?>/dashboard.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : ''; ?>">
                     <i class="fa fa-dashboard"></i> 仪表盘
                 </a>
             </div>
@@ -87,7 +87,7 @@
 
             <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/new_products.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'new_products.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/new_products.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'new_products.php' ? 'active' : ''; ?>">
                         <i class="fa fa-cube"></i> 新产品管理
                     </a>
                 </div>
@@ -95,7 +95,7 @@
 
             <?php if (isLoggedIn()):  ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/products.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'products.php' ? 'active' : ''; ?>">
                         <i class="fa fa-shopping-cart"></i> 商品管理
                     </a>
                 </div>
@@ -103,7 +103,7 @@
 
             <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/order_profit.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'order_profit.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/order_profit.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'order_profit.php' ? 'active' : ''; ?>">
                         <i class="fa fa-money"></i> 订单利润
                     </a>
                 </div>
@@ -112,42 +112,42 @@
 
             <?php if (hasPermission('inventory_details.view')): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/inventory_details.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'inventory_details.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'inventory_details.php' ? 'active' : ''; ?>">
                         <i class="fa fa-list"></i> 库存明细
                     </a>
                 </div>
             <?php endif; ?>
             <?php if (hasPermission('inventory_details.view')): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/inventory_details.php?action=inventory_alert" class="<?php echo basename($_SERVER['PHP_SELF']) == 'inventory_details.php?action=inventory_alert' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=inventory_alert" class="<?php echo basename($_SERVER['PHP_SELF']) == 'inventory_details.php?action=inventory_alert' ? 'active' : ''; ?>">
                         <i class="fa fa-list"></i> 库存预警
                     </a>
                 </div>
             <?php endif; ?>
             <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/inventory_details_fba.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'inventory_details_fba.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details_fba.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'inventory_details_fba.php' ? 'active' : ''; ?>">
                         <i class="fa fa-list"></i> fba库存明细
                     </a>
                 </div>
             <?php endif; ?>
              <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'costs.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'costs.php' ? 'active' : ''; ?>">
                         <i class="fa fa-list"></i> 广告费
                     </a>
                 </div>
             <?php endif; ?>
             <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/aigc.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'aigc.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/aigc.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'aigc.php' ? 'active' : ''; ?>">
                         <i class="fa fa-image"></i> AI图片处理
                     </a>
                 </div>
             <?php endif; ?>
             <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/store.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'store.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/store.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'store.php' ? 'active' : ''; ?>">
                         <i class="fa fa-money"></i> 店铺管理
                     </a>
                 </div>
@@ -159,21 +159,21 @@
 
             <?php if (hasPermission('warehouses.view')): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/warehouses.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'warehouses.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/warehouses.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'warehouses.php' ? 'active' : ''; ?>">
                         <i class="fa fa-list"></i> 仓库管理
                     </a>
                 </div>
             <?php endif; ?>
             <?php if (hasPermission('car_data.view')): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/car_data.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'car_data.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'car_data.php' ? 'active' : ''; ?>">
                         <i class="fa fa-car"></i> 车型数据管理
                     </a>
                 </div>
             <?php endif; ?>
              <?php if (hasPermission('yunfei.view')): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/yunfei.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'yunfei.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/yunfei.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'yunfei.php' ? 'active' : ''; ?>">
                         <i class="fa fa-truck"></i> 运费管理
                     </a>
                 </div>
@@ -181,7 +181,7 @@
 
             <?php if (hasPermission('users.view')): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/users.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/users.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : ''; ?>">
                         <i class="fa fa-users"></i> 用户管理
                     </a>
                 </div>
@@ -189,7 +189,7 @@
 
             <?php if (hasPermission('roles.view')): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/roles.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'roles.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/roles.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'roles.php' ? 'active' : ''; ?>">
                         <i class="fa fa-user-circle"></i> 角色管理
                     </a>
                 </div>
@@ -197,7 +197,7 @@
 
             <?php if (hasPermission('permissions.view')): ?>
                 <div class="nav-item">
-                    <a href="<?php echo APP_URL; ?>/permissions.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'permissions.php' ? 'active' : ''; ?>">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/permissions.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'permissions.php' ? 'active' : ''; ?>">
                         <i class="fa fa-key"></i> 权限管理
                     </a>
                 </div>
@@ -218,7 +218,7 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="<?php echo APP_URL; ?>/logout.php"><i class="fa fa-sign-out"></i> 退出登录</a></li>
+                    <li><a class="dropdown-item" href="<?php echo ADMIN_PANEL_URL; ?>/logout.php"><i class="fa fa-sign-out"></i> 退出登录</a></li>
                 </ul>
             </div>
         </div>
