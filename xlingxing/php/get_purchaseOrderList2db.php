@@ -53,7 +53,7 @@ print_r($newArray);
 //连接数据库，用$newArray 的数据 更新inventory_details数据表中wid,sku对应的quantity_receive字段
 
 // 引入数据库配置文件
-require_once __DIR__ . '/../../admin-panel/config/config.php';
+require_once __DIR__ . '/../../config.php';
 
 try {
     // 创建PDO实例

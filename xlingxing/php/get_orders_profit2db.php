@@ -15,7 +15,7 @@ $response = [
 
 try {
     // ========== 引入配置文件（提前引入，避免后续依赖） ==========
-    $configPath = __DIR__ . '/../../admin-panel/config/config.php';
+    $configPath = __DIR__ . '/../../config.php';
     if (!file_exists($configPath)) {
         throw new Exception("配置文件不存在：{$configPath}");
     }
