@@ -37,13 +37,13 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-3">
-                                <label for="cost" class="form-label">日广告花费（美元�?<span class="text-danger">*</span></label>
+                                <label for="cost" class="form-label">费用金额（美元） <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
                                     <input type="number" step="0.01" class="form-control" id="cost" 
                                            name="cost" required placeholder="0.00">
                                 </div>
-                                <div class="form-text">日广告花费金�?/div>
+                                <div class="form-text">费用金额（美元）</div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -51,7 +51,7 @@
                                 <label for="cost_type" class="form-label">费用类型 <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="cost_type" name="cost_type" required
                                        placeholder="请输入费用类型（如广告费用、平台租金、其他费用）" maxlength="50">
-                                <div class="form-text">费用类型，如广告费用、平台租金、其他费�?/div>
+                                <div class="form-text">费用类型，如广告费用、平台租金、其他费用</div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -59,7 +59,7 @@
                                 <label for="cost_date" class="form-label">日期 <span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="cost_date" name="cost_date" required
                                        placeholder="请选择日期">
-                                <div class="form-text">数据日期，按天存�?/div>
+                                <div class="form-text">数据日期，按天存储</div>
                             </div>
                         </div>
                     </div>
@@ -69,8 +69,8 @@
                             <div class="mb-3">
                                 <label for="remark" class="form-label">备注</label>
                                 <textarea class="form-control" id="remark" name="remark" rows="3"
-                                          placeholder="请输入备注信�? maxlength="255"></textarea>
-                                <div class="form-text">可选，最�?55个字�?/div>
+                                          placeholder="请输入备注信息" maxlength="255"></textarea>
+                                <div class="form-text">可选，最多255个字符</div>
                             </div>
                         </div>
                     </div>
@@ -97,9 +97,9 @@
                 <ul class="list-unstyled">
                     <li><strong>平台名称</strong>: 平台名称，如Amazon-FBA，Amazon、eBay，Shopify</li>
                     <li><strong>店铺名称</strong>: 店铺名称</li>
-                    <li><strong>日广告花�?/strong>: 每日广告花费金额（美元）</li>
-                    <li><strong>费用类型</strong>: 费用类型，如广告费用、平台租金、其他费�?/li>
-                    <li><strong>日期</strong>: 数据日期，按天存�?/li>
+                    <li><strong>费用金额</strong>: 每日广告花费金额（美元）</li>
+                    <li><strong>费用类型</strong>: 费用类型，如广告费用、平台租金、其他费用</li>
+                    <li><strong>日期</strong>: 数据日期，按天存储</li>
                     <li>特别注意：平台名字和店铺名字必须大小写一致，具体参照<a href="<?php echo ADMIN_PANEL_URL; ?>/store.php" target="_blank">店铺列表</a></li>
                 </ul>
             </div>
@@ -107,7 +107,7 @@
 
         <div class="card mt-3">
             <div class="card-header">
-                <h5 class="mb-0">快速操�?/h5>
+                <h5 class="mb-0">快速操作</h5>
             </div>
             <div class="card-body">
                 <div class="mb-2">
