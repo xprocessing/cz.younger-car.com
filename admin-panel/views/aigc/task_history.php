@@ -113,7 +113,8 @@
                                     </td>
                                     <td>
                                         <?php if ($task['result_url']): ?>
-                                            <a href="<?php echo htmlspecialchars($task['result_url']); ?>" target="_blank">查看</a>
+                                            <img src="<?php echo htmlspecialchars($task['result_url']); ?>" alt="结果图片" style="max-width: 100px; max-height: 100px;">
+                                            <a href="<?php echo htmlspecialchars($task['result_url']); ?>" target="_blank">下载查看</a>
                                         <?php else: ?>
                                             -
                                         <?php endif; ?>
