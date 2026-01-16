@@ -11,7 +11,9 @@ error_reporting(E_ALL);
 set_time_limit(3600); // 1小时超时
 
 // 初始化应用环境
-define('APP_ROOT', realpath(dirname(__FILE__) . '/../..'));
+if (!defined('APP_ROOT')) {
+    define('APP_ROOT', realpath(dirname(__FILE__) . '/../..'));
+}
 
 try {
     // 检查命令行参数

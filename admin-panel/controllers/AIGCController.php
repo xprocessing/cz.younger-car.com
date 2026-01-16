@@ -1,7 +1,7 @@
 <?php
-require_once APP_ROOT . '/models/AIGC.php';
-require_once APP_ROOT . '/helpers/functions.php';
-require_once APP_ROOT . '/includes/Logger.php';
+require_once APP_ROOT . '/admin-panel/models/AIGC.php';
+require_once APP_ROOT . '/admin-panel/helpers/functions.php';
+require_once APP_ROOT . '/admin-panel/includes/Logger.php';
 
 class AIGCController {
     private $aigcModel;

@@ -2,7 +2,9 @@
 // AIGC图片处理模块入口文件
 
 // 设置应用根目录
-define('APP_ROOT', realpath(dirname(__FILE__) . '/../'));
+if (!defined('APP_ROOT')) {
+    define('APP_ROOT', realpath(dirname(__FILE__) . '/../'));
+}
 
 // 加载配置文件
 require_once APP_ROOT . '/admin-panel/config/config.php';
