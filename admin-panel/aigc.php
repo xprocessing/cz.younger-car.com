@@ -1,17 +1,11 @@
 <?php
 // AIGC图片处理模块入口文件
 
-// 设置APP_ROOT为网站根目录
-if (!defined('APP_ROOT')) {
-    define('APP_ROOT', realpath(dirname(__FILE__) . '/../'));
-}
-
 // 加载配置文件
-require_once APP_ROOT . '/admin-panel/config/config.php';
-
+require_once __DIR__ . '/config/config.php';
 
 // 加载控制器
-require_once APP_ROOT . '/admin-panel/controllers/AIGCController.php';
+require_once APP_ROOT . '/controllers/AIGCController.php';
 
 // 创建控制器实例
 $aigcController = new AIGCController();
