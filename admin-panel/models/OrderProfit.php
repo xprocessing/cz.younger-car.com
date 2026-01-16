@@ -936,7 +936,7 @@ class OrderProfit {
     // 获取各平台广告费占比数据
     public function getPlatformCostPercentage($startDate = null, $endDate = null) {
         $sql = "SELECT s.platform_name, SUM(c.cost) as total_cost
-                FROM costs c
+                FROM shop_costs c
                 LEFT JOIN store s ON c.store_name COLLATE utf8mb4_unicode_ci = s.store_name COLLATE utf8mb4_unicode_ci
                 WHERE 1=1";
         

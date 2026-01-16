@@ -8,6 +8,7 @@
             $exportParams = [];
             if (!empty($_GET['platform_name'])) $exportParams[] = 'platform_name=' . urlencode($_GET['platform_name']);
             if (!empty($_GET['store_name'])) $exportParams[] = 'store_name=' . urlencode($_GET['store_name']);
+            if (!empty($_GET['cost_type'])) $exportParams[] = 'cost_type=' . urlencode($_GET['cost_type']);
             if (!empty($_GET['start_date'])) $exportParams[] = 'start_date=' . urlencode($_GET['start_date']);
             if (!empty($_GET['end_date'])) $exportParams[] = 'end_date=' . urlencode($_GET['end_date']);
             if (!empty($exportParams)) echo '&' . implode('&', $exportParams);
@@ -53,6 +54,20 @@
                 </select>
             </div>
             <div class="col-md-2">
+                <label for="cost_type" class="form-label">费用类型</label>
+                <select name="cost_type" class="form-select">
+                    <option value="">全部类型</option>
+                    <?php if (!empty($costTypeList)): ?>
+                        <?php foreach ($costTypeList as $costType): ?>
+                            <option value="<?php echo htmlspecialchars($costType); ?>" 
+                                    <?php echo (($_GET['cost_type'] ?? '') == $costType ? 'selected' : ''); ?>>
+                                <?php echo htmlspecialchars($costType); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
+            </div>
+            <div class="col-md-2">
                 <label for="start_date" class="form-label">开始日期</label>
                 <input type="date" name="start_date" class="form-control" 
                        value="<?php echo $_GET['start_date'] ?? ''; ?>">
@@ -85,6 +100,7 @@
                         <th>平台名称</th>
                         <th>店铺名称</th>
                         <th>日广告花费（美元）</th>
+                        <th>费用类型</th>
                         <th>日期</th>
                         <th>备注</th>
                         <th>创建时间</th>
@@ -100,6 +116,7 @@
                                 <td><?php echo htmlspecialchars($cost['platform_name']); ?></td>
                                 <td><?php echo htmlspecialchars($cost['store_name']); ?></td>
                                 <td>$<?php echo $cost['cost']; ?></td>
+                                <td><?php echo htmlspecialchars($cost['cost_type']); ?></td>
                                 <td><?php echo $cost['date']; ?></td>
                                 <td><?php echo htmlspecialchars($cost['remark'] ?? ''); ?></td>
                                 <td><?php echo $cost['create_at']; ?></td>
@@ -119,7 +136,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="9" class="text-center">暂无数据</td>
+                            <td colspan="10" class="text-center">暂无数据</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -137,6 +154,7 @@
                     $queryParams = [];
                     if (!empty($_GET['platform_name'])) $queryParams[] = 'platform_name=' . urlencode($_GET['platform_name']);
                     if (!empty($_GET['store_name'])) $queryParams[] = 'store_name=' . urlencode($_GET['store_name']);
+                    if (!empty($_GET['cost_type'])) $queryParams[] = 'cost_type=' . urlencode($_GET['cost_type']);
                     if (!empty($_GET['start_date'])) $queryParams[] = 'start_date=' . urlencode($_GET['start_date']);
                     if (!empty($_GET['end_date'])) $queryParams[] = 'end_date=' . urlencode($_GET['end_date']);
                     if (!empty($queryParams)) echo '&' . implode('&', $queryParams);

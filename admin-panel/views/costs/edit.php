@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="cost" class="form-label">日广告花费（美元） <span class="text-danger">*</span></label>
                                 <div class="input-group">
@@ -51,7 +51,16 @@
                                 <div class="form-text">日广告花费金额</div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="cost_type" class="form-label">费用类型 <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="cost_type" name="cost_type" required
+                                       value="<?php echo htmlspecialchars($cost['cost_type']); ?>"
+                                       placeholder="请输入费用类型（如广告费用、平台租金、其他费用）" maxlength="50">
+                                <div class="form-text">费用类型，如广告费用、平台租金、其他费用</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="date" class="form-label">日期 <span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="date" name="date" required
@@ -113,6 +122,10 @@
                         <td><?php echo htmlspecialchars($cost['store_name']); ?></td>
                     </tr>
                     <tr>
+                        <td><strong>费用类型:</strong></td>
+                        <td><?php echo htmlspecialchars($cost['cost_type']); ?></td>
+                    </tr>
+                    <tr>
                         <td><strong>日期:</strong></td>
                         <td><?php echo $cost['date']; ?></td>
                     </tr>
@@ -137,6 +150,7 @@
                     <li><strong>平台名称</strong>: 平台名称，如Amazon-FBA，Amazon、eBay，Shopify</li>
                     <li><strong>店铺名称</strong>: 店铺名称</li>
                     <li><strong>日广告花费</strong>: 每日广告花费金额（美元）</li>
+                    <li><strong>费用类型</strong>: 费用类型，如广告费用、平台租金、其他费用</li>
                     <li><strong>日期</strong>: 数据日期，按天存储</li>
                 </ul>
             </div>
@@ -176,6 +190,14 @@ document.querySelector('form').addEventListener('submit', function(e) {
         e.preventDefault();
         alert('请选择日期');
         document.getElementById('date').focus();
+        return;
+    }
+
+    const costType = document.getElementById('cost_type').value.trim();
+    if (!costType) {
+        e.preventDefault();
+        alert('请输入费用类型');
+        document.getElementById('cost_type').focus();
         return;
     }
 });

@@ -22,12 +22,13 @@ class CostsController {
         
         $platformName = $_GET['platform_name'] ?? '';
         $storeName = $_GET['store_name'] ?? '';
+        $costType = $_GET['cost_type'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        if ($platformName || $storeName || $startDate || $endDate) {
-            $costs = $this->costsModel->searchWithFilters($platformName, $storeName, $startDate, $endDate, $limit, $offset);
-            $totalCount = $this->costsModel->getSearchWithFiltersCount($platformName, $storeName, $startDate, $endDate);
+        if ($platformName || $storeName || $costType || $startDate || $endDate) {
+            $costs = $this->costsModel->searchWithFilters($platformName, $storeName, $costType, $startDate, $endDate, $limit, $offset);
+            $totalCount = $this->costsModel->getSearchWithFiltersCount($platformName, $storeName, $costType, $startDate, $endDate);
         } else {
             $costs = $this->costsModel->getAll($limit, $offset);
             $totalCount = $this->costsModel->getCount();
@@ -36,6 +37,7 @@ class CostsController {
         $totalPages = ceil($totalCount / $limit);
         $platformList = $this->costsModel->getPlatformList();
         $storeList = $this->costsModel->getStoreList();
+        $costTypeList = $this->costsModel->getCostTypeList();
         $title = '广告费管理';
         
         include VIEWS_DIR . '/layouts/header.php';
@@ -87,6 +89,11 @@ class CostsController {
             redirect(ADMIN_PANEL_URL . '/costs.php?action=create');
         }
         
+        if (empty($_POST['cost_type'])) {
+            showError('费用类型不能为空');
+            redirect(ADMIN_PANEL_URL . '/costs.php?action=create');
+        }
+        
         // 验证数值字段
         $cost = trim($_POST['cost']);
         // 替换逗号为小数点，支持国际化数字格式
@@ -101,6 +108,7 @@ class CostsController {
         $existingCost = $this->costsModel->getAllWithFilters(
             $_POST['platform_name'],
             $_POST['store_name'],
+            $_POST['cost_type'],
             $_POST['date'],
             $_POST['date']
         );
@@ -114,6 +122,7 @@ class CostsController {
             'platform_name' => $_POST['platform_name'],
             'store_name' => $_POST['store_name'],
             'cost' => $_POST['cost'],
+            'cost_type' => $_POST['cost_type'],
             'date' => $_POST['date'],
             'remark' => $_POST['remark'] ?? null
         ];
@@ -189,6 +198,11 @@ class CostsController {
             redirect(ADMIN_PANEL_URL . '/costs.php?action=edit&id=' . $id);
         }
         
+        if (empty($_POST['cost_type'])) {
+            showError('费用类型不能为空');
+            redirect(ADMIN_PANEL_URL . '/costs.php?action=edit&id=' . $id);
+        }
+        
         // 验证数值字段
         $cost = trim($_POST['cost']);
         // 替换逗号为小数点，支持国际化数字格式
@@ -203,6 +217,7 @@ class CostsController {
         $existingCosts = $this->costsModel->getAllWithFilters(
             $_POST['platform_name'],
             $_POST['store_name'],
+            $_POST['cost_type'],
             $_POST['date'],
             $_POST['date']
         );
@@ -218,6 +233,7 @@ class CostsController {
             'platform_name' => $_POST['platform_name'],
             'store_name' => $_POST['store_name'],
             'cost' => $_POST['cost'],
+            'cost_type' => $_POST['cost_type'],
             'date' => $_POST['date'],
             'remark' => $_POST['remark'] ?? null
         ];
@@ -270,15 +286,17 @@ class CostsController {
         
         $platformName = $_GET['platform_name'] ?? '';
         $storeName = $_GET['store_name'] ?? '';
+        $costType = $_GET['cost_type'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        $costs = $this->costsModel->searchWithFilters($platformName, $storeName, $startDate, $endDate, $limit, $offset);
-        $totalCount = $this->costsModel->getSearchWithFiltersCount($platformName, $storeName, $startDate, $endDate);
+        $costs = $this->costsModel->searchWithFilters($platformName, $storeName, $costType, $startDate, $endDate, $limit, $offset);
+        $totalCount = $this->costsModel->getSearchWithFiltersCount($platformName, $storeName, $costType, $startDate, $endDate);
         
         $totalPages = ceil($totalCount / $limit);
         $platformList = $this->costsModel->getPlatformList();
         $storeList = $this->costsModel->getStoreList();
+        $costTypeList = $this->costsModel->getCostTypeList();
         $title = '搜索结果';
         
         include VIEWS_DIR . '/layouts/header.php';
@@ -410,6 +428,12 @@ class CostsController {
         }
         
         if (empty($row[3]) || trim($row[3]) === '') {
+            $errors[] = "第 {$rowCount} 行：费用类型不能为空";
+            $errorCount++;
+            return;
+        }
+        
+        if (empty($row[4]) || trim($row[4]) === '') {
             $errors[] = "第 {$rowCount} 行：日期不能为空";
             $errorCount++;
             return;
@@ -426,7 +450,7 @@ class CostsController {
         }
         
         // 验证日期格式
-        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $row[3])) {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $row[4])) {
             $errors[] = "第 {$rowCount} 行：日期格式不正确，应为YYYY-MM-DD";
             $errorCount++;
             return;
@@ -437,7 +461,8 @@ class CostsController {
             trim($row[0]),
             trim($row[1]),
             trim($row[3]),
-            trim($row[3])
+            trim($row[4]),
+            trim($row[4])
         );
         
         if (!empty($existingCosts)) {
@@ -450,8 +475,9 @@ class CostsController {
             'platform_name' => trim($row[0]),
             'store_name' => trim($row[1]),
             'cost' => trim($row[2]),
-            'date' => trim($row[3]),
-            'remark' => isset($row[4]) ? trim($row[4]) : null
+            'cost_type' => trim($row[3]),
+            'date' => trim($row[4]),
+            'remark' => isset($row[5]) ? trim($row[5]) : null
         ];
         
         $successCount++;
@@ -466,11 +492,12 @@ class CostsController {
         // 获取所有筛选参数
         $platformName = $_GET['platform_name'] ?? '';
         $storeName = $_GET['store_name'] ?? '';
+        $costType = $_GET['cost_type'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
         // 获取所有符合条件的数据
-        $costs = $this->costsModel->getAllWithFilters($platformName, $storeName, $startDate, $endDate);
+        $costs = $this->costsModel->getAllWithFilters($platformName, $storeName, $costType, $startDate, $endDate);
         
         // 设置CSV文件头
         $filename = 'costs_export_' . date('YmdHis') . '.csv';
@@ -490,6 +517,7 @@ class CostsController {
             '平台名称',
             '店铺名称',
             '日均广告花费（美元）',
+            '费用类型',
             '日期',
             '备注',
             '创建时间',
@@ -503,6 +531,7 @@ class CostsController {
                 $cost['platform_name'],
                 $cost['store_name'],
                 $cost['cost'],
+                $cost['cost_type'],
                 $cost['date'],
                 $cost['remark'] ?? '',
                 $cost['create_at'],

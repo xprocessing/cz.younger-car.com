@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="cost" class="form-label">日广告花费（美元） <span class="text-danger">*</span></label>
                                 <div class="input-group">
@@ -46,7 +46,15 @@
                                 <div class="form-text">日广告花费金额</div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="cost_type" class="form-label">费用类型 <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="cost_type" name="cost_type" required
+                                       placeholder="请输入费用类型（如广告费用、平台租金、其他费用）" maxlength="50">
+                                <div class="form-text">费用类型，如广告费用、平台租金、其他费用</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="date" class="form-label">日期 <span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="date" name="date" required
@@ -90,6 +98,7 @@
                     <li><strong>平台名称</strong>: 平台名称，如Amazon-FBA，Amazon、eBay，Shopify</li>
                     <li><strong>店铺名称</strong>: 店铺名称</li>
                     <li><strong>日广告花费</strong>: 每日广告花费金额（美元）</li>
+                    <li><strong>费用类型</strong>: 费用类型，如广告费用、平台租金、其他费用</li>
                     <li><strong>日期</strong>: 数据日期，按天存储</li>
                     <li>特别注意：平台名字和店铺名字必须大小写一致，具体参照<a href="<?php echo ADMIN_PANEL_URL; ?>/store.php" target="_blank">店铺列表</a></li>
                 </ul>
@@ -127,6 +136,7 @@ function setSampleData() {
     document.getElementById('platform_name').value = 'Amazon-FBA';
     document.getElementById('store_name').value = 'US Store 1';
     document.getElementById('cost').value = '250.50';
+    document.getElementById('cost_type').value = '广告费用';
     document.getElementById('date').value = new Date().toISOString().slice(0, 10);
     document.getElementById('remark').value = '示例备注信息';
 }
@@ -169,6 +179,14 @@ document.querySelector('form').addEventListener('submit', function(e) {
         e.preventDefault();
         alert('请选择日期');
         document.getElementById('date').focus();
+        return;
+    }
+
+    const costType = document.getElementById('cost_type').value.trim();
+    if (!costType) {
+        e.preventDefault();
+        alert('请输入费用类型');
+        document.getElementById('cost_type').focus();
         return;
     }
 });
