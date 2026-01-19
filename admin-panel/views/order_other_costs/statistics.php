@@ -121,7 +121,11 @@
     // 店铺费用饼图
     const storeCtx = document.getElementById('storeChart').getContext('2d');
     const storeLabels = <?php echo json_encode(array_column($lastMonthByStore, 'store_name')); ?>;
-    const storeValues = <?php echo json_encode(array_column($lastMonthByStore, 'total_cost')); ?>;
+    // 确保所有值都转换为浮点数
+    const storeValues = <?php 
+        $values = array_map('floatval', array_column($lastMonthByStore, 'total_cost'));
+        echo json_encode($values);
+    ?>;
     
     // 生成随机颜色
     const generateColors = (count) => {
@@ -167,7 +171,11 @@
     // 平台费用饼图
     const platformCtx = document.getElementById('platformChart').getContext('2d');
     const platformLabels = <?php echo json_encode(array_column($lastMonthByPlatform, 'platform_name')); ?>;
-    const platformValues = <?php echo json_encode(array_column($lastMonthByPlatform, 'total_cost')); ?>;
+    // 确保所有值都转换为浮点数
+    const platformValues = <?php 
+        $values = array_map('floatval', array_column($lastMonthByPlatform, 'total_cost'));
+        echo json_encode($values);
+    ?>;
     
     new Chart(platformCtx, {
         type: 'pie',

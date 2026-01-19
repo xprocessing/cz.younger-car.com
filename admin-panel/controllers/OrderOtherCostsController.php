@@ -523,14 +523,16 @@ class OrderOtherCostsController {
         // 获取上个月按平台名称的费用统计
         $lastMonthByPlatform = $this->orderOtherCostsModel->getLastMonthByPlatform();
         
-        // 计算总费用
-        $totalByStore = array_reduce($lastMonthByStore, function($sum, $item) {
-            return $sum + $item['total_cost'];
-        }, 0);
+        // 计算总费用（使用浮点数相加，确保正确处理DECIMAL类型）
+        $totalByStore = 0;
+        foreach ($lastMonthByStore as $item) {
+            $totalByStore += (float)$item['total_cost'];
+        }
         
-        $totalByPlatform = array_reduce($lastMonthByPlatform, function($sum, $item) {
-            return $sum + $item['total_cost'];
-        }, 0);
+        $totalByPlatform = 0;
+        foreach ($lastMonthByPlatform as $item) {
+            $totalByPlatform += (float)$item['total_cost'];
+        }
         
         $title = '订单其他费用统计';
         
