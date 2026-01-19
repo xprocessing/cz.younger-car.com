@@ -115,7 +115,7 @@
                                 <td><?php echo $cost['id']; ?></td>
                                 <td><?php echo htmlspecialchars($cost['platform_name']); ?></td>
                                 <td><?php echo htmlspecialchars($cost['store_name']); ?></td>
-                                <td>$<?php echo $cost['cost']; ?></td>
+                                <td><?php echo $cost['cost']; ?></td>
                                 <td><?php echo htmlspecialchars($cost['cost_type']); ?></td>
                                 <td><?php echo $cost['cost_date']; ?></td>
                                 <td><?php echo htmlspecialchars($cost['remark'] ?? ''); ?></td>
