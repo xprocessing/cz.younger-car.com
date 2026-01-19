@@ -409,10 +409,19 @@ class OrderOtherCostsController {
         }
         
         // 验证日期格式
-        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $row[0])) {
+        if (!preg_match('/^\d{4}-\d{1,2}-\d{1,2}$/', $row[0])) {
             $errors[] = "第 {$rowCount} 行：日期格式不正确，应为YYYY-MM-DD";
             $errorCount++;
             return;
+        }
+        
+        // 将日期格式化为标准的YYYY-MM-DD格式（确保月份和日期为两位数）
+        $dateParts = explode('-', $row[0]);
+        if (count($dateParts) === 3) {
+            $year = $dateParts[0];
+            $month = str_pad($dateParts[1], 2, '0', STR_PAD_LEFT);
+            $day = str_pad($dateParts[2], 2, '0', STR_PAD_LEFT);
+            $row[0] = "{$year}-{$month}-{$day}";
         }
         
         // 验证数值字段
