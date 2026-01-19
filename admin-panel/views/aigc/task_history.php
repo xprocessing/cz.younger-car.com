@@ -3,7 +3,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">任务历史</h1>
         <a href="<?php echo ADMIN_PANEL_URL; ?>/aigc.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-arrow-left fa-sm text-white-50"></i> 返回处理页面
+            <i class="fa fa-arrow-left fa-sm text-white-50"></i> 返回处理页面
         </a>
     </div>
 
