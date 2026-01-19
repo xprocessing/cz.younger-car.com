@@ -186,4 +186,70 @@ class CompanyCosts {
         
         return $costTypes;
     }
+    
+    // 获取过去12个月的月度费用总额统计
+    public function getMonthlyStatistics() {
+        $sql = "SELECT 
+                DATE_FORMAT(cost_date, '%Y-%m') as month, 
+                SUM(cost) as total_cost 
+              FROM company_costs 
+              WHERE cost_date >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+              GROUP BY DATE_FORMAT(cost_date, '%Y-%m') 
+              ORDER BY month";
+        
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetchAll();
+        
+        // 确保返回12个月的数据，包括没有数据的月份
+        $statistics = [];
+        $currentMonth = date('Y-m');
+        
+        for ($i = 11; $i >= 0; $i--) {
+            $month = date('Y-m', strtotime("-$i months", strtotime($currentMonth)));
+            $statistics[$month] = 0.00;
+        }
+        
+        foreach ($result as $row) {
+            $statistics[$row['month']] = floatval($row['total_cost']);
+        }
+        
+        // 转换为数组格式便于前端使用
+        $formattedStatistics = [];
+        foreach ($statistics as $month => $totalCost) {
+            $formattedStatistics[] = [
+                'month' => $month,
+                'total_cost' => $totalCost
+            ];
+        }
+        
+        return $formattedStatistics;
+    }
+    
+    // 获取本月各类型费用统计
+    public function getCurrentMonthStatistics() {
+        $sql = "SELECT 
+                cost_type, 
+                SUM(cost) as total_cost 
+              FROM company_costs 
+              WHERE cost_date BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01') AND LAST_DAY(NOW())
+              GROUP BY cost_type 
+              ORDER BY total_cost DESC";
+        
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll();
+    }
+    
+    // 获取上月各类型费用统计
+    public function getPreviousMonthStatistics() {
+        $sql = "SELECT 
+                cost_type, 
+                SUM(cost) as total_cost 
+              FROM company_costs 
+              WHERE cost_date BETWEEN DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 MONTH), '%Y-%m-01') AND LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH))
+              GROUP BY cost_type 
+              ORDER BY total_cost DESC";
+        
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll();
+    }
 }

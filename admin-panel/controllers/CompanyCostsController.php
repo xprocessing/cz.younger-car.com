@@ -34,6 +34,12 @@ class CompanyCostsController {
         
         $totalPages = ceil($totalCount / $limit);
         $costTypeList = $this->companyCostsModel->getCostTypeList();
+        
+        // 获取统计数据
+        $monthlyStatistics = $this->companyCostsModel->getMonthlyStatistics();
+        $currentMonthStats = $this->companyCostsModel->getCurrentMonthStatistics();
+        $previousMonthStats = $this->companyCostsModel->getPreviousMonthStatistics();
+        
         $title = '公司运营费用管理';
         
         include VIEWS_DIR . '/layouts/header.php';
