@@ -675,7 +675,7 @@ CREATE TABLE IF NOT EXISTS aigc_tasks (
     -- 任务名称
     task_name VARCHAR(255) NOT NULL COMMENT '任务名称',
     -- 任务类型，用于区分不同功能的任务
-    task_type ENUM('remove_defect', 'crop_png', 'crop_white_bg', 'resize', 'watermark', 'face_swap', 'multi_angle', 'other') NOT NULL COMMENT '任务类型',
+    task_type ENUM('remove_defect', 'crop_png', 'crop_white_bg', 'resize', 'watermark', 'face_swap', 'multi_angle', 'image_to_image', 'text_to_image', 'other') NOT NULL COMMENT '任务类型',
     -- 任务状态
     task_status ENUM('pending', 'processing', 'completed', 'failed') NOT NULL DEFAULT 'pending' COMMENT '任务状态',
     -- 任务参数，JSON格式存储具体配置
