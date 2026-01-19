@@ -7,20 +7,7 @@
     </div>
 </div>
 
-<!-- 统计图表 -->
-<div class="row mb-3">
-    <!-- 月度统计图表 -->
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">过去12个月费用总额统计</h5>
-            </div>
-            <div class="card-body">
-                <canvas id="monthlyChart" style="height: 300px !important;"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="row mb-3">
     <!-- 本月费用统计 -->
@@ -61,7 +48,20 @@
         </div>
     </div>
 </div>
-
+<!-- 统计图表 -->
+<div class="row mb-3">
+    <!-- 月度统计图表 -->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">过去12个月费用总额统计</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="monthlyChart" style="height: 300px !important;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Chart.js 脚本 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
