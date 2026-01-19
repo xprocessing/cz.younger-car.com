@@ -618,7 +618,7 @@ CREATE TABLE IF NOT EXISTS company_costs (
     cost_date DATE NOT NULL COMMENT '费用日期（YYYY-MM-DD）',
     -- 费用类型，非空，最大50字符
     cost_type VARCHAR(50) NOT NULL COMMENT '费用类型（如租赁费用、人员工资、物业费、网络通信费、软件订阅/系统服务费、其他费用）',
-    -- 费用（美元），非空，小数类型（总长度10，小数位2，支持最大99999999.99美元）
+    -- 费用（人民币），非空，小数类型（总长度10，小数位2，支持最大99999999.99人民币）
     cost DECIMAL(10, 2) NOT NULL COMMENT '费用金额',
   
     -- 备注字段，允许为空，最大255字符

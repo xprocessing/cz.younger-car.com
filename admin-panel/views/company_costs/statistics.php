@@ -37,7 +37,7 @@
                         $currentMonthTotal += $stat['total_cost'];
                     }
                 ?>
-                <p class="text-end mt-2"><strong>本月总费用：$<?php echo number_format($currentMonthTotal, 2); ?></strong></p>
+                <p class="text-end mt-2"><strong>本月总费用：￥<?php echo number_format($currentMonthTotal, 2); ?></strong></p>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
                         $previousMonthTotal += $stat['total_cost'];
                     }
                 ?>
-                <p class="text-end mt-2"><strong>上月总费用：$<?php echo number_format($previousMonthTotal, 2); ?></strong></p>
+                <p class="text-end mt-2"><strong>上月总费用：￥<?php echo number_format($previousMonthTotal, 2); ?></strong></p>
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
         data: {
             labels: monthlyLabels,
             datasets: [{
-                label: '费用总额 ($)',
+                label: '费用总额 (人民币)',
                 data: monthlyValues,
                 borderColor: '#4e73df',
                 backgroundColor: 'rgba(78, 115, 223, 0.1)',
@@ -95,7 +95,7 @@
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return '$' + context.parsed.y.toFixed(2);
+                            return '￥' + context.parsed.y.toFixed(2);
                         }
                     }
                 }
@@ -105,7 +105,7 @@
                     beginAtZero: true,
                     ticks: {
                         callback: function(value) {
-                            return '$' + value;
+                            return '￥' + value;
                         }
                     }
                 }
@@ -194,7 +194,7 @@
                     callbacks: {
                         label: function(context) {
                             const label = context.label || '';
-                            const value = '$' + context.parsed.toFixed(2);
+                            const value = '￥' + context.parsed.toFixed(2);
                             const total = previousMonthValues.reduce((a, b) => a + b, 0);
                             const percentage = total > 0 ? ((context.parsed / total) * 100).toFixed(1) + '%' : '0.0%';
                             return label + ': ' + value + ' (' + percentage + ')';
