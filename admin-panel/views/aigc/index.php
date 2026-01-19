@@ -238,7 +238,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="crop_white_bg_subject_ratio">主体占比（%）</label>
-                            <input type="number" class="form-control" id="crop_white_bg_subject_ratio" name="crop_white_bg_subject_ratio" value="80" min="50" max="95">
+                            <input type="number" class="form-control" id="crop_white_bg_subject_ratio" name="crop_white_bg_subject_ratio" value="75" min="50" max="95">
                         </div>
                     </div>
                 </div>
