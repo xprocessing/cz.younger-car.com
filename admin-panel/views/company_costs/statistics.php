@@ -16,7 +16,7 @@
                 <h5 class="mb-0">过去12个月费用总额统计</h5>
             </div>
             <div class="card-body">
-                <canvas id="monthlyChart" height="200"></canvas>
+                <canvas id="monthlyChart" style="height: 300px !important;"></canvas>
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
                 <h5 class="mb-0">本月费用统计</h5>
             </div>
             <div class="card-body">
-                <canvas id="currentMonthChart"></canvas>
+                <canvas id="currentMonthChart" style="height: 150px !important;"></canvas>
                 <?php 
                     $currentMonthTotal = 0;
                     foreach ($currentMonthStats as $stat) {
@@ -49,7 +49,7 @@
                 <h5 class="mb-0">上月费用统计</h5>
             </div>
             <div class="card-body">
-                <canvas id="previousMonthChart"></canvas>
+                <canvas id="previousMonthChart" style="height: 150px !important;"></canvas>
                 <?php 
                     $previousMonthTotal = 0;
                     foreach ($previousMonthStats as $stat) {
