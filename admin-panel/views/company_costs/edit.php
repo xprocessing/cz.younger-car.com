@@ -37,7 +37,7 @@
             <div class="mb-3">
                 <label for="cost" class="form-label">费用金额（人民币） <span class="text-danger">*</span></label>
                 <input type="number" class="form-control" id="cost" name="cost" 
-                       value="<?php echo $cost['cost']; ?>" required min="0" step="0.01" 
+                       value="<?php echo $cost['cost']; ?>" required  step="0.01" 
                        placeholder="请输入费用金额，如299.00">
                 <div class="form-text">请输入费用金额，最多支持两位小数</div>
             </div>
