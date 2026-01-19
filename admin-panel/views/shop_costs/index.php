@@ -99,7 +99,7 @@
                         <th>ID</th>
                         <th>平台名称</th>
                         <th>店铺名称</th>
-                        <th>费用金额（美元）</th>
+                        <th>费用金额（人民币）</th>
                         <th>费用类型</th>
                         <th>日期</th>
                         <th>备注</th>
@@ -158,7 +158,7 @@
                     if (!empty($_GET['start_date'])) $queryParams[] = 'start_date=' . urlencode($_GET['start_date']);
                     if (!empty($_GET['end_date'])) $queryParams[] = 'end_date=' . urlencode($_GET['end_date']);
                     if (!empty($queryParams)) echo '&' . implode('&', $queryParams);
-                ?>" tabindex="-1">上一�?/a>
+                ?>" tabindex="-1">上一页</a>
             </li>
             <?php 
             $startPage = max(1, $page - 2);
@@ -196,7 +196,7 @@
             <li class="page-item <?php echo ($page == $totalPages) ? 'disabled' : ''; ?>">
                 <a class="page-link" href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?page=<?php echo $page + 1; ?><?php 
                     if (!empty($queryParams)) echo '&' . implode('&', $queryParams);
-                ?>">下一�?/a>
+                ?>">下一页</a>
             </li>
         </ul>
     </nav>
