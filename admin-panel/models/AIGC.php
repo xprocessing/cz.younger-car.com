@@ -348,7 +348,7 @@ class AIGC {
                 $subject_ratio_percent = $subject_ratio * 100;
                 
                 // 生成抠图提示词
-                $prompt = "请精确抠出图片中的主体，优化主体亮度和对比度，不改变主体的角度，确保边缘光滑自然，将主体放置在纯白色背景上，主体居中且占比约{$subject_ratio_percent}%，输出{$width}x{$height}像素高质量jpg格式。";
+                $prompt = "请精确抠出图片中的主体，优化主体亮度和对比度，不改变主体的角度，确保主体边缘光滑自然，将主体放置在纯白色背景上，主体的宽或者高占比约{$subject_ratio_percent}%，输出{$width}x{$height}像素高质量jpg格式。";
                 
                 // 调用API
                 $response = $this->callAliyunAPI($prompt, $image_data);
