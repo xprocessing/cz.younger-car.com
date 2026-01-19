@@ -23,6 +23,7 @@
                 <label for="cost_type" class="form-label">费用类型 <span class="text-danger">*</span></label>
                 <select class="form-select" id="cost_type" name="cost_type" required>
                     <option value="">请选择费用类型</option>
+                    <option value="租赁费用" <?php echo ($cost['cost_type'] == '仓储费用' ? 'selected' : ''); ?>>仓储费用</option>
                     <option value="租赁费用" <?php echo ($cost['cost_type'] == '租赁费用' ? 'selected' : ''); ?>>租赁费用</option>
                     <option value="人员工资" <?php echo ($cost['cost_type'] == '人员工资' ? 'selected' : ''); ?>>人员工资</option>
                     <option value="物业费" <?php echo ($cost['cost_type'] == '物业费' ? 'selected' : ''); ?>>物业费</option>
@@ -34,7 +35,7 @@
             </div>
             
             <div class="mb-3">
-                <label for="cost" class="form-label">费用金额（美元） <span class="text-danger">*</span></label>
+                <label for="cost" class="form-label">费用金额（人民币） <span class="text-danger">*</span></label>
                 <input type="number" class="form-control" id="cost" name="cost" 
                        value="<?php echo $cost['cost']; ?>" required min="0" step="0.01" 
                        placeholder="请输入费用金额，如299.00">
