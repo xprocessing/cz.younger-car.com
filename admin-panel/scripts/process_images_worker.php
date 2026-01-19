@@ -279,7 +279,5 @@ try {
         unlink($task_file);
     }
     
-    exit(1);
+    // 不再调用exit()，让控制权返回给调用者
 }
-
-exit(0);
