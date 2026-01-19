@@ -16,6 +16,9 @@
         <a href="<?php echo ADMIN_PANEL_URL; ?>/company_costs.php?action=create" class="btn btn-primary">
             <i class="fa fa-plus"></i> 新增费用
         </a>
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/company_costs.php?action=statistics" class="btn btn-outline-info me-2">
+            <i class="fa fa-bar-chart"></i> 费用统计
+        </a>
     </div>
 </div>
 
@@ -59,16 +62,6 @@
     </div>
 </div>
 
-<!-- 统计入口 -->
-<div class="card mb-3">
-    <div class="card-body text-center">
-        <h5 class="card-title mb-3">费用统计</h5>
-        <p class="card-text mb-4">查看过去12个月的费用总额趋势以及本月和上月的费用分布情况</p>
-        <a href="<?php echo ADMIN_PANEL_URL; ?>/company_costs.php?action=statistics" class="btn btn-primary btn-lg">
-            <i class="fa fa-bar-chart"></i> 查看统计报表
-        </a>
-    </div>
-</div>
 
 <!-- 数据表格 -->
 <div class="card">
