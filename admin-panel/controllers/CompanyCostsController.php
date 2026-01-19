@@ -35,15 +35,28 @@ class CompanyCostsController {
         $totalPages = ceil($totalCount / $limit);
         $costTypeList = $this->companyCostsModel->getCostTypeList();
         
+        $title = '公司运营费用管理';
+        
+        include VIEWS_DIR . '/layouts/header.php';
+        include VIEWS_DIR . '/company_costs/index.php';
+        include VIEWS_DIR . '/layouts/footer.php';
+    }
+    
+    // 显示统计页面
+    public function statistics() {
+        if (!isLoggedIn()) {
+            redirect(ADMIN_PANEL_URL . '/login.php');
+        }
+        
         // 获取统计数据
         $monthlyStatistics = $this->companyCostsModel->getMonthlyStatistics();
         $currentMonthStats = $this->companyCostsModel->getCurrentMonthStatistics();
         $previousMonthStats = $this->companyCostsModel->getPreviousMonthStatistics();
         
-        $title = '公司运营费用管理';
+        $title = '公司运营费用统计';
         
         include VIEWS_DIR . '/layouts/header.php';
-        include VIEWS_DIR . '/company_costs/index.php';
+        include VIEWS_DIR . '/company_costs/statistics.php';
         include VIEWS_DIR . '/layouts/footer.php';
     }
     
