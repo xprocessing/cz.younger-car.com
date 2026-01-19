@@ -562,4 +562,32 @@ class ShopCostsController {
         fclose($output);
         exit;
     }
+    
+    // 显示统计页面
+    public function statistics() {
+        if (!isLoggedIn()) {
+            redirect(ADMIN_PANEL_URL . '/login.php');
+        }
+        
+        // 获取上个月按店铺名称的费用统计
+        $lastMonthByStore = $this->shopCostsModel->getLastMonthByStore();
+        
+        // 获取上个月按平台名称的费用统计
+        $lastMonthByPlatform = $this->shopCostsModel->getLastMonthByPlatform();
+        
+        // 计算总费用
+        $totalByStore = array_reduce($lastMonthByStore, function($sum, $item) {
+            return $sum + $item['total_cost'];
+        }, 0);
+        
+        $totalByPlatform = array_reduce($lastMonthByPlatform, function($sum, $item) {
+            return $sum + $item['total_cost'];
+        }, 0);
+        
+        $title = '广告费统计';
+        
+        include VIEWS_DIR . '/layouts/header.php';
+        include VIEWS_DIR . '/shop_costs/statistics.php';
+        include VIEWS_DIR . '/layouts/footer.php';
+    }
 }

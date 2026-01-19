@@ -35,6 +35,9 @@ switch ($action) {
     case 'export':
         $shopCostsController->export();
         break;
+    case 'statistics':
+        $shopCostsController->statistics();
+        break;
     default:
         $shopCostsController->index();
         break;

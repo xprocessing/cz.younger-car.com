@@ -646,8 +646,8 @@ CREATE TABLE IF NOT EXISTS order_other_costs (
     -- 店铺名称，非空，最大50字符
     store_name VARCHAR(50) NOT NULL COMMENT '店铺名称',
     -- 费用事项，非空，最大50字符
-    cost_type VARCHAR(50) NOT NULL COMMENT '费用类型（如退货运费，运费补收，运输索赔，其他费用有正有负）',
-    -- 费用金额（美元），非空，小数类型（总长度10，小数位2，支持最大99999999.99美元）
+    cost_type VARCHAR(50) NOT NULL COMMENT '费用类型（如退货货运费，运费补收，运输索赔，其他费用有正有负）',
+    -- 费用金额（人民币），非空，小数类型（总长度10，小数位2，支持最大99999999.99人民币）
     cost DECIMAL(10, 2) NOT NULL COMMENT '费用金额',
     -- 备注字段，允许为空，最大255字符
     remark VARCHAR(255) DEFAULT NULL COMMENT '备注信息',

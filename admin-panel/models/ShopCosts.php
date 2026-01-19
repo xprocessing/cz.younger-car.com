@@ -232,4 +232,26 @@ class ShopCosts {
         $result = $stmt->fetchAll();
         return array_column($result, 'cost_type');
     }
+    
+    // 获取上个月按店铺名称的费用统计
+    public function getLastMonthByStore() {
+        $sql = "SELECT store_name, SUM(cost) as total_cost FROM shop_costs 
+                WHERE cost_date >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') 
+                AND cost_date < DATE_FORMAT(NOW(), '%Y-%m-01') 
+                GROUP BY store_name 
+                ORDER BY total_cost DESC";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll();
+    }
+    
+    // 获取上个月按平台名称的费用统计
+    public function getLastMonthByPlatform() {
+        $sql = "SELECT platform_name, SUM(cost) as total_cost FROM shop_costs 
+                WHERE cost_date >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') 
+                AND cost_date < DATE_FORMAT(NOW(), '%Y-%m-01') 
+                GROUP BY platform_name 
+                ORDER BY total_cost DESC";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll();
+    }
 }
