@@ -245,6 +245,7 @@ CREATE TABLE IF NOT EXISTS `order_profit` (
 	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
 	`store_id` CHAR(50) COMMENT '店铺id',
 	`global_order_no` CHAR(50) COMMENT '订单号',
+    `platformOrderNo` CHAR(50) COMMENT '平台单号',
     `wid` INT DEFAULT NULL COMMENT '仓库id',
     `warehouse_name` CHAR(50) COMMENT '发货仓库',
 	`receiver_country` CHAR(10) COMMENT '收货国家',
