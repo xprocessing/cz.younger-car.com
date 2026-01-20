@@ -47,6 +47,8 @@
                         <th>是否同步</th>
                         <th>状态</th>
                         <th>国家/地区编码</th>
+                        <th>店铺负责人</th>
+                        <th>赛道负责人</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -71,6 +73,8 @@
                                     </span>
                                 </td>
                                 <td><?php echo htmlspecialchars($store['country_code'] ?? '-'); ?></td>
+                                <td><?php echo htmlspecialchars($store['store_manager_name'] ?? '-'); ?></td>
+                                <td><?php echo htmlspecialchars($store['track_manager_name'] ?? '-'); ?></td>
                                 <td>
                                     <div class="btn-group" role="group">
                                         <a href="<?php echo ADMIN_PANEL_URL; ?>/store.php?action=edit&id=<?php echo $store['store_id']; ?>" 
@@ -87,7 +91,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="10" class="text-center">暂无数据</td>
+                            <td colspan="12" class="text-center">暂无数据</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

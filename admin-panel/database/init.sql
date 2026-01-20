@@ -272,8 +272,12 @@ CREATE TABLE `store` (
   `is_sync` tinyint NOT NULL COMMENT '是否同步（1：是，0：否）',
   `status` tinyint NOT NULL COMMENT '状态（1：正常，其他：异常）',
   `country_code` varchar(20) DEFAULT NULL COMMENT '国家/地区编码',
+  -- 增加 店铺负责人 赛道负责人名字
+  `store_manager_name` VARCHAR(50) NULL COMMENT '店铺负责人姓名',
+  `track_manager_name` VARCHAR(50) NULL COMMENT '赛道负责人姓名',
   PRIMARY KEY (`store_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺信息表';
+
 
 
 -- 创建产品表

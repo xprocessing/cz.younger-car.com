@@ -104,7 +104,9 @@ class StoreController {
             'currency' => $_POST['currency'],
             'is_sync' => (int)($_POST['is_sync'] ?? 0),
             'status' => (int)($_POST['status'] ?? 1),
-            'country_code' => $_POST['country_code'] ?? ''
+            'country_code' => $_POST['country_code'] ?? '',
+            'store_manager_name' => $_POST['store_manager_name'] ?? '',
+            'track_manager_name' => $_POST['track_manager_name'] ?? ''
         ];
         
         if ($this->storeModel->create($data)) {
@@ -184,7 +186,9 @@ class StoreController {
             'currency' => $_POST['currency'],
             'is_sync' => (int)($_POST['is_sync'] ?? 0),
             'status' => (int)($_POST['status'] ?? 1),
-            'country_code' => $_POST['country_code'] ?? ''
+            'country_code' => $_POST['country_code'] ?? '',
+            'store_manager_name' => $_POST['store_manager_name'] ?? '',
+            'track_manager_name' => $_POST['track_manager_name'] ?? ''
         ];
         
         if ($this->storeModel->update($storeId, $data)) {

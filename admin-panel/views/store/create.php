@@ -102,6 +102,25 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="store_manager_name" class="form-label">店铺负责人姓名</label>
+                                <input type="text" class="form-control" id="store_manager_name" name="store_manager_name"
+                                       placeholder="请输入店铺负责人姓名" maxlength="50">
+                                <div class="form-text">店铺的负责人姓名</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="track_manager_name" class="form-label">赛道负责人姓名</label>
+                                <input type="text" class="form-control" id="track_manager_name" name="track_manager_name"
+                                       placeholder="请输入赛道负责人姓名" maxlength="50">
+                                <div class="form-text">赛道的负责人姓名</div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="mt-4">
                         <button type="submit" class="btn btn-primary">
