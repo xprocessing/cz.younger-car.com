@@ -131,21 +131,32 @@
                     </a>
                 </div>
             <?php endif; ?>
-             <?php if (isLoggedIn()): ?>
+            <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
                     <a href="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'shop_costs.php' ? 'active' : ''; ?>">
                         <i class="fa fa-list"></i> 店铺费用
                     </a>
                 </div>
             <?php endif; ?>
-             <?php if (isLoggedIn()): ?>
+
+
+            <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
                     <a href="<?php echo ADMIN_PANEL_URL; ?>/track_costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'track_costs.php' ? 'active' : ''; ?>">
                         <i class="fa fa-list"></i> 赛道费用
                     </a>
                 </div>
             <?php endif; ?>
-             <?php if (isLoggedIn()): ?>
+
+
+            <?php if (isLoggedIn()): ?>
+                <div class="nav-item">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/company_costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'company_costs.php' ? 'active' : ''; ?>">
+                        <i class="fa fa-list"></i> 公司费用
+                    </a>
+                </div>
+            <?php endif; ?>
+            <?php if (isLoggedIn()): ?>
                 <div class="nav-item">
                     <a href="<?php echo ADMIN_PANEL_URL; ?>/order_other_costs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'order_other_costs.php' ? 'active' : ''; ?>">
                         <i class="fa fa-list"></i> 订单其他费用
@@ -170,7 +181,7 @@
 
 
 
-          
+
 
             <?php if (hasPermission('warehouses.view')): ?>
                 <div class="nav-item">
@@ -186,7 +197,7 @@
                     </a>
                 </div>
             <?php endif; ?>
-             <?php if (hasPermission('yunfei.view')): ?>
+            <?php if (hasPermission('yunfei.view')): ?>
                 <div class="nav-item">
                     <a href="<?php echo ADMIN_PANEL_URL; ?>/yunfei.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'yunfei.php' ? 'active' : ''; ?>">
                         <i class="fa fa-truck"></i> 运费管理
