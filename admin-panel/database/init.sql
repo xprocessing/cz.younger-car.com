@@ -636,6 +636,33 @@ CREATE TABLE IF NOT EXISTS company_costs (
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='公司运营费用数据表';
 
+-- 创建赛道费用数据表 track_costs
+CREATE TABLE IF NOT EXISTS track_costs (
+    -- 主键 id，自增整数
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',   
+    -- 赛道名称，非空，最大50字符
+    track_name VARCHAR(50) NOT NULL COMMENT '赛道名称',
+    -- 费用（人民币），非空，小数类型（总长度10，小数位2，支持最大99999999.99人民币）
+    cost DECIMAL(10, 2) NOT NULL COMMENT '费用金额',
+    -- 费用类型，非空，最大50字符
+    cost_type VARCHAR(50) NOT NULL COMMENT '费用类型（如 仓库费用、人员工资、其他费用等等）',
+    -- 费用日期，按天存储，格式YYYY-MM-DD
+    cost_date DATE NOT NULL COMMENT '费用日期（YYYY-MM-DD）',
+    -- 备注字段，允许为空，最大255字符
+    remark VARCHAR(255) DEFAULT NULL COMMENT '备注信息',
+    -- 创建时间，默认当前时间，格式YYYY-MM-DD HH:MM:SS
+    create_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    -- 更新时间，默认当前时间，更新时自动刷新
+    update_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    -- 设置主键
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='赛道费用数据表';
+
+
+
+
+
+
 
 -- 订单其他费用表：（退货运费，运费补收，运输索赔，其他费用有正有负）
 -- 字段：日期，订单号，平台名称，店铺名称，费用类型，费用金额，备注说明
