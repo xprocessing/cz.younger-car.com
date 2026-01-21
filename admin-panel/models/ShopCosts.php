@@ -40,13 +40,14 @@ class ShopCosts {
     
     // 创建成本记录
     public function create($data) {
-        $sql = "INSERT INTO shop_costs (platform_name, store_name, cost, cost_type, cost_date, remark, create_at, update_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())";
+        $sql = "INSERT INTO shop_costs (platform_name, store_name, cost, cost_type, cost_date, track_name, remark, create_at, update_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
         $params = [
             $data['platform_name'],
             $data['store_name'],
             $data['cost'],
             $data['cost_type'],
             $data['cost_date'],
+            $data['track_name'] ?? null,
             $data['remark'] ?? null
         ];
         
@@ -55,13 +56,14 @@ class ShopCosts {
     
     // 更新成本记录
     public function update($id, $data) {
-        $sql = "UPDATE shop_costs SET platform_name = ?, store_name = ?, cost = ?, cost_type = ?, cost_date = ?, remark = ?, update_at = NOW() WHERE id = ?";
+        $sql = "UPDATE shop_costs SET platform_name = ?, store_name = ?, cost = ?, cost_type = ?, cost_date = ?, track_name = ?, remark = ?, update_at = NOW() WHERE id = ?";
         $params = [
             $data['platform_name'],
             $data['store_name'],
             $data['cost'],
             $data['cost_type'],
             $data['cost_date'],
+            $data['track_name'] ?? null,
             $data['remark'] ?? null,
             $id
         ];
@@ -76,7 +78,7 @@ class ShopCosts {
     }
     
     // 根据筛选条件搜索成本记录
-    public function searchWithFilters($platformName, $storeName, $costType, $startDate, $endDate, $limit, $offset) {
+    public function searchWithFilters($platformName, $storeName, $costType, $trackName, $startDate, $endDate, $limit, $offset) {
         $sql = "SELECT * FROM shop_costs WHERE 1=1";
         $params = [];
         
@@ -93,6 +95,11 @@ class ShopCosts {
         if (!empty($costType)) {
             $sql .= " AND cost_type = ?";
             $params[] = $costType;
+        }
+        
+        if (!empty($trackName)) {
+            $sql .= " AND track_name = ?";
+            $params[] = $trackName;
         }
         
         if (!empty($startDate)) {
@@ -114,7 +121,7 @@ class ShopCosts {
     }
     
     // 获取筛选条件下的成本记录总数
-    public function getSearchWithFiltersCount($platformName, $storeName, $costType, $startDate, $endDate) {
+    public function getSearchWithFiltersCount($platformName, $storeName, $costType, $trackName, $startDate, $endDate) {
         $sql = "SELECT COUNT(*) as total FROM shop_costs WHERE 1=1";
         $params = [];
         
@@ -133,6 +140,11 @@ class ShopCosts {
             $params[] = $costType;
         }
         
+        if (!empty($trackName)) {
+            $sql .= " AND track_name = ?";
+            $params[] = $trackName;
+        }
+        
         if (!empty($startDate)) {
             $sql .= " AND cost_date >= ?";
             $params[] = $startDate;
@@ -149,7 +161,7 @@ class ShopCosts {
     }
     
     // 获取所有符合筛选条件的成本记录（用于导出）
-    public function getAllWithFilters($platformName, $storeName, $costType, $startDate, $endDate) {
+    public function getAllWithFilters($platformName, $storeName, $costType, $trackName, $startDate, $endDate) {
         $sql = "SELECT * FROM shop_costs WHERE 1=1";
         $params = [];
         
@@ -166,6 +178,11 @@ class ShopCosts {
         if (!empty($costType)) {
             $sql .= " AND cost_type = ?";
             $params[] = $costType;
+        }
+        
+        if (!empty($trackName)) {
+            $sql .= " AND track_name = ?";
+            $params[] = $trackName;
         }
         
         if (!empty($startDate)) {
@@ -190,17 +207,18 @@ class ShopCosts {
             return true;
         }
         
-        $sql = "INSERT INTO shop_costs (platform_name, store_name, cost, cost_type, cost_date, remark, create_at, update_at) VALUES ";
+        $sql = "INSERT INTO shop_costs (platform_name, store_name, cost, cost_type, cost_date, track_name, remark, create_at, update_at) VALUES ";
         $params = [];
         $values = [];
         
         foreach ($data as $row) {
-            $values[] = "(?, ?, ?, ?, ?, ?, NOW(), NOW())";
+            $values[] = "(?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
             $params[] = $row['platform_name'];
             $params[] = $row['store_name'];
             $params[] = $row['cost'];
             $params[] = $row['cost_type'];
             $params[] = $row['cost_date'];
+            $params[] = $row['track_name'] ?? null;
             $params[] = $row['remark'] ?? null;
         }
         
@@ -233,6 +251,14 @@ class ShopCosts {
         return array_column($result, 'cost_type');
     }
     
+    // 获取赛道列表（用于筛选）
+    public function getTrackList() {
+        $sql = "SELECT DISTINCT track_name FROM shop_costs WHERE track_name IS NOT NULL AND track_name != '' ORDER BY track_name";
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetchAll();
+        return array_column($result, 'track_name');
+    }
+    
     // 获取上个月按店铺名称的费用统计
     public function getLastMonthByStore() {
         $sql = "SELECT store_name, SUM(cost) as total_cost FROM shop_costs 
@@ -250,6 +276,18 @@ class ShopCosts {
                 WHERE cost_date >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') 
                 AND cost_date < DATE_FORMAT(NOW(), '%Y-%m-01') 
                 GROUP BY platform_name 
+                ORDER BY total_cost DESC";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll();
+    }
+    
+    // 获取上个月按赛道名称的费用统计
+    public function getLastMonthByTrack() {
+        $sql = "SELECT track_name, SUM(cost) as total_cost FROM shop_costs 
+                WHERE cost_date >= DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') 
+                AND cost_date < DATE_FORMAT(NOW(), '%Y-%m-01') 
+                AND track_name IS NOT NULL AND track_name != '' 
+                GROUP BY track_name 
                 ORDER BY total_cost DESC";
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll();

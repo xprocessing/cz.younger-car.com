@@ -16,7 +16,7 @@
             <div class="card-body">
                 <form method="POST" action="<?php echo ADMIN_PANEL_URL; ?>/shop_costs.php?action=create_post">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="platform_name" class="form-label">平台名称 <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="platform_name" name="platform_name" required
@@ -24,12 +24,20 @@
                                 <div class="form-text">平台名称，如Amazon-FBA，Amazon、eBay，Shopify</div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="store_name" class="form-label">店铺名称 <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="store_name" name="store_name" required
                                        placeholder="请输入店铺名" maxlength="50">
                                 <div class="form-text">店铺名称</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="track_name" class="form-label">赛道名称 <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="track_name" name="track_name" required
+                                       placeholder="请输入赛道名称" maxlength="50">
+                                <div class="form-text">赛道名称，如汽车用品、电子产品等</div>
                             </div>
                         </div>
                     </div>
@@ -97,6 +105,7 @@
                 <ul class="list-unstyled">
                     <li><strong>平台名称</strong>: 平台名称，如Amazon-FBA，Amazon、eBay，Shopify</li>
                     <li><strong>店铺名称</strong>: 店铺名称</li>
+                    <li><strong>赛道名称</strong>: 赛道名称，如汽车用品、电子产品等</li>
                     <li><strong>费用金额</strong>: 每日广告花费金额（美元）</li>
                     <li><strong>费用类型</strong>: 费用类型，如广告费用、平台租金、其他费用</li>
                     <li><strong>日期</strong>: 数据日期，按天存储</li>

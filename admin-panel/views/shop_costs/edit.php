@@ -18,7 +18,7 @@
                     <input type="hidden" name="id" value="<?php echo $cost['id']; ?>">
                     
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="platform_name" class="form-label">平台名称 <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="platform_name" name="platform_name" required
@@ -27,13 +27,22 @@
                                 <div class="form-text">平台名称，如Amazon-FBA，Amazon、eBay，Shopify</div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="store_name" class="form-label">店铺名称 <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="store_name" name="store_name" required
                                        value="<?php echo htmlspecialchars($cost['store_name']); ?>"
                                        placeholder="请输入店铺名称" maxlength="50">
                                 <div class="form-text">店铺名称</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="track_name" class="form-label">赛道名称 <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="track_name" name="track_name" required
+                                       value="<?php echo htmlspecialchars($cost['track_name'] ?? ''); ?>"
+                                       placeholder="请输入赛道名称" maxlength="50">
+                                <div class="form-text">赛道名称，如汽车用品、电子产品等</div>
                             </div>
                         </div>
                     </div>

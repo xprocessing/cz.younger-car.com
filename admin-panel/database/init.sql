@@ -596,6 +596,8 @@ ALTER TABLE `cz_data`.`car_data` DROP INDEX `uk_make_year_trim`, ADD UNIQUE `uk_
 CREATE TABLE IF NOT EXISTS shop_costs (
     -- 主键 id，自增整数
     id INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+     -- 赛道名称，非空，最大50字符
+    track_name VARCHAR(50) NOT NULL COMMENT '赛道名称',
     -- 平台名称，非空，最大50字符
     platform_name VARCHAR(50) NOT NULL COMMENT '平台名称（如Amazon-FBA，Amazon、eBay，Shopify）',
     -- 店铺名称，非空，最大50字符

@@ -23,12 +23,13 @@ class ShopCostsController {
         $platformName = $_GET['platform_name'] ?? '';
         $storeName = $_GET['store_name'] ?? '';
         $costType = $_GET['cost_type'] ?? '';
+        $trackName = $_GET['track_name'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        if ($platformName || $storeName || $costType || $startDate || $endDate) {
-            $costs = $this->shopCostsModel->searchWithFilters($platformName, $storeName, $costType, $startDate, $endDate, $limit, $offset);
-            $totalCount = $this->shopCostsModel->getSearchWithFiltersCount($platformName, $storeName, $costType, $startDate, $endDate);
+        if ($platformName || $storeName || $costType || $trackName || $startDate || $endDate) {
+            $costs = $this->shopCostsModel->searchWithFilters($platformName, $storeName, $costType, $trackName, $startDate, $endDate, $limit, $offset);
+            $totalCount = $this->shopCostsModel->getSearchWithFiltersCount($platformName, $storeName, $costType, $trackName, $startDate, $endDate);
         } else {
             $costs = $this->shopCostsModel->getAll($limit, $offset);
             $totalCount = $this->shopCostsModel->getCount();
@@ -38,6 +39,7 @@ class ShopCostsController {
         $platformList = $this->shopCostsModel->getPlatformList();
         $storeList = $this->shopCostsModel->getStoreList();
         $costTypeList = $this->shopCostsModel->getCostTypeList();
+        $trackList = $this->shopCostsModel->getTrackList();
         $title = '广告费管理';
         
         include VIEWS_DIR . '/layouts/header.php';
@@ -109,6 +111,7 @@ class ShopCostsController {
             $_POST['platform_name'],
             $_POST['store_name'],
             $_POST['cost_type'],
+            $_POST['track_name'] ?? '',
             $_POST['cost_date'],
             $_POST['cost_date']
         );
@@ -124,6 +127,7 @@ class ShopCostsController {
             'cost' => $_POST['cost'],
             'cost_type' => $_POST['cost_type'],
             'cost_date' => $_POST['cost_date'],
+            'track_name' => $_POST['track_name'] ?? null,
             'remark' => $_POST['remark'] ?? null
         ];
         
@@ -218,6 +222,7 @@ class ShopCostsController {
             $_POST['platform_name'],
             $_POST['store_name'],
             $_POST['cost_type'],
+            $_POST['track_name'] ?? '',
             $_POST['cost_date'],
             $_POST['cost_date']
         );
@@ -235,6 +240,7 @@ class ShopCostsController {
             'cost' => $_POST['cost'],
             'cost_type' => $_POST['cost_type'],
             'cost_date' => $_POST['cost_date'],
+            'track_name' => $_POST['track_name'] ?? null,
             'remark' => $_POST['remark'] ?? null
         ];
         
@@ -287,16 +293,18 @@ class ShopCostsController {
         $platformName = $_GET['platform_name'] ?? '';
         $storeName = $_GET['store_name'] ?? '';
         $costType = $_GET['cost_type'] ?? '';
+        $trackName = $_GET['track_name'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        $costs = $this->shopCostsModel->searchWithFilters($platformName, $storeName, $costType, $startDate, $endDate, $limit, $offset);
-        $totalCount = $this->shopCostsModel->getSearchWithFiltersCount($platformName, $storeName, $costType, $startDate, $endDate);
+        $costs = $this->shopCostsModel->searchWithFilters($platformName, $storeName, $costType, $trackName, $startDate, $endDate, $limit, $offset);
+        $totalCount = $this->shopCostsModel->getSearchWithFiltersCount($platformName, $storeName, $costType, $trackName, $startDate, $endDate);
         
         $totalPages = ceil($totalCount / $limit);
         $platformList = $this->shopCostsModel->getPlatformList();
         $storeList = $this->shopCostsModel->getStoreList();
         $costTypeList = $this->shopCostsModel->getCostTypeList();
+        $trackList = $this->shopCostsModel->getTrackList();
         $title = '搜索结果';
         
         include VIEWS_DIR . '/layouts/header.php';
@@ -432,25 +440,31 @@ class ShopCostsController {
         }
         
         if (empty($row[2]) || trim($row[2]) === '') {
-            $errors[] = "第 {$rowCount} 行：费用金额不能为空";
+            $errors[] = "第 {$rowCount} 行：赛道名称不能为空";
             $errorCount++;
             return;
         }
         
         if (empty($row[3]) || trim($row[3]) === '') {
-            $errors[] = "第 {$rowCount} 行：费用类型不能为空";
+            $errors[] = "第 {$rowCount} 行：费用金额不能为空";
             $errorCount++;
             return;
         }
         
         if (empty($row[4]) || trim($row[4]) === '') {
+            $errors[] = "第 {$rowCount} 行：费用类型不能为空";
+            $errorCount++;
+            return;
+        }
+        
+        if (empty($row[5]) || trim($row[5]) === '') {
             $errors[] = "第 {$rowCount} 行：日期不能为空";
             $errorCount++;
             return;
         }
         
         // 验证数值字段
-        $cost = trim($row[2]);
+        $cost = trim($row[3]);
         // 替换逗号为小数点，支持国际化数字格式
         $cost = str_replace(',', '.', $cost);
         if (!preg_match('/^-?\d+(\.\d+)?$/', $cost)) {
@@ -460,28 +474,29 @@ class ShopCostsController {
         }
         
         // 验证日期格式
-        if (!preg_match('/^\d{4}-\d{1,2}-\d{1,2}$/', $row[4])) {
+        if (!preg_match('/^\d{4}-\d{1,2}-\d{1,2}$/', $row[5])) {
             $errors[] = "第 {$rowCount} 行：日期格式不正确，应为YYYY-MM-DD";
             $errorCount++;
             return;
         }
         
         // 将日期格式化为标准的YYYY-MM-DD格式（确保月份和日期为两位数）
-        $dateParts = explode('-', $row[4]);
+        $dateParts = explode('-', $row[5]);
         if (count($dateParts) === 3) {
             $year = $dateParts[0];
             $month = str_pad($dateParts[1], 2, '0', STR_PAD_LEFT);
             $day = str_pad($dateParts[2], 2, '0', STR_PAD_LEFT);
-            $row[4] = "{$year}-{$month}-{$day}";
+            $row[5] = "{$year}-{$month}-{$day}";
         }
         
         // 检查记录是否已存在
         $existingCosts = $this->shopCostsModel->getAllWithFilters(
             trim($row[0]),
             trim($row[1]),
-            trim($row[3]),
             trim($row[4]),
-            trim($row[4])
+            trim($row[2]),
+            trim($row[5]),
+            trim($row[5])
         );
         
         if (!empty($existingCosts)) {
@@ -493,10 +508,11 @@ class ShopCostsController {
         $data[] = [
             'platform_name' => trim($row[0]),
             'store_name' => trim($row[1]),
-            'cost' => trim($row[2]),
-            'cost_type' => trim($row[3]),
-            'cost_date' => trim($row[4]),
-            'remark' => isset($row[5]) ? trim($row[5]) : null
+            'track_name' => trim($row[2]),
+            'cost' => $cost,
+            'cost_type' => trim($row[4]),
+            'cost_date' => $row[5],
+            'remark' => isset($row[6]) ? trim($row[6]) : null
         ];
         
         $successCount++;
@@ -512,11 +528,11 @@ class ShopCostsController {
         $platformName = $_GET['platform_name'] ?? '';
         $storeName = $_GET['store_name'] ?? '';
         $costType = $_GET['cost_type'] ?? '';
+        $trackName = $_GET['track_name'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        // 获取所有符合条件的数据
-        $costs = $this->shopCostsModel->getAllWithFilters($platformName, $storeName, $costType, $startDate, $endDate);
+        $costs = $this->shopCostsModel->getAllWithFilters($platformName, $storeName, $costType, $trackName, $startDate, $endDate);
         
         // 设置CSV文件头
         $filename = 'costs_export_' . date('YmdHis') . '.csv';
@@ -535,7 +551,8 @@ class ShopCostsController {
         $header = [
             '平台名称',
             '店铺名称',
-            '日均广告花费（美元）',
+            '赛道名称',
+            '费用金额（美元）',
             '费用类型',
             '日期',
             '备注',
@@ -549,6 +566,7 @@ class ShopCostsController {
             $row = [
                 $cost['platform_name'],
                 $cost['store_name'],
+                $cost['track_name'] ?? '',
                 $cost['cost'],
                 $cost['cost_type'],
                 $cost['cost_date'],

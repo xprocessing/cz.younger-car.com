@@ -9,6 +9,7 @@
             if (!empty($_GET['platform_name'])) $exportParams[] = 'platform_name=' . urlencode($_GET['platform_name']);
             if (!empty($_GET['store_name'])) $exportParams[] = 'store_name=' . urlencode($_GET['store_name']);
             if (!empty($_GET['cost_type'])) $exportParams[] = 'cost_type=' . urlencode($_GET['cost_type']);
+            if (!empty($_GET['track_name'])) $exportParams[] = 'track_name=' . urlencode($_GET['track_name']);
             if (!empty($_GET['start_date'])) $exportParams[] = 'start_date=' . urlencode($_GET['start_date']);
             if (!empty($_GET['end_date'])) $exportParams[] = 'end_date=' . urlencode($_GET['end_date']);
             if (!empty($exportParams)) echo '&' . implode('&', $exportParams);
@@ -71,6 +72,20 @@
                 </select>
             </div>
             <div class="col-md-2">
+                <label for="track_name" class="form-label">赛道名称</label>
+                <select name="track_name" class="form-select">
+                    <option value="">全部赛道</option>
+                    <?php if (!empty($trackList)): ?>
+                        <?php foreach ($trackList as $track): ?>
+                            <option value="<?php echo htmlspecialchars($track); ?>" 
+                                    <?php echo (($_GET['track_name'] ?? '') == $track ? 'selected' : ''); ?>>
+                                <?php echo htmlspecialchars($track); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
+            </div>
+            <div class="col-md-2">
                 <label for="start_date" class="form-label">开始日期</label>
                 <input type="date" name="start_date" class="form-control" 
                        value="<?php echo $_GET['start_date'] ?? ''; ?>">
@@ -102,6 +117,7 @@
                         <th>ID</th>
                         <th>平台名称</th>
                         <th>店铺名称</th>
+                        <th>赛道名称</th>
                         <th>费用金额（人民币）</th>
                         <th>费用类型</th>
                         <th>日期</th>
@@ -118,6 +134,7 @@
                                 <td><?php echo $cost['id']; ?></td>
                                 <td><?php echo htmlspecialchars($cost['platform_name']); ?></td>
                                 <td><?php echo htmlspecialchars($cost['store_name']); ?></td>
+                                <td><?php echo htmlspecialchars($cost['track_name'] ?? ''); ?></td>
                                 <td><?php echo $cost['cost']; ?></td>
                                 <td><?php echo htmlspecialchars($cost['cost_type']); ?></td>
                                 <td><?php echo $cost['cost_date']; ?></td>
@@ -139,7 +156,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="10" class="text-center">暂无数据</td>
+                            <td colspan="11" class="text-center">暂无数据</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
