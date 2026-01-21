@@ -69,7 +69,7 @@ class TrackStatistics {
             FROM 
                 shop_costs sc
             LEFT JOIN 
-                store s ON sc.platform_name = s.platform_name AND sc.store_name = s.store_name
+                store s ON sc.platform_name COLLATE utf8mb4_unicode_ci = s.platform_name COLLATE utf8mb4_unicode_ci AND sc.store_name COLLATE utf8mb4_unicode_ci = s.store_name COLLATE utf8mb4_unicode_ci
             WHERE 
                 sc.cost_date BETWEEN ? AND ?
             GROUP BY 
