@@ -14,6 +14,10 @@
         ?>" class="btn btn-outline-primary me-2">
             <i class="fa fa-download"></i> 批量导出
         </a>
+
+       <a href="<?php echo ADMIN_PANEL_URL; ?>/track_costs.php?action=statistics" class="btn btn-primary">
+            <i class="fa fa-chart-line"></i> 赛道费用统计
+        </a>
         <a href="<?php echo ADMIN_PANEL_URL; ?>/track_costs.php?action=create" class="btn btn-primary">
             <i class="fa fa-plus"></i> 新增费用
         </a>
