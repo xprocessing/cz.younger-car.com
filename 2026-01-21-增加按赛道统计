@@ -19,3 +19,14 @@ order_profit 表中的 order_total_amount，profit_amount 是美元
 计算总这利润和总利润率的时候要把人民币按目前汇率6.96转换为美元（1美元=6.96人民币）
 
 再次补充：order_profit 表中的 order_total_amount，profit_amount 字段是带有美元符号的文本，且有正有负
+
+
+补充数据：
+店铺费用shop_costs数据表
+shop_costs数据表 中cost_date 为 费用日期 cost 为 费用
+shop_costs表通过platform_name store_name 对应 store 表中的 平台名称platform_name 店铺名称store_name
+
+总净利润 = 总毛利润 - 总赛道费用cost-赛道分摊公司成本-店铺费用
+净利润率 = 总净利润 / 总订单金额
+
+修正：shop_costs数据表  cost 为 费用，单位为人民币，要按汇率7转换为美元

@@ -19,6 +19,7 @@
                                         <th>总毛利润</th>
                                         <th>总赛道费用</th>
                                         <th>公司成本分摊</th>
+                                        <th>店铺费用</th>
                                         <th>总净利润</th>
                                         <th>净利润率</th>
                                     </tr>
@@ -33,6 +34,7 @@
                                                 <td>$<?php echo number_format($stat['total_profit'], 2); ?></td>
                                                 <td>$<?php echo number_format($stat['total_cost'], 2); ?></td>
                                                 <td>$<?php echo number_format($stat['allocated_company_cost'], 2); ?></td>
+                                                <td>$<?php echo number_format($stat['shop_cost'], 2); ?></td>
                                                 <td>
                                                     <?php 
                                                         $netProfitClass = $stat['net_profit'] > 0 ? 'text-success' : ($stat['net_profit'] < 0 ? 'text-danger' : 'text-muted');

@@ -61,19 +61,36 @@ class TrackStatistics {
         $companyCostResult = $this->db->query($companyCostSql, [$lastMonthStart, $lastMonthEnd])->fetch();
         $totalCompanyCost = $companyCostResult ? floatval($companyCostResult['total_company_cost']) : 0;
 
+        // 4. 获取每个赛道的店铺费用
+        $shopCostSql = "
+            SELECT 
+                s.track_name,
+                SUM(sc.cost) as total_shop_cost
+            FROM 
+                shop_costs sc
+            LEFT JOIN 
+                store s ON sc.platform_name = s.platform_name AND sc.store_name = s.store_name
+            WHERE 
+                sc.cost_date BETWEEN ? AND ?
+            GROUP BY 
+                s.track_name
+        ";
+        $shopCostStats = $this->db->query($shopCostSql, [$lastMonthStart, $lastMonthEnd])->fetchAll();
+
         // 4. 合并数据并计算
         $trackStats = [];
         $trackNames = array_unique(array_merge(
             array_column($orderStats, 'track_name'),
-            array_column($costStats, 'track_name')
+            array_column($costStats, 'track_name'),
+            array_column($shopCostStats, 'track_name')
         ));
         // 过滤掉null值
         $trackNames = array_filter($trackNames, function($value) {
             return $value !== null && $value !== '';
         });
 
-        // 赛道数量（固定为4个）
-        $trackCount = 4;
+        // 赛道数量（固定为3个）
+        $trackCount = 3;
 
         foreach ($trackNames as $trackName) {
             // 查找对应赛道的订单数据
@@ -88,6 +105,12 @@ class TrackStatistics {
             });
             $costData = reset($costData) ?: ['total_cost' => 0];
 
+            // 查找对应赛道的店铺费用数据
+            $shopCostData = array_filter($shopCostStats, function($item) use ($trackName) {
+                return $item['track_name'] === $trackName;
+            });
+            $shopCostData = reset($shopCostData) ?: ['total_shop_cost' => 0];
+
             // 计算分摊的公司成本
             $allocatedCompanyCost = $totalCompanyCost / $trackCount;
 
@@ -99,9 +122,10 @@ class TrackStatistics {
             $exchangeRate = 7.0;
             $costInUSD = floatval($costData['total_cost']) / $exchangeRate;
             $allocatedCompanyCostInUSD = $allocatedCompanyCost / $exchangeRate;
+            $shopCostInUSD = floatval($shopCostData['total_shop_cost']) / $exchangeRate;
             
             // 计算净利润
-            $netProfit = $totalProfit - $costInUSD - $allocatedCompanyCostInUSD;
+            $netProfit = $totalProfit - $costInUSD - $allocatedCompanyCostInUSD - $shopCostInUSD;
 
             // 计算净利润率
             $netProfitMargin = $totalOrderAmount > 0 ? ($netProfit / $totalOrderAmount) * 100 : 0;
@@ -113,6 +137,7 @@ class TrackStatistics {
                 'total_profit' => $totalProfit,
                 'total_cost' => $costInUSD,
                 'allocated_company_cost' => $allocatedCompanyCostInUSD,
+                'shop_cost' => $shopCostInUSD,
                 'net_profit' => $netProfit,
                 'net_profit_margin' => $netProfitMargin
             ];
