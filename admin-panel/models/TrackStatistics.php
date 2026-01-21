@@ -22,14 +22,14 @@ class TrackStatistics {
             SELECT 
                 s.track_name,
                 COUNT(op.id) as order_count,
-                SUM(CAST(REPLACE(REPLACE(op.order_total_amount, '$', ''), ',', '') AS DECIMAL(10,2))) as total_order_amount,
-                SUM(CAST(REPLACE(REPLACE(op.profit_amount, '$', ''), ',', '') AS DECIMAL(10,2))) as total_profit
+                SUM(CAST(REPLACE(REPLACE(REPLACE(op.order_total_amount, '$', ''), ',', ''), '%', '') AS DECIMAL(10,2))) as total_order_amount,
+                SUM(CAST(REPLACE(REPLACE(REPLACE(op.profit_amount, '$', ''), ',', ''), '%', '') AS DECIMAL(10,2))) as total_profit
             FROM 
-                store s
-            JOIN 
-                order_profit op ON s.store_id = op.store_id
+                order_profit op
+            LEFT JOIN 
+                store s ON op.store_id = s.store_id
             WHERE 
-                op.global_purchase_time BETWEEN ? AND ?
+                DATE(op.global_purchase_time) BETWEEN ? AND ?
             GROUP BY 
                 s.track_name
         ";
