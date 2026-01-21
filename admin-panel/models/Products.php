@@ -39,7 +39,7 @@ class Products {
         return $result['count'];
     }
     
-    public function searchWithFilters($keyword = '', $sku = '', $spu = '', $status = '', $brandName = '', $categoryName = '', $limit = null, $offset = 0) {
+    public function searchWithFilters($keyword = '', $sku = '', $spu = '', $status = '', $brandName = '', $categoryName = '', $minCgPrice = '', $maxCgPrice = '', $limit = null, $offset = 0) {
         $sql = "SELECT * FROM products WHERE 1=1";
         $params = [];
         
@@ -76,6 +76,16 @@ class Products {
             $params[] = "%{$categoryName}%";
         }
         
+        if ($minCgPrice !== '') {
+            $sql .= " AND cg_price >= ?";
+            $params[] = $minCgPrice;
+        }
+        
+        if ($maxCgPrice !== '') {
+            $sql .= " AND cg_price <= ?";
+            $params[] = $maxCgPrice;
+        }
+        
         $sql .= " ORDER BY id DESC";
         
         if ($limit) {
@@ -88,7 +98,7 @@ class Products {
         return $stmt->fetchAll();
     }
     
-    public function getSearchWithFiltersCount($keyword = '', $sku = '', $spu = '', $status = '', $brandName = '', $categoryName = '') {
+    public function getSearchWithFiltersCount($keyword = '', $sku = '', $spu = '', $status = '', $brandName = '', $categoryName = '', $minCgPrice = '', $maxCgPrice = '') {
         $sql = "SELECT COUNT(*) as count FROM products WHERE 1=1";
         $params = [];
         
@@ -123,6 +133,16 @@ class Products {
         if ($categoryName) {
             $sql .= " AND category_name LIKE ?";
             $params[] = "%{$categoryName}%";
+        }
+        
+        if ($minCgPrice !== '') {
+            $sql .= " AND cg_price >= ?";
+            $params[] = $minCgPrice;
+        }
+        
+        if ($maxCgPrice !== '') {
+            $sql .= " AND cg_price <= ?";
+            $params[] = $maxCgPrice;
         }
         
         $stmt = $this->db->query($sql, $params);

@@ -23,11 +23,13 @@ class ProductsController {
         $brand = $_GET['brand'] ?? '';
         $category = $_GET['category'] ?? '';
         $status = $_GET['status'] ?? '';
+        $minCgPrice = $_GET['min_cg_price'] ?? '';
+        $maxCgPrice = $_GET['max_cg_price'] ?? '';
         $startDate = $_GET['start_date'] ?? '';
         $endDate = $_GET['end_date'] ?? '';
         
-        $products = $this->productsModel->searchWithFilters($keyword, '', '', $status, $brand, $category, $limit, $offset);
-        $totalCount = $this->productsModel->getSearchWithFiltersCount($keyword, '', '', $status, $brand, $category);
+        $products = $this->productsModel->searchWithFilters($keyword, '', '', $status, $brand, $category, $minCgPrice, $maxCgPrice, $limit, $offset);
+        $totalCount = $this->productsModel->getSearchWithFiltersCount($keyword, '', '', $status, $brand, $category, $minCgPrice, $maxCgPrice);
         
         $totalPages = ceil($totalCount / $limit);
         $brandList = $this->productsModel->getBrandList();

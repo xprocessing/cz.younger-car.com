@@ -60,6 +60,16 @@
                 </select>
             </div>
             <div class="col-md-2">
+                <label for="min_cg_price" class="form-label">采购成本</label>
+                <div class="input-group">
+                    <input type="number" step="0.0001" name="min_cg_price" class="form-control" placeholder="最小" 
+                           value="<?php echo $_GET['min_cg_price'] ?? ''; ?>">
+                    <span class="input-group-text">-</span>
+                    <input type="number" step="0.0001" name="max_cg_price" class="form-control" placeholder="最大" 
+                           value="<?php echo $_GET['max_cg_price'] ?? ''; ?>">
+                </div>
+            </div>
+            <div class="col-md-2">
                 <label for="status" class="form-label">状态</label>
                 <select name="status" class="form-select">
                     <option value="">全部状态</option>
