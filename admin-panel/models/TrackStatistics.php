@@ -22,8 +22,8 @@ class TrackStatistics {
             SELECT 
                 s.track_name,
                 COUNT(op.id) as order_count,
-                SUM(op.order_total_amount) as total_order_amount,
-                SUM(op.profit_amount) as total_profit
+                SUM(CAST(REPLACE(REPLACE(op.order_total_amount, '$', ''), ',', '') AS DECIMAL(10,2))) as total_order_amount,
+                SUM(CAST(REPLACE(REPLACE(op.profit_amount, '$', ''), ',', '') AS DECIMAL(10,2))) as total_profit
             FROM 
                 store s
             JOIN 
@@ -80,17 +80,7 @@ class TrackStatistics {
             $orderData = array_filter($orderStats, function($item) use ($trackName) {
                 return $item['track_name'] === $trackName;
             });
-            $orderData = reset($orderData) ?: ['order_count' => 0, 'total_order_amount' => '0', 'total_profit' => '0'];
-            
-            // 解析带有美元符号的文本为数值
-            $parseCurrency = function($value) {
-                if (is_string($value)) {
-                    // 移除美元符号和逗号
-                    $value = preg_replace('/[\$%,]/', '', $value);
-                    return floatval($value);
-                }
-                return floatval($value);
-            };
+            $orderData = reset($orderData) ?: ['order_count' => 0, 'total_order_amount' => 0, 'total_profit' => 0];
 
             // 查找对应赛道的费用数据
             $costData = array_filter($costStats, function($item) use ($trackName) {
@@ -101,9 +91,9 @@ class TrackStatistics {
             // 计算分摊的公司成本
             $allocatedCompanyCost = $totalCompanyCost / $trackCount;
 
-            // 解析订单金额和利润
-            $totalOrderAmount = $parseCurrency($orderData['total_order_amount']);
-            $totalProfit = $parseCurrency($orderData['total_profit']);
+            // 直接使用数据库返回的数值类型
+            $totalOrderAmount = floatval($orderData['total_order_amount']);
+            $totalProfit = floatval($orderData['total_profit']);
 
             // 货币转换：将人民币转换为美元（假设汇率为7.0）
             $exchangeRate = 7.0;
