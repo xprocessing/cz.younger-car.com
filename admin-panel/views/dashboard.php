@@ -8,7 +8,7 @@
             <div class="row mb-4">
                 <div class="col-md-12">
                     <div class="mb-4">
-                        <h3>赛道统计</h3>
+                        <h3>赛道统计 - <?php echo date('Y年m月', strtotime('-1 month')); ?></h3>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                                 <thead class="thead-light">
