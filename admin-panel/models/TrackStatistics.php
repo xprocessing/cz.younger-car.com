@@ -64,16 +64,15 @@ class TrackStatistics {
         // 4. 获取每个赛道的店铺费用
         $shopCostSql = "
             SELECT 
-                s.track_name,
-                SUM(sc.cost) as total_shop_cost
+                track_name,
+                SUM(cost) as total_shop_cost
             FROM 
-                shop_costs sc
-            LEFT JOIN 
-                store s ON sc.platform_name COLLATE utf8mb4_unicode_ci = s.platform_name COLLATE utf8mb4_unicode_ci AND sc.store_name COLLATE utf8mb4_unicode_ci = s.store_name COLLATE utf8mb4_unicode_ci
+                shop_costs
             WHERE 
-                sc.cost_date BETWEEN ? AND ?
+                cost_date BETWEEN ? AND ?
+                AND track_name IS NOT NULL AND track_name != ''
             GROUP BY 
-                s.track_name
+                track_name
         ";
         $shopCostStats = $this->db->query($shopCostSql, [$lastMonthStart, $lastMonthEnd])->fetchAll();
 

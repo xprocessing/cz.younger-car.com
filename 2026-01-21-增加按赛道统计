@@ -30,3 +30,7 @@ shop_costs表通过platform_name store_name 对应 store 表中的 平台名称p
 净利润率 = 总净利润 / 总订单金额
 
 修正：shop_costs数据表  cost 为 费用，单位为人民币，要按汇率7转换为美元
+
+更改：
+shop_costs数据表 增加了 track_name 字段，用于对应 store_name 表中的 track_name
+shop_costs数据表 中 cost 字段 单位为 人民币，要按汇率7转换为美元
