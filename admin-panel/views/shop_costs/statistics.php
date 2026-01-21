@@ -116,7 +116,7 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="<?php echo ADMIN_PANEL_URL; ?>/public/js/chart.js"></script>
 <script>
     // 店铺费用饼图
     const storeCtx = document.getElementById('storeChart').getContext('2d');

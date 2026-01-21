@@ -63,7 +63,7 @@
     </div>
 </div>
 <!-- Chart.js 脚本 -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="<?php echo ADMIN_PANEL_URL; ?>/public/js/chart.js"></script>
 <script>
     // 月度统计图表
     const monthlyData = <?php echo json_encode($monthlyStatistics); ?>;
