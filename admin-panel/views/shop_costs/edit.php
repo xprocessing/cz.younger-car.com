@@ -52,7 +52,7 @@
                             <div class="mb-3">
                                 <label for="cost" class="form-label">花费（人民币）<span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <span class="input-group-text">$</span>
+                                    <span class="input-group-text">￥</span>
                                     <input type="number" step="0.01" class="form-control" id="cost" 
                                            name="cost" required placeholder="0.00"
                                            value="<?php echo htmlspecialchars($cost['cost']); ?>">
