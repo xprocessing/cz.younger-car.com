@@ -50,14 +50,14 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-3">
-                                <label for="cost" class="form-label">日广告花费（美元）<span class="text-danger">*</span></label>
+                                <label for="cost" class="form-label">花费（人民币）<span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
                                     <input type="number" step="0.01" class="form-control" id="cost" 
                                            name="cost" required placeholder="0.00"
                                            value="<?php echo htmlspecialchars($cost['cost']); ?>">
                                 </div>
-                                <div class="form-text">日广告花费金额</div>
+                                <div class="form-text">花费金额</div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -158,7 +158,7 @@
                 <ul class="list-unstyled">
                     <li><strong>平台名称</strong>: 平台名称，如Amazon-FBA，Amazon、eBay，Shopify</li>
                     <li><strong>店铺名称</strong>: 店铺名称</li>
-                    <li><strong>日广告花费</strong>: 每日广告花费金额（美元）</li>
+                    <li><strong>日广告花费</strong>: 花费金额（人民币）</li>
                     <li><strong>费用类型</strong>: 费用类型，如广告费用、平台租金、其他费用</li>
                     <li><strong>日期</strong>: 数据日期，按天存储</li>
                 </ul>
