@@ -275,6 +275,7 @@ CREATE TABLE `store` (
   -- 增加 店铺负责人 赛道负责人名字
   `store_manager_name` VARCHAR(50) NULL COMMENT '店铺负责人姓名',
   `track_manager_name` VARCHAR(50) NULL COMMENT '赛道负责人姓名',
+  `track_name` VARCHAR(50)  NULL COMMENT '赛道名称',
   PRIMARY KEY (`store_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺信息表';
 

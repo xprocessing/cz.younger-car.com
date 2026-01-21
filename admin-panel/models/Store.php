@@ -39,8 +39,8 @@ class Store {
     
     // 创建店铺
     public function create($data) {
-        $sql = "INSERT INTO store (store_id, sid, store_name, platform_code, platform_name, currency, is_sync, status, country_code) 
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO store (store_id, sid, store_name, platform_code, platform_name, currency, is_sync, status, country_code, track_name) 
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $params = [
             $data['store_id'],
@@ -51,7 +51,8 @@ class Store {
             $data['currency'],
             $data['is_sync'],
             $data['status'],
-            $data['country_code'] ?? null
+            $data['country_code'] ?? null,
+            $data['track_name'] ?? null
         ];
         
         return $this->db->query($sql, $params);
@@ -59,7 +60,7 @@ class Store {
     
     // 更新店铺
     public function update($storeId, $data) {
-        $sql = "UPDATE store SET sid = ?, store_name = ?, platform_code = ?, platform_name = ?, currency = ?, is_sync = ?, status = ?, country_code = ? 
+        $sql = "UPDATE store SET sid = ?, store_name = ?, platform_code = ?, platform_name = ?, currency = ?, is_sync = ?, status = ?, country_code = ?, track_name = ? 
                WHERE store_id = ?";
         
         $params = [
@@ -71,6 +72,7 @@ class Store {
             $data['is_sync'],
             $data['status'],
             $data['country_code'] ?? null,
+            $data['track_name'] ?? null,
             $storeId
         ];
         

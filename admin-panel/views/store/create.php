@@ -121,6 +121,17 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="track_name" class="form-label">赛道名称</label>
+                                <input type="text" class="form-control" id="track_name" name="track_name"
+                                       placeholder="请输入赛道名称" maxlength="50">
+                                <div class="form-text">店铺所属的赛道名称</div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="mt-4">
                         <button type="submit" class="btn btn-primary">
