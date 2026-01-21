@@ -80,7 +80,17 @@ class TrackStatistics {
             $orderData = array_filter($orderStats, function($item) use ($trackName) {
                 return $item['track_name'] === $trackName;
             });
-            $orderData = reset($orderData) ?: ['order_count' => 0, 'total_order_amount' => 0, 'total_profit' => 0];
+            $orderData = reset($orderData) ?: ['order_count' => 0, 'total_order_amount' => '0', 'total_profit' => '0'];
+            
+            // 解析带有美元符号的文本为数值
+            $parseCurrency = function($value) {
+                if (is_string($value)) {
+                    // 移除美元符号和逗号
+                    $value = preg_replace('/[\$%,]/', '', $value);
+                    return floatval($value);
+                }
+                return floatval($value);
+            };
 
             // 查找对应赛道的费用数据
             $costData = array_filter($costStats, function($item) use ($trackName) {
@@ -91,22 +101,26 @@ class TrackStatistics {
             // 计算分摊的公司成本
             $allocatedCompanyCost = $totalCompanyCost / $trackCount;
 
+            // 解析订单金额和利润
+            $totalOrderAmount = $parseCurrency($orderData['total_order_amount']);
+            $totalProfit = $parseCurrency($orderData['total_profit']);
+
             // 货币转换：将人民币转换为美元（假设汇率为7.0）
             $exchangeRate = 7.0;
             $costInUSD = floatval($costData['total_cost']) / $exchangeRate;
             $allocatedCompanyCostInUSD = $allocatedCompanyCost / $exchangeRate;
             
             // 计算净利润
-            $netProfit = floatval($orderData['total_profit']) - $costInUSD - $allocatedCompanyCostInUSD;
+            $netProfit = $totalProfit - $costInUSD - $allocatedCompanyCostInUSD;
 
             // 计算净利润率
-            $netProfitMargin = $orderData['total_order_amount'] > 0 ? ($netProfit / floatval($orderData['total_order_amount'])) * 100 : 0;
+            $netProfitMargin = $totalOrderAmount > 0 ? ($netProfit / $totalOrderAmount) * 100 : 0;
 
             $trackStats[] = [
                 'track_name' => $trackName,
                 'order_count' => intval($orderData['order_count']),
-                'total_order_amount' => floatval($orderData['total_order_amount']),
-                'total_profit' => floatval($orderData['total_profit']),
+                'total_order_amount' => $totalOrderAmount,
+                'total_profit' => $totalProfit,
                 'total_cost' => $costInUSD,
                 'allocated_company_cost' => $allocatedCompanyCostInUSD,
                 'net_profit' => $netProfit,
