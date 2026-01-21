@@ -4,7 +4,65 @@
             <div class="card-header">
                 <h5>欢迎回来，<?php echo $_SESSION['full_name']; ?></h5>
             </div>
-            <!-- 增加赛道销售额，赛道费用，赛道利润，赛道利润率等 -->
+            <!-- 赛道统计模块 -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="mb-4">
+                        <h3>赛道统计</h3>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>赛道名称</th>
+                                        <th>总订单数量</th>
+                                        <th>总订单金额</th>
+                                        <th>总毛利润</th>
+                                        <th>总赛道费用</th>
+                                        <th>公司成本分摊</th>
+                                        <th>总净利润</th>
+                                        <th>净利润率</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (!empty($trackStatistics)): ?>
+                                        <?php foreach ($trackStatistics as $stat): ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($stat['track_name']); ?></td>
+                                                <td><?php echo number_format($stat['order_count']); ?></td>
+                                                <td>$<?php echo number_format($stat['total_order_amount'], 2); ?></td>
+                                                <td>$<?php echo number_format($stat['total_profit'], 2); ?></td>
+                                                <td>$<?php echo number_format($stat['total_cost'], 2); ?></td>
+                                                <td>$<?php echo number_format($stat['allocated_company_cost'], 2); ?></td>
+                                                <td>
+                                                    <?php 
+                                                        $netProfitClass = $stat['net_profit'] > 0 ? 'text-success' : ($stat['net_profit'] < 0 ? 'text-danger' : 'text-muted');
+                                                        echo '<span class="' . $netProfitClass . '">';
+                                                        echo '$' . number_format($stat['net_profit'], 2);
+                                                        echo '</span>';
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php 
+                                                        $marginClass = $stat['net_profit_margin'] > 0 ? 'text-success' : ($stat['net_profit_margin'] < 0 ? 'text-danger' : 'text-muted');
+                                                        echo '<span class="' . $marginClass . '">';
+                                                        echo $stat['net_profit_margin'] > 0 ? '+' : '';
+                                                        echo number_format($stat['net_profit_margin'], 2) . '%';
+                                                        echo '</span>';
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td colspan="8" class="text-center">暂无数据</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="card-body">
                 <!-- 各平台月度销售额统计 -->
@@ -86,6 +144,18 @@
                         <div class="mb-4">
                             <h3>各平台广告费占比</h3>
                             <canvas id="costsChart" width="250" height="250"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-4">
+                            <h3>赛道销售占比</h3>
+                            <canvas id="trackSalesChart" width="250" height="250"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-4">
+                            <h3>赛道利润占比</h3>
+                            <canvas id="trackProfitChart" width="250" height="250"></canvas>
                         </div>
                     </div>
                 </div>
@@ -282,6 +352,16 @@
             ];
         }
         echo json_encode($costsData);
+    ?>;
+    
+    // 赛道销售数据
+    const trackSalesData = <?php 
+        echo json_encode($trackSalesData);
+    ?>;
+    
+    // 赛道利润数据
+    const trackProfitData = <?php 
+        echo json_encode($trackProfitData);
     ?>;
     
     // 准备折线图数据
@@ -610,6 +690,12 @@
         
         // 绘制Shopify平台柱状图
         drawBarChart('shopifySalesChart', dailySalesData, ['Shopify'], 'Shopify 平台近60天日销售额');
+        
+        // 绘制赛道销售占比饼图
+        drawPieChart('trackSalesChart', trackSalesData, '赛道销售占比');
+        
+        // 绘制赛道利润占比饼图
+        drawPieChart('trackProfitChart', trackProfitData, '赛道利润占比');
     }
     
     // 页面加载完成后绘制图表

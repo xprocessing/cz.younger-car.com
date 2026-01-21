@@ -88,6 +88,13 @@ class AuthController {
         // 获取各平台月度销售额统计数据
         $platformMonthlyStats = $orderProfitModel->getPlatformMonthlySalesStats();
         
+        // 获取赛道统计数据
+        require_once ADMIN_PANEL_DIR . '/models/TrackStatistics.php';
+        $trackStatisticsModel = new TrackStatistics();
+        $trackStatistics = $trackStatisticsModel->getTrackStatistics();
+        $trackSalesData = $trackStatisticsModel->getTrackSalesData();
+        $trackProfitData = $trackStatisticsModel->getTrackProfitData();
+        
         $success = getSuccess();
         $user = getCurrentUser();
         
