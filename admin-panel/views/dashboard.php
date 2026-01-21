@@ -27,7 +27,7 @@
                                     <?php if (!empty($trackStatistics)): ?>
                                         <?php foreach ($trackStatistics as $stat): ?>
                                             <tr>
-                                                <td><?php echo htmlspecialchars($stat['track_name']); ?></td>
+                                                <td><?php echo htmlspecialchars($stat['track_name'] ?? '未知赛道'); ?></td>
                                                 <td><?php echo number_format($stat['order_count']); ?></td>
                                                 <td>$<?php echo number_format($stat['total_order_amount'], 2); ?></td>
                                                 <td>$<?php echo number_format($stat['total_profit'], 2); ?></td>
@@ -93,7 +93,7 @@
                                         <?php if (!empty($platformMonthlyStats)): ?>
                                             <?php foreach ($platformMonthlyStats as $stat): ?>
                                                 <tr>
-                                                    <td><?php echo htmlspecialchars($stat['platform_name']); ?></td>
+                                                    <td><?php echo htmlspecialchars($stat['platform_name'] ?? '未知平台'); ?></td>
                                                     <td>$<?php echo number_format($stat['current_month_sales'], 2); ?></td>
                                                     <td>$<?php echo number_format($stat['last_month_sales'], 2); ?></td>
                                                     <td>$<?php echo number_format($stat['last_last_month_sales'], 2); ?></td>

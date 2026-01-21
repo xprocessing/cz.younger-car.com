@@ -11,3 +11,9 @@ company_costs 表中的 cost 为 公司成本，cost_date 为 成本日期
 
 总净利润 = 总毛利润 - 总赛道费用cost-赛道分摊公司成本
 净利润率 = 总净利润 / 总订单金额
+
+补充说明：
+
+company_costs 和 track_costs 表中的 cost是人民币
+order_profit 表中的 order_total_amount，profit_amount 是美元
+计算总这利润和总利润率的时候要把人民币按目前汇率6.96转换为美元（1美元=6.96人民币）

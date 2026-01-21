@@ -67,6 +67,10 @@ class TrackStatistics {
             array_column($orderStats, 'track_name'),
             array_column($costStats, 'track_name')
         ));
+        // 过滤掉null值
+        $trackNames = array_filter($trackNames, function($value) {
+            return $value !== null && $value !== '';
+        });
 
         // 赛道数量（固定为4个）
         $trackCount = 4;
@@ -87,8 +91,13 @@ class TrackStatistics {
             // 计算分摊的公司成本
             $allocatedCompanyCost = $totalCompanyCost / $trackCount;
 
+            // 货币转换：将人民币转换为美元（假设汇率为7.0）
+            $exchangeRate = 7.0;
+            $costInUSD = floatval($costData['total_cost']) / $exchangeRate;
+            $allocatedCompanyCostInUSD = $allocatedCompanyCost / $exchangeRate;
+            
             // 计算净利润
-            $netProfit = floatval($orderData['total_profit']) - floatval($costData['total_cost']) - $allocatedCompanyCost;
+            $netProfit = floatval($orderData['total_profit']) - $costInUSD - $allocatedCompanyCostInUSD;
 
             // 计算净利润率
             $netProfitMargin = $orderData['total_order_amount'] > 0 ? ($netProfit / floatval($orderData['total_order_amount'])) * 100 : 0;
@@ -98,8 +107,8 @@ class TrackStatistics {
                 'order_count' => intval($orderData['order_count']),
                 'total_order_amount' => floatval($orderData['total_order_amount']),
                 'total_profit' => floatval($orderData['total_profit']),
-                'total_cost' => floatval($costData['total_cost']),
-                'allocated_company_cost' => $allocatedCompanyCost,
+                'total_cost' => $costInUSD,
+                'allocated_company_cost' => $allocatedCompanyCostInUSD,
                 'net_profit' => $netProfit,
                 'net_profit_margin' => $netProfitMargin
             ];
