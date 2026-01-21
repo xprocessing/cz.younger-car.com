@@ -108,6 +108,7 @@
                             <th>商品名称</th>
                             <th>采购成本</th>
                             <th>状态</th>
+                            <th>开发人员</th>
                             <th>创建时间</th>
                             <th>操作</th>
                         </tr>
@@ -154,6 +155,7 @@
                                         ?>
                                         <span class="badge <?php echo $badgeClass; ?>"><?php echo $statusText; ?></span>
                                     </td>
+                                    <td><?php echo htmlspecialchars($product['product_developer'] ?? ''); ?></td>
                                     <td><?php echo $product['create_time'] ?? ''; ?></td>
                                     <td>
                                         <a href="<?php echo ADMIN_PANEL_URL; ?>/products.php?action=edit&id=<?php echo $product['id']; ?>" 
