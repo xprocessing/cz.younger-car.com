@@ -1,0 +1,13 @@
+增加赛道统计板块：
+统计每个赛道的上月 总订单数量，总订单金额，总毛利润，总赛道费用cost，公司成本分摊，总净利润，净利润率
+
+store 表中的 track_name 为 赛道名称 ，store_id为店铺编号 
+通过store_id 对应 order_profit表中 相同的store_id 的 订单金额order_total_amount，毛利润 profit_amount ，订单日期global_purchase_time
+通过 track_name 对应 track_costs表中 相同的track_name 的 赛道费用cost，费用日期cost_date
+
+company_costs 表中的 cost 为 公司成本，cost_date 为 成本日期
+
+赛道分摊公司成本 = 公司成本 / 赛道数量4个
+
+总净利润 = 总毛利润 - 总赛道费用cost-赛道分摊公司成本
+净利润率 = 总净利润 / 总订单金额

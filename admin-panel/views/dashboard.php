@@ -4,6 +4,8 @@
             <div class="card-header">
                 <h5>欢迎回来，<?php echo $_SESSION['full_name']; ?></h5>
             </div>
+            <!-- 增加赛道销售额，赛道费用，赛道利润，赛道利润率等 -->
+
             <div class="card-body">
                 <!-- 各平台月度销售额统计 -->
                 <div class="row mb-4">
