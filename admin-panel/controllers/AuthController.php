@@ -91,6 +91,9 @@ class AuthController {
         // 获取各平台月度订单量统计数据
         $platformMonthlyOrderStats = $orderProfitModel->getPlatformMonthlyOrderStats();
         
+        // 获取最近30天按平台统计数据
+        $platformStats = $orderProfitModel->getPlatformStats($startDate, $endDate);
+        
         // 获取赛道统计数据
         require_once ADMIN_PANEL_DIR . '/models/TrackStatistics.php';
         $trackStatisticsModel = new TrackStatistics();
