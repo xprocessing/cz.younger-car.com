@@ -4,51 +4,7 @@
             <div class="card-header">
                 <h5>欢迎回来，<?php echo $_SESSION['full_name']; ?></h5>
             </div>
-            <!-- 最近30天按平台统计 -->
-            <div class="row mb-4">
-                <div class="col-md-12">
-                    <div class="mb-4">
-                        <h3>最近30天按平台统计</h3>
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>平台名称</th>
-                                        <th>订单数量</th>
-                                        <th>总订单金额</th>
-                                        <th>总利润</th>
-                                        <th>总出库成本</th>
-                                        <th>总运费</th>
-                                        <th>平均利润率</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php if (!empty($platformStats)): ?>
-                                        <?php foreach ($platformStats as $platform): ?>
-                                            <tr>
-                                                <td><?php echo htmlspecialchars($platform['platform_name']); ?></td>
-                                                <td><?php echo number_format($platform['order_count']); ?></td>
-                                                <td><strong>$<?php echo number_format($platform['total_amount'], 2); ?></strong></td>
-                                                <td><strong>$<?php echo number_format($platform['total_profit'], 2); ?></strong></td>
-                                                <td><strong>$<?php echo number_format($platform['total_wms_cost'], 2); ?></strong></td>
-                                                <td><strong>$<?php echo number_format($platform['total_wms_shipping'], 2); ?></strong></td>
-                                                <td><strong
-                                                        class="<?php echo $platform['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
-                                                        <?php echo number_format($platform['avg_profit_rate'], 2); ?>%
-                                                    </strong></td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <tr>
-                                            <td colspan="7" class="text-center">暂无数据</td>
-                                        </tr>
-                                    <?php endif; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <!-- 赛道统计模块 -->
             <div class="row mb-4">
                 <div class="col-md-12">
@@ -305,6 +261,51 @@
                         </div>
                     </div>
                 </div>
+                <!-- 最近30天按平台统计 -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="mb-4">
+                        <h3>最近30天按平台统计</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>平台名称</th>
+                                        <th>订单数量</th>
+                                        <th>总订单金额</th>
+                                        <th>总利润</th>
+                                        <th>总出库成本</th>
+                                        <th>总运费</th>
+                                        <th>平均利润率</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (!empty($platformStats)): ?>
+                                        <?php foreach ($platformStats as $platform): ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($platform['platform_name']); ?></td>
+                                                <td><?php echo number_format($platform['order_count']); ?></td>
+                                                <td><strong>$<?php echo number_format($platform['total_amount'], 2); ?></strong></td>
+                                                <td><strong>$<?php echo number_format($platform['total_profit'], 2); ?></strong></td>
+                                                <td><strong>$<?php echo number_format($platform['total_wms_cost'], 2); ?></strong></td>
+                                                <td><strong>$<?php echo number_format($platform['total_wms_shipping'], 2); ?></strong></td>
+                                                <td><strong
+                                                        class="<?php echo $platform['avg_profit_rate'] >= 0 ? 'text-success' : 'text-danger'; ?>">
+                                                        <?php echo number_format($platform['avg_profit_rate'], 2); ?>%
+                                                    </strong></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td colspan="7" class="text-center">暂无数据</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
                 
                 
