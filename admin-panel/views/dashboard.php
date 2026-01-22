@@ -3,6 +3,11 @@
         <div class="card">
             <div class="card-header">
                 <h5>欢迎回来，<?php echo $_SESSION['full_name']; ?></h5>
+                <?php
+require_once ADMIN_PANEL_DIR . '/includes/RedisCache.php';
+$redisCache = RedisCache::getInstance();
+echo 'Redis连接状态: ' . ($redisCache->isConnected() ? '已连接' : '未连接');
+?>
             </div>
             <!-- 最近60天每日销量统计 -->
             <div class="row mb-4">

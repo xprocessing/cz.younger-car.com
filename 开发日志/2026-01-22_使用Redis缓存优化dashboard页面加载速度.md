@@ -132,4 +132,8 @@
 3. **优化控制器逻辑**：在AuthController.php中添加了缓存逻辑，减少数据库查询
 4. **设计合理的缓存策略**：使用日期作为缓存键前缀，设置5分钟过期时间，确保数据及时更新
 
-通过这些优化措施，dashboard.php页面的加载速度从原来的数秒减少到1秒以内，数据库查询次数减少了80-90%，系统性能和用户体验得到了显著改善。
+通过这些优化措施，dashboard.php页面的加载速度从原来的数秒减少到1秒以内，数据库查询次数减少了80-90%，系统性能和用户体验得到了显著改善。<?php
+require_once ADMIN_PANEL_DIR . '/includes/RedisCache.php';
+$redisCache = RedisCache::getInstance();
+echo 'Redis连接状态: ' . ($redisCache->isConnected() ? '已连接' : '未连接');
+?>
