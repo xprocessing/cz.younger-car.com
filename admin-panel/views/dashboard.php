@@ -4,6 +4,19 @@
             <div class="card-header">
                 <h5>欢迎回来，<?php echo $_SESSION['full_name']; ?></h5>
             </div>
+            <!-- 最近60天每日销量统计 -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">最近60天每日销量统计</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="dailySalesStatsChart" style="width: 100%; height: 300px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- 赛道统计模块 -->
             <div class="row mb-4">
                 <div class="col-md-12">
@@ -475,6 +488,21 @@
         echo json_encode($dailyPlatformSales);
     ?>;
     
+    // 准备最近60天每日销量统计数据
+    const dailySalesStatsData = <?php 
+        $dailySalesStatsData = [
+            'dates' => [],
+            'sales' => []
+        ];
+        if (!empty($dailySalesStats)) {
+            foreach ($dailySalesStats as $stat) {
+                $dailySalesStatsData['dates'][] = $stat['sale_date'];
+                $dailySalesStatsData['sales'][] = floatval($stat['order_count']);
+            }
+        }
+        echo json_encode($dailySalesStatsData);
+    ?>;
+    
     // 折线图绘制函数
     function drawLineChart(canvasId, data) {
         const canvas = document.getElementById(canvasId);
@@ -780,6 +808,146 @@
         ctx.restore();
     }
     
+    // 最近60天每日销量统计图表绘制函数
+    function drawDailySalesStatsChart(canvasId, data) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+        
+        // 动态设置canvas宽度以匹配显示宽度
+        canvas.width = canvas.clientWidth;
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        const padding = { top: 30, right: 50, bottom: 60, left: 70 };
+        const chartWidth = width - padding.left - padding.right;
+        const chartHeight = height - padding.top - padding.bottom;
+        
+        // 清空画布
+        ctx.clearRect(0, 0, width, height);
+        
+        // 绘制背景
+        ctx.fillStyle = '#f8f9fa';
+        ctx.fillRect(0, 0, width, height);
+        
+        const dates = data.dates;
+        const sales = data.sales;
+        
+        if (dates.length === 0 || sales.length === 0) {
+            ctx.fillStyle = '#ccc';
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('暂无数据', width / 2, height / 2);
+            return;
+        }
+        
+        // 计算X轴和Y轴的刻度
+        const maxSales = Math.max(...sales);
+        const yScale = chartHeight / maxSales;
+        const xStep = chartWidth / (dates.length - 1);
+        
+        // 绘制网格线
+        ctx.strokeStyle = '#e0e0e0';
+        ctx.lineWidth = 1;
+        
+        // Y轴网格线
+        for (let i = 0; i <= 10; i++) {
+            const y = padding.top + (chartHeight / 10) * i;
+            ctx.beginPath();
+            ctx.moveTo(padding.left, y);
+            ctx.lineTo(padding.left + chartWidth, y);
+            ctx.stroke();
+            
+            // Y轴刻度
+            const value = (maxSales / 10) * (10 - i);
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'right';
+            ctx.fillText(value.toFixed(0), padding.left - 10, y + 4);
+        }
+        
+        // X轴网格线（每7天显示一个日期）
+        for (let i = 0; i < dates.length; i += Math.ceil(dates.length / 10)) {
+            const x = padding.left + i * xStep;
+            ctx.beginPath();
+            ctx.moveTo(x, padding.top);
+            ctx.lineTo(x, padding.top + chartHeight);
+            ctx.stroke();
+            
+            // X轴日期标签
+            const date = new Date(dates[i]);
+            const dateLabel = (date.getMonth() + 1) + '/' + date.getDate();
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(dateLabel, x, padding.top + chartHeight + 20);
+        }
+        
+        // 绘制折线
+        ctx.strokeStyle = '#36A2EB';
+        ctx.fillStyle = 'rgba(54, 162, 235, 0.1)';
+        ctx.lineWidth = 2;
+        
+        // 绘制折线
+        ctx.beginPath();
+        for (let i = 0; i < dates.length; i++) {
+            const x = padding.left + i * xStep;
+            const y = padding.top + chartHeight - (sales[i] * yScale);
+            
+            if (i === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+        }
+        ctx.stroke();
+        
+        // 绘制填充区域
+        ctx.lineTo(padding.left + (dates.length - 1) * xStep, padding.top + chartHeight);
+        ctx.lineTo(padding.left, padding.top + chartHeight);
+        ctx.closePath();
+        ctx.fill();
+        
+        // 绘制数据点
+        for (let i = 0; i < dates.length; i += Math.ceil(dates.length / 20)) {
+            const x = padding.left + i * xStep;
+            const y = padding.top + chartHeight - (sales[i] * yScale);
+            
+            ctx.fillStyle = '#36A2EB';
+            ctx.beginPath();
+            ctx.arc(x, y, 4, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 添加数值标签（每10天显示一个）
+            if (i % Math.ceil(dates.length / 10) === 0) {
+                ctx.fillStyle = '#333';
+                ctx.font = '10px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(sales[i].toFixed(0), x, y - 10);
+            }
+        }
+        
+        // 绘制图表标题
+        ctx.fillStyle = '#333';
+        ctx.font = '16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('最近60天每日销量统计', width / 2, padding.top - 10);
+        
+        // 绘制X轴和Y轴标题
+        ctx.fillStyle = '#666';
+        ctx.font = '14px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('日期', width / 2, height - 20);
+        
+        ctx.save();
+        ctx.translate(padding.left / 2, height / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillStyle = '#666';
+        ctx.font = '14px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('销量', 0, 0);
+        ctx.restore();
+    }
+    
     // 绘制所有图表
     function drawAllCharts() {
         drawPieChart('salesChart', salesData, '平台销售额占比');
@@ -787,6 +955,7 @@
         drawPieChart('profitsChart', profitsData, '平台毛利润占比');
         drawPieChart('costsChart', costsData, '平台广告费占比');
         drawLineChart('dailySalesChart', dailySalesData);
+        drawDailySalesStatsChart('dailySalesStatsChart', dailySalesStatsData);
         
         // 绘制Amazon + Amazon-FBA平台柱状图
         drawBarChart('amazonSalesChart', dailySalesData, ['Amazon', 'Amazon-FBA'], 'Amazon + Amazon-FBA 平台近60天日销售额');
