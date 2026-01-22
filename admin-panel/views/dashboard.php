@@ -843,7 +843,7 @@
         // 计算X轴和Y轴的刻度
         const maxSales = Math.max(...sales);
         const yScale = chartHeight / maxSales;
-        const xStep = chartWidth / (dates.length - 1);
+        const barWidth = chartWidth / dates.length * 0.8;
         
         // 绘制网格线
         ctx.strokeStyle = '#e0e0e0';
@@ -867,7 +867,7 @@
         
         // X轴网格线（每7天显示一个日期）
         for (let i = 0; i < dates.length; i += Math.ceil(dates.length / 10)) {
-            const x = padding.left + i * xStep;
+            const x = padding.left + i * (chartWidth / dates.length);
             ctx.beginPath();
             ctx.moveTo(x, padding.top);
             ctx.lineTo(x, padding.top + chartHeight);
@@ -882,49 +882,28 @@
             ctx.fillText(dateLabel, x, padding.top + chartHeight + 20);
         }
         
-        // 绘制折线
-        ctx.strokeStyle = '#36A2EB';
-        ctx.fillStyle = 'rgba(54, 162, 235, 0.1)';
-        ctx.lineWidth = 2;
-        
-        // 绘制折线
-        ctx.beginPath();
-        for (let i = 0; i < dates.length; i++) {
-            const x = padding.left + i * xStep;
-            const y = padding.top + chartHeight - (sales[i] * yScale);
-            
-            if (i === 0) {
-                ctx.moveTo(x, y);
-            } else {
-                ctx.lineTo(x, y);
-            }
-        }
-        ctx.stroke();
-        
-        // 绘制填充区域
-        ctx.lineTo(padding.left + (dates.length - 1) * xStep, padding.top + chartHeight);
-        ctx.lineTo(padding.left, padding.top + chartHeight);
-        ctx.closePath();
-        ctx.fill();
-        
-        // 绘制数据点
-        for (let i = 0; i < dates.length; i += Math.ceil(dates.length / 20)) {
-            const x = padding.left + i * xStep;
-            const y = padding.top + chartHeight - (sales[i] * yScale);
+        // 绘制柱状图
+        dates.forEach((date, dateIndex) => {
+            const x = padding.left + dateIndex * (chartWidth / dates.length) + (chartWidth / dates.length - barWidth) / 2;
+            const barHeight = sales[dateIndex] * yScale;
+            const barY = padding.top + chartHeight - barHeight;
             
             ctx.fillStyle = '#36A2EB';
-            ctx.beginPath();
-            ctx.arc(x, y, 4, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.fillRect(x, barY, barWidth, barHeight);
             
-            // 添加数值标签（每10天显示一个）
-            if (i % Math.ceil(dates.length / 10) === 0) {
+            // 绘制边框
+            ctx.strokeStyle = '#2196F3';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(x, barY, barWidth, barHeight);
+            
+            // 显示数值标签（每5天显示一个）
+            if (dateIndex % Math.ceil(dates.length / 15) === 0) {
                 ctx.fillStyle = '#333';
                 ctx.font = '10px Arial';
                 ctx.textAlign = 'center';
-                ctx.fillText(sales[i].toFixed(0), x, y - 10);
+                ctx.fillText(sales[dateIndex].toFixed(0), x + barWidth / 2, barY - 10);
             }
-        }
+        });
         
         // 绘制图表标题
         ctx.fillStyle = '#333';
