@@ -21,7 +21,7 @@ class TrackStatistics {
         $orderSql = "
             SELECT 
                 COALESCE(s.track_name, '未分类赛道') as track_name,
-                COUNT(DISTINCT op.id) as order_count,
+                COUNT(*) as order_count,
                 SUM(CAST(REPLACE(REPLACE(REPLACE(op.order_total_amount, '$', ''), ',', ''), '%', '') AS DECIMAL(10,2))) as total_order_amount,
                 SUM(CAST(REPLACE(REPLACE(REPLACE(op.profit_amount, '$', ''), ',', ''), '%', '') AS DECIMAL(10,2))) as total_profit
             FROM 
