@@ -508,8 +508,9 @@
         const canvas = document.getElementById(canvasId);
         if (!canvas) return;
         
-        // 动态设置canvas宽度以匹配显示宽度
+        // 动态设置canvas尺寸以匹配显示尺寸
         canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
         const ctx = canvas.getContext('2d');
         const width = canvas.width;
         const height = canvas.height;
@@ -666,8 +667,9 @@
         const canvas = document.getElementById(canvasId);
         if (!canvas) return;
         
-        // 动态设置canvas宽度以匹配显示宽度
+        // 动态设置canvas尺寸以匹配显示尺寸
         canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
         const ctx = canvas.getContext('2d');
         const width = canvas.width;
         const height = canvas.height;
@@ -813,8 +815,9 @@
         const canvas = document.getElementById(canvasId);
         if (!canvas) return;
         
-        // 动态设置canvas宽度以匹配显示宽度
+        // 动态设置canvas尺寸以匹配显示尺寸
         canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
         const ctx = canvas.getContext('2d');
         const width = canvas.width;
         const height = canvas.height;
