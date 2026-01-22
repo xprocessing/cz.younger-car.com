@@ -58,7 +58,7 @@ class RedisCache {
      * @param int $expire 过期时间（秒）
      * @return bool
      */
-    public function set($key, $value, $expire = 300) {
+    public function set($key, $value, $expire = 3600) {
         if (!$this->connected) {
             return false;
         }
