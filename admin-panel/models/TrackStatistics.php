@@ -29,9 +29,9 @@ class TrackStatistics {
             LEFT JOIN 
                 store s ON op.store_id = s.store_id
             WHERE 
-                DATE(op.global_purchase_time) BETWEEN ? AND ?
+                op.global_purchase_time BETWEEN ? AND ?
             GROUP BY 
-                s.track_name
+                COALESCE(s.track_name, '未分类赛道')
         ";
         $orderStats = $this->db->query($orderSql, [$lastMonthStart, $lastMonthEnd])->fetchAll();
 
@@ -94,19 +94,19 @@ class TrackStatistics {
         foreach ($trackNames as $trackName) {
             // 查找对应赛道的订单数据
             $orderData = array_filter($orderStats, function($item) use ($trackName) {
-                return $item['track_name'] === $trackName;
+                return $item['track_name'] == $trackName;
             });
             $orderData = reset($orderData) ?: ['order_count' => 0, 'total_order_amount' => 0, 'total_profit' => 0];
 
             // 查找对应赛道的费用数据
             $costData = array_filter($costStats, function($item) use ($trackName) {
-                return $item['track_name'] === $trackName;
+                return $item['track_name'] == $trackName;
             });
             $costData = reset($costData) ?: ['total_cost' => 0];
 
             // 查找对应赛道的店铺费用数据
             $shopCostData = array_filter($shopCostStats, function($item) use ($trackName) {
-                return $item['track_name'] === $trackName;
+                return $item['track_name'] == $trackName;
             });
             $shopCostData = reset($shopCostData) ?: ['total_shop_cost' => 0];
 
