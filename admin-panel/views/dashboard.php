@@ -123,6 +123,65 @@
                     </div>
                 </div>
 
+                <!-- 各平台月度订单量统计 -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="mb-4">
+                            <h3>各平台月度订单量统计</h3>
+                            <div class="table-responsive">
+                                <?php 
+                                    // 获取当前月份名称
+                                    $currentMonth = date('m月');
+                                    // 获取上月月份名称
+                                    $lastMonth = date('m月', strtotime('-1 month'));
+                                    // 获取上上月月份名称
+                                    $lastLastMonth = date('m月', strtotime('-2 month'));
+                                ?>
+                                <table class="table table-bordered table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>平台名称</th>
+                                            <th><?php echo $currentMonth; ?>订单量(本月)</th>
+                                            <th><?php echo $lastMonth; ?>订单量(上月)</th>
+                                            <th><?php echo $lastLastMonth; ?>订单量(上上月)</th>
+                                            <th><?php echo $lastMonth; ?>对比<?php echo $lastLastMonth; ?>增长率(上月对比上上月)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if (!empty($platformMonthlyOrderStats)): ?>
+                                            <?php foreach ($platformMonthlyOrderStats as $stat): ?>
+                                                <tr>
+                                                    <td><?php echo htmlspecialchars($stat['platform_name'] ?? '未知平台'); ?></td>
+                                                    <td><?php echo number_format($stat['current_month_orders']); ?></td>
+                                                    <td><?php echo number_format($stat['last_month_orders']); ?></td>
+                                                    <td><?php echo number_format($stat['last_last_month_orders']); ?></td>
+                                                    <td>
+                                                        <?php 
+                                                            $growthRate = $stat['growth_rate']; 
+                                                            $growthClass = $growthRate > 0 ? 'text-success' : ($growthRate < 0 ? 'text-danger' : 'text-muted');
+                                                            echo '<span class="' . $growthClass . '">';
+                                                            echo $growthRate > 0 ? '+' : '';
+                                                            echo number_format($growthRate, 2) . '%';
+                                                            echo '</span>';
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="5" class="text-center">暂无数据</td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 各平台月度销售额统计 -->
+
+
                 <div class="row">
                     <div class="col-md-3">
                         <div class="mb-4">

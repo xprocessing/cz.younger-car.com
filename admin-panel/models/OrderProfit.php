@@ -1107,4 +1107,83 @@ class OrderProfit {
         
         return $stats;
     }
+    
+    // 获取各个平台的月度订单量统计数据
+    public function getPlatformMonthlyOrderStats() {
+        // 获取本月、上月、上上月的年份和月份
+        $currentYearMonth = date('Y-m');
+        $lastYearMonth = date('Y-m', strtotime('-1 month'));
+        $lastLastYearMonth = date('Y-m', strtotime('-2 month'));
+        
+        // 计算每个月的开始和结束日期
+        $currentMonthStart = $currentYearMonth . '-01';
+        $currentMonthEnd = date('Y-m-t', strtotime($currentYearMonth));
+        
+        $lastMonthStart = $lastYearMonth . '-01';
+        $lastMonthEnd = date('Y-m-t', strtotime($lastYearMonth));
+        
+        $lastLastMonthStart = $lastLastYearMonth . '-01';
+        $lastLastMonthEnd = date('Y-m-t', strtotime($lastLastYearMonth));
+        
+        // 构建SQL查询
+        $sql = "SELECT 
+                    s.platform_name,
+                    
+                    -- 本月订单量
+                    COUNT(CASE 
+                        WHEN DATE_FORMAT(op.global_purchase_time, '%Y-%m') = ? 
+                        THEN op.id 
+                        ELSE NULL 
+                    END) as current_month_orders,
+                    
+                    -- 上月订单量
+                    COUNT(CASE 
+                        WHEN DATE_FORMAT(op.global_purchase_time, '%Y-%m') = ? 
+                        THEN op.id 
+                        ELSE NULL 
+                    END) as last_month_orders,
+                    
+                    -- 上上月订单量
+                    COUNT(CASE 
+                        WHEN DATE_FORMAT(op.global_purchase_time, '%Y-%m') = ? 
+                        THEN op.id 
+                        ELSE NULL 
+                    END) as last_last_month_orders
+                
+                FROM order_profit op
+                LEFT JOIN store s ON op.store_id = s.store_id
+                WHERE 
+                    DATE(op.global_purchase_time) BETWEEN ? AND ?
+                GROUP BY s.platform_name
+                ORDER BY s.platform_name ASC";
+        
+        $params = [$currentYearMonth, $lastYearMonth, $lastLastYearMonth, $lastLastMonthStart, $currentMonthEnd];
+        $stmt = $this->db->query($sql, $params);
+        $result = $stmt->fetchAll();
+        
+        // 处理结果，计算增长率
+        $stats = [];
+        foreach ($result as $row) {
+            $platform = $row['platform_name'] ?? '未知平台';
+            $currentMonthOrders = intval($row['current_month_orders']);
+            $lastMonthOrders = intval($row['last_month_orders']);
+            $lastLastMonthOrders = intval($row['last_last_month_orders']);
+            
+            // 计算增长率
+            $growthRate = 0;
+            if ($lastLastMonthOrders > 0) {
+                $growthRate = (($lastMonthOrders - $lastLastMonthOrders) / $lastLastMonthOrders) * 100;
+            }
+            
+            $stats[] = [
+                'platform_name' => $platform,
+                'current_month_orders' => $currentMonthOrders,
+                'last_month_orders' => $lastMonthOrders,
+                'last_last_month_orders' => $lastLastMonthOrders,
+                'growth_rate' => $growthRate
+            ];
+        }
+        
+        return $stats;
+    }
 }
