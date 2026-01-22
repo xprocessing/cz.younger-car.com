@@ -1,6 +1,7 @@
 <?php
 require_once ADMIN_PANEL_DIR . '/models/InventoryDetails.php';
 require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
+require_once ADMIN_PANEL_DIR . '/includes/RedisCache.php';
 
 class InventoryDetailsController {
     private $inventoryDetailsModel;
@@ -234,6 +235,11 @@ class InventoryDetailsController {
         header('Cache-Control: post-check=0, pre-check=0', false);
         header('Pragma: no-cache');
         
+        // 初始化Redis缓存
+        $redisCache = RedisCache::getInstance();
+        $cachePrefix = 'inventory_alert:' . date('Y-m-d');
+        $cacheExpire = 86400; // 1天缓存
+        
         // 分页参数处理
         $page = max(1, (int)($_GET['page'] ?? 1));
         $limit = max(1, min(500, (int)($_GET['limit'] ?? 100))); // 每页最多500条
@@ -273,9 +279,25 @@ class InventoryDetailsController {
             // 清除会话中的批量查询数据，确保下次打开页面时显示所有数据
             unset($_SESSION['batch_sku_list']);
             
-            // 查询所有数据
-            $totalCount = 0;
-            $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert($limit, $offset, $totalCount);
+            // 生成缓存键
+            $cacheKey = $cachePrefix . ':list:' . $page . ':' . $limit;
+            $totalCountCacheKey = $cachePrefix . ':total_count';
+            
+            // 尝试从缓存获取数据
+            $cachedData = $redisCache->get($cacheKey);
+            $totalCount = $redisCache->get($totalCountCacheKey);
+            
+            if ($cachedData && $totalCount) {
+                $inventoryAlerts = $cachedData;
+            } else {
+                // 查询所有数据
+                $totalCount = 0;
+                $inventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert($limit, $offset, $totalCount);
+                
+                // 缓存数据
+                $redisCache->set($cacheKey, $inventoryAlerts, $cacheExpire);
+                $redisCache->set($totalCountCacheKey, $totalCount, $cacheExpire);
+            }
         }
         
         // 计算总页数
@@ -311,18 +333,39 @@ class InventoryDetailsController {
         if ($hasBatchQuery) {
             // 如果有批量查询条件，获取所有符合条件的SKU的统计数据
             $allInventoryAlerts = $this->inventoryDetailsModel->getInventoryAlertBySkuList($skuList);
+            
+            // 计算所有数据的总和
+            $totalStats['product_valid_num_excluding_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_valid_num_excluding_wenzhou'));
+            $totalStats['product_onway_excluding_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_onway_excluding_wenzhou'));
+            $totalStats['product_valid_num_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_valid_num_wenzhou'));
+            $totalStats['quantity_receive_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'quantity_receive_wenzhou'));
+            $totalStats['outbound_30days'] = array_sum(array_column($allInventoryAlerts, 'outbound_30days'));
+            $totalStats['sku_count'] = count($allInventoryAlerts);
         } else {
-            // 否则获取所有库存预警数据的统计信息
-            $allInventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert();
+            // 生成统计数据缓存键
+            $statsCacheKey = $cachePrefix . ':stats';
+            
+            // 尝试从缓存获取统计数据
+            $cachedStats = $redisCache->get($statsCacheKey);
+            
+            if ($cachedStats) {
+                $totalStats = $cachedStats;
+            } else {
+                // 否则获取所有库存预警数据的统计信息
+                $allInventoryAlerts = $this->inventoryDetailsModel->getInventoryAlert();
+                
+                // 计算所有数据的总和
+                $totalStats['product_valid_num_excluding_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_valid_num_excluding_wenzhou'));
+                $totalStats['product_onway_excluding_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_onway_excluding_wenzhou'));
+                $totalStats['product_valid_num_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_valid_num_wenzhou'));
+                $totalStats['quantity_receive_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'quantity_receive_wenzhou'));
+                $totalStats['outbound_30days'] = array_sum(array_column($allInventoryAlerts, 'outbound_30days'));
+                $totalStats['sku_count'] = count($allInventoryAlerts);
+                
+                // 缓存统计数据
+                $redisCache->set($statsCacheKey, $totalStats, $cacheExpire);
+            }
         }
-        
-        // 计算所有数据的总和
-        $totalStats['product_valid_num_excluding_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_valid_num_excluding_wenzhou'));
-        $totalStats['product_onway_excluding_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_onway_excluding_wenzhou'));
-        $totalStats['product_valid_num_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_valid_num_wenzhou'));
-        $totalStats['quantity_receive_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'quantity_receive_wenzhou'));
-        $totalStats['outbound_30days'] = array_sum(array_column($allInventoryAlerts, 'outbound_30days'));
-        $totalStats['sku_count'] = count($allInventoryAlerts);
         
         $title = '库存预警（海外仓）';
         
