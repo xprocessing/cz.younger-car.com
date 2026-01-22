@@ -27,7 +27,7 @@
                         <div class="col-md-2">
                             <div class="card bg-success text-white">
                                 <div class="card-body">
-                                    <h5 class="card-title">总可用量（不含温州仓）</h5>
+                                    <h5 class="card-title">总可用量（不含温州）</h5>
                                     <h2 class="mb-0"><?php echo number_format($totalStats['product_valid_num_excluding_wenzhou']); ?></h2>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                         <div class="col-md-2">
                             <div class="card bg-warning text-dark">
                                 <div class="card-body">
-                                    <h5 class="card-title">总调拨在途（不含温州仓）</h5>
+                                    <h5 class="card-title">总调拨在途（不含温州）</h5>
                                     <h2 class="mb-0"><?php echo number_format($totalStats['product_onway_excluding_wenzhou']); ?></h2>
                                 </div>
                             </div>
