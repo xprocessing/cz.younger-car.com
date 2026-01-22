@@ -254,17 +254,18 @@ class OrderProfitController {
         }
         
         $endDate = date('Y-m-d');
-        $startDate = date('Y-m-d', strtotime('-60 days'));
+        $startDate30 = date('Y-m-d', strtotime('-30 days'));
+        $startDate60 = date('Y-m-d', strtotime('-60 days'));
         
         $storeId = '';
         
-        $platformStats = $this->orderProfitModel->getPlatformStats($startDate, $endDate);
-        $storeStats = $this->orderProfitModel->getStoreStats($startDate, $endDate);
-        $brandStats = $this->orderProfitModel->getBrandStats($startDate, $endDate);
-        $skuStats = $this->orderProfitModel->getSkuStats($startDate, $endDate);
-        $stats = $this->orderProfitModel->getProfitStats($startDate, $endDate, $storeId);
-        $profitRateDistribution = $this->orderProfitModel->getProfitRateDistribution($startDate, $endDate);
-        $dailySalesStats = $this->orderProfitModel->getDailySalesStats($startDate, $endDate);
+        $platformStats = $this->orderProfitModel->getPlatformStats($startDate30, $endDate);
+        $storeStats = $this->orderProfitModel->getStoreStats($startDate30, $endDate);
+        $brandStats = $this->orderProfitModel->getBrandStats($startDate30, $endDate);
+        $skuStats = $this->orderProfitModel->getSkuStats($startDate30, $endDate);
+        $stats = $this->orderProfitModel->getProfitStats($startDate30, $endDate, $storeId);
+        $profitRateDistribution = $this->orderProfitModel->getProfitRateDistribution($startDate30, $endDate);
+        $dailySalesStats = $this->orderProfitModel->getDailySalesStats($startDate60, $endDate);
         
         $storeList = $this->orderProfitModel->getStoreList();
         $title = '利润统计';
