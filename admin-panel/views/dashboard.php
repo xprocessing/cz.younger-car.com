@@ -16,8 +16,68 @@
                         </div>
                     </div>
                 </div>
+        </div>
+    </div>
+    <!-- 库存统计模块 -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <div class="card bg-success text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">总可用量（不含温州仓）</h5>
+                                    <h2 class="mb-0"><?php echo number_format($totalStats['product_valid_num_excluding_wenzhou']); ?></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="card bg-warning text-dark">
+                                <div class="card-body">
+                                    <h5 class="card-title">总调拨在途（不含温州仓）</h5>
+                                    <h2 class="mb-0"><?php echo number_format($totalStats['product_onway_excluding_wenzhou']); ?></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="card bg-success text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">总可用量（温州仓）</h5>
+                                    <h2 class="mb-0"><?php echo number_format($totalStats['product_valid_num_wenzhou']); ?></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="card bg-warning text-dark">
+                                <div class="card-body">
+                                    <h5 class="card-title">总待到货量（温州仓）</h5>
+                                    <h2 class="mb-0"><?php echo number_format($totalStats['quantity_receive_wenzhou']); ?></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="card bg-info text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">最近30天总出库量</h5>
+                                    <h2 class="mb-0"><?php echo number_format($totalStats['outbound_30days']); ?></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">SKU总数</h5>
+                                    <h2 class="mb-0"><?php echo $totalStats['sku_count']; ?></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- 赛道统计模块 -->
+        </div>
+    </div>
+    <!-- 赛道统计模块 -->
             <div class="row mb-4">
                 <div class="col-md-12">
                     <div class="mb-4">

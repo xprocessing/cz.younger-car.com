@@ -98,6 +98,18 @@ class AuthController {
         $startDate60 = date('Y-m-d', strtotime('-60 days'));
         $dailySalesStats = $orderProfitModel->getDailySalesStats($startDate60, $endDate);
         
+        // 获取库存统计数据
+        require_once ADMIN_PANEL_DIR . '/models/InventoryDetails.php';
+        $inventoryDetailsModel = new InventoryDetails();
+        $allInventoryAlerts = $inventoryDetailsModel->getInventoryAlert();
+        $totalStats = [];
+        $totalStats['product_valid_num_excluding_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_valid_num_excluding_wenzhou'));
+        $totalStats['product_onway_excluding_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_onway_excluding_wenzhou'));
+        $totalStats['product_valid_num_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'product_valid_num_wenzhou'));
+        $totalStats['quantity_receive_wenzhou'] = array_sum(array_column($allInventoryAlerts, 'quantity_receive_wenzhou'));
+        $totalStats['outbound_30days'] = array_sum(array_column($allInventoryAlerts, 'outbound_30days'));
+        $totalStats['sku_count'] = count($allInventoryAlerts);
+        
         // 获取赛道统计数据
         require_once ADMIN_PANEL_DIR . '/models/TrackStatistics.php';
         $trackStatisticsModel = new TrackStatistics();
