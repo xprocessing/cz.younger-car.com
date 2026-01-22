@@ -843,13 +843,13 @@ class OrderProfit {
     
     public function getDailySalesStats($last30DaysStart, $endDate) {
         $sql = "SELECT 
-                    DATE(global_purchase_time) as date,
-                    SUM(CAST(REPLACE(REPLACE(REPLACE(order_total_amount, '$', ''), ',', ''), '%', '') AS DECIMAL(10,2))) as total_sales
+                    DATE(global_purchase_time) as sale_date,
+                    COUNT(*) as order_count
                 FROM order_profit
                 WHERE global_purchase_time >= ? 
                 AND global_purchase_time <= ?
                 GROUP BY DATE(global_purchase_time)
-                ORDER BY date ASC";
+                ORDER BY sale_date ASC";
         
         $stmt = $this->db->query($sql, [$last30DaysStart, $endDate]);
         return $stmt->fetchAll();

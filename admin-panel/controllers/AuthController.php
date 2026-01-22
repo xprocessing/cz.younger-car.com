@@ -94,10 +94,6 @@ class AuthController {
         // 获取最近30天按平台统计数据
         $platformStats = $orderProfitModel->getPlatformStats($startDate, $endDate);
         
-        // 获取最近60天每日销量统计数据
-        $startDate60 = date('Y-m-d', strtotime('-60 days'));
-        $dailySalesStats = $orderProfitModel->getDailySalesStats($startDate60, $endDate);
-        
         // 获取赛道统计数据
         require_once ADMIN_PANEL_DIR . '/models/TrackStatistics.php';
         $trackStatisticsModel = new TrackStatistics();
