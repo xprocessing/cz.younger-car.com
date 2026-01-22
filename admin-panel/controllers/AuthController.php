@@ -76,7 +76,7 @@ class AuthController {
         
         // 生成缓存键
         $cachePrefix = 'dashboard:' . date('Y-m-d');
-        $cacheExpire = 300; // 5分钟缓存
+        $cacheExpire = 36000; // 10小时缓存  
         
         // 获取各平台销售额占比
         $salesCacheKey = $cachePrefix . ':platform:sales';
