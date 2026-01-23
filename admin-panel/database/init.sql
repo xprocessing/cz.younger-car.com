@@ -224,6 +224,23 @@ CREATE TABLE IF NOT EXISTS yunfei (
     create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY unique_order_no (global_order_no)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 审单明细表（订单号，运德运费（试算数据），中邮运费（试算数据），仓库选择，物流商选择，预估邮费，审单状态，审单时间，审单备注，创建时间。）
+CREATE TABLE IF NOT EXISTS `order_approval` (
+	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
+	`global_order_no` CHAR(50) NOT NULL COMMENT '订单号',
+    `wd_yunfei` JSON DEFAULT NULL COMMENT '运德运费（试算数据）',
+    `ems_yunfei` JSON DEFAULT NULL COMMENT '中邮运费（试算数据）',
+    `warehouse_id` INT DEFAULT NULL COMMENT '仓库选择',
+    `logistics_provider_id` INT DEFAULT NULL COMMENT '物流商选择',
+    `estimated_yunfei` VARCHAR(20) DEFAULT NULL COMMENT '预估邮费(带美元/人民币符号)',
+	`approval_status` VARCHAR(20) DEFAULT NULL COMMENT '审单状态（null/自动审核/人工审核）',
+	`approval_time` DATETIME COMMENT '审单时间',	
+	`approval_remark` VARCHAR(255) COMMENT '审单备注',
+	PRIMARY KEY(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='审单明细';
+
+
 -- 新品开发及进度表
 CREATE TABLE IF NOT EXISTS `new_products` (
 	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
