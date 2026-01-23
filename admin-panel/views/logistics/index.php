@@ -32,12 +32,12 @@
                                     <input type="text" name="keyword" class="form-control float-right" placeholder="搜索物流渠道名称、编码或服务商" value="<?php echo htmlspecialchars($keyword ?? ''); ?>">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default" onclick="window.location.href='<?php echo ADMIN_PANEL_URL; ?>/logistics.php?keyword='+encodeURIComponent(document.querySelector('input[name=keyword]').value)">
-                                            <i class="fas fa-search"></i>
+                                            <i class="fa fa-search"></i>
                                         </button>
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-info btn-sm ml-2" onclick="window.location.href='<?php echo ADMIN_PANEL_URL; ?>/logistics.php?action=create'">
-                                    <i class="fas fa-plus"></i> 创建物流渠道
+                                    <i class="fa fa-plus"></i> 创建物流渠道
                                 </button>
                             </div>
                         </div>
@@ -75,10 +75,10 @@
                                                 </td>
                                                 <td>
                                                     <a href="<?php echo ADMIN_PANEL_URL; ?>/logistics.php?action=edit&type_id=<?php echo $logistics['type_id']; ?>" class="btn btn-sm btn-primary">
-                                                        <i class="fas fa-edit"></i> 编辑
+                                                        <i class="fa fa-edit"></i> 编辑
                                                     </a>
                                                     <a href="<?php echo ADMIN_PANEL_URL; ?>/logistics.php?action=delete&type_id=<?php echo $logistics['type_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('确定要删除此物流渠道吗？');">
-                                                        <i class="fas fa-trash"></i> 删除
+                                                        <i class="fa fa-trash"></i> 删除
                                                     </a>
                                                 </td>
                                             </tr>
