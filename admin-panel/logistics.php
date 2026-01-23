@@ -20,7 +20,9 @@ require_once ADMIN_PANEL_DIR . '/helpers/functions.php';
 require_once ADMIN_PANEL_DIR . '/controllers/LogisticsController.php';
 
 // 检查登录状态
-checkLogin();
+if (!isLoggedIn()) {
+    redirect(ADMIN_PANEL_URL . '/login.php');
+}
 
 // 获取操作参数
 $action = $_GET['action'] ?? 'index';
