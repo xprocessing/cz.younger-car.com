@@ -190,6 +190,13 @@
                     </a>
                 </div>
             <?php endif; ?>
+            <?php if (hasPermission('logistics.view')): ?>
+                <div class="nav-item">
+                    <a href="<?php echo ADMIN_PANEL_URL; ?>/logistics.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'logistics.php' ? 'active' : ''; ?>">
+                        <i class="fa fa-truck"></i> 物流渠道
+                    </a>
+                </div>
+            <?php endif; ?>
             <?php if (hasPermission('car_data.view')): ?>
                 <div class="nav-item">
                     <a href="<?php echo ADMIN_PANEL_URL; ?>/car_data.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'car_data.php' ? 'active' : ''; ?>">

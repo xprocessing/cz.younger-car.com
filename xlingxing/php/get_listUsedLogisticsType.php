@@ -29,6 +29,6 @@ try {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
 
-//测试地址 cz.younger-car.com/xlingxing/php/get_listUsedLogisticsType.php?provider_type=0
+//测试地址 cz.younger-car.com/xlingxing/php/get_listUsedLogisticsType.php?provider_type=2
 
 ?>

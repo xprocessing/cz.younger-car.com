@@ -225,20 +225,66 @@ CREATE TABLE IF NOT EXISTS yunfei (
     UNIQUE KEY unique_order_no (global_order_no)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 审单明细表（订单号，运德运费（试算数据），中邮运费（试算数据），仓库选择，物流商选择，预估邮费，审单状态，审单时间，审单备注，创建时间。）
-CREATE TABLE IF NOT EXISTS `order_approval` (
+-- 创建物流渠道表 logistics
+CREATE TABLE IF NOT EXISTS logistics (
+    -- 主键，自增ID（可选，如果你已有业务主键可忽略）
+    id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '自增主键',
+    -- 业务相关字段，根据提供的JSON数据类型设计
+    type_id VARCHAR(64) NOT NULL COMMENT '物流类型ID',
+    is_used TINYINT NOT NULL COMMENT '是否启用 1-启用 0-禁用',
+    name VARCHAR(128) NOT NULL COMMENT '物流渠道名称',
+    code VARCHAR(64) NOT NULL COMMENT '物流渠道编码',
+    logistics_provider_id VARCHAR(64) NOT NULL COMMENT '物流服务商ID',
+    order_type TINYINT NOT NULL COMMENT '订单类型',
+    channel_type TINYINT NOT NULL COMMENT '渠道类型',
+    relate_olt_id VARCHAR(64) NOT NULL DEFAULT '0' COMMENT '关联OLT ID',
+    fee_template_id BIGINT NOT NULL DEFAULT 0 COMMENT '费用模板ID',
+    billing_type TINYINT NOT NULL DEFAULT 0 COMMENT '计费类型',
+    volume_param INT NOT NULL COMMENT '体积参数',
+    warehouse_type TINYINT NOT NULL COMMENT '仓库类型',
+    logistics_provider_name VARCHAR(128) NOT NULL COMMENT '物流服务商名称',
+    provider_is_used TINYINT NOT NULL COMMENT '服务商是否启用 1-启用 0-禁用',
+    is_platform_provider TINYINT NOT NULL COMMENT '是否平台服务商 1-是 0-否',
+    supplier_code VARCHAR(64) NOT NULL COMMENT '供应商编码',
+    wp_code VARCHAR(64) NOT NULL COMMENT '仓库编码',
+    type TINYINT NOT NULL COMMENT '物流类型',
+    wid INT NOT NULL COMMENT '仓库ID',
+    is_combine_channel BOOLEAN NOT NULL COMMENT '是否组合渠道',
+    tms_provider_id BIGINT NOT NULL DEFAULT 0 COMMENT 'TMS服务商ID',
+    tms_provider_type TINYINT NOT NULL DEFAULT 0 COMMENT 'TMS服务商类型',
+    supplier_id BIGINT NOT NULL DEFAULT 0 COMMENT '供应商ID',
+    is_support_domestic_provider BOOLEAN NOT NULL COMMENT '是否支持国内服务商',
+    is_need_marking BOOLEAN NOT NULL COMMENT '是否需要标记',
+    -- 通用审计字段（可选，建议添加）
+    create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    
+    -- 索引设计（根据业务查询需求）
+    INDEX idx_type_id (type_id),
+    INDEX idx_code (code),
+    INDEX idx_logistics_provider_id (logistics_provider_id),
+    INDEX idx_wid (wid),
+    INDEX idx_is_used (is_used)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='物流渠道';
+
+-- 订单审核（订单号，local_sku,国家receiver_country_code，城市city，邮编postal_code，运德运费（试算数据），中邮运费（试算数据），仓库wid，物流方式id logistics_type_id，预估邮费，审单状态，审单时间，审单备注，创建时间。）
+CREATE TABLE IF NOT EXISTS `order_review` (
 	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
 	`global_order_no` CHAR(50) NOT NULL COMMENT '订单号',
+    `local_sku` CHAR(50) NOT NULL COMMENT '本地sku',
+    `receiver_country_code` CHAR(10) NOT NULL COMMENT '国家',
+    `city` CHAR(50) NOT NULL COMMENT '城市',
+    `postal_code` CHAR(20) NOT NULL COMMENT '邮编',
     `wd_yunfei` JSON DEFAULT NULL COMMENT '运德运费（试算数据）',
     `ems_yunfei` JSON DEFAULT NULL COMMENT '中邮运费（试算数据）',
-    `warehouse_id` INT DEFAULT NULL COMMENT '仓库选择',
-    `logistics_provider_id` INT DEFAULT NULL COMMENT '物流商选择',
+    `wid` INT DEFAULT NULL COMMENT '仓库wid',
+    `logistics_type_id` INT DEFAULT NULL COMMENT '物流方式id',
     `estimated_yunfei` VARCHAR(20) DEFAULT NULL COMMENT '预估邮费(带美元/人民币符号)',
-	`approval_status` VARCHAR(20) DEFAULT NULL COMMENT '审单状态（null/自动审核/人工审核）',
-	`approval_time` DATETIME COMMENT '审单时间',	
-	`approval_remark` VARCHAR(255) COMMENT '审单备注',
+	`review_status` VARCHAR(20) DEFAULT NULL COMMENT '审单状态（null/自动审核/人工审核）',
+	`review_time` DATETIME COMMENT '审单时间',	
+	`review_remark` VARCHAR(255) COMMENT '审单备注',
 	PRIMARY KEY(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='审单明细';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单审核';
 
 
 -- 新品开发及进度表

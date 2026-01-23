@@ -116,7 +116,13 @@ INSERT INTO permissions (name, slug, description, module) VALUES
 ('删除订单其他费用', 'order_other_costs.delete', '可以删除订单其他费用记录', 'order_other_costs'),
 ('导入订单其他费用', 'order_other_costs.import', '可以导入订单其他费用数据', 'order_other_costs'),
 ('导出订单其他费用', 'order_other_costs.export', '可以导出订单其他费用数据', 'order_other_costs'),
-('查看订单其他费用统计', 'order_other_costs.stats', '可以查看订单其他费用统计', 'order_other_costs');
+('查看订单其他费用统计', 'order_other_costs.stats', '可以查看订单其他费用统计', 'order_other_costs'),
+
+-- 物流渠道权限（新增模块）
+('查看物流渠道', 'logistics.view', '可以查看物流渠道列表', 'logistics'),
+('创建物流渠道', 'logistics.create', '可以创建新物流渠道', 'logistics'),
+('编辑物流渠道', 'logistics.edit', '可以编辑现有物流渠道', 'logistics'),
+('删除物流渠道', 'logistics.delete', '可以删除物流渠道', 'logistics');
 
 -- 3. 给角色分配权限
 
@@ -209,7 +215,13 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 (2, (SELECT id FROM permissions WHERE slug = 'order_other_costs.delete')),
 (2, (SELECT id FROM permissions WHERE slug = 'order_other_costs.import')),
 (2, (SELECT id FROM permissions WHERE slug = 'order_other_costs.export')),
-(2, (SELECT id FROM permissions WHERE slug = 'order_other_costs.stats'));
+(2, (SELECT id FROM permissions WHERE slug = 'order_other_costs.stats')),
+
+-- 物流渠道
+(2, (SELECT id FROM permissions WHERE slug = 'logistics.view')),
+(2, (SELECT id FROM permissions WHERE slug = 'logistics.create')),
+(2, (SELECT id FROM permissions WHERE slug = 'logistics.edit')),
+(2, (SELECT id FROM permissions WHERE slug = 'logistics.delete'));
 
 -- 查看者角色 (role_id=3) - 仅拥有查看权限
 INSERT INTO role_permissions (role_id, permission_id) VALUES
@@ -234,7 +246,10 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 (3, (SELECT id FROM permissions WHERE slug = 'shop_costs.view')),
 (3, (SELECT id FROM permissions WHERE slug = 'shop_costs.stats')),
 (3, (SELECT id FROM permissions WHERE slug = 'order_other_costs.view')),
-(3, (SELECT id FROM permissions WHERE slug = 'order_other_costs.stats'));
+(3, (SELECT id FROM permissions WHERE slug = 'order_other_costs.stats')),
+
+-- 物流渠道查看权限
+(3, (SELECT id FROM permissions WHERE slug = 'logistics.view'));
 
 -- 4. 验证权限配置
 
