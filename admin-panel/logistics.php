@@ -2,6 +2,9 @@
 // 引入配置文件
 require_once __DIR__ . '/../config.php';
 
+// 启动会话
+session_start();
+
 // 定义常量
 if (!defined('ADMIN_PANEL_DIR')) {
     define('ADMIN_PANEL_DIR', dirname(__FILE__));

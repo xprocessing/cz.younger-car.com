@@ -140,7 +140,7 @@ class LogisticsController {
         ];
         
         if ($this->logisticsModel->create($data)) {
-            setSuccess('物流渠道创建成功');
+            showSuccess('物流渠道创建成功');
             redirect(ADMIN_PANEL_URL . '/logistics.php');
         } else {
             showError('物流渠道创建失败');
@@ -253,7 +253,7 @@ class LogisticsController {
         ];
         
         if ($this->logisticsModel->update($type_id, $data)) {
-            setSuccess('物流渠道更新成功');
+            showSuccess('物流渠道更新成功');
             redirect(ADMIN_PANEL_URL . '/logistics.php');
         } else {
             showError('物流渠道更新失败');
@@ -283,7 +283,7 @@ class LogisticsController {
         }
         
         if ($this->logisticsModel->delete($type_id)) {
-            setSuccess('物流渠道删除成功');
+            showSuccess('物流渠道删除成功');
         } else {
             showError('物流渠道删除失败');
         }
