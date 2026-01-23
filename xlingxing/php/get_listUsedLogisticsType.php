@@ -19,7 +19,7 @@ try {
     $logisticsParams = [
         'provider_type' => $provider_type,
         'page' => 1,
-        'length' => 200       
+        'length' => 300       
     ];
     $orders = $apiClient->post('/erp/sc/routing/wms/WmsLogistics/listUsedLogisticsType', $logisticsParams);
     //print_r("物流数据：" . PHP_EOL);
@@ -29,6 +29,6 @@ try {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
 
-
+//测试地址 cz.younger-car.com/xlingxing/php/get_listUsedLogisticsType.php?provider_type=0
 
 ?>
