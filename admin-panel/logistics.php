@@ -1,4 +1,7 @@
 <?php
+// 引入配置文件
+require_once __DIR__ . '/../config.php';
+
 // 定义常量
 if (!defined('ADMIN_PANEL_DIR')) {
     define('ADMIN_PANEL_DIR', dirname(__FILE__));
