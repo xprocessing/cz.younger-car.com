@@ -74,6 +74,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>店铺ID</th>
                         <th>订单号</th>
                         <th>本地SKU</th>
                         <th>国家</th>
@@ -95,6 +96,7 @@
                         <?php foreach ($orderReviews as $review): ?>
                             <tr>
                                 <td><?php echo $review['id']; ?></td>
+                                <td><?php echo $review['store_id']; ?></td>
                                 <td><?php echo $review['global_order_no']; ?></td>
                                 <td><?php echo $review['local_sku']; ?></td>
                                 <td><?php echo $review['receiver_country_code']; ?></td>

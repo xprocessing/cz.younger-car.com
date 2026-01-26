@@ -782,6 +782,7 @@ CREATE TABLE IF NOT EXISTS logistics (
 -- 订单审核（订单号，local_sku,国家receiver_country_code，城市city，邮编postal_code，运德运费（试算数据），中邮运费（试算数据），仓库wid，物流方式id logistics_type_id，预估邮费，审单状态，审单时间，审单备注，创建时间。）
 CREATE TABLE IF NOT EXISTS `order_review` (
 	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
+    `store_id` CHAR(50) COMMENT '店铺id',
 	`global_order_no` CHAR(50) NOT NULL COMMENT '订单号',
     `local_sku` CHAR(50) NOT NULL COMMENT '本地sku',
     `receiver_country_code` CHAR(10) NOT NULL COMMENT '国家',
