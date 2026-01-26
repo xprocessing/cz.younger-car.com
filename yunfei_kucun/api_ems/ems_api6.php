@@ -147,9 +147,36 @@ $response = [
 
 $obj = $response;   // 转成关联数组
 $data = $obj['data'];               // 取出我们关心的部分
-echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+//echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
-//增加一个运德运费查询
+// 初始化存储totalFee的数组
+$totalFeeArray = [];
+
+// 第一层循环：遍历地区（USEA/USWE等）
+foreach ($data as $region => $carriers) {
+    // 第二层循环：遍历物流商（USPS-PRIORITY/AMAZON-GROUND等）
+    foreach ($carriers as $carrier => $info) {
+        // 筛选ask为Success的条目
+        if (isset($info['ask']) && $info['ask'] === 'Success') {
+            // 提取totalFee并加入数组（做数据校验避免报错）
+            if (isset($info['data']['totalFee'])) {
+                // 可选：保留物流商和地区信息，方便溯源
+                $totalFeeArray[] = [
+                    'region' => $region,       // 地区
+                    'carrier' => $carrier,     // 物流商
+                    'totalFee' => $info['data']['totalFee']  // 总费用
+                ];
+                
+                // 如果只需要纯数值数组，用下面这行替代上面的数组追加
+                // $totalFeeArray[] = $info['data']['totalFee'];
+            }
+        }
+    }
+}
+
+// 输出结果
+echo "提取的totalFee数组：\n";
+print_r($totalFeeArray);
 
 
 //测试多仓库链接
