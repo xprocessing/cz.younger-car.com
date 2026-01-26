@@ -265,7 +265,9 @@ if ($hasFilters): ?>
                         <th>毛利润</th>
                         <th>利润率</th>
                         <th>出库成本</th>
+                        <th>采购成本</th>
                         <th>实际运费</th>
+                        <th>交易费</th>                        
                         <th>更新时间</th>
                         <th>操作</th>
                     </tr>
@@ -341,7 +343,17 @@ if ($hasFilters): ?>
                                 </td>
                                 <td>
                                     <span class="text-danger">
+                                        <?php echo htmlspecialchars($profit['cg_price_amount'] ?? ''); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-danger">
                                         <?php echo htmlspecialchars($profit['wms_shipping_price_amount'] ?? ''); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-danger">
+                                        <?php echo htmlspecialchars($profit['transaction_fee_amount'] ?? ''); ?>
                                     </span>
                                 </td>
                                 <td>

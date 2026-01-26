@@ -256,6 +256,11 @@ CREATE TABLE IF NOT EXISTS `order_profit` (
 	`order_total_amount` CHAR(20) COMMENT '订单金额，为字符串带$货币符号',
     `wms_outbound_cost_amount` CHAR(20) COMMENT '实际出库成本，为字符串带有$货币符号',
 	`wms_shipping_price_amount` CHAR(20) COMMENT '实际运费，为字符串带有$货币符号',	
+    
+    `cg_price_amount` CHAR(20) COMMENT '采购成本，币种CNY',	
+    `transaction_fee_amount` CHAR(20) COMMENT '交易费，币种取amount_currency',
+
+
 	`profit_amount` CHAR(20) COMMENT '毛利润，为字符串带有$货币符号，有正有负',
 	`profit_rate` CHAR(20) COMMENT '利润率（已经计算过，数据库中有正有负,保留小数点两位）',	
 	`update_time` DATETIME COMMENT '数据更新时间',
