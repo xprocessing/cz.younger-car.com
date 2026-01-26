@@ -19,7 +19,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 250px;
+            width: 200px;
             overflow-y: auto;
         }
 
@@ -41,7 +41,7 @@
         }
 
         .content {
-            margin-left: 250px;
+            margin-left: 200px;
             padding: 20px;
         }
 
@@ -49,7 +49,7 @@
             background-color: white;
             padding: 10px 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-left: 250px;
+            margin-left: 200px;
         }
 
         .nav {
