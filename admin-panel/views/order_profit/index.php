@@ -266,7 +266,7 @@ if ($hasFilters): ?>
                         <th>利润率</th>
                         <th>出库成本</th>
                         <th>采购成本</th>
-                        <th>实际运费</th>
+                        <th>实际运费（尾程）</th>
                         <th>交易费</th>                        
                         <th>更新时间</th>
                         <th>操作</th>
