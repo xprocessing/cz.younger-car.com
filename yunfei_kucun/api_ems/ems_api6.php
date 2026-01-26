@@ -174,7 +174,7 @@ foreach ($data as $region => $carriers) {
     }
 }
 
-// 输出结果
+// 输出结果试算成功的数组
 //echo "提取的totalFee数组：\n";
 print_r($totalFeeArray);
 

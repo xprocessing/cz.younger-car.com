@@ -6,9 +6,11 @@
  * 作者：蒋和超
  */
 require_once './wedo_common.php';
+
 require_once __DIR__ . '/../../config.php'; 
 $testUserAccount = WD_APP_ID;//用户级测试账号
 $testToken = WD_APP_TOKEN;//用户级测试token
+
 $content['channel'] = 'UPSGW';
 $content['country']	= 'US';
 $content['weight'] = 1;
@@ -26,5 +28,7 @@ $data					= http_build_query($data);
 $response				= curlPostData($sandBoxUrl, $data);
 print_r($response);
 exit;
+
+//测试链接 http://cz.younger-car.com/yunfei_kucun/api_wd/wedo_getShipfeeByChannel_api.php
 ?>
 
