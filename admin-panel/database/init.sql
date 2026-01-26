@@ -255,10 +255,14 @@ CREATE TABLE IF NOT EXISTS `order_profit` (
 	`local_sku` CHAR(50) COMMENT 'sku',
 	`order_total_amount` CHAR(20) COMMENT '订单金额，为字符串带$货币符号',
     `wms_outbound_cost_amount` CHAR(20) COMMENT '实际出库成本，为字符串带有$货币符号',
-	`wms_shipping_price_amount` CHAR(20) COMMENT '实际运费，为字符串带有$货币符号',	
-    
+	`wms_shipping_price_amount` CHAR(20) COMMENT '实际运费，尾程运费，为字符串带有$货币符号',
+
+    `first_shipping_price_amount` CHAR(20) COMMENT '头程运费',		
+
     `cg_price_amount` CHAR(20) COMMENT '采购成本，币种CNY',	
     `transaction_fee_amount` CHAR(20) COMMENT '交易费，币种取amount_currency',
+
+
 
 
 	`profit_amount` CHAR(20) COMMENT '毛利润，为字符串带有$货币符号，有正有负',
