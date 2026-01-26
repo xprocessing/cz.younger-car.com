@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/config.php'; // 引入 EMS_TOKEN 和 EMS_KEY
+require_once __DIR__ . '/../../config.php';  // 引入 EMS_TOKEN 和 EMS_KEY
 
 /**
  * 调用 getProductList 接口获取产品列表
