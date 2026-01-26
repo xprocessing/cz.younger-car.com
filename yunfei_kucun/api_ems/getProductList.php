@@ -19,9 +19,9 @@ function callGetProductList(array  $params): array {
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.example.org/Ec/">
   <SOAP-ENV:Body>
     <ns1:callService>
-      <paramsJson>{ $ paramsJson}</paramsJson>
-      <appToken>{ $ _SERVER['EMS_TOKEN'] ?? EMS_TOKEN}</appToken>
-      <appKey>{ $ _SERVER['EMS_KEY'] ?? EMS_KEY}</appKey>
+      <paramsJson>{ $paramsJson}</paramsJson>
+      <appToken>{ EMS_TOKEN}</appToken>
+      <appKey>{ EMS_KEY}</appKey>
       <service>getProductList</service>
     </ns1:callService>
   </SOAP-ENV:Body>
