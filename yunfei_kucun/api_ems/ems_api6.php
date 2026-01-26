@@ -175,9 +175,9 @@ foreach ($data as $region => $carriers) {
 }
 
 // 输出结果
-echo "提取的totalFee数组：\n";
+//echo "提取的totalFee数组：\n";
 print_r($totalFeeArray);
 
 
 //测试多仓库链接
-//http://cz.younger-car.com/yunfei_kucun/api_ems/ems_api5.1.php?postcode=90210&weight=1.5&warehouse=USEA,USWE&channel=USPS-PRIORITY,AMAZON-GROUND
+//http://cz.younger-car.com/yunfei_kucun/api_ems/ems_api6.php?postcode=90210&weight=1.5&warehouse=USEA,USWE&channel=USPS-PRIORITY,AMAZON-GROUND
