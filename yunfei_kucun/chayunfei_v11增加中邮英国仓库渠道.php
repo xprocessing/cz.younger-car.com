@@ -2,7 +2,7 @@
 // 根据订单的邮编、重量、尺寸、城市，查询中邮 EMS 和 运德物流运费
 // 支持 GET 参数：city, postcode, weight, length, width, height
 // 示例测试 URL:
-// https://cz.younger-car.com/chayunfei.php?postcode=92113-3931&weight=7.1928&length=74.0&width=27.0&height=18.0&city=San%20Diego
+// https://cz.younger-car.com/yunfei_kucun/chayunfei.latest.php?postcode=92113-3931&weight=7.1928&length=74.0&width=27.0&height=18.0&city=San%20Diego
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
