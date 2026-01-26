@@ -79,6 +79,9 @@
                         <th>国家</th>
                         <th>城市</th>
                         <th>邮编</th>
+                        <th>运德运费-试算</th>
+                        <th>中邮运费-试算</th>
+
                         <th>仓库ID</th>
                         <th>物流方式ID</th>
                         <th>预估邮费</th>
@@ -97,6 +100,8 @@
                                 <td><?php echo $review['receiver_country_code']; ?></td>
                                 <td><?php echo $review['city'] ?? ''; ?></td>
                                 <td><?php echo $review['postal_code'] ?? ''; ?></td>
+                                <td><?php echo $review['wd_yunfei'] ?? ''; ?></td>
+                                <td><?php echo $review['ems_yunfei'] ?? ''; ?></td>
                                 <td><?php echo $review['wid'] ?? ''; ?></td>
                                 <td><?php echo $review['logistics_type_id'] ?? ''; ?></td>
                                 <td><?php echo $review['estimated_yunfei'] ?? ''; ?></td>
