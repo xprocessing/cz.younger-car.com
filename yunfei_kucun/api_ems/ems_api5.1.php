@@ -10,7 +10,7 @@ header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
 
-require_once '/../../config.php'; // 必须包含 EMS_TOKEN 和 EMS_KEY 两个常量
+require_once __DIR__ . '/../../config.php'; // 必须包含 EMS_TOKEN 和 EMS_KEY 两个常量
 
 // ========== 参数接收 ==========
 $postcode  = trim($_GET['postcode']  ?? '');
