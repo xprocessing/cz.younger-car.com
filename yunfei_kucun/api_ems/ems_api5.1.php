@@ -147,55 +147,6 @@ $response = [
 
 $obj = $response;   // 转成关联数组
 $data = $obj['data'];               // 取出我们关心的部分
-
-// 可选：加点基础样式，让表格更好看
-echo '<style>
-    table { border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; }
-    th, td { border: 1px solid #999; padding: 8px 12px; text-align: left; }
-    th { background-color: #f2f2f2; }
-    .fail { color: #d8000c; }
-</style>';
-
-echo '<table>';
-echo '<thead>';
-echo '<tr>';
-echo '<th>仓库 (Warehouse)</th>';
-echo '<th>渠道 (Channel)</th>';
-echo '<th>费用CNY (SHIPPING)</th>';
-echo '<th>费用CNY (totalFee)</th>';
-echo '<th>结果 (Result)</th>';
-echo '<th>错误码 (Error Code)</th>';
-echo '<th>错误信息 (Error Message)</th>';
-echo '</tr>';
-echo '</thead>';
-echo '<tbody>';
-
-foreach ($data as $warehouse => $channels) {
-    foreach ($channels as $channel => $info) {
-        $ask      = $info['ask'] ?? '-';
-        $errCode  = $info['Error']['errCode'] ?? '-';
-        $errMsg   = $info['Error']['errMessage'] ?? '-';
-        $totalFee = $info['data']['totalFee'];
-        $SHIPPING = $info['data']['SHIPPING'];
-
-        // Failure 标红
-        $askClass = ($ask === 'Failure') ? ' class="fail"' : '';
-
-        echo '<tr>';
-        echo "<td><strong>$warehouse</strong></td>";
-        echo "<td>$channel</td>";
-         echo "<td>$SHIPPING</td>";
-        echo "<td>$totalFee</td>";       
-        echo "<td$askClass>$ask</td>";
-        echo "<td>$errCode</td>";
-        echo "<td>$errMsg</td>";
-        echo '</tr>';
-    }
-}
-
-echo '</tbody>';
-echo '</table>';
-
 echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 //增加一个运德运费查询
