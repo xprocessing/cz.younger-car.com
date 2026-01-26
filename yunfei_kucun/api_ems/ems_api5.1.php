@@ -201,3 +201,5 @@ echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 //增加一个运德运费查询
 
 
+//测试多仓库链接
+//http://cz.younger-car.com/yunfei_kucun/api_ems/ems_api5.1.php?postcode=90210&weight=1.5&warehouse=USEA&channel=FEDEX-LP
