@@ -85,6 +85,8 @@ try {
         profit_rate,
         wms_outbound_cost_amount,
         wms_shipping_price_amount,
+        transaction_fee_amount,
+        cg_price_amount,
         update_time
     ) VALUES (
         :store_id,
@@ -99,6 +101,8 @@ try {
         :profit_rate,
         :wms_outbound_cost_amount,
         :wms_shipping_price_amount,
+        :transaction_fee_amount,
+        :cg_price_amount,
         :update_time
     ) ON DUPLICATE KEY UPDATE
         store_id = VALUES(store_id),
@@ -112,6 +116,8 @@ try {
         profit_rate = VALUES(profit_rate),
         wms_outbound_cost_amount = VALUES(wms_outbound_cost_amount),
         wms_shipping_price_amount = VALUES(wms_shipping_price_amount),
+        transaction_fee_amount = VALUES(transaction_fee_amount),
+        cg_price_amount = VALUES(cg_price_amount),
         update_time = VALUES(update_time)";
 
     $stmt = $pdo->prepare($sql);
@@ -138,6 +144,9 @@ try {
         $wms_outbound_cost_amount=str_replace('-','',$wms_outbound_cost_amount);
         $wms_shipping_price_amount=$transactionInfo['wms_shipping_price_amount'];
         $wms_shipping_price_amount=str_replace('-','',$wms_shipping_price_amount);
+        $transaction_fee_amount=$transactionInfo['transaction_fee_amount'];        
+        $cg_price_amount=$transactionInfo['cg_price_amount'];
+        
 
 
         // 构造数据数组
@@ -154,6 +163,8 @@ try {
             ':profit_rate' => $profitRate,
             ':wms_outbound_cost_amount' => $wms_outbound_cost_amount ?? 0,
             ':wms_shipping_price_amount' => $wms_shipping_price_amount ?? 0,
+            ':transaction_fee_amount' => $transaction_fee_amount ?? 0,
+            ':cg_price_amount' => $cg_price_amount ?? 0,
             ':update_time' => date('Y-m-d H:i:s')
         ];
 
