@@ -147,7 +147,7 @@ $response = [
 
 $obj = $response;   // 转成关联数组
 $data = $obj['data'];               // 取出我们关心的部分
-echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 //增加一个运德运费查询
 
