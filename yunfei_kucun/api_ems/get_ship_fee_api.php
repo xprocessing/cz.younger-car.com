@@ -143,7 +143,7 @@ $response = [
     'data' => $finalResult
 ];
 
-echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+//echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 //将response 转为json 格式
 //$result = json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
