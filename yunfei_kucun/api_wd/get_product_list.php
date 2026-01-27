@@ -1,0 +1,186 @@
+<?php
+/**
+ * 运德海外仓运费试算接口 Demo
+ * 包含签名生成、POST 请求发送、响应解析
+ */
+error_reporting(-1);
+header("Content-type: text/html; charset=utf-8");
+date_default_timezone_set('Asia/Shanghai');
+
+require_once __DIR__ . '/../../config.php'; 
+// -------------------------- 配置信息 --------------------------
+// 替换为你的用户账号（联系运德客服获取）
+$userAccount = WD_APP_ID;
+// 替换为你的授权 token（联系运德客服获取）
+$testToken = WD_APP_TOKEN;
+// 运费试算接口地址
+$apiUrl = "http://fg.wedoexpress.com/api.php?mod=apiManage&act=queryGoodsInfo";
+// -------------------------- 配置信息结束 --------------------------
+
+/**
+ * 发送 POST 请求（form-data 格式）
+ * @param string $url 接口地址
+ * @param array $data 请求参数（关联数组）
+ * @return string 接口响应内容
+ */
+function curlPostData($url, $data) {
+    $ch = curl_init();
+    
+    // 设置请求地址
+    curl_setopt($ch, CURLOPT_URL, $url);
+    // 禁止输出 header
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    // 允许重定向
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    // 禁用 SSL 证书校验（正式环境建议开启）
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    // 设置为 POST 请求
+    curl_setopt($ch, CURLOPT_POST, 1);
+    // 设置 POST 数据（自动编码为 form-data 格式）
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    // 要求返回响应内容
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    // 设置超时时间（60秒）
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+    
+    // 发送请求（最多重试3次）
+    $cnt = 0;
+    $result = false;
+    while ($cnt < 3 && $result === false) {
+        $result = curl_exec($ch);
+        $cnt++;
+    }
+    
+    // 捕获 curl 错误
+    if (curl_errno($ch)) {
+        $errorMsg = "CURL 请求失败：" . curl_error($ch);
+        curl_close($ch);
+        throw new Exception($errorMsg);
+    }
+    
+    curl_close($ch);
+    return $result;
+}
+
+/**
+ * 生成签名串
+ * @param array $data 待签名的参数（关联数组）
+ * @return string 大写 MD5 签名
+ */
+function createSignature($data) {
+    global $testToken;
+    
+    // 1. 按参数名升序排序
+    ksort($data);
+    
+    // 2. 拼接所有参数的值（sign 字段不参与）
+    $signStr = '';
+    foreach ($data as $key => $value) {
+        if ($key !== 'sign') {
+            $signStr .= $value;
+        }
+    }
+    
+    // 3. 拼接 token 后进行 MD5 加密，再转大写
+    $signature = strtoupper(md5($signStr . $testToken));
+    
+    return $signature;
+}
+
+/**
+ * 获取商品信息 主函数 getGoodsInfo
+ * @param array $contentParams content 字段的 JSON 参数
+ * @return array 解析后的接口响应
+ */
+function getGoodsInfo($contentParams) {
+    global $userAccount, $apiUrl;
+    
+    try {
+        // 1. 构造 content 字段（JSON 字符串）
+        $contentJson = json_encode($contentParams, JSON_UNESCAPED_UNICODE);
+        if ($contentJson === false) {
+            throw new Exception("content 参数 JSON 编码失败：" . json_last_error_msg());
+        }
+        
+        // 2. 构造待签名的参数数组（不含 sign）
+        $requestData = [
+            'userAccount' => $userAccount,
+            'content' => $contentJson
+        ];
+        
+        // 3. 生成签名
+        $sign = createSignature($requestData);
+        
+        // 4. 补充 sign 字段，形成最终请求参数
+        $requestData['sign'] = $sign;
+        
+        // 5. 发送 POST 请求
+        echo "=== 开始发送运费试算请求 ===\n";
+        echo "请求地址：" . $apiUrl . "\n";
+        echo "请求参数：" . json_encode($requestData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
+        
+        $response = curlPostData($apiUrl, $requestData);
+        
+        // 6. 解析响应（JSON 转数组）
+        $responseData = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new Exception("响应数据解析失败：" . json_last_error_msg() . "，原始响应：" . $response);
+        }
+        
+        echo "\n=== 请求成功，响应结果 ===" . "\n";
+        return $responseData;
+        
+    } catch (Exception $e) {
+        echo "\n=== 请求失败 ===" . "\n";
+        echo "错误信息：" . $e->getMessage() . "\n";
+        return ['errCode' => '500', 'errMsg' => $e->getMessage()];
+    }
+}
+
+// -------------------------- 测试代码 --------------------------
+try {
+    // 构造 content 参数（根据实际需求修改）
+    $contentParams = [
+        'storeCode' => 'WDUSLG',  // 仓库编码（选取填写英文简码即可）
+        'page' => '1',                 // 页码，每页50组数据
+        'skuType' => 'userSKU',           // userSKU:用户料号 sku:运德料号
+        'skuArr' => ['NI-C63-FL-GB'],             // 料号数组	[‘sku1’,’sku2’,’sku3’]       
+        'signatureService' => 0            // 签名服务（0:无，1:成人签名，2:直接签名）
+    ];
+    
+    // 调用 获取商品信息 函数
+    $result = getGoodsInfo($contentParams);
+    
+    // 打印格式化结果
+    echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
+    
+    // 解析具体商品信息
+    if ($result['errCode'] == 200 && !empty($result['data']['data'])) {
+        $goodsInfoData = $result['data']['data'];
+        echo "\n=== 商品详情 ===" . "\n";
+        foreach ($goodsInfoData as $channel => $info) {
+            echo "渠道：" . $channel . "\n";
+            echo "  - 商品名称：" . $info['goodsName'] . "\n";
+            echo "  - 商品描述：" . $info['goodsDesc'] . "\n";
+            echo "  - 商品重量：" . $info['goodsWeight'] . " " . $info['currency'] . "\n";
+            echo "  - 商品体积：" . $info['goodsVolume'] . " " . $info['currency'] . "\n";
+            echo "  - 商品单价：" . $info['goodsPrice'] . " " . $info['currency'] . "\n";
+            echo "  - 商品数量：" . $info['goodsNum'] . "\n";
+            echo "  - 商品金额：" . $info['goodsAmount'] . " " . $info['currency'] . "\n";
+            echo "  - 运费：" . $info['shipFee'] . " " . $info['currency'] . "\n";
+            echo "  - 主记录号：" . $info['mainRecordCode'] . "\n";
+            echo "  - 记录号：" . $info['recordCode'] . "\n\n"; 
+        }
+    } else {
+        echo "\n=== 错误信息 ===" . "\n";
+        echo "错误码：" . $result['errCode'] . "\n";
+        echo "错误描述：" . $result['errMsg'] . "\n";
+    }
+    
+} catch (Exception $e) {
+    echo "测试代码执行失败：" . $e->getMessage() . "\n";
+}
+
+
+//测试链接 http://cz.younger-car.com/yunfei_kucun/api_wd/get_product_list.php
