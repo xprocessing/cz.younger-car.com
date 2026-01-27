@@ -7,6 +7,8 @@ error_reporting(-1);
 header("Content-type: text/html; charset=utf-8");
 date_default_timezone_set('Asia/Shanghai');
 
+$sku = $_GET['sku'] ?? '';
+
 require_once __DIR__ . '/../../config.php'; 
 // -------------------------- 配置信息 --------------------------
 // 替换为你的用户账号（联系运德客服获取）
@@ -115,10 +117,8 @@ function getGoodsInfo($contentParams) {
         // 4. 补充 sign 字段，形成最终请求参数
         $requestData['sign'] = $sign;
         
-        // 5. 发送 POST 请求
-        echo "=== 开始发送运费试算请求 ===\n";
-        echo "请求地址：" . $apiUrl . "\n";
-        echo "请求参数：" . json_encode($requestData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
+        // 5. 发送 POST 请求      
+        //echo "请求参数：" . json_encode($requestData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
         
         $response = curlPostData($apiUrl, $requestData);
         
@@ -128,12 +128,12 @@ function getGoodsInfo($contentParams) {
             throw new Exception("响应数据解析失败：" . json_last_error_msg() . "，原始响应：" . $response);
         }
         
-        echo "\n=== 请求成功，响应结果 ===" . "\n";
+        //echo "\n=== 请求成功，响应结果 ===" . "\n";
         return $responseData;
         
     } catch (Exception $e) {
-        echo "\n=== 请求失败 ===" . "\n";
-        echo "错误信息：" . $e->getMessage() . "\n";
+        //echo "\n=== 请求失败 ===" . "\n";
+        //echo "错误信息：" . $e->getMessage() . "\n";
         return ['errCode' => '500', 'errMsg' => $e->getMessage()];
     }
 }
@@ -145,7 +145,7 @@ try {
         'storeCode' => 'WDUSLG',  // 仓库编码（选取填写英文简码即可）
         'page' => '1',                 // 页码，每页50组数据
         'skuType' => 'userSKU',           // userSKU:用户料号 sku:运德料号
-        'skuArr' => ['NI-C63-FL-GB'],             // 料号数组	[‘sku1’,’sku2’,’sku3’]       
+        'skuArr' => [$sku],             // 料号数组	[‘sku1’,’sku2’,’sku3’]       
         'signatureService' => 0            // 签名服务（0:无，1:成人签名，2:直接签名）
     ];
     
@@ -155,32 +155,11 @@ try {
     // 打印格式化结果
     echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
     
-    // 解析具体商品信息
-    if ($result['errCode'] == 200 && !empty($result['data']['data'])) {
-        $goodsInfoData = $result['data']['data'];
-        echo "\n=== 商品详情 ===" . "\n";
-        foreach ($goodsInfoData as $channel => $info) {
-            echo "渠道：" . $channel . "\n";
-            echo "  - 商品名称：" . $info['goodsName'] . "\n";
-            echo "  - 商品描述：" . $info['goodsDesc'] . "\n";
-            echo "  - 商品重量：" . $info['goodsWeight'] . " " . $info['currency'] . "\n";
-            echo "  - 商品体积：" . $info['goodsVolume'] . " " . $info['currency'] . "\n";
-            echo "  - 商品单价：" . $info['goodsPrice'] . " " . $info['currency'] . "\n";
-            echo "  - 商品数量：" . $info['goodsNum'] . "\n";
-            echo "  - 商品金额：" . $info['goodsAmount'] . " " . $info['currency'] . "\n";
-            echo "  - 运费：" . $info['shipFee'] . " " . $info['currency'] . "\n";
-            echo "  - 主记录号：" . $info['mainRecordCode'] . "\n";
-            echo "  - 记录号：" . $info['recordCode'] . "\n\n"; 
-        }
-    } else {
-        echo "\n=== 错误信息 ===" . "\n";
-        echo "错误码：" . $result['errCode'] . "\n";
-        echo "错误描述：" . $result['errMsg'] . "\n";
-    }
+   
     
 } catch (Exception $e) {
     echo "测试代码执行失败：" . $e->getMessage() . "\n";
 }
 
 
-//测试链接 http://cz.younger-car.com/yunfei_kucun/api_wd/get_product_list.php
+//测试链接 http://cz.younger-car.com/yunfei_kucun/api_wd/get_product_list.php?sku=NI-C63-FL-GB
