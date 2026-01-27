@@ -197,7 +197,7 @@ try {
     }
 
     // 输出提取后的结果（格式化展示）
-    echo "提取后的核心数据：\n";
+    //echo "提取后的核心数据：\n";
     echo json_encode($extractedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
 } catch (Exception $e) {
     echo "测试代码执行失败：" . $e->getMessage() . "\n";
