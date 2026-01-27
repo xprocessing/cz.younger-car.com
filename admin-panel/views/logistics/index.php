@@ -51,7 +51,7 @@
                                         <th>物流类型id：type_id</th>
                                         <th>物流渠道名称</th>
                                         <th>物流渠道编码：code</th>
-                                        <th>服务商</th>
+                                        <th>服务商logistics_provider_name</th>
                                         <th>供应商编码</th>
                                         <th>仓库编码</th>
                                         <th>是否启用</th>

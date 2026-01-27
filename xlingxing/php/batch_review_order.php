@@ -10,23 +10,15 @@ require_once __DIR__ . '/lx_api.php';
 try {
     // 初始化API客户端
     $apiClient = new LingXingApiClient();
-    //当前时间戳，按秒
-    $currentTimestamp = time();
-    $nDaysAgo=$_GET['nDaysAgo'] ?? 2;
-    $oneDaysAgoTimestamp = $currentTimestamp - ($nDaysAgo * 24 * 60 * 60);
-    $nDaysAgoTimestamp = $currentTimestamp - (($nDaysAgo+2) * 24 * 60 * 60);
-
+    $global_order_no = $_GET['global_order_no'];
+    
    
     // 调用POST接口示例
     $orderParams = [
-        'offset' => 0,
-        'length' => 200,
-        'order_status' => 6,
-        'date_type' => 'global_purchase_time',
-       'start_time' => $nDaysAgoTimestamp,
-        'end_time' => $oneDaysAgoTimestamp
+        'global_order_no' =>  [$global_order_no] //array类型
+       
     ];
-    $orders = $apiClient->post('/pb/mp/order/v2/list', $orderParams);
+    $orders = $apiClient->post('/basicOpen/openapi/multiplatform/order/review', $orderParams);
     //print_r("订单数据：" . PHP_EOL);
     //json格式化输出
     echo json_encode($orders, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
@@ -35,5 +27,5 @@ try {
 }
 
 
-//测试链接 https://cz.younger-car.com/xlingxing/php/get_orders.php?nDaysAgo=2
+//测试链接 https://cz.younger-car.com/xlingxing/php/batch_review_order.php?global_order_no=103662673459556100   
 ?>
