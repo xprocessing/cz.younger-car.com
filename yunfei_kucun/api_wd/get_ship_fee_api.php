@@ -181,7 +181,7 @@ try {
     $result = calculateShipFee($contentParams);
 
     // 打印格式化结果
-    echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
+   // echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
 
     // 提取核心数据（这里是关键逻辑）
     $extractedData = [];
