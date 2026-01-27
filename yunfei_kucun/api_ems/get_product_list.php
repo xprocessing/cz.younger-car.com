@@ -142,7 +142,7 @@ echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 //http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10
 
 # 按单个SKU查询
-// http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&product_sku=YOUR_SKU_001
+// http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&product_sku=NI-C63-FL-GB
 
 # 按多个SKU查询（逗号分隔）
 //http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&product_sku_arr=SKU001,SKU002,SKU003

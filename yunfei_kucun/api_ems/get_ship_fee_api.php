@@ -18,7 +18,7 @@ $weight    = max(0.001, floatval($_GET['weight'] ?? 0));     // 最低 0.001kg
 $warehouse = strtoupper(trim($_GET['warehouse'] ?? ''));
 $channel   = trim($_GET['channel'] ?? '');
 
-// 可选尺寸（单位 cm），默认最小 1cm
+//尺寸（单位 cm），默认最小 1cm
 $length = max(1, round(floatval($_GET['length'] ?? 0), 1));
 $width  = max(1, round(floatval($_GET['width']  ?? 0), 1));
 $height = max(1, round(floatval($_GET['height'] ?? 0), 1));
@@ -180,4 +180,4 @@ print_r($totalFeeArray);
 
 
 //测试多仓库链接
-//http://cz.younger-car.com/yunfei_kucun/api_ems/ems_api6.php?postcode=90210&weight=1.5&warehouse=USEA,USWE&channel=USPS-PRIORITY,AMAZON-GROUND
+//http://cz.younger-car.com/yunfei_kucun/api_ems/get_ship_fee_api.php?postcode=90210&weight=1.5&warehouse=USEA,USWE&channel=USPS-PRIORITY,AMAZON-GROUND&length=26&width=20&height=2
