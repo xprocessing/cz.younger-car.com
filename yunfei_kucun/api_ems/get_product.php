@@ -135,9 +135,28 @@ $result = [
     'data' => $response
 ];
 
-echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+//echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
+// 首先进行数据提取和整理
+$sku_data = [];
 
+// 检查数据是否存在，避免报错
+if (isset($result['data']['data'][0]['product_warehouse_attribute'][0])) {
+    // 获取 product_warehouse_attribute 中的第一条数据（通常只有一条）
+    $warehouse_attr = $result['data']['data'][0]['product_warehouse_attribute'][0];
+    
+    // 按照你的要求整理数据
+    $sku_data = [
+        'sku' => $warehouse_attr['product_sku'],
+        'weight' => $warehouse_attr['product_weight'],
+        'length' => $warehouse_attr['product_length'],
+        'width' => $warehouse_attr['product_width'],
+        'height' => $warehouse_attr['product_length'] // 你要求 height 对应 product_length
+    ];
+}
+
+// 输出整理后的结果（可选）
+echo json_encode($sku_data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 # 基础调用（第1页，每页10条）
 //http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10
 
