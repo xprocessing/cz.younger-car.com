@@ -140,7 +140,7 @@ $response = [
     'data' => $finalResult
 ];
 
-//echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 //将response 转为json 格式
 //$result = json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
@@ -152,7 +152,7 @@ $data = $obj['data'];               // 取出我们关心的部分
 // 初始化存储totalFee的数组
 $totalFeeArray = [];
 
-// 第一层循环：遍历地区（USEA/USWE等）
+// 第一层循环：遍历从仓库地区（USEA/USWE等）
 foreach ($data as $region => $carriers) {
     // 第二层循环：遍历物流商（USPS-PRIORITY/AMAZON-GROUND等）
     foreach ($carriers as $carrier => $info) {
