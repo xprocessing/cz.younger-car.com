@@ -139,11 +139,11 @@ echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 
 # 基础调用（第1页，每页10条）
-//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10
+//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10
 
 # 按单个SKU查询
-// http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&sku=NI-C63-FL-GB
+// http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10&sku=NI-C63-FL-GB
 
 # 按多个SKU查询（逗号分隔）
-//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&sku_arr=NI-C63-FL-GB,NI-C63-FL-GB2
+//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10&sku_arr=NI-C63-FL-GB,NI-C63-FL-GB2
 ?>

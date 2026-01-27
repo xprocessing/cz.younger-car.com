@@ -162,4 +162,4 @@ try {
 }
 
 
-//测试链接 http://cz.younger-car.com/yunfei_kucun/api_wd/get_product_list.php?sku=NI-C63-FL-GB
+//测试链接 http://cz.younger-car.com/yunfei_kucun/api_wd/get_product.php?sku=NI-C63-FL-GB
