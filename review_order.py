@@ -1,13 +1,20 @@
 #获取所有店铺信息 https://cz.younger-car.com/xlingxing/php/get_store.php
 #获取所有物流渠道信息 https://cz.younger-car.com/xlingxing/php/get_listUsedLogisticsType.php?provider_type=2
-#获取待审核订单列表信息（sku，订单号，店铺id，订单创建时间，订单状态等） https://cz.younger-car.com/xlingxing/php/get_orders.php?nDaysAgo=2 
+#获取待审核订单列表信息（sku，订单金额，采购金额，订单号，店铺id，订单创建时间，订单状态等） https://cz.younger-car.com/xlingxing/php/get_orders.php?nDaysAgo=2 
 #通过sku查询库存 https://cz.younger-car.com/xlingxing/php/get_inventoryDetails.php?sku=NI-C63-FL-GB
 
-#通过sku获取中邮的产品规格 http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&product_sku=NI-C63-FL-GB
-#获取中邮运费试算api http://cz.younger-car.com/yunfei_kucun/api_ems/get_ship_fee_api.php?postcode=90210&weight=1.5&warehouse=USEA,USWE&channel=USPS-PRIORITY,AMAZON-GROUND&length=26&width=20&height=2
+#通过sku获取中邮的产品规格：返回sku，重量，长宽高 http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&sku=NI-C63-FL-GB
 
-#通过sku获取运德的产品规格 https://cz.younger-car.com/yunfei_kucun/api_wd/get_product_list.php?sku=NI-C63-FL-GB
-#获取运德的运费试算  https://cz.younger-car.com/yunfei_kucun/api_wd/get_ship_fee.php
+
+#获取中邮运费试算api ：返回仓库，物流渠道，运费 http://cz.younger-car.com/yunfei_kucun/api_ems/get_ship_fee_api.php?postcode=90210&weight=1.5&warehouse=USEA,USWE&channel=USPS-PRIORITY,AMAZON-GROUND&length=26&width=20&height=2
+[{ "warehouse": "USEA", "channel": "USPS-PRIORITY", "totalFee": 93.76 }, 
+{ "warehouse": "USEA", "channel": "AMAZON-GROUND", "totalFee": 213.759675 }, 
+{ "warehouse": "USWE", "channel": "USPS-PRIORITY", "totalFee": 96.07 }, 
+{ "warehouse": "USWE", "channel": "AMAZON-GROUND", "totalFee": 145.582925 } ]
+#通过sku获取运德的产品规格：返回sku，重量，长宽高  https://cz.younger-car.com/yunfei_kucun/api_wd/get_product_list.php?sku=NI-C63-FL-GB
+#获取运德的运费试算：返回仓库，物流渠道，运费   http://cz.younger-car.com/yunfei_kucun/api_wd/get_ship_fee_api.php?channelCode=AMGDCA,CAUSPSGA&country=US&city=LOS ANGELES&postcode=90001&weight=0.079&length=26&width=20&height=2&signatureService=0
+
+
 #修改领星订单 仓库+物流渠道
 #数据存入数据库，使用post请求。
 #可视化运行大屏+钉钉通知。

@@ -95,8 +95,8 @@ XML;
 // 1. 接收请求参数（支持 GET 传参，便于灵活调用）
 $pageSize = intval($_GET['pageSize'] ?? 10);
 $page = intval($_GET['page'] ?? 1);
-$productSku = trim($_GET['product_sku'] ?? '');
-$productSkuArr = !empty($_GET['product_sku_arr']) ? explode(',', trim($_GET['product_sku_arr'])) : [];
+$productSku = trim($_GET['sku'] ?? '');
+$productSkuArr = !empty($_GET['sku_arr']) ? explode(',', trim($_GET['sku_arr'])) : [];
 
 // 2. 校验必填参数
 if ($pageSize <= 0 || $page <= 0) {
@@ -116,10 +116,10 @@ $params = [
 ];
 // 可选参数：按 SKU 过滤
 if (!empty($productSku)) {
-    $params["product_sku"] = $productSku;
+    $params["sku"] = $productSku;
 }
 if (!empty($productSkuArr)) {
-    $params["product_sku_arr"] = array_filter($productSkuArr); // 过滤空值
+    $params["sku_arr"] = array_filter($productSkuArr); // 过滤空值
 }
 
 // 4. 转换参数为 JSON 字符串
@@ -142,8 +142,8 @@ echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 //http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10
 
 # 按单个SKU查询
-// http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&product_sku=NI-C63-FL-GB
+// http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&sku=NI-C63-FL-GB
 
 # 按多个SKU查询（逗号分隔）
-//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&product_sku_arr=SKU001,SKU002,SKU003
+//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&sku_arr=SKU001,SKU002,SKU003
 ?>
