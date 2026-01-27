@@ -133,6 +133,9 @@ $response = [
     'request' => [
         'postcode'   => $postcode,
         'weight'     => $weight,
+        'length'     => $length,
+        'width'      => $width,
+        'height'     => $height,
         'warehouses' => $warehouseList,
         'channels'   => $channelList,
         'total_combinations' => $totalRequests
@@ -140,8 +143,7 @@ $response = [
     'data' => $finalResult
 ];
 
-echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-
+//echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 //将response 转为json 格式
 //$result = json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
@@ -153,17 +155,17 @@ $data = $obj['data'];               // 取出我们关心的部分
 $totalFeeArray = [];
 
 // 第一层循环：遍历从仓库地区（USEA/USWE等）
-foreach ($data as $region => $carriers) {
+foreach ($data as $warehouse => $channels) {
     // 第二层循环：遍历物流商（USPS-PRIORITY/AMAZON-GROUND等）
-    foreach ($carriers as $carrier => $info) {
+    foreach ($channels as $channel => $info) {
         // 筛选ask为Success的条目
         if (isset($info['ask']) && $info['ask'] === 'Success') {
             // 提取totalFee并加入数组（做数据校验避免报错）
             if (isset($info['data']['totalFee'])) {
                 // 可选：保留物流商和地区信息，方便溯源
                 $totalFeeArray[] = [
-                    'region' => $region,       // 地区
-                    'carrier' => $carrier,     // 物流商
+                    'warehouse' => $warehouse,       // 仓库地区
+                    'channel' => $channel,     // 物流渠道代码
                     'totalFee' => $info['data']['totalFee']  // 总费用
                 ];
                 
@@ -174,9 +176,9 @@ foreach ($data as $region => $carriers) {
     }
 }
 
-// 输出结果试算成功的数组
+// 输出结果试算成功的数组，输出json 格式
 //echo "提取的totalFee数组：\n";
-print_r($totalFeeArray);
+echo json_encode($totalFeeArray, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 
 //测试多仓库链接
