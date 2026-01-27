@@ -47,9 +47,10 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>物流类型ID</th>
+                                        <th>仓库id：wid</th>
+                                        <th>物流类型id：type_id</th>
                                         <th>物流渠道名称</th>
-                                        <th>编码</th>
+                                        <th>物流渠道编码：code</th>
                                         <th>服务商</th>
                                         <th>供应商编码</th>
                                         <th>仓库编码</th>
@@ -62,6 +63,7 @@
                                         <?php foreach ($logisticsList as $logistics): ?>
                                             <tr>
                                                 <td><?php echo $logistics['id']; ?></td>
+                                                <td><?php echo $logistics['wid']; ?></td>
                                                 <td><?php echo $logistics['type_id']; ?></td>
                                                 <td><?php echo htmlspecialchars($logistics['name']); ?></td>
                                                 <td><?php echo htmlspecialchars($logistics['code']); ?></td>
