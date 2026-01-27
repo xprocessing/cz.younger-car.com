@@ -116,10 +116,10 @@ $params = [
 ];
 // 可选参数：按 SKU 过滤
 if (!empty($productSku)) {
-    $params["sku"] = $productSku;
+    $params["product_sku"] = $productSku;
 }
 if (!empty($productSkuArr)) {
-    $params["sku_arr"] = array_filter($productSkuArr); // 过滤空值
+    $params["product_sku_arr"] = array_filter($productSkuArr); // 过滤空值
 }
 
 // 4. 转换参数为 JSON 字符串
@@ -145,5 +145,5 @@ echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 // http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&sku=NI-C63-FL-GB
 
 # 按多个SKU查询（逗号分隔）
-//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&sku_arr=SKU001,SKU002,SKU003
+//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&sku_arr=NI-C63-FL-GB,NI-C63-FL-GB2
 ?>
