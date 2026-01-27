@@ -151,7 +151,7 @@ if (isset($result['data']['data'][0]['product_warehouse_attribute'][0])) {
         'weight' => $warehouse_attr['product_weight'],
         'length' => $warehouse_attr['product_length'],
         'width' => $warehouse_attr['product_width'],
-        'height' => $warehouse_attr['product_length'] // 你要求 height 对应 product_length
+        'height' => $warehouse_attr['product_height'] 
     ];
 }
 

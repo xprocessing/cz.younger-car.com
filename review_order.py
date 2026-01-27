@@ -4,7 +4,7 @@
 #通过sku查询库存 https://cz.younger-car.com/xlingxing/php/get_inventoryDetails.php?sku=NI-C63-FL-GB
 
 #通过sku获取中邮的产品规格：返回sku，重量，长宽高 http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10&sku=NI-C63-FL-GB
-
+{ "sku": "NI-C63-FL-GB", "weight": "5.480", "length": "186.00", "width": "54.00", "height": "186.00" }
 
 #获取中邮运费试算api ：返回仓库，物流渠道，运费 http://cz.younger-car.com/yunfei_kucun/api_ems/get_ship_fee_api.php?postcode=90210&weight=1.5&warehouse=USEA,USWE&channel=USPS-PRIORITY,AMAZON-GROUND&length=26&width=20&height=2
 [{ "warehouse": "USEA", "channel": "USPS-PRIORITY", "totalFee": 93.76 }, 
@@ -12,6 +12,7 @@
 { "warehouse": "USWE", "channel": "USPS-PRIORITY", "totalFee": 96.07 }, 
 { "warehouse": "USWE", "channel": "AMAZON-GROUND", "totalFee": 145.582925 } ]
 #通过sku获取运德的产品规格：返回sku，重量，长宽高  https://cz.younger-car.com/yunfei_kucun/api_wd/get_product.php?sku=NI-C63-FL-GB
+
 #获取运德的运费试算：返回仓库，物流渠道，运费   http://cz.younger-car.com/yunfei_kucun/api_wd/get_ship_fee_api.php?channelCode=AMGDCA,CAUSPSGA&country=US&city=LOS ANGELES&postcode=90001&weight=0.079&length=26&width=20&height=2&signatureService=0
 
 
