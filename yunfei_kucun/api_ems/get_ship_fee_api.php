@@ -166,7 +166,9 @@ foreach ($data as $warehouse => $channels) {
                 $totalFeeArray[] = [
                     'warehouse' => $warehouse,       // 仓库地区
                     'channel' => $channel,     // 物流渠道代码
-                    'totalFee' => $info['data']['totalFee']  // 总费用
+                    'totalFee' => $info['data']['totalFee'],   // 总费用
+                    'currency' => "CNY"
+
                 ];
                 
                 // 如果只需要纯数值数组，用下面这行替代上面的数组追加

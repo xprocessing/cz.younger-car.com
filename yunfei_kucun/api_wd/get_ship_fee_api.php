@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 运德海外仓运费试算接口 Demo
  * 包含签名生成、POST 请求发送、响应解析
@@ -18,18 +19,18 @@ date_default_timezone_set('Asia/Shanghai');
         'height' => 2,                     // 高（cm）
 
 */
-$channelCode =$_GET['channelCode'];
-$country =$_GET['country'];
-$city =$_GET['city'];
-$postcode =$_GET['postcode'];
-$weight =$_GET['weight'];
-$length =$_GET['length'];
-$width =$_GET['width'];
-$height =$_GET['height'];
+$channelCode = $_GET['channelCode'];
+$country = $_GET['country'];
+$city = $_GET['city'];
+$postcode = $_GET['postcode'];
+$weight = $_GET['weight'];
+$length = $_GET['length'];
+$width = $_GET['width'];
+$height = $_GET['height'];
 
 
 
-require_once __DIR__ . '/../../config.php'; 
+require_once __DIR__ . '/../../config.php';
 // -------------------------- 配置信息 --------------------------
 // 替换为你的用户账号（联系运德客服获取）
 $userAccount = WD_APP_ID;
@@ -45,9 +46,10 @@ $apiUrl = "http://fg.wedoexpress.com/api.php?mod=apiManage&act=getShipFeeQuery";
  * @param array $data 请求参数（关联数组）
  * @return string 接口响应内容
  */
-function curlPostData($url, $data) {
+function curlPostData($url, $data)
+{
     $ch = curl_init();
-    
+
     // 设置请求地址
     curl_setopt($ch, CURLOPT_URL, $url);
     // 禁止输出 header
@@ -65,7 +67,7 @@ function curlPostData($url, $data) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     // 设置超时时间（60秒）
     curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-    
+
     // 发送请求（最多重试3次）
     $cnt = 0;
     $result = false;
@@ -73,14 +75,14 @@ function curlPostData($url, $data) {
         $result = curl_exec($ch);
         $cnt++;
     }
-    
+
     // 捕获 curl 错误
     if (curl_errno($ch)) {
         $errorMsg = "CURL 请求失败：" . curl_error($ch);
         curl_close($ch);
         throw new Exception($errorMsg);
     }
-    
+
     curl_close($ch);
     return $result;
 }
@@ -90,12 +92,13 @@ function curlPostData($url, $data) {
  * @param array $data 待签名的参数（关联数组）
  * @return string 大写 MD5 签名
  */
-function createSignature($data) {
+function createSignature($data)
+{
     global $testToken;
-    
+
     // 1. 按参数名升序排序
     ksort($data);
-    
+
     // 2. 拼接所有参数的值（sign 字段不参与）
     $signStr = '';
     foreach ($data as $key => $value) {
@@ -103,10 +106,10 @@ function createSignature($data) {
             $signStr .= $value;
         }
     }
-    
+
     // 3. 拼接 token 后进行 MD5 加密，再转大写
     $signature = strtoupper(md5($signStr . $testToken));
-    
+
     return $signature;
 }
 
@@ -115,43 +118,43 @@ function createSignature($data) {
  * @param array $contentParams content 字段的 JSON 参数
  * @return array 解析后的接口响应
  */
-function calculateShipFee($contentParams) {
+function calculateShipFee($contentParams)
+{
     global $userAccount, $apiUrl;
-    
+
     try {
         // 1. 构造 content 字段（JSON 字符串）
         $contentJson = json_encode($contentParams, JSON_UNESCAPED_UNICODE);
         if ($contentJson === false) {
             throw new Exception("content 参数 JSON 编码失败：" . json_last_error_msg());
         }
-        
+
         // 2. 构造待签名的参数数组（不含 sign）
         $requestData = [
             'userAccount' => $userAccount,
             'content' => $contentJson
         ];
-        
+
         // 3. 生成签名
         $sign = createSignature($requestData);
-        
+
         // 4. 补充 sign 字段，形成最终请求参数
         $requestData['sign'] = $sign;
-        
+
         // 5. 发送 POST 请求
-      
-       // echo "请求参数：" . json_encode($requestData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
-        
+
+        // echo "请求参数：" . json_encode($requestData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
+
         $response = curlPostData($apiUrl, $requestData);
-        
+
         // 6. 解析响应（JSON 转数组）
         $responseData = json_decode($response, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new Exception("响应数据解析失败：" . json_last_error_msg() . "，原始响应：" . $response);
         }
-        
-       // echo "\n=== 请求成功，响应结果 ===" . "\n";
+
+        // echo "\n=== 请求成功，响应结果 ===" . "\n";
         return $responseData;
-        
     } catch (Exception $e) {
         echo "\n=== 请求失败 ===" . "\n";
         //echo "错误信息：" . $e->getMessage() . "\n";
@@ -173,15 +176,29 @@ try {
         'height' => $height,                     // 高（cm）
         'signatureService' => 0            // 签名服务（0:无，1:成人签名，2:直接签名）
     ];
-    
+
     // 调用运费试算函数
     $result = calculateShipFee($contentParams);
-    
+
     // 打印格式化结果
     echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
-    
-   
-    
+
+    // 提取核心数据（这里是关键逻辑）
+    $extractedData = [];
+    if (isset($result['data']) && is_array($result['data'])) {
+        foreach ($result['data'] as $channel => $channelInfo) {
+            // 提取你需要的三个字段
+            $extractedData[] = [
+                'channel' => $channel,          // 渠道名称（如 AMGDCA）
+                'totalFee' => $channelInfo['shipFee'],  // 总费用（对应 shipFee）
+                'currency' => $channelInfo['currency']  // 货币类型（如 USD）
+            ];
+        }
+    }
+
+    // 输出提取后的结果（格式化展示）
+    echo "提取后的核心数据：\n";
+    echo json_encode($extractedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
 } catch (Exception $e) {
     echo "测试代码执行失败：" . $e->getMessage() . "\n";
 }
