@@ -11,14 +11,20 @@ try {
     // 初始化API客户端
     $apiClient = new LingXingApiClient();
 
+    $type_id = $_GET['type_id'];
+    $wid = $_GET['wid'];
+    $global_order_no = $_GET['global_order_no'];
+
+
+
     // 调用POST接口示例
     $orderParams = [
         'order_list' => [
             [
-                'global_order_no' => 103257522489451000,
+                'global_order_no' => $global_order_no,
                 'logistics' => [
-                    'logistics_type_id' => 825,
-                    'sys_wid' => 50
+                    'logistics_type_id' => $type_id,
+                    'sys_wid' => $wid
                 ]
             ]
         ]
@@ -31,5 +37,4 @@ try {
     echo "错误：" . $e->getMessage() . PHP_EOL;
 }
 
-
-//测试链接 https://cz.younger-car.com/xlingxing/php/get_orders.php?nDaysAgo=2
+//测试链接 https://cz.younger-car.com/xlingxing/php/edit_order.php?type_id=203571748136745984&wid=5832&global_order_no=103257522489451000
