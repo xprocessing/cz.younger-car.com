@@ -7,6 +7,28 @@ error_reporting(-1);
 header("Content-type: text/html; charset=utf-8");
 date_default_timezone_set('Asia/Shanghai');
 
+/*
+   'channelCode' => 'AMGDCA,CAUSPSGA',  // 渠道简码（多个用逗号分隔）
+        'country' => 'US',                 // 国家简码
+        'city' => 'LOS ANGELES',           // 收件人城市
+        'postcode' => '90001',             // 收件人邮编
+        'weight' => '0.079',               // 重量（kg）
+        'length' => 26,                    // 长（cm）
+        'width' => 20,                     // 宽（cm）
+        'height' => 2,                     // 高（cm）
+
+*/
+$channelCode =$_GET['channelCode'];
+$country =$_GET['country'];
+$city =$_GET['city'];
+$postcode =$_GET['postcode'];
+$weight =$_GET['weight'];
+$length =$_GET['length'];
+$width =$_GET['width'];
+$height =$_GET['height'];
+
+
+
 require_once __DIR__ . '/../../config.php'; 
 // -------------------------- 配置信息 --------------------------
 // 替换为你的用户账号（联系运德客服获取）
@@ -116,9 +138,8 @@ function calculateShipFee($contentParams) {
         $requestData['sign'] = $sign;
         
         // 5. 发送 POST 请求
-        echo "=== 开始发送运费试算请求 ===\n";
-        echo "请求地址：" . $apiUrl . "\n";
-        echo "请求参数：" . json_encode($requestData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
+      
+       // echo "请求参数：" . json_encode($requestData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
         
         $response = curlPostData($apiUrl, $requestData);
         
@@ -128,12 +149,12 @@ function calculateShipFee($contentParams) {
             throw new Exception("响应数据解析失败：" . json_last_error_msg() . "，原始响应：" . $response);
         }
         
-        echo "\n=== 请求成功，响应结果 ===" . "\n";
+       // echo "\n=== 请求成功，响应结果 ===" . "\n";
         return $responseData;
         
     } catch (Exception $e) {
         echo "\n=== 请求失败 ===" . "\n";
-        echo "错误信息：" . $e->getMessage() . "\n";
+        //echo "错误信息：" . $e->getMessage() . "\n";
         return ['errCode' => '500', 'errMsg' => $e->getMessage()];
     }
 }
@@ -142,14 +163,14 @@ function calculateShipFee($contentParams) {
 try {
     // 构造 content 参数（根据实际需求修改）
     $contentParams = [
-        'channelCode' => 'AMGDCA,CAUSPSGA',  // 渠道简码（多个用逗号分隔）
-        'country' => 'US',                 // 国家简码
-        'city' => 'LOS ANGELES',           // 收件人城市
-        'postcode' => '90001',             // 收件人邮编
-        'weight' => '0.079',               // 重量（kg）
-        'length' => 26,                    // 长（cm）
-        'width' => 20,                     // 宽（cm）
-        'height' => 2,                     // 高（cm）
+        'channelCode' => $channelCode,  // 渠道简码（多个用逗号分隔）
+        'country' => $country,                 // 国家简码
+        'city' => $city,           // 收件人城市
+        'postcode' => $postcode,             // 收件人邮编
+        'weight' => $weight,               // 重量（kg）
+        'length' => $length,                    // 长（cm）
+        'width' => $width,                     // 宽（cm）
+        'height' => $height,                     // 高（cm）
         'signatureService' => 0            // 签名服务（0:无，1:成人签名，2:直接签名）
     ];
     
@@ -159,21 +180,7 @@ try {
     // 打印格式化结果
     echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
     
-    // 解析具体运费信息
-    if ($result['errCode'] == 200 && !empty($result['data']['data'])) {
-        $shipFeeData = $result['data']['data'];
-        echo "\n=== 运费详情 ===" . "\n";
-        foreach ($shipFeeData as $channel => $feeInfo) {
-            echo "渠道：" . $channel . "\n";
-            echo "  - 运费：" . $feeInfo['shipFee'] . " " . $feeInfo['currency'] . "\n";
-            echo "  - 主记录号：" . $feeInfo['mainRecordCode'] . "\n";
-            echo "  - 记录号：" . $feeInfo['recordCode'] . "\n\n";
-        }
-    } else {
-        echo "\n=== 错误信息 ===" . "\n";
-        echo "错误码：" . $result['errCode'] . "\n";
-        echo "错误描述：" . $result['errMsg'] . "\n";
-    }
+   
     
 } catch (Exception $e) {
     echo "测试代码执行失败：" . $e->getMessage() . "\n";

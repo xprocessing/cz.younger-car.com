@@ -8,8 +8,8 @@
 # 通过sku获取中邮的产品规格 http://cz.younger-car.com/yunfei_kucun/api_ems/get_product_list.php?page=1&pageSize=10&product_sku=YOUR_SKU_001
 # 获取中邮运费试算api https://cz.younger-car.com/yunfei_kucun/api_ems/get_ship_fee_api.php?postcode=90210&weight=1.5&warehouse=USEA,USWE&channel=USPS-PRIORITY,AMAZON-GROUND
 
-# 通过sku获取运德的产品规格
-# 获取运德的运费试算 
+# 通过sku获取运德的产品规格 https://cz.younger-car.com/yunfei_kucun/api_wd/get_product_list.php?sku=NI-C63-FL-GB
+# 获取运德的运费试算  https://cz.younger-car.com/yunfei_kucun/api_wd/get_ship_fee.php
 
 # 修改领星订单 仓库+物流渠道
 
