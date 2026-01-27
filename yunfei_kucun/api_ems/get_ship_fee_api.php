@@ -145,7 +145,7 @@ $response = [
 
 //echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 //将response 转为json 格式
-//$result = json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+$result = json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 $obj = $response;   // 转成关联数组
 $data = $obj['data'];               // 取出我们关心的部分
