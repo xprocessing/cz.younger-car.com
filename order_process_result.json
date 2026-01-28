@@ -55,12 +55,12 @@
     },
     {
         "global_order_no": "103662879949013321",
-        "status": "failed",
-        "message": "无有效运费数据",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
+        "status": "success",
+        "message": "订单修改成功",
+        "final_fee": 773.4657,
+        "final_type_id": "203571786812169216",
+        "final_wid": 5846,
+        "final_channel_code": "FEDHDW"
     },
     {
         "global_order_no": "103662886842542686",

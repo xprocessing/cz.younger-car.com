@@ -292,6 +292,7 @@ def process_single_order(order, store_list, logistics_list):
     print(f"【process_single_order】最优选择：{min_compare['type']} 仓库 | 运费 {min_compare['fee_cny']} 元 | 渠道编码 {final_choice['channel_code']}")
 
     # 步骤8：修改订单
+    
     print("\n----- 步骤8：执行订单修改 -----")
     print(f"【process_single_order】修改订单 {global_order_no} | type_id={final_choice['type_id']} | wid={final_choice['wid']}")
     edit_result = review_order.edit_order(
@@ -315,6 +316,7 @@ def process_single_order(order, store_list, logistics_list):
     
     print(f"\n===== 结束处理订单 {global_order_no} =====")
     return result
+    
 
 def main():
     """
