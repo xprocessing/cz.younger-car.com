@@ -183,15 +183,15 @@ try {
     // 打印格式化结果
    // echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
 
-    // 提取核心数据（这里是关键逻辑）
+    // 提取核心数据（这里是关键逻辑）,如果totalFee为空,则不提取该渠道
     $extractedData = [];
     if (isset($result['data']) && is_array($result['data'])) {
         foreach ($result['data'] as $channel => $channelInfo) {
             // 提取你需要的三个字段
             $extractedData[] = [
                 'channel_code' => $channel,        // 渠道名称（如 AMGDCA）
-                'totalFee' => $channelInfo['shipFee'],  // 总费用（对应 shipFee）
-                'currency' => $channelInfo['currency']  // 货币类型（如 USD）
+                'totalFee' => $channelInfo['shipFee'] ?? null,  // 总费用（对应 shipFee）,如果为空,则设为null
+                'currency' => $channelInfo['currency'] ?? null  // 货币类型（如 USD）,如果为空,则设为null
             ];
         }
     }

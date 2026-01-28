@@ -1,0 +1,92 @@
+[
+    {
+        "global_order_no": "103662618671969283",
+        "status": "failed",
+        "message": "无匹配有货仓库的物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103662620069213848",
+        "status": "failed",
+        "message": "无匹配有货仓库的物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103662628057147918",
+        "status": "failed",
+        "message": "未匹配到可用物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103662643136413847",
+        "status": "failed",
+        "message": "无有效运费数据",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103662651133585149",
+        "status": "failed",
+        "message": "无匹配有货仓库的物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103662869462946935",
+        "status": "failed",
+        "message": "无有效运费数据",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103662879949013321",
+        "status": "failed",
+        "message": "无有效运费数据",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103662886842542686",
+        "status": "failed",
+        "message": "无有效运费数据",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103662934875944657",
+        "status": "failed",
+        "message": "未匹配到可用物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103662979063923779",
+        "status": "failed",
+        "message": "无匹配有货仓库的物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    }
+]

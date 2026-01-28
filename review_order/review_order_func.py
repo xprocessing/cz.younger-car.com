@@ -267,13 +267,29 @@ def get_wd_product_spec(sku):
         json_data = response.json()
         
         # 4. 提取指定字段构建目标字典
-        product_spec = {
-            "sku": json_data.get("sku", ""),
-            "weight": json_data.get("weight", ""),
-            "length": json_data.get("length", ""),
-            "width": json_data.get("width", ""),
-            "height": json_data.get("height", "")
-        }
+        # 处理API返回列表的情况
+        if isinstance(json_data, list):
+            # 如果是列表，尝试获取第一个元素
+            if json_data:
+                first_item = json_data[0]
+                product_spec = {
+                    "sku": first_item.get("sku", ""),
+                    "weight": first_item.get("weight", ""),
+                    "length": first_item.get("length", ""),
+                    "width": first_item.get("width", ""),
+                    "height": first_item.get("height", "")
+                }
+            else:
+                return {}
+        else:
+            # 正常情况：返回字典
+            product_spec = {
+                "sku": json_data.get("sku", ""),
+                "weight": json_data.get("weight", ""),
+                "length": json_data.get("length", ""),
+                "width": json_data.get("width", ""),
+                "height": json_data.get("height", "")
+            }
         
         return product_spec
     
@@ -334,8 +350,9 @@ def get_ems_ship_fee(postcode, weight, warehouse, channels, length, width, heigh
         for item in json_data:
             ship_fee.append({
                 "warehouse": item.get("warehouse"),
-                "channel": item.get("channel"),
-                "totalFee": item.get("totalFee")
+                "channel_code": item.get("channel_code"),
+                "totalFee": item.get("totalFee"),
+                "currency": item.get("currency")
             })
         
         return ship_fee
@@ -355,7 +372,7 @@ def get_ems_ship_fee(postcode, weight, warehouse, channels, length, width, heigh
 
 # 测试示例
 # 8.获取运德运费试算
-def get_wd_ship_fee(channelCode, country, city, postcode, weight, length, width, height, signatureService):
+def get_wd_ship_fee(channels, country, city, postcode, weight, length, width, height, signatureService):
     """
     获取运德运费试算结果
     
@@ -378,7 +395,7 @@ def get_wd_ship_fee(channelCode, country, city, postcode, weight, length, width,
     
     # 构造请求参数（注意参数名和传入参数严格对应）
     params = {
-        "channelCode": channelCode,
+        "channels": channels,
         "country": country,
         "city": city,
         "postcode": postcode,
@@ -402,7 +419,7 @@ def get_wd_ship_fee(channelCode, country, city, postcode, weight, length, width,
         ship_fee = []
         for item in json_data:
             ship_fee.append({
-                "channel": item.get("channel"),       # 物流渠道
+                "channel_code": item.get("channel_code"),       # 物流渠道
                 "totalFee": item.get("totalFee"),     # 总运费
                 "currency": item.get("currency")      # 货币单位
             })
@@ -516,27 +533,27 @@ if __name__ == "__main__":
     print("获取的运德产品规格数据列表：")
     product_spec = get_wd_product_spec(sku)
     print(product_spec)
-   
+    """
     print("获取的中邮运费试算数据列表：")
     postcode = "90210"
     weight = "1.5"
     warehouse = "USEA,USWE"
     channel = "USPS-PRIORITY,AMAZON-GROUND"
-    length = "26"
+    length = "50"
     width = "20"
     height = "2"
     ship_fee = get_ems_ship_fee(postcode, weight, warehouse, channel, length, width, height)
     print(ship_fee)
-
+    """
     print("获取的运德运费试算数据列表：")
     channelCode = "AMGDCA,CAUSPSGA"
     country = "US"
     city = "LOS ANGELES"
     postcode = "90001"
-    weight = "0.079"
-    length = "26"
+    weight = "1.5"
+    length = "260"
     width = "20"
-    height = "2"
+    height = "20"
     signatureService = "0"
     ship_fee = get_wd_ship_fee(channelCode, country, city, postcode, weight, length, width, height, signatureService)
     print(ship_fee)
