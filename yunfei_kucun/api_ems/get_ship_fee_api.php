@@ -184,4 +184,4 @@ echo json_encode($totalFeeArray, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 
 //测试多仓库链接
-//http://cz.younger-car.com/yunfei_kucun/api_ems/get_ship_fee_api.php?postcode=90210&weight=1.5&warehouse=USEA,USWE&channel=USPS-PRIORITY,AMAZON-GROUND&length=26&width=20&height=2
+//http://cz.younger-car.com/yunfei_kucun/api_ems/get_ship_fee_api.php?postcode=90210&weight=1.5&warehouse=USEA,USWE&channels=USPS-PRIORITY,AMAZON-GROUND&length=26&width=20&height=2

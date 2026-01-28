@@ -19,7 +19,7 @@ date_default_timezone_set('Asia/Shanghai');
         'height' => 2,                     // 高（cm）
 
 */
-$channelCode = $_GET['channelCode'];
+$channels = $_GET['channels'];
 $country = $_GET['country'];
 $city = $_GET['city'];
 $postcode = $_GET['postcode'];
@@ -166,7 +166,7 @@ function calculateShipFee($contentParams)
 try {
     // 构造 content 参数（根据实际需求修改）
     $contentParams = [
-        'channelCode' => $channelCode,  // 渠道简码（多个用逗号分隔）
+        'channelCode' => $channels,  // 渠道简码（多个用逗号分隔）
         'country' => $country,                 // 国家简码
         'city' => $city,           // 收件人城市
         'postcode' => $postcode,             // 收件人邮编
@@ -189,7 +189,7 @@ try {
         foreach ($result['data'] as $channel => $channelInfo) {
             // 提取你需要的三个字段
             $extractedData[] = [
-                'channel' => $channel,          // 渠道名称（如 AMGDCA）
+                'channel_code' => $channel,        // 渠道名称（如 AMGDCA）
                 'totalFee' => $channelInfo['shipFee'],  // 总费用（对应 shipFee）
                 'currency' => $channelInfo['currency']  // 货币类型（如 USD）
             ];
@@ -204,4 +204,4 @@ try {
 }
 
 
-//测试链接 http://cz.younger-car.com/yunfei_kucun/api_wd/get_ship_fee_api.php?channelCode=AMGDCA,CAUSPSGA&country=US&city=LOS ANGELES&postcode=90001&weight=0.079&length=26&width=20&height=2&signatureService=0
+//测试链接 http://cz.younger-car.com/yunfei_kucun/api_wd/get_ship_fee_api.php?channels=AMGDCA,CAUSPSGA&country=US&city=LOS ANGELES&postcode=90001&weight=0.079&length=26&width=20&height=2&signatureService=0
