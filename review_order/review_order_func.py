@@ -63,7 +63,7 @@ def get_logistics_list():
                 # 提取指定字段，处理字段可能不存在的情况（设置默认值）
                 logistics_item = {
                     "type_id": item.get("type_id", ""),
-                    "code": item.get("code", ""),
+                    "channel_code": item.get("code", ""),
                     "logistics_provider_name": item.get("logistics_provider_name", ""),
                     "wid": item.get("wid", "")
                 }
@@ -290,7 +290,7 @@ def get_wd_product_spec(sku):
         print(f"未知错误发生: {e}")
         return {}
 # 7.获取中邮运费试算
-def get_ems_ship_fee(postcode, weight, warehouse, channel, length, width, height):
+def get_ems_ship_fee(postcode, weight, warehouse, channels, length, width, height):
     """
     获取中邮运费试算结果
     
@@ -314,7 +314,7 @@ def get_ems_ship_fee(postcode, weight, warehouse, channel, length, width, height
         "postcode": postcode,
         "weight": weight,
         "warehouse": warehouse,
-        "channel": channel,
+        "channels": channels,
         "length": length,
         "width": width,
         "height": height

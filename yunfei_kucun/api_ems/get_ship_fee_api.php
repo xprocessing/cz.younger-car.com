@@ -16,7 +16,7 @@ require_once __DIR__ . '/../../config.php'; // 必须包含 EMS_TOKEN 和 EMS_KE
 $postcode  = trim($_GET['postcode']  ?? '');
 $weight    = max(0.001, floatval($_GET['weight'] ?? 0));     // 最低 0.001kg
 $warehouse = strtoupper(trim($_GET['warehouse'] ?? ''));
-$channel   = trim($_GET['channel'] ?? '');
+$channels   = trim($_GET['channels'] ?? '');
 
 //尺寸（单位 cm），默认最小 1cm
 $length = max(1, round(floatval($_GET['length'] ?? 0), 1));
@@ -24,22 +24,22 @@ $width  = max(1, round(floatval($_GET['width']  ?? 0), 1));
 $height = max(1, round(floatval($_GET['height'] ?? 0), 1));
 
 // ========== 参数校验 ==========
-if ($postcode === '' || $weight <= 0 || $warehouse === '' || $channel === '') {
+if ($postcode === '' || $weight <= 0 || $warehouse === '' || $channels === '') {
     echo json_encode([
         'success' => false,
-        'message' => 'postcode、weight、warehouse、channel 均为必传参数'
+        'message' => 'postcode、weight、warehouse、channels 均为必传参数'
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
-// 解析 warehouse 和 channel，支持逗号分隔
+// 解析 warehouse 和 channels，支持逗号分隔
 $warehouseList = array_filter(array_unique(array_map('trim', explode(',', $warehouse))));
-$channelList   = array_filter(array_unique(array_map('trim', explode(',', $channel))));
+$channelList   = array_filter(array_unique(array_map('trim', explode(',', $channels))));
 
 if (empty($warehouseList) || empty($channelList)) {
     echo json_encode([
         'success' => false,
-        'message' => 'warehouse 或 channel 参数格式错误'
+        'message' => 'warehouse 或 channels 参数格式错误'
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }
@@ -165,7 +165,7 @@ foreach ($data as $warehouse => $channels) {
                 // 可选：保留物流商和地区信息，方便溯源
                 $totalFeeArray[] = [
                     'warehouse' => $warehouse,       // 仓库地区
-                    'channel' => $channel,     // 物流渠道代码
+                    'channel_code' => $channel,     // 物流渠道代码
                     'totalFee' => $info['data']['totalFee'],   // 总费用
                     'currency' => "CNY"
 
