@@ -292,23 +292,24 @@ def get_wd_product_spec(sku):
 # 7.获取中邮运费试算
 def get_ems_ship_fee(postcode, weight, warehouse, channel, length, width, height):
     """
-    根据传入的物流参数获取运费信息
+    获取中邮运费试算结果
     
-    Args:
-        postcode (str/int): 邮编
-        weight (str/float): 重量
-        warehouse (str): 仓库编码（如USEA、USWE）
-        channel (str): 物流渠道（如USPS-PRIORITY、AMAZON-GROUND）
-        length (str/float): 长度
-        width (str/float): 宽度
-        height (str/float): 高度
-        
-    Returns:
-        list: 包含字典的数组，每个字典包含warehouse、channel、totalFee字段
-              如果请求失败或数据异常，返回空列表
+    参数:
+        postcode (str/int): 邮编，如 90210
+        weight (float/int): 重量，如 1.5
+        warehouse (str): 仓库，多个用逗号分隔，如 "USEA,USWE"
+        channel (str): 物流渠道，多个用逗号分隔，如 "USPS-PRIORITY,AMAZON-GROUND"
+        length (float/int): 长度，如 26
+        width (float/int): 宽度，如 20
+        height (float/int): 高度，如 2
+    
+    返回:
+        list: 包含运费信息的字典列表，每个字典包含 warehouse、channel、totalFee 字段
     """
-    # 1. 定义基础URL和请求参数
-    base_url = "http://cz.younger-car.com/yunfei_kucun/api_ems/get_ship_fee_api.php"  # 假设基础URL为此（若实际不同可替换）
+    # 基础 API URL
+    base_url = "http://cz.younger-car.com/yunfei_kucun/api_ems/get_ship_fee_api.php"
+    
+    # 构造请求参数
     params = {
         "postcode": postcode,
         "weight": weight,
@@ -320,66 +321,62 @@ def get_ems_ship_fee(postcode, weight, warehouse, channel, length, width, height
     }
     
     try:
-        # 2. 发送HTTP GET请求，设置超时时间10秒
-        response = requests.get(base_url, params=params, timeout=10)
-        # 检查HTTP响应状态码（非200则抛出异常）
+        # 发送 GET 请求
+        response = requests.get(base_url, params=params, timeout=30)
+        # 检查请求是否成功
         response.raise_for_status()
         
-        # 3. 解析返回的JSON数据（预期是数组格式）
+        # 解析 JSON 数据
         json_data = response.json()
         
-        # 4. 提取指定字段构建目标数组
+        # 提取需要的字段，构造返回的字典列表
         ship_fee = []
-        # 遍历返回的每个物流费用项
         for item in json_data:
-            fee_item = {
-                "warehouse": item.get("warehouse", ""),
-                "channel": item.get("channel", ""),
-                "totalFee": item.get("totalFee", 0.0)  # 运费默认值设为0.0，保证数值类型
-            }
-            ship_fee.append(fee_item)
+            ship_fee.append({
+                "warehouse": item.get("warehouse"),
+                "channel": item.get("channel"),
+                "totalFee": item.get("totalFee")
+            })
         
         return ship_fee
     
     except requests.exceptions.RequestException as e:
-        # 捕获所有请求相关异常（网络错误、超时、HTTP错误等）
-        print(f"请求运费API出错: {e}")
+        # 捕获请求相关异常（超时、连接失败、HTTP错误等）
+        print(f"请求 API 时发生错误: {e}")
         return []
     except ValueError as e:
-        # 捕获JSON解析失败的异常
-        print(f"JSON数据解析失败: {e}")
-        return []
-    except TypeError as e:
-        # 捕获遍历非数组数据的异常（比如返回的不是列表）
-        print(f"数据格式异常，预期是数组: {e}")
+        # 捕获 JSON 解析异常
+        print(f"解析返回的 JSON 数据失败: {e}")
         return []
     except Exception as e:
-        # 捕获其他未知异常，避免函数崩溃
-        print(f"未知错误发生: {e}")
+        # 捕获其他未知异常
+        print(f"未知错误: {e}")
         return []
 
+# 测试示例
 # 8.获取运德运费试算
 def get_wd_ship_fee(channelCode, country, city, postcode, weight, length, width, height, signatureService):
     """
-    根据传入的物流参数从指定API获取运费信息
+    获取运德运费试算结果
     
-    Args:
-        channelCode (str): 渠道编码（多个用逗号分隔，如"AMGDCA,CAUSPSGA"）
-        country (str): 国家编码（如"US"）
-        city (str): 城市名称（如"LOS ANGELES"）
-        postcode (str/int): 邮编（如90001）
-        weight (str/float): 重量（如0.079）
-        length (str/float): 长度（如26）
-        width (str/float): 宽度（如20）
-        height (str/float): 高度（如2）
-        signatureService (int/str): 签名服务标识（0/1）
-        
-    Returns:
-        list: 包含字典的数组，每个字典包含channel、totalFee、currency字段
-              请求失败/数据异常时返回空列表
+    参数:
+        channelCode (str): 物流渠道编码，多个用逗号分隔，如 "AMGDCA,CAUSPSGA"
+        country (str): 国家，如 "US"
+        city (str): 城市，如 "LOS ANGELES"
+        postcode (str/int): 邮编，如 90001
+        weight (float/int): 重量，如 0.079
+        length (float/int): 长度，如 26
+        width (float/int): 宽度，如 20
+        height (float/int): 高度，如 2
+        signatureService (int/str): 签收服务，0 表示不开启，1 表示开启
+    
+    返回:
+        list: 包含运费信息的字典列表，每个字典包含 channel、totalFee、currency 字段
     """
-    # 1. 定义API基础地址和请求参数
+    # 基础 API URL
     base_url = "http://cz.younger-car.com/yunfei_kucun/api_wd/get_ship_fee_api.php"
+    
+    # 构造请求参数（注意参数名和传入参数严格对应）
     params = {
         "channelCode": channelCode,
         "country": country,
@@ -393,43 +390,39 @@ def get_wd_ship_fee(channelCode, country, city, postcode, weight, length, width,
     }
     
     try:
-        # 2. 发送GET请求，设置10秒超时（处理城市含空格等特殊字符，requests会自动编码）
-        response = requests.get(base_url, params=params, timeout=10)
-        # 检查HTTP响应状态码（非200则抛出异常）
+        # 发送 GET 请求，设置超时时间避免无限等待
+        response = requests.get(base_url, params=params, timeout=30)
+        # 检查 HTTP 响应状态码（非 200 则抛出异常）
         response.raise_for_status()
         
-        # 3. 解析JSON数据（预期为数组格式）
+        # 解析返回的 JSON 数据
         json_data = response.json()
         
-        # 4. 提取指定字段构建目标数组
+        # 提取指定字段，构造目标字典列表
         ship_fee = []
         for item in json_data:
-            fee_item = {
-                "channel": item.get("channel", ""),
-                "totalFee": item.get("totalFee", "0.00"),  # 默认空运费设为0.00
-                "currency": item.get("currency", "")       # 默认货币为空字符串
-            }
-            ship_fee.append(fee_item)
+            ship_fee.append({
+                "channel": item.get("channel"),       # 物流渠道
+                "totalFee": item.get("totalFee"),     # 总运费
+                "currency": item.get("currency")      # 货币单位
+            })
         
         return ship_fee
     
     except requests.exceptions.RequestException as e:
-        # 捕获网络超时、连接失败、HTTP错误等请求异常
-        print(f"请求运费API失败: {e}")
+        # 捕获所有请求相关异常（超时、连接失败、HTTP 错误等）
+        print(f"请求运德运费 API 失败: {e}")
         return []
     except ValueError as e:
-        # 捕获JSON解析失败（如返回非JSON格式数据）
-        print(f"JSON数据解析出错: {e}")
-        return []
-    except TypeError as e:
-        # 捕获遍历非数组数据的异常（如返回字典/None）
-        print(f"数据格式错误，预期为数组: {e}")
+        # 捕获 JSON 解析失败异常（返回数据非合法 JSON）
+        print(f"解析运费 JSON 数据失败: {e}")
         return []
     except Exception as e:
-        # 兜底捕获所有未知异常，避免函数崩溃
-        print(f"未知错误发生: {e}")
+        # 捕获其他未知异常，避免程序崩溃
+        print(f"获取运德运费时发生未知错误: {e}")
         return []
 
+# 测试示例
 # 9.修改领星订单：通过订单号+ 仓库+物流渠道 发起请求执行
 def edit_order(type_id, wid, global_order_no):
     """
@@ -493,7 +486,7 @@ def edit_order(type_id, wid, global_order_no):
 # 测试示例
 # 调用函数并打印结果
 if __name__ == "__main__":
-    store_list = get_store_list()
+    store_list = get_store_list()    
     print("提取的店铺数据列表：")
     for item in store_list:
         print(item)
@@ -505,6 +498,8 @@ if __name__ == "__main__":
   
     
     orders_list = get_orders_list()
+    # 剔除wid不为空的订单，只处理wid为空的订单
+    #orders_list = [item for item in orders_list if item["wid"] == ""]
     print("提取的订单数据列表：")
     for item in orders_list:
         print(item)
@@ -512,8 +507,7 @@ if __name__ == "__main__":
     print("获取的库存数据列表：")
     sku = "NI-C63-FL-GB"
     inventory_details = get_inventory_details(sku)
-    for item in inventory_details:
-        print(item)
+    print(inventory_details)    
 
     print("获取的中邮产品规格数据列表：")
     product_spec = get_ems_product_spec(sku)

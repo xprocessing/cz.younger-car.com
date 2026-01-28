@@ -10,21 +10,20 @@ require_once __DIR__ . '/lx_api.php';
 try {
     // 初始化API客户端
     $apiClient = new LingXingApiClient();
-    //当前时间戳，按秒
+    //当前时间戳，按秒//待审核订单
     $currentTimestamp = time();
-    $nDaysAgo=$_GET['nDaysAgo'] ?? 2;
-    $oneDaysAgoTimestamp = $currentTimestamp - ($nDaysAgo * 24 * 60 * 60);
-    $nDaysAgoTimestamp = $currentTimestamp - (($nDaysAgo+2) * 24 * 60 * 60);
+    $nDaysAgo=$_GET['nDaysAgo'] ?? 2;   
+    $nDaysAgoTimestamp = $currentTimestamp - ($nDaysAgo * 24 * 60 * 60);
 
    
     // 调用POST接口示例
     $orderParams = [
         'offset' => 0,
-        'length' => 200,
-        'order_status' => 6,
+        'length' => 300,
+        'order_status' => 4,//待发货订单
         'date_type' => 'global_purchase_time',
        'start_time' => $nDaysAgoTimestamp,
-        'end_time' => $oneDaysAgoTimestamp
+        'end_time' => $currentTimestamp,
     ];
     $orders = $apiClient->post('/pb/mp/order/v2/list', $orderParams);
     //print_r("订单数据：" . PHP_EOL);
