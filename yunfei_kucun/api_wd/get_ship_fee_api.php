@@ -183,7 +183,10 @@ try {
     // 打印格式化结果
    // echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
 
-    // 提取核心数据（这里是关键逻辑）,如果totalFee为空,则不提取该渠道
+    // 提取核心数据（这里是关键逻辑）,如果shipFee为空,则不提取该渠道的运费试算数据
+    // 如果currency为空,则设为null
+    
+
     $extractedData = [];
     if (isset($result['data']) && is_array($result['data'])) {
         foreach ($result['data'] as $channel => $channelInfo) {
