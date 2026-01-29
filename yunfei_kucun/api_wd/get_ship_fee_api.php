@@ -30,12 +30,14 @@ $height = $_GET['height'];
 
 
 
+
 require_once __DIR__ . '/../../config.php';
 // -------------------------- 配置信息 --------------------------
 // 替换为你的用户账号（联系运德客服获取）
 $userAccount = WD_APP_ID;
 // 替换为你的授权 token（联系运德客服获取）
 $testToken = WD_APP_TOKEN;
+
 // 运费试算接口地址
 $apiUrl = "http://fg.wedoexpress.com/api.php?mod=apiManage&act=getShipFeeQuery";
 // -------------------------- 配置信息结束 --------------------------

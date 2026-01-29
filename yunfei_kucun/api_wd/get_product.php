@@ -9,13 +9,37 @@ header("Content-type: text/html; charset=utf-8");
 date_default_timezone_set('Asia/Shanghai');
 
 $sku = $_GET['sku'] ?? '';
+$platform_name = $_GET['platform_name'];
 
 require_once __DIR__ . '/../../config.php';
 // -------------------------- 配置信息 --------------------------
+$platform_name = $_GET['platform_name'];
+switch ($platform_name) {
+    case 'Amazon':
+        $userAccount = WD_APP_ID_Amazon;
+        $testToken = WD_APP_TOKEN_Amazon;
+        break;
+    case 'eBay':
+        $userAccount = WD_APP_ID_eBay;
+        $testToken = WD_APP_TOKEN_eBay;
+        break;
+    case 'Shopify':
+        $userAccount = WD_APP_ID_Shopify;
+        $testToken = WD_APP_TOKEN_Shopify;
+        break;
+    default:
+        $userAccount = WD_APP_ID;
+        $testToken = WD_APP_TOKEN;
+        break;
+}
+
 // 替换为你的用户账号（联系运德客服获取）
-$userAccount = WD_APP_ID;
+//$userAccount = WD_APP_ID;
 // 替换为你的授权 token（联系运德客服获取）
-$testToken = WD_APP_TOKEN;
+///$testToken = WD_APP_TOKEN;
+
+
+
 // 运费试算接口地址
 $apiUrl = "http://fg.wedoexpress.com/api.php?mod=apiManage&act=queryGoodsInfo";
 // -------------------------- 配置信息结束 --------------------------
@@ -183,4 +207,4 @@ try {
 }
 
 
-//测试链接 http://cz.younger-car.com/yunfei_kucun/api_wd/get_product.php?sku=NI-C63-FL-GB
+//测试链接 http://cz.younger-car.com/yunfei_kucun/api_wd/get_product.php?sku=NI-C63-FL-GB&platform_name=

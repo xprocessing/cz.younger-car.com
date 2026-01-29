@@ -526,14 +526,14 @@ if __name__ == "__main__":
     inventory_details = get_inventory_details(sku)
     print(inventory_details)    
 
-    print("获取的中邮产品规格数据列表：")
+    print("获取的中邮产品规格数据字典：")
     product_spec = get_ems_product_spec(sku)
     print(product_spec)
    
-    print("获取的运德产品规格数据列表：")
+    print("获取的运德产品规格数据字典：")
     product_spec = get_wd_product_spec(sku)
     print(product_spec)
-    """
+    
     print("获取的中邮运费试算数据列表：")
     postcode = "90210"
     weight = "1.5"
@@ -544,14 +544,14 @@ if __name__ == "__main__":
     height = "2"
     ship_fee = get_ems_ship_fee(postcode, weight, warehouse, channel, length, width, height)
     print(ship_fee)
-    """
+    
     print("获取的运德运费试算数据列表：")
     channelCode = "AMGDCA,CAUSPSGA"
     country = "US"
     city = "LOS ANGELES"
     postcode = "90001"
     weight = "1.5"
-    length = "260"
+    length = "26"
     width = "20"
     height = "20"
     signatureService = "0"

@@ -14,14 +14,37 @@ require_once __DIR__ . '/../../config.php';
  * @param string $paramsJson 作为 JSON 字符串传递的参数
  * @return array 返回的 API 响应数据
  */
-function callEmsSoap(string $service, string $paramsJson): array {  
+
+
+function callEmsSoap(string $service, string $paramsJson): array
+{
     // 生产环境 URL
     $url = "http://cpws.ems.com.cn/default/svc/web-service";
     // 测试环境 URL (如果需要)
     // $url = "http://sbx-zy-oms.eminxing.com/default/svc/web-service";
 
-    $token = EMS_TOKEN;
-    $key   = EMS_KEY;
+    $platform_name = $_GET['platform_name'];
+
+    // 根据平台名称获取对应的token和key
+    switch ($platform_name) {
+        case 'Amazon':
+            $token = EMS_TOKEN_Amazon;
+            $key   = EMS_KEY_Amazon;
+            break;
+        case 'eBay':
+            $token = EMS_TOKEN_eBay;
+            $key   = EMS_KEY_eBay;
+            break;
+        case 'Shopify':
+            $token = EMS_TOKEN_Shopify;
+            $key   = EMS_KEY_Shopify;
+            break;
+        default:
+            $token = EMS_TOKEN;
+            $key   = EMS_KEY;
+            break;
+    }
+
 
     // 构造 SOAP XML 请求体（移除变量插值的多余空格）
     $xml = <<<XML
@@ -56,7 +79,7 @@ XML;
 
     // 执行请求
     $resp = curl_exec($ch);
-    $err = curl_error($ch);       
+    $err = curl_error($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); // 获取 HTTP 状态码
     curl_close($ch);
 
@@ -72,7 +95,7 @@ XML;
 
     // 尝试从响应中提取 <response> 标签内的内容
     if (!preg_match('#<response>(.*?)</response>#s', $resp, $matches)) {
-        return ['ask' => 'Fail', 'message' => 'No <response> tag found in SOAP response', 'raw_response' => $resp];        
+        return ['ask' => 'Fail', 'message' => 'No <response> tag found in SOAP response', 'raw_response' => $resp];
     }
 
     $responseContent = $matches[1];
@@ -81,9 +104,9 @@ XML;
     $decoded = json_decode($responseContent, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
         return [
-            'ask' => 'Fail', 
-            'message' => 'JSON Decode Error: ' . json_last_error_msg(), 
-            'raw_response' => $resp, 
+            'ask' => 'Fail',
+            'message' => 'JSON Decode Error: ' . json_last_error_msg(),
+            'raw_response' => $resp,
             'response_content' => $responseContent
         ];
     }
@@ -144,25 +167,24 @@ $sku_data = [];
 if (isset($result['data']['data'][0]['product_warehouse_attribute'][0])) {
     // 获取 product_warehouse_attribute 中的第一条数据（通常只有一条）
     $warehouse_attr = $result['data']['data'][0]['product_warehouse_attribute'][0];
-    
+
     // 按照你的要求整理数据
     $sku_data = [
         'sku' => $warehouse_attr['product_sku'],
         'weight' => $warehouse_attr['product_weight'],
         'length' => $warehouse_attr['product_length'],
         'width' => $warehouse_attr['product_width'],
-        'height' => $warehouse_attr['product_height'] 
+        'height' => $warehouse_attr['product_height']
     ];
 }
 
 // 输出整理后的结果（可选）
 echo json_encode($sku_data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 # 基础调用（第1页，每页10条）
-//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10
+//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10&platform_name=
 
 # 按单个SKU查询
-// http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10&sku=NI-C63-FL-GB
+// http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10&sku=NI-C63-FL-GB&platform_name=
 
 # 按多个SKU查询（逗号分隔）
-//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10&sku_arr=NI-C63-FL-GB,NI-C63-FL-GB2
-?>
+//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10&sku_arr=NI-C63-FL-GB,NI-C63-FL-GB2&platform_name=

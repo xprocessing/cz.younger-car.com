@@ -348,7 +348,7 @@ def main():
         return
     
     # 2. 筛选处理wid=0的订单，测试阶段取前5个
-    target_orders = [order for order in orders_list if order.get("wid") == "0"][:10]  # 测试阶段前5个
+    target_orders = [order for order in orders_list if order.get("wid") == "0"][:5]  # 测试阶段前5个
     print(f"\n【main】筛选出wid=0的订单数：{len(target_orders)}")
     if not target_orders:
         print("【main】无wid=0的订单需要处理，程序退出")
