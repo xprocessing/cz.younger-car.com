@@ -134,25 +134,35 @@ class BatchReviewGUI:
         self.tree_frame.pack(fill=tk.BOTH, expand=True)
         
         self.result_tree = ttk.Treeview(self.tree_frame, columns=(
-            "order_no", "status", "fee", "type_id", "wid", "channel", "message"
+            "order_no", "status", "wid", "channel",
+            "wd_product_spec", "ems_product_spec", "ems_fee", "wd_fee",
+            "fee", "type_id", "message"
         ), show="headings")
         
         # 配置列
         self.result_tree.heading("order_no", text="订单号")
         self.result_tree.heading("status", text="状态")
+        self.result_tree.heading("wid", text="有货仓库")
+        self.result_tree.heading("channel", text="可用渠道编码")
+        self.result_tree.heading("wd_product_spec", text="运德产品规格")
+        self.result_tree.heading("ems_product_spec", text="中邮产品规格")
+        self.result_tree.heading("ems_fee", text="中邮邮费试算(元)")
+        self.result_tree.heading("wd_fee", text="运德邮费试算(元)")
         self.result_tree.heading("fee", text="最优运费(元)")
         self.result_tree.heading("type_id", text="物流类型ID")
-        self.result_tree.heading("wid", text="仓库ID")
-        self.result_tree.heading("channel", text="渠道编码")
         self.result_tree.heading("message", text="消息")
         
         # 设置列宽
         self.result_tree.column("order_no", width=150)
         self.result_tree.column("status", width=80)
+        self.result_tree.column("wid", width=100)
+        self.result_tree.column("channel", width=150)
+        self.result_tree.column("wd_product_spec", width=150)
+        self.result_tree.column("ems_product_spec", width=150)
+        self.result_tree.column("ems_fee", width=120)
+        self.result_tree.column("wd_fee", width=120)
         self.result_tree.column("fee", width=100)
         self.result_tree.column("type_id", width=120)
-        self.result_tree.column("wid", width=80)
-        self.result_tree.column("channel", width=120)
         self.result_tree.column("message", width=200)
         
         # 添加滚动条
@@ -241,7 +251,7 @@ class BatchReviewGUI:
             orders_list = review_order.get_orders_list()
             
             # 筛选处理wid=0的订单，测试阶段取前5个
-            target_orders = [order for order in orders_list if order.get("wid") == "0"][:5]
+            target_orders = [order for order in orders_list if order.get("wid") == "0"][:8]
             print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 筛选出 {len(target_orders)} 个待处理订单")
             
             if not target_orders:
@@ -276,7 +286,11 @@ class BatchReviewGUI:
                         "final_fee": 0,
                         "final_type_id": "",
                         "final_wid": "",
-                        "final_channel_code": ""
+                        "final_channel_code": "",
+                        "wd_product_spec": "",
+                        "ems_product_spec": "",
+                        "ems_fee": 0,
+                        "wd_fee": 0
                     })
                 
                 print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] === 结束处理第 {idx} 个订单 ===")
@@ -328,7 +342,11 @@ class BatchReviewGUI:
             "final_fee": 0,
             "final_type_id": "",
             "final_wid": "",
-            "final_channel_code": ""
+            "final_channel_code": "",
+            "wd_product_spec": "",
+            "ems_product_spec": "",
+            "ems_fee": 0,
+            "wd_fee": 0
         }
 
         # 步骤1：根据store_id匹配platform_name
@@ -375,13 +393,16 @@ class BatchReviewGUI:
         if ems_logistics:
             ems_channel_codes = [log.get("channel_code") for log in ems_logistics if log.get("channel_code")]
             if ems_channel_codes:
-                ems_spec = review_order.get_ems_product_spec(local_sku)
+                ems_spec = review_order.get_ems_product_spec(local_sku, platform_name)
                 if ems_spec and all([ems_spec.get("weight"), ems_spec.get("length"), ems_spec.get("width"), ems_spec.get("height")]):
                     try:
                         weight = float(ems_spec.get("weight"))
                         length = float(ems_spec.get("length"))
                         width = float(ems_spec.get("width"))
                         height = float(ems_spec.get("height"))
+                        
+                        ems_spec_str = f"{weight}kg,{length}x{width}x{height}cm"
+                        result["ems_product_spec"] = ems_spec_str
                         
                         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 调用中邮运费试算接口...")
                         ems_fee_list = review_order.get_ems_ship_fee(
@@ -397,6 +418,7 @@ class BatchReviewGUI:
                         ems_ship_result = self.get_min_fee_shipment(ems_fee_list, ems_logistics)
                         time.sleep(10)  # 避免请求过快
                         if ems_ship_result:
+                            result["ems_fee"] = ems_ship_result["totalFee"]
                             print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 中邮最小运费：{ems_ship_result['totalFee']} {ems_ship_result['currency']}")
                     except Exception as e:
                         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 计算中邮运费失败：{e}")
@@ -408,13 +430,16 @@ class BatchReviewGUI:
         if wd_logistics:
             wd_channel_codes = [log.get("channel_code") for log in wd_logistics if log.get("channel_code")]
             if wd_channel_codes:
-                wd_spec = review_order.get_wd_product_spec(local_sku)
+                wd_spec = review_order.get_wd_product_spec(local_sku, platform_name)
                 if wd_spec and all([wd_spec.get("weight"), wd_spec.get("length"), wd_spec.get("width"), wd_spec.get("height")]):
                     try:
                         weight = float(wd_spec.get("weight"))
                         length = float(wd_spec.get("length"))
                         width = float(wd_spec.get("width"))
                         height = float(wd_spec.get("height"))
+                        
+                        wd_spec_str = f"{weight}kg,{length}x{width}x{height}cm"
+                        result["wd_product_spec"] = wd_spec_str
                         
                         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 调用运德运费试算接口...")
                         wd_fee_list = review_order.get_wd_ship_fee(
@@ -434,6 +459,7 @@ class BatchReviewGUI:
                         if wd_ship_result:
                             wd_fee_cny = wd_ship_result["totalFee"] * USD_TO_CNY_RATE
                             wd_ship_result["totalFee_cny"] = wd_fee_cny
+                            result["wd_fee"] = wd_fee_cny
                             print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 运德最小运费：{wd_ship_result['totalFee']} {wd_ship_result['currency']}（折合人民币{wd_fee_cny}元）")
                     except Exception as e:
                         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 计算运德运费失败：{e}")
@@ -573,10 +599,14 @@ class BatchReviewGUI:
             self.result_tree.insert("", tk.END, values=(
                 result.get("global_order_no"),
                 result.get("status"),
-                result.get("final_fee", 0),
-                result.get("final_type_id", ""),
                 result.get("final_wid", ""),
                 result.get("final_channel_code", ""),
+                result.get("wd_product_spec", ""),
+                result.get("ems_product_spec", ""),
+                result.get("ems_fee", 0),
+                result.get("wd_fee", 0),
+                result.get("final_fee", 0),
+                result.get("final_type_id", ""),
                 result.get("message", "")
             ))
     
