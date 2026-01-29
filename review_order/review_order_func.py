@@ -190,7 +190,7 @@ def get_inventory_details(sku):
     
     return inventory_details
 # 5.获取中邮产品规格
-def get_ems_product_spec(sku):
+def get_ems_product_spec(sku,platform_name):
     """
     根据传入的sku获取产品规格信息
     
@@ -206,7 +206,8 @@ def get_ems_product_spec(sku):
     params = {
         "page": 1,
         "pageSize": 10,
-        "sku": sku
+        "sku": sku,
+        "platform_name": platform_name
     }
     
     try:
@@ -240,7 +241,7 @@ def get_ems_product_spec(sku):
         return {}
 
 # 6.获取运德产品规格
-def get_wd_product_spec(sku):
+def get_wd_product_spec(sku,platform_name):
     """
     根据传入的sku从新的API地址获取产品规格信息
     
@@ -254,7 +255,8 @@ def get_wd_product_spec(sku):
     # 1. 定义基础URL和请求参数
     base_url = "https://cz.younger-car.com/yunfei_kucun/api_wd/get_product.php"
     params = {
-        "sku": sku
+        "sku": sku,
+        "platform_name": platform_name
     }
     
     try:
