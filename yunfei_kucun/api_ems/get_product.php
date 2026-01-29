@@ -29,19 +29,19 @@ function callEmsSoap(string $service, string $paramsJson): array
     switch ($platform_name) {
         case 'Amazon':
             $token = EMS_TOKEN_Amazon;
-            $key   = EMS_KEY_Amazon;
+            $key = EMS_KEY_Amazon;
             break;
         case 'eBay':
             $token = EMS_TOKEN_eBay;
-            $key   = EMS_KEY_eBay;
+            $key = EMS_KEY_eBay;
             break;
         case 'Shopify':
             $token = EMS_TOKEN_Shopify;
-            $key   = EMS_KEY_Shopify;
+            $key = EMS_KEY_Shopify;
             break;
         default:
             $token = EMS_TOKEN;
-            $key   = EMS_KEY;
+            $key = EMS_KEY;
             break;
     }
 
@@ -120,6 +120,23 @@ $pageSize = intval($_GET['pageSize'] ?? 10);
 $page = intval($_GET['page'] ?? 1);
 $productSku = trim($_GET['sku'] ?? '');
 $productSkuArr = !empty($_GET['sku_arr']) ? explode(',', trim($_GET['sku_arr'])) : [];
+$platform_name = $_GET['platform_name'];
+switch ($platform_name) {
+    case 'Amazon':      
+        $productSku = preg_replace('/^[^-]+/', 'A', $productSku);
+        break;
+    case 'eBay':       
+        $productSku = preg_replace('/^[^-]+/', 'E', $productSku);
+        break;
+    case 'Shopify':       
+        $productSku = preg_replace('/^[^-]+/', 'D', $productSku);
+        break;
+    default:
+       
+        break;
+}
+
+
 
 // 2. 校验必填参数
 if ($pageSize <= 0 || $page <= 0) {

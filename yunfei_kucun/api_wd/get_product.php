@@ -18,14 +18,17 @@ switch ($platform_name) {
     case 'Amazon':
         $userAccount = WD_APP_ID_Amazon;
         $testToken = WD_APP_TOKEN_Amazon;
+        $sku = preg_replace('/^[^-]+/', 'A', $sku);
         break;
     case 'eBay':
         $userAccount = WD_APP_ID_eBay;
         $testToken = WD_APP_TOKEN_eBay;
+        $sku = preg_replace('/^[^-]+/', 'E', $sku);
         break;
     case 'Shopify':
         $userAccount = WD_APP_ID_Shopify;
         $testToken = WD_APP_TOKEN_Shopify;
+        $sku = preg_replace('/^[^-]+/', 'D', $sku);
         break;
     default:
         $userAccount = WD_APP_ID;
