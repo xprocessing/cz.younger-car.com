@@ -1,71 +1,17 @@
 [
     {
-        "global_order_no": "103662618671969283",
-        "status": "failed",
-        "message": "无匹配有货仓库的物流渠道",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
-    },
-    {
-        "global_order_no": "103662620069213848",
-        "status": "failed",
-        "message": "无匹配有货仓库的物流渠道",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
-    },
-    {
-        "global_order_no": "103662628057147918",
-        "status": "failed",
-        "message": "未匹配到可用物流渠道",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
-    },
-    {
-        "global_order_no": "103662643136413847",
-        "status": "failed",
-        "message": "无有效运费数据",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
-    },
-    {
-        "global_order_no": "103662651133585149",
-        "status": "failed",
-        "message": "无匹配有货仓库的物流渠道",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
-    },
-    {
         "global_order_no": "103662869462946935",
         "status": "failed",
-        "message": "无有效运费数据",
+        "message": "订单 103662869462946935 处理异常：get_wd_product_spec() missing 1 required positional argument: 'platform_name'",
         "final_fee": 0,
         "final_type_id": "",
         "final_wid": "",
         "final_channel_code": ""
-    },
-    {
-        "global_order_no": "103662879949013321",
-        "status": "success",
-        "message": "订单修改成功",
-        "final_fee": 773.4657,
-        "final_type_id": "203571786812169216",
-        "final_wid": 5846,
-        "final_channel_code": "FEDHDW"
     },
     {
         "global_order_no": "103662886842542686",
         "status": "failed",
-        "message": "无有效运费数据",
+        "message": "订单 103662886842542686 处理异常：get_wd_product_spec() missing 1 required positional argument: 'platform_name'",
         "final_fee": 0,
         "final_type_id": "",
         "final_wid": "",
@@ -82,6 +28,60 @@
     },
     {
         "global_order_no": "103662979063923779",
+        "status": "failed",
+        "message": "无匹配有货仓库的物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103662995267707089",
+        "status": "failed",
+        "message": "无匹配有货仓库的物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103663021794792713",
+        "status": "failed",
+        "message": "订单 103663021794792713 处理异常：get_wd_product_spec() missing 1 required positional argument: 'platform_name'",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103663035154809500",
+        "status": "failed",
+        "message": "订单 103663035154809500 处理异常：get_wd_product_spec() missing 1 required positional argument: 'platform_name'",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103663252141724265",
+        "status": "failed",
+        "message": "无匹配有货仓库的物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103663280062022829",
+        "status": "failed",
+        "message": "无可用库存的仓库",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103663295711826952",
         "status": "failed",
         "message": "无匹配有货仓库的物流渠道",
         "final_fee": 0,

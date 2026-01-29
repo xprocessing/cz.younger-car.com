@@ -204,8 +204,7 @@ def get_ems_product_spec(sku,platform_name):
     # 1. 拼接URL
     base_url = "http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php"
     params = {
-        "page": 1,
-        "pageSize": 10,
+       
         "sku": sku,
         "platform_name": platform_name
     }

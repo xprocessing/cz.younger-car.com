@@ -1,333 +1,323 @@
 import review_order_func as review_order
 import time
-
-# 汇率配置（美元转人民币）
-USD_TO_CNY_RATE = 7.0
-
-def get_platform_logistics_mapping(logistics_list):
-    """
-    构建平台与物流渠道的映射关系，便于快速匹配
-    :param logistics_list: 物流渠道列表（来自get_logistics_list）
-    :return: 映射字典，key为平台关键词，value为匹配的物流渠道列表
-    """
-    mapping = {
-        "Amazon": [],
-        "eBay": [],
-        "Shopify": []
-    }
-    for logistics in logistics_list:
-        provider_name = logistics.get("logistics_provider_name", "")
-        # 匹配对应平台的物流渠道
-        if "亚马逊" in provider_name:
-            mapping["Amazon"].append(logistics)
-        if "eBay" in provider_name:
-            mapping["eBay"].append(logistics)
-        if "独立站" in provider_name:
-            mapping["Shopify"].append(logistics)
-    print(f"✅ 平台-物流渠道映射构建完成：{mapping.keys()}")
-    return mapping
-
-def get_store_platform_mapping(store_list):
-    """
-    构建店铺ID与平台名称的映射关系
-    :param store_list: 店铺列表（来自get_store_list）
-    :return: 映射字典，key为store_id，value为platform_name
-    """
-    mapping = {store["store_id"]: store["platform_name"] for store in store_list}
-    print(f"✅ 店铺-平台映射构建完成，共{len(mapping)}个店铺")
-    return mapping
-
-def filter_valid_logistics_by_inventory(logistics_list, valid_wids):
-    """
-    根据有货的仓库ID筛选可用的物流渠道
-    :param logistics_list: 初始匹配的物流渠道列表
-    :param valid_wids: 有货的仓库ID列表
-    :return: 筛选后的物流渠道列表
-    """
-    valid_logistics = [
-        logis for logis in logistics_list 
-        if logis.get("wid") in valid_wids
-    ]
-    print(f"✅ 库存筛选后可用物流渠道数量：{len(valid_logistics)}（有货仓库：{valid_wids}）")
-    return valid_logistics
-
-def get_min_fee_logistics(fee_list, logistics_list):
-    """
-    从运费列表中找到最小运费对应的物流渠道信息
-    :param fee_list: 运费试算列表
-    :param logistics_list: 对应的物流渠道列表
-    :return: 最小运费信息（字典），包含totalFee、type_id、wid、channel_code
-    """
-    if not fee_list or not logistics_list:
-        print("⚠️ 运费列表/物流渠道列表为空，无最小运费可选")
-        return None
-    
-    # 构建运费与物流渠道的关联
-    fee_logis_map = {}
-    for fee_item in fee_list:
-        channel_code = fee_item.get("channel_code")
-        total_fee = fee_item.get("totalFee", 0)
-        # 找到对应channel_code的物流渠道
-        for logis in logistics_list:
-            if logis.get("channel_code") == channel_code:
-                fee_logis_map[total_fee] = {
-                    "totalFee": total_fee,
-                    "type_id": logis.get("type_id"),
-                    "wid": logis.get("wid"),
-                    "channel_code": channel_code,
-                    "currency": fee_item.get("currency")
-                }
-                break
-    
-    # 找到最小运费
-    if not fee_logis_map:
-        print("⚠️ 未匹配到运费对应的物流渠道")
-        return None
-    min_fee = min(fee_logis_map.keys())
-    min_fee_info = fee_logis_map[min_fee]
-    print(f"✅ 最小运费筛选完成：{min_fee_info}")
-    return min_fee_info
-
-def process_single_order(order, store_platform_map, platform_logistics_map, logistics_list_all):
-    """
-    处理单个订单的完整逻辑：匹配物流→筛选库存→计算运费→选择最优渠道
-    :param order: 单个订单字典
-    :param store_platform_map: 店铺-平台映射
-    :param platform_logistics_map: 平台-物流渠道映射
-    :param logistics_list_all: 所有物流渠道列表
-    :return: 订单处理结果字典
-    """
-    order_no = order.get("global_order_no")
-    store_id = order.get("store_id")
-    sku = order.get("local_sku")
-    postal_code = order.get("postal_code")
-    country_code = order.get("receiver_country_code")
-    city = order.get("city")
-    
-    print(f"\n=====================================================")
-    print(f"📌 开始处理订单：{order_no}（SKU：{sku} | 店铺ID：{store_id}）")
-    print(f"📋 订单基础信息：邮编={postal_code} | 国家={country_code} | 城市={city}")
-    
-    # 步骤1：匹配订单对应的平台和初始物流渠道
-    platform_name = store_platform_map.get(store_id, "")
-    print(f"✅ 订单对应平台：{platform_name}（店铺ID：{store_id}）")
-    initial_logistics = platform_logistics_map.get(platform_name, [])
-    if not initial_logistics:
-        print(f"❌ 订单{order_no}无匹配的初始物流渠道，跳过")
-        return {"order_no": order_no, "status": "failed", "reason": "无匹配物流渠道"}
-    
-    # 步骤2：获取有货的仓库ID
-    inventory_details = review_order.get_inventory_details(sku)
-    print(f"✅ 库存查询结果：{inventory_details}")
-    valid_wids = [item["wid"] for item in inventory_details if item.get("product_valid_num", 0) > 0]
-    if not valid_wids:
-        print(f"❌ 订单{order_no}SKU={sku}无可用库存，跳过")
-        return {"order_no": order_no, "status": "failed", "reason": "无可用库存"}
-    
-    # 步骤3：根据库存筛选可用物流渠道
-    valid_logistics = filter_valid_logistics_by_inventory(initial_logistics, valid_wids)
-    if not valid_logistics:
-        print(f"❌ 订单{order_no}无库存匹配的可用物流渠道，跳过")
-        return {"order_no": order_no, "status": "failed", "reason": "无库存匹配的物流渠道"}
-    
-    # 拆分中邮/运德物流渠道
-    ems_logistics = [logis for logis in valid_logistics if "中邮" in logis.get("logistics_provider_name", "")]
-    wd_logistics = [logis for logis in valid_logistics if "运德" in logis.get("logistics_provider_name", "")]
-    print(f"✅ 中邮可用物流渠道：{len(ems_logistics)} | 运德可用物流渠道：{len(wd_logistics)}")
-    
-    # 初始化运费结果
-    ems_min_fee = None
-    wd_min_fee = None
-    
-    # 步骤4：处理中邮运费试算
-    if ems_logistics:
-        # 获取中邮商品规格
-        ems_spec = review_order.get_ems_product_spec(sku)
-        print(f"✅ 中邮商品规格（SKU={sku}）：{ems_spec}")
-        if not ems_spec:
-            print(f"⚠️ 中邮商品规格获取失败，跳过中邮运费计算")
-        else:
-            # 构造中邮运费参数
-            ems_channels = ",".join([logis["channel_code"] for logis in ems_logistics])
-            ems_postcode = postal_code
-            ems_weight = ems_spec.get("weight", 0)
-            ems_length = ems_spec.get("length", 0)
-            ems_width = ems_spec.get("width", 0)
-            ems_height = ems_spec.get("height", 0)
-            ems_warehouse = "USEA,USWE"
-            
-            # 调用中邮运费试算（增加超时提示）
-            print(f"⏳ 正在请求中邮运费试算（渠道：{ems_channels}），请等待...")
-            time.sleep(10)  # 模拟等待（可选）
-            ems_fee_list = review_order.get_ems_ship_fee(
-                ems_postcode, ems_weight, ems_warehouse,
-                ems_channels, ems_length, ems_width, ems_height
-            )
-            print(f"✅ 中邮运费试算结果：{ems_fee_list}")
-            ems_min_fee = get_min_fee_logistics(ems_fee_list, ems_logistics)
-            if ems_min_fee:
-                ems_min_fee["totalFee_cny"] = float(ems_min_fee["totalFee"])  # 中邮本身是人民币
-                print(f"🏆 中邮最小运费：{ems_min_fee['totalFee']} {ems_min_fee['currency']}（¥{ems_min_fee['totalFee_cny']}）")
-    
-    # 步骤5：处理运德运费试算
-    if wd_logistics:
-        # 获取运德商品规格
-        wd_spec = review_order.get_wd_product_spec(sku)
-        print(f"✅ 运德商品规格（SKU={sku}）：{wd_spec}")
-        if not wd_spec:
-            print(f"⚠️ 运德商品规格获取失败，跳过运德运费计算")
-        else:
-            # 构造运德运费参数
-            wd_channels = ",".join([logis["channel_code"] for logis in wd_logistics])
-            wd_country = country_code
-            wd_city = city
-            wd_postcode = postal_code
-            wd_weight = wd_spec.get("weight", 0)
-            wd_length = wd_spec.get("length", 0)
-            wd_width = wd_spec.get("width", 0)
-            wd_height = wd_spec.get("height", 0)
-            wd_signature = 0
-            
-            # 调用运德运费试算
-            print(f"⏳ 正在请求运德运费试算（渠道：{wd_channels}），请等待...")
-            time.sleep(10)  # 模拟等待（可选）
-            wd_fee_list = review_order.get_wd_ship_fee(
-                wd_channels, wd_country, wd_city, wd_postcode,
-                wd_weight, wd_length, wd_width, wd_height, wd_signature
-            )
-            print(f"✅ 运德运费试算结果：{wd_fee_list}")
-            wd_min_fee = get_min_fee_logistics(wd_fee_list, wd_logistics)
-            if wd_min_fee:
-                # 美元转人民币
-                wd_min_fee["totalFee_usd"] = float(wd_min_fee["totalFee"])
-                wd_min_fee["totalFee_cny"] = wd_min_fee["totalFee_usd"] * USD_TO_CNY_RATE
-                print(f"🏆 运德最小运费：{wd_min_fee['totalFee']} {wd_min_fee['currency']}（¥{wd_min_fee['totalFee_cny']}）")
-    
-    # 步骤6：比较中邮和运德的最小运费（统一转人民币）
-    final_choice = None
-    ems_fee_cny = ems_min_fee["totalFee_cny"] if ems_min_fee else float("inf")
-    wd_fee_cny = wd_min_fee["totalFee_cny"] if wd_min_fee else float("inf")
-    
-    if ems_fee_cny < wd_fee_cny:
-        final_choice = ems_min_fee
-        final_choice["source"] = "中邮"
-    elif wd_fee_cny < ems_fee_cny:
-        final_choice = wd_min_fee
-        final_choice["source"] = "运德"
-    else:
-        print("❌ 中邮/运德运费均无有效数据，无法选择最优渠道")
-        return {"order_no": order_no, "status": "failed", "reason": "无有效运费数据"}
-    
-    print(f"✅ 最终最优选择：{final_choice['source']}（运费¥{final_choice['totalFee_cny']}）")
-    
-    # 步骤7：组装订单处理结果
-    result = {
-        "order_no": order_no,
-        "status": "success",
-        "order_info": order,
-        "inventory_info": inventory_details,
-        "ems_spec": ems_spec,
-        "wd_spec": wd_spec,
-        "ems_min_fee": ems_min_fee,
-        "wd_min_fee": wd_min_fee,
-        "final_choice": final_choice
-    }
-    return result
-
-def confirm_and_edit_order(process_result):
-    """
-    弹窗提示订单信息并确认是否修改订单
-    :param process_result: 订单处理结果字典
-    :return: 修改订单的结果
-    """
-    if process_result["status"] != "success":
-        print(f"❌ 订单{process_result['order_no']}处理失败，无需修改")
-        return None
-    
-    order_no = process_result["order_no"]
-    final_choice = process_result["final_choice"]
-    
-    # 打印确认提示信息
-    print(f"\n=====================================================")
-    print(f"📝 订单修改确认（订单号：{order_no}）")
-    print(f"1. 订单基础信息：{process_result['order_info']}")
-    print(f"2. 库存信息：{process_result['inventory_info']}")
-    print(f"3. 中邮规格：{process_result['ems_spec']}")
-    print(f"4. 运德规格：{process_result['wd_spec']}")
-    print(f"5. 中邮最小运费：{process_result['ems_min_fee']}")
-    print(f"6. 运德最小运费：{process_result['wd_min_fee']}")
-    print(f"7. 最终选择：{final_choice}")
-    print(f"=====================================================")
-    
-    # 交互确认
-    confirm = input("❓ 是否确认修改该订单？(y/n)：")
-    if confirm.lower() != "y":
-        print(f"✅ 用户取消修改订单{order_no}")
-        return {"order_no": order_no, "edit_status": "cancelled"}
-    
-    # 调用修改订单函数
-    type_id = final_choice.get("type_id")
-    wid = final_choice.get("wid")
-    print(f"⏳ 正在修改订单{order_no}（type_id：{type_id} | wid：{wid}）...")
-    edit_result = review_order.edit_order(type_id, wid, order_no)
-    print(f"✅ 订单修改结果：{edit_result}")
-    return {
-        "order_no": order_no,
-        "edit_status": "completed",
-        "edit_result": edit_result
-    }
+import json
+from datetime import datetime
 
 def main():
-    """主函数：执行完整的订单批量处理流程"""
-    print("🚀 开始执行批量订单审核流程...")
+    print(f"开始执行订单审核 - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
-    # 1. 初始化基础数据
-    print("\n【第一步】获取基础数据（店铺/物流渠道）")
+    # 1. 获取店铺列表
+    print("\n=== 步骤1: 获取店铺列表 ===")
     store_list = review_order.get_store_list()
-    print(f"✅ 获取店铺列表：共{len(store_list)}条")
+    print(f"获取到 {len(store_list)} 个店铺:")
+    for store in store_list:
+        print(f"  Store ID: {store['store_id']}, 平台名称: {store['platform_name']}")
     
-    logistics_list_all = review_order.get_logistics_list()
-    print(f"✅ 获取物流渠道列表：共{len(logistics_list_all)}条")
+    # 2. 获取物流渠道列表
+    print("\n=== 步骤2: 获取物流渠道列表 ===")
+    logistics_list = review_order.get_logistics_list()
+    print(f"获取到 {len(logistics_list)} 个物流渠道:")
+    for logistics in logistics_list:
+        print(f"  Type ID: {logistics['type_id']}, 渠道代码: {logistics['channel_code']}, 物流提供商: {logistics['logistics_provider_name']}, 仓库ID: {logistics['wid']}")
     
-    # 构建映射关系
-    store_platform_map = get_store_platform_mapping(store_list)
-    platform_logistics_map = get_platform_logistics_mapping(logistics_list_all)
-    
-    # 2. 获取订单列表并筛选（只处理wid=0的订单，测试取前5个）
-    print("\n【第二步】获取并筛选订单列表")
+    # 3. 获取订单列表
+    print("\n=== 步骤3: 获取订单列表 ===")
     orders_list = review_order.get_orders_list()
-    print(f"✅ 原始订单总数：{len(orders_list)}")
+    # 只处理wid为空的订单
+    order_no=input("请输入要处理的系统订单订单号: ")
+    orders_to_process = [order for order in orders_list if order["wid"] == "0" and order["global_order_no"] == order_no]
+    print(f"获取到 {len(orders_list)} 个订单，其中 {len(orders_to_process)} 个需要处理 (wid为空)")
     
-    # 筛选wid=0的订单
-    target_orders = [order for order in orders_list if order.get("wid") == "0"]
-    print(f"✅ 筛选后wid=0的订单数：{len(target_orders)}")
+    # 仅处理前5个订单（测试）
+    orders_to_process = orders_to_process[:10]
+    print(f"本次处理前 {len(orders_to_process)} 个订单:")
+    for i, order in enumerate(orders_to_process, 1):
+        print(f"  订单 {i}: 全局订单号: {order['global_order_no']}, Store ID: {order['store_id']}, SKU: {order['local_sku']}, 国家: {order['receiver_country_code']}, 城市: {order['city']}, 邮编: {order['postal_code']}, 金额: {order['order_total_amount']}")
     
-    # 测试阶段取前5个
-    test_orders = target_orders[:10]
-    print(f"✅ 测试阶段处理前{len(test_orders)}个订单：{[o['global_order_no'] for o in test_orders]}")
+    # 4. 处理每个订单
+    print("\n=== 步骤4: 开始处理订单 ===")
+    processed_orders = []
     
-    # 3. 遍历处理每个订单
-    print("\n【第三步】批量处理订单")
-    process_results = []
-    for order in test_orders:
-        result = process_single_order(order, store_platform_map, platform_logistics_map, logistics_list_all)
-        process_results.append(result)
+    for order in orders_to_process:
+        print(f"\n--- 处理订单: {order['global_order_no']} ---")
         
-        # 处理完单个订单后执行修改确认
-        if result and result["status"] == "success":
-            edit_result = confirm_and_edit_order(result)
-            result["edit_result"] = edit_result
+        # 4.1 获取订单对应的平台名称
+        platform_name = ""
+        for store in store_list:
+            if store['store_id'] == order['store_id']:
+                platform_name = store['platform_name']
+                break
+        
+        if not platform_name:
+            print(f"  错误: 未找到订单 {order['global_order_no']} 对应的平台名称")
+            continue
+        
+        print(f"  订单平台: {platform_name}")
+        
+        # 4.2 确定订单可用的物流渠道
+        available_logistics = []
+        platform_keywords = {
+            "Amazon": "亚马逊",
+            "eBay": "eBay",
+            "Shopify": "独立站"
+        }
+        
+        # 确定平台关键词
+        platform_keyword = ""
+        for key, value in platform_keywords.items():
+            if key in platform_name:
+                platform_keyword = value
+                break
+        
+        if not platform_keyword:
+            print(f"  警告: 未识别的平台名称 '{platform_name}'，将尝试匹配所有物流渠道")
+        
+        # 筛选可用的物流渠道
+        for logistics in logistics_list:
+            if platform_keyword and platform_keyword in logistics['logistics_provider_name']:
+                available_logistics.append(logistics)
+            elif not platform_keyword:  # 如果没有识别出平台关键词，添加所有物流
+                available_logistics.append(logistics)
+        
+        print(f"  找到 {len(available_logistics)} 个可用物流渠道:")
+        for logistics in available_logistics:
+            print(f"    - {logistics['logistics_provider_name']} ({logistics['channel_code']})")
+        
+        if not available_logistics:
+            print(f"  警告: 未找到 {order['global_order_no']} 订单可用的物流渠道")
+            continue
+        
+        # 4.3 获取商品库存
+        print(f"  获取 SKU: {order['local_sku']} 的库存信息...")
+        inventory_details = review_order.get_inventory_details(order['local_sku'])
+        print(f"  获取到 {len(inventory_details)} 个仓库的库存信息:")
+        for detail in inventory_details:
+            print(f"    仓库ID: {detail['wid']}, SKU: {detail['sku']}, 可用库存: {detail['product_valid_num']}, 库龄: {detail['average_age']}")
+        
+        # 4.4 筛选有货的仓库和对应的物流渠道
+        available_warehouses = [str(detail['wid']) for detail in inventory_details if detail['product_valid_num'] > 0]
+        print(f"  有货的仓库ID: {', '.join(available_warehouses) if available_warehouses else '无'}")
+        
+        # 根据有货仓库筛选物流渠道
+        filtered_logistics = []
+        for logistics in available_logistics:
+            if logistics['wid'] in available_warehouses:
+                filtered_logistics.append(logistics)
+        
+        print(f"  有货仓库中可用的物流渠道数量: {len(filtered_logistics)}")
+        for logistics in filtered_logistics:
+            print(f"    - 仓库ID: {logistics['wid']}, 渠道: {logistics['channel_code']}, 物流商: {logistics['logistics_provider_name']}")
+        
+        if not filtered_logistics:
+            print(f"  警告: 未找到有货仓库中可用的物流渠道")
+            continue
+        
+        # 4.5 分离中邮和运德的物流渠道
+        ems_logistics = [log for log in filtered_logistics if "中邮" in log['logistics_provider_name']]
+        wd_logistics = [log for log in filtered_logistics if "运德" in log['logistics_provider_name']]
+        
+        print(f"  中邮物流渠道数量: {len(ems_logistics)}")
+        print(f"  运德物流渠道数量: {len(wd_logistics)}")
+        
+        # 4.6 获取商品规格 - 中邮
+        ems_best_option = None
+        if ems_logistics:
+            print(f"  获取中邮仓库商品规格 (SKU: {order['local_sku']}, 平台: {platform_name})...")
+            ems_product_spec = review_order.get_ems_product_spec(order['local_sku'], platform_name)
+            print(f"  中邮商品规格: {json.dumps(ems_product_spec, ensure_ascii=False)}")
+            
+            # 4.7 获取中邮运费试算
+            if ems_product_spec and ems_product_spec.get('weight'):
+                # 准备中邮运费试算参数
+                ems_channels = ",".join([log['channel_code'] for log in ems_logistics])
+                warehouse = "USEA,USWE"  # 固定值
+                weight = ems_product_spec.get('weight', '0')
+                length = ems_product_spec.get('length', '0')
+                width = ems_product_spec.get('width', '0')
+                height = ems_product_spec.get('height', '0')
+                postcode = order['postal_code']
+                
+                print(f"  计算中邮运费 (渠道: {ems_channels}, 仓库: {warehouse}, 邮编: {postcode})...")
+                print(f"    商品规格 - 重量: {weight}, 长: {length}, 宽: {width}, 高: {height}")
+                
+                ems_ship_fee = review_order.get_ems_ship_fee(
+                    postcode, weight, warehouse, ems_channels, length, width, height
+                )
+                
+                print(f"  中邮运费试算结果 ({len(ems_ship_fee)}个选项):")
+                for fee in ems_ship_fee:
+                    print(f"    - 仓库: {fee['warehouse']}, 渠道: {fee['channel_code']}, 运费: {fee['totalFee']} {fee['currency']}")
+                
+                # 找到最小运费选项
+                if ems_ship_fee:
+                    min_ems_fee = min(ems_ship_fee, key=lambda x: float(x['totalFee'] or 0))
+                    print(f"  中邮最小运费选项: 仓库: {min_ems_fee['warehouse']}, 渠道: {min_ems_fee['channel_code']}, 运费: {min_ems_fee['totalFee']} {min_ems_fee['currency']}")
+                    
+                    # 找到对应的物流信息
+                    for log in ems_logistics:
+                        if log['channel_code'] == min_ems_fee['channel_code']:
+                            ems_best_option = {
+                                'type_id': log['type_id'],
+                                'wid': log['wid'],
+                                'channel_code': min_ems_fee['channel_code'],
+                                'totalFee': float(min_ems_fee['totalFee'] or 0),
+                                'currency': min_ems_fee['currency'],
+                                'product_spec': ems_product_spec,
+                                'ship_fee_details': ems_ship_fee,
+                                'provider': '中邮'
+                            }
+                            break
+        
+        # 4.8 获取商品规格 - 运德
+        wd_best_option = None
+        if wd_logistics:
+            print(f"  获取运德仓库商品规格 (SKU: {order['local_sku']}, 平台: {platform_name})...")
+            wd_product_spec = review_order.get_wd_product_spec(order['local_sku'], platform_name)
+            print(f"  运德商品规格: {json.dumps(wd_product_spec, ensure_ascii=False)}")
+            
+            # 4.9 获取运德运费试算
+            if wd_product_spec and wd_product_spec.get('weight'):
+                # 准备运德运费试算参数
+                wd_channels = ",".join([log['channel_code'] for log in wd_logistics])
+                country = order['receiver_country_code']
+                city = order['city']
+                postcode = order['postal_code']
+                weight = wd_product_spec.get('weight', '0')
+                length = wd_product_spec.get('length', '0')
+                width = wd_product_spec.get('width', '0')
+                height = wd_product_spec.get('height', '0')
+                signatureService = "0"  # 固定值
+                
+                print(f"  计算运德运费 (渠道: {wd_channels}, 国家: {country}, 城市: {city}, 邮编: {postcode})...")
+                print(f"    商品规格 - 重量: {weight}, 长: {length}, 宽: {width}, 高: {height}")
+                
+                wd_ship_fee = review_order.get_wd_ship_fee(
+                    wd_channels, country, city, postcode, weight, length, width, height, signatureService
+                )
+                
+                print(f"  运德运费试算结果 ({len(wd_ship_fee)}个选项):")
+                for fee in wd_ship_fee:
+                    print(f"    - 渠道: {fee['channel_code']}, 运费: {fee['totalFee']} {fee['currency']}")
+                
+                # 找到最小运费选项
+                if wd_ship_fee:
+                    min_wd_fee = min(wd_ship_fee, key=lambda x: float(x['totalFee'] or 0))
+                    print(f"  运德最小运费选项: 渠道: {min_wd_fee['channel_code']}, 运费: {min_wd_fee['totalFee']} {min_wd_fee['currency']}")
+                    
+                    # 找到对应的物流信息
+                    for log in wd_logistics:
+                        if log['channel_code'] == min_wd_fee['channel_code']:
+                            wd_best_option = {
+                                'type_id': log['type_id'],
+                                'wid': log['wid'],
+                                'channel_code': min_wd_fee['channel_code'],
+                                'totalFee': float(min_wd_fee['totalFee'] or 0),
+                                'currency': min_wd_fee['currency'],
+                                'product_spec': wd_product_spec,
+                                'ship_fee_details': wd_ship_fee,
+                                'provider': '运德'
+                            }
+                            break
+        
+        # 4.10 比较中邮和运德运费，选择较小的一个
+        best_option = None
+        print("\n  === 运费比较 ===")
+        
+        if ems_best_option:
+            print(f"  中邮最佳选项: 运费 {ems_best_option['totalFee']} {ems_best_option['currency']}")
+        
+        if wd_best_option:
+            # 转换为人民币 (汇率7)
+            wd_fee_in_cny = wd_best_option['totalFee'] * 7
+            print(f"  运德最佳选项: 运费 {wd_best_option['totalFee']} {wd_best_option['currency']} (约合 {wd_fee_in_cny:.2f} 人民币，汇率7)")
+        
+        if ems_best_option and wd_best_option:
+            wd_fee_in_cny = wd_best_option['totalFee'] * 7
+            if ems_best_option['totalFee'] <= wd_fee_in_cny:
+                best_option = ems_best_option
+                print(f"  选择中邮: {ems_best_option['totalFee']} 人民币 <= {wd_fee_in_cny:.2f} 人民币")
+            else:
+                best_option = wd_best_option
+                print(f"  选择运德: {wd_fee_in_cny:.2f} 人民币 < {ems_best_option['totalFee']} 人民币")
+        elif ems_best_option:
+            best_option = ems_best_option
+            print("  仅中邮有可用选项，选择中邮")
+        elif wd_best_option:
+            best_option = wd_best_option
+            print("  仅运德有可用选项，选择运德")
+        
+        if not best_option:
+            print(f"  警告: 未找到可用的最佳物流选项")
+            continue
+        
+        # 4.11 准备订单修改信息
+        order_info = {
+            'global_order_no': order['global_order_no'],
+            'store_id': order['store_id'],
+            'platform_name': platform_name,
+            'local_sku': order['local_sku'],
+            'country': order['receiver_country_code'],
+            'city': order['city'],
+            'postal_code': order['postal_code'],
+            'order_total_amount': order['order_total_amount'],
+            'inventory_details': inventory_details,
+            'best_option': best_option,
+            'ems_best_option': ems_best_option,
+            'wd_best_option': wd_best_option
+        }
+        
+        processed_orders.append(order_info)
+        
+        # 4.12 暂停一下，避免请求过于频繁
+        time.sleep(2)
     
-    # 4. 输出最终汇总
-    print("\n=====================================================")
-    print("📊 批量订单处理汇总")
-    success_count = len([r for r in process_results if r and r["status"] == "success"])
-    fail_count = len(process_results) - success_count
-    print(f"✅ 处理成功：{success_count} 个")
-    print(f"❌ 处理失败：{fail_count} 个")
-    for res in process_results:
-        if res:
-            print(f"- 订单{res['order_no']}：{res['status']} | 最终选择：{res.get('final_choice', {}).get('source', '无')}")
+    # 5. 显示处理结果并请求确认
+    print("\n=== 步骤5: 处理结果汇总 ===")
+    print(f"成功处理 {len(processed_orders)} 个订单")
+    
+    for i, order_info in enumerate(processed_orders, 1):
+        print(f"\n--- 订单 {i}: {order_info['global_order_no']} ---")
+        print(f"  平台: {order_info['platform_name']}, SKU: {order_info['local_sku']}")
+        print(f"  收货地址: {order_info['country']}, {order_info['city']}, {order_info['postal_code']}")
+        print(f"  订单金额: {order_info['order_total_amount']}")
+        
+        print("\n  库存信息:")
+        for detail in order_info['inventory_details']:
+            print(f"    仓库ID: {detail['wid']}, 可用库存: {detail['product_valid_num']}, 库龄: {detail['average_age']}")
+        
+        if order_info['ems_best_option']:
+            ems = order_info['ems_best_option']
+            print("\n  中邮方案详情:")
+            print(f"    渠道: {ems['channel_code']}")
+            print(f"    仓库ID: {ems['wid']}")
+            print(f"    运费: {ems['totalFee']} {ems['currency']}")
+            print(f"    商品规格: 长{ems['product_spec'].get('length', '')}, 宽{ems['product_spec'].get('width', '')}, 高{ems['product_spec'].get('height', '')}, 重量{ems['product_spec'].get('weight', '')}")
+        
+        if order_info['wd_best_option']:
+            wd = order_info['wd_best_option']
+            wd_fee_in_cny = wd['totalFee'] * 7
+            print("\n  运德方案详情:")
+            print(f"    渠道: {wd['channel_code']}")
+            print(f"    仓库ID: {wd['wid']}")
+            print(f"    运费: {wd['totalFee']} {wd['currency']} (约合 {wd_fee_in_cny:.2f} 人民币，汇率7)")
+            print(f"    商品规格: 长{wd['product_spec'].get('length', '')}, 宽{wd['product_spec'].get('width', '')}, 高{wd['product_spec'].get('height', '')}, 重量{wd['product_spec'].get('weight', '')}")
+        
+        best = order_info['best_option']
+        print(f"\n  最终选择: {best['provider']}")
+        print(f"    物流渠道: {best['channel_code']}")
+        print(f"    仓库ID: {best['wid']}")
+        print(f"    运费: {best['totalFee']} {best['currency']}" + (" (已转换为人民币)" if best['provider'] == "运德" else ""))
+        
+        # 询问是否确认修改
+        confirm = input(f"\n是否确认修改订单 {order_info['global_order_no']} ? (y/n): ")
+        if confirm.lower() == 'y':
+            print(f"  正在修改订单 {order_info['global_order_no']} ...")
+            result = review_order.edit_order(best['type_id'], best['wid'], order_info['global_order_no'])
+            print(f"  修改结果: {json.dumps(result, ensure_ascii=False)}")
+        else:
+            print(f"  已跳过修改订单 {order_info['global_order_no']}")
+    
+    print(f"\n=== 批量审核完成 - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ===")
 
 if __name__ == "__main__":
     main()

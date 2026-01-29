@@ -181,10 +181,10 @@ if (isset($result['data']['data'][0]['product_warehouse_attribute'][0])) {
 // 输出整理后的结果（可选）
 echo json_encode($sku_data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 # 基础调用（第1页，每页10条）
-//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10&platform_name=
+//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?platform_name=
 
 # 按单个SKU查询
-// http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10&sku=NI-C63-FL-GB&platform_name=
+// http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?sku=NI-C63-FL-GB&platform_name=
 
 # 按多个SKU查询（逗号分隔）
-//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?page=1&pageSize=10&sku_arr=NI-C63-FL-GB,NI-C63-FL-GB2&platform_name=
+//http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?sku_arr=NI-C63-FL-GB,NI-C63-FL-GB2&platform_name=
