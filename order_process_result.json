@@ -1,71 +1,8 @@
 [
     {
-        "global_order_no": "103662869462946935",
-        "status": "failed",
-        "message": "订单 103662869462946935 处理异常：get_wd_product_spec() missing 1 required positional argument: 'platform_name'",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
-    },
-    {
-        "global_order_no": "103662886842542686",
-        "status": "failed",
-        "message": "订单 103662886842542686 处理异常：get_wd_product_spec() missing 1 required positional argument: 'platform_name'",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
-    },
-    {
-        "global_order_no": "103662934875944657",
-        "status": "failed",
-        "message": "未匹配到可用物流渠道",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
-    },
-    {
-        "global_order_no": "103662979063923779",
-        "status": "failed",
-        "message": "无匹配有货仓库的物流渠道",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
-    },
-    {
-        "global_order_no": "103663021794792713",
-        "status": "failed",
-        "message": "订单 103663021794792713 处理异常：get_wd_product_spec() missing 1 required positional argument: 'platform_name'",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
-    },
-    {
-        "global_order_no": "103663035154809500",
-        "status": "failed",
-        "message": "订单 103663035154809500 处理异常：get_wd_product_spec() missing 1 required positional argument: 'platform_name'",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
-    },
-    {
         "global_order_no": "103663252141724265",
         "status": "failed",
         "message": "无匹配有货仓库的物流渠道",
-        "final_fee": 0,
-        "final_type_id": "",
-        "final_wid": "",
-        "final_channel_code": ""
-    },
-    {
-        "global_order_no": "103663280062022829",
-        "status": "failed",
-        "message": "无可用库存的仓库",
         "final_fee": 0,
         "final_type_id": "",
         "final_wid": "",
@@ -84,6 +21,69 @@
         "global_order_no": "103663360807358152",
         "status": "failed",
         "message": "无匹配有货仓库的物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103663386580548666",
+        "status": "failed",
+        "message": "无有效运费数据",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103663496626984722",
+        "status": "failed",
+        "message": "无匹配有货仓库的物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103663620665696995",
+        "status": "failed",
+        "message": "无可用库存的仓库",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103663703773667434",
+        "status": "failed",
+        "message": "无匹配有货仓库的物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103663721910507187",
+        "status": "failed",
+        "message": "无有效运费数据",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103663734852448975",
+        "status": "failed",
+        "message": "无匹配有货仓库的物流渠道",
+        "final_fee": 0,
+        "final_type_id": "",
+        "final_wid": "",
+        "final_channel_code": ""
+    },
+    {
+        "global_order_no": "103663744084368414",
+        "status": "failed",
+        "message": "无可用库存的仓库",
         "final_fee": 0,
         "final_type_id": "",
         "final_wid": "",

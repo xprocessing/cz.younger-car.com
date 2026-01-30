@@ -58,7 +58,7 @@ class BatchReviewGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("批量审核订单系统")
-        self.root.geometry("900x700")
+        self.root.geometry("1200x800")
         self.root.resizable(True, True)
         
         # 设置主题
@@ -85,6 +85,8 @@ class BatchReviewGUI:
         # 停止按钮
         self.stop_button = ttk.Button(self.control_frame, text="停止处理", command=self.stop_process, state=tk.DISABLED)
         self.stop_button.pack(side=tk.LEFT, padx=5)
+
+       
         
         # 状态标签
         self.status_var = tk.StringVar(value="就绪")
@@ -233,6 +235,7 @@ class BatchReviewGUI:
             # 1. 初始化基础数据
             print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 获取店铺列表...")
             store_list = review_order.get_store_list()
+            time.sleep(2)  # 避免请求过快
             print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 获取到 {len(store_list)} 个店铺")
             
             if not store_list:
@@ -241,6 +244,7 @@ class BatchReviewGUI:
             
             print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 获取物流渠道列表...")
             logistics_list = review_order.get_logistics_list()
+            time.sleep(2)  # 避免请求过快
             print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 获取到 {len(logistics_list)} 个物流渠道")
             
             if not logistics_list:
@@ -249,9 +253,11 @@ class BatchReviewGUI:
             
             print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 获取订单列表...")
             orders_list = review_order.get_orders_list()
+            time.sleep(2)  # 避免请求过快
             
             # 筛选处理wid=0的订单，测试阶段取前5个
-            target_orders = [order for order in orders_list if order.get("wid") == "0"][:8]
+            #target_orders = [order for order in orders_list if order.get("wid") == "0"][:8]
+            target_orders = [order for order in orders_list if order.get("wid") == "0"]
             print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 筛选出 {len(target_orders)} 个待处理订单")
             
             if not target_orders:
@@ -370,6 +376,7 @@ class BatchReviewGUI:
         # 步骤3：根据sku获取有货的仓库ID
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 步骤3：查询库存信息")
         inventory_details = review_order.get_inventory_details(local_sku)
+        time.sleep(2)  # 避免请求过快
         valid_wids = [item.get("wid") for item in inventory_details if int(item.get("product_valid_num", 0)) > 0]
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 有货仓库：{valid_wids}")
         
@@ -414,9 +421,10 @@ class BatchReviewGUI:
                             width=width,
                             height=height
                         )
-                        time.sleep(2)  # 避免请求过快
+                        time.sleep(6)  # 避免请求过快
+                        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 中邮运费试算结果：{ems_fee_list}")
                         ems_ship_result = self.get_min_fee_shipment(ems_fee_list, ems_logistics)
-                        time.sleep(10)  # 避免请求过快
+                        time.sleep(2)  # 避免请求过快
                         if ems_ship_result:
                             result["ems_fee"] = ems_ship_result["totalFee"]
                             print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 中邮最小运费：{ems_ship_result['totalFee']} {ems_ship_result['currency']}")
@@ -441,21 +449,40 @@ class BatchReviewGUI:
                         wd_spec_str = f"{weight}kg,{length}x{width}x{height}cm"
                         result["wd_product_spec"] = wd_spec_str
                         
-                        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 调用运德运费试算接口...")
-                        wd_fee_list = review_order.get_wd_ship_fee(
-                            channels=",".join(wd_channel_codes),
-                            country=receiver_country_code,
-                            city=city,
-                            postcode=postal_code,
-                            weight=weight,
-                            length=length,
-                            width=width,
-                            height=height,
-                            signatureService=0
-                        )
-                        time.sleep(2)  # 避免请求过快
+                        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 运德渠道数量：{len(wd_channel_codes)}")
+                        
+                        wd_fee_list = []
+                        batch_size = 10
+                        total_batches = (len(wd_channel_codes) + batch_size - 1) // batch_size
+                        
+                        for i in range(total_batches):
+                            start_idx = i * batch_size
+                            end_idx = min((i + 1) * batch_size, len(wd_channel_codes))
+                            batch_channels = wd_channel_codes[start_idx:end_idx]
+                            
+                            print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 调用运德运费试算接口（第{i+1}/{total_batches}批，渠道数：{len(batch_channels)}）...")
+                            batch_fee_list = review_order.get_wd_ship_fee(
+                                channels=",".join(batch_channels),
+                                country=receiver_country_code,
+                                city=city,
+                                postcode=postal_code,
+                                weight=weight,
+                                length=length,
+                                width=width,
+                                height=height,
+                                signatureService=0
+                            )
+                            wd_fee_list.extend(batch_fee_list)
+                            print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 第{i+1}批运费试算结果：{len(batch_fee_list)}条")
+                            
+                            if i < total_batches - 1:
+                                print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 等待6秒后继续下一批查询...")
+                                time.sleep(6)
+                        
+                        time.sleep(3)
+                        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 运德运费试算结果总计：{len(wd_fee_list)}条")
                         wd_ship_result = self.get_min_fee_shipment(wd_fee_list, wd_logistics)
-                        time.sleep(10)  # 避免请求过快
+                        time.sleep(3)
                         if wd_ship_result:
                             wd_fee_cny = wd_ship_result["totalFee"] * USD_TO_CNY_RATE
                             wd_ship_result["totalFee_cny"] = wd_fee_cny
