@@ -98,7 +98,7 @@
                             <tr>
                                 <td><?php echo $review['id']; ?></td>
                                 <td><?php echo $review['store_id']; ?></td>
-                                <td><?php echo $review['global_order_no']; ?></td>
+                                <td> <a href="https://erp.lingxing.com/erp/mmulti/mpOrderDetail?orderSn=<?php echo $review['global_order_no']; ?>" target="_blank"> <?php echo $review['global_order_no']; ?> </a> </td>
                                 <td><?php echo $review['local_sku']; ?></td>
                                 <td><?php echo $review['receiver_country_code']; ?></td>
                                 <td><?php echo $review['city'] ?? ''; ?></td>
