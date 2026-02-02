@@ -26,7 +26,7 @@ class OrderReview {
     public function getAll($limit = null, $offset = 0) {
         $sql = "SELECT orr.*, s.platform_name, s.store_name 
                 FROM order_review orr 
-                LEFT JOIN store s ON orr.store_id = s.store_id 
+                LEFT JOIN store s ON orr.store_id = s.store_id COLLATE utf8mb4_unicode_ci 
                 ORDER BY orr.id DESC";
         $params = [];
         
@@ -105,7 +105,7 @@ class OrderReview {
     public function searchWithFilters($keyword, $reviewStatus, $startDate, $endDate, $limit, $offset) {
         $sql = "SELECT orr.*, s.platform_name, s.store_name 
                 FROM order_review orr 
-                LEFT JOIN store s ON orr.store_id = s.store_id 
+                LEFT JOIN store s ON orr.store_id = s.store_id COLLATE utf8mb4_unicode_ci 
                 WHERE 1=1";
         $params = [];
         
