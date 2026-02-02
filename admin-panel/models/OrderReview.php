@@ -24,7 +24,10 @@ class OrderReview {
     
     // 获取所有订单审核记录，支持分页
     public function getAll($limit = null, $offset = 0) {
-        $sql = "SELECT * FROM order_review ORDER BY id DESC";
+        $sql = "SELECT orr.*, s.platform_name, s.store_name 
+                FROM order_review orr 
+                LEFT JOIN store s ON orr.store_id = s.store_id 
+                ORDER BY orr.id DESC";
         $params = [];
         
         if ($limit !== null) {
@@ -100,32 +103,37 @@ class OrderReview {
     
     // 根据筛选条件搜索订单审核记录
     public function searchWithFilters($keyword, $reviewStatus, $startDate, $endDate, $limit, $offset) {
-        $sql = "SELECT * FROM order_review WHERE 1=1";
+        $sql = "SELECT orr.*, s.platform_name, s.store_name 
+                FROM order_review orr 
+                LEFT JOIN store s ON orr.store_id = s.store_id 
+                WHERE 1=1";
         $params = [];
         
         if (!empty($keyword)) {
-            $sql .= " AND (global_order_no LIKE ? OR local_sku LIKE ? OR receiver_country_code LIKE ?)";
+            $sql .= " AND (orr.global_order_no LIKE ? OR orr.local_sku LIKE ? OR orr.receiver_country_code LIKE ? OR s.platform_name LIKE ? OR s.store_name LIKE ?)";
+            $params[] = '%' . $keyword . '%';
+            $params[] = '%' . $keyword . '%';
             $params[] = '%' . $keyword . '%';
             $params[] = '%' . $keyword . '%';
             $params[] = '%' . $keyword . '%';
         }
         
         if (!empty($reviewStatus)) {
-            $sql .= " AND review_status = ?";
+            $sql .= " AND orr.review_status = ?";
             $params[] = $reviewStatus;
         }
         
         if (!empty($startDate)) {
-            $sql .= " AND review_time >= ?";
+            $sql .= " AND orr.review_time >= ?";
             $params[] = $startDate;
         }
         
         if (!empty($endDate)) {
-            $sql .= " AND review_time <= ?";
+            $sql .= " AND orr.review_time <= ?";
             $params[] = $endDate;
         }
         
-        $sql .= " ORDER BY id DESC";
+        $sql .= " ORDER BY orr.id DESC";
         
         if ($limit !== null) {
             $sql .= " LIMIT ? OFFSET ?";

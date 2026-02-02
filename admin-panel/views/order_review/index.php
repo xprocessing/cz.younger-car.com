@@ -117,6 +117,7 @@
                     <tr>
                         <th>ID</th>
                         <th>店铺ID</th>
+                        <th>店铺</th>
                         <th>订单号</th>
                         <th>本地SKU</th>
                         <th>国家</th>
@@ -140,6 +141,19 @@
                             <tr>
                                 <td><?php echo $review['id']; ?></td>
                                 <td><?php echo $review['store_id']; ?></td>
+                                <td>
+                                    <?php 
+                                    $platform_name = $review['platform_name'] ?? '';
+                                    $store_name = $review['store_name'] ?? '';
+                                    if ($platform_name && $store_name) {
+                                        echo htmlspecialchars($platform_name . ' - ' . $store_name);
+                                    } elseif ($store_name) {
+                                        echo htmlspecialchars($store_name);
+                                    } else {
+                                        echo htmlspecialchars($review['store_id'] ?? '');
+                                    }
+                                    ?>
+                                </td>
                                 <td> <a href="https://erp.lingxing.com/erp/mmulti/mpOrderDetail?orderSn=<?php echo $review['global_order_no']; ?>" target="_blank"> <?php echo $review['global_order_no']; ?> </a> </td>
                                 <td><?php echo $review['local_sku']; ?></td>
                                 <td><?php echo $review['receiver_country_code']; ?></td>
