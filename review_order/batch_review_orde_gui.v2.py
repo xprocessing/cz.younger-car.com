@@ -396,6 +396,7 @@ class BatchReviewGUI:
         # 步骤5：计算中邮运费
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 步骤5：计算中邮运费")
         ems_ship_result = None
+        ems_fee_list = []
         ems_logistics = self.filter_logistics_by_provider(filtered_logistics, "中邮")
         if ems_logistics:
             ems_channel_codes = [log.get("channel_code") for log in ems_logistics if log.get("channel_code")]
@@ -434,6 +435,7 @@ class BatchReviewGUI:
         # 步骤6：计算运德运费
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 步骤6：计算运德运费")
         wd_ship_result = None
+        wd_fee_list = []
         wd_logistics = self.filter_logistics_by_provider(filtered_logistics, "运德")
         if wd_logistics:
             wd_channel_codes = [log.get("channel_code") for log in wd_logistics if log.get("channel_code")]
@@ -520,7 +522,25 @@ class BatchReviewGUI:
         final_choice = min_compare["detail"]
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 最优选择：{min_compare['type']} 仓库 | 运费 {min_compare['fee_cny']} 元")
 
-        # 步骤8：修改订单
+        # 步骤8： 调用post_order_review 接口 将订单数据发送
+        post_result = review_order.post_order_review(
+            store_id=store_id,
+            global_order_no=global_order_no,
+            local_sku=local_sku,
+            receiver_country_code=receiver_country_code,
+            city=city,
+            postal_code=postal_code,
+            wd_yunfei= wd_fee_list or {},
+            ems_yunfei= ems_fee_list or {},
+            wid=final_choice.get("wid"),
+            logistics_type_id=final_choice.get("type_id"),
+            estimated_yunfei=str(min_compare["fee_cny"]),
+            review_remark="自动选择最优运费"
+        )
+        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 订单数据存储结果：{post_result.text}")
+
+
+        # 步骤9：修改订单
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 步骤8：执行订单修改")
         edit_result = review_order.edit_order(
             type_id=final_choice.get("type_id"),
@@ -552,7 +572,7 @@ class BatchReviewGUI:
             logistics_provider = logistics.get("logistics_provider_name", "")
             if ("Amazon" in platform_name and "亚马逊" in logistics_provider) or \
                ("eBay" in platform_name and "eBay" in logistics_provider) or \
-               ("Shopify" in platform_name and "独立站" in logistics_provider):
+               ("Shopify" in platform_name and ("独立站" in logistics_provider or "公共" in logistics_provider)):               
                 matched_logistics.append(logistics)
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 平台{platform_name}匹配物流渠道数：{len(matched_logistics)}")
         return matched_logistics

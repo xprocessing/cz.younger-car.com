@@ -1,6 +1,6 @@
 import requests
 import json
-
+# 将发送订单数据，存入数据库
 def post_order_review(
     store_id,
     global_order_no,
@@ -82,14 +82,14 @@ def post_order_review(
 
 # 调用函数，传入测试参数（可选参数wd_yunfei、ems_yunfei可省略，默认空字典）
 response = post_order_review(
-    store_id="STORE001",
-    global_order_no="ORD20260202001",
+    store_id="110574573074617856",
+    global_order_no="ORD2026020201031112",
     local_sku="SKU12345",
     receiver_country_code="US",
     city="New York",
     postal_code="10001",
-    wd_yunfei={"US": "10.00","US": "15.00"},
-    ems_yunfei={"US": "15.00","US": "15.00"},
+    wd_yunfei={"US": "10.00","US1": "15.00"},
+    ems_yunfei={"US": "15.00","US1": "15.00"},
     wid=1,
     logistics_type_id=10,
     estimated_yunfei="50.00",
@@ -102,3 +102,5 @@ if response:
     # 1. 先打印原始响应信息，用于调试（关键：先确认接口返回了什么）
     print(f"响应状态码：{response.status_code}")
     print(f"响应内容（原始文本）：{response.text}")
+    print(response.json().get("success"))
+    
