@@ -10,10 +10,10 @@ def post_order_review(
     postal_code,
     wid,
     logistics_type_id,
-    estimated_yunfei,
-    review_remark,
+    estimated_yunfei,    
     wd_yunfei=None,
-    ems_yunfei=None
+    ems_yunfei=None,
+    review_remark=None
 ):
     """
     向固定API地址发送订单审核的POST请求（JSON格式）
@@ -25,11 +25,11 @@ def post_order_review(
     :param postal_code: 邮政编码，如"10001"
     :param wid: 仓库ID，整数类型，如1
     :param logistics_type_id: 物流类型ID，整数类型，如10
-    :param estimated_yunfei: 预估运费，字符串格式，如"50.00"
-    :param review_remark: 审核备注，如"测试订单"
+    :param estimated_yunfei: 预估运费，字符串格式，如"50.00"    
     :param wd_yunfei: 海外仓运费，可选参数，默认空字典
     :param wd_yunfei: EMS运费，可选参数，默认空字典
     :return: 请求响应对象（包含响应状态、响应内容等）
+    :param review_remark: 审核备注，如"测试订单"
     """
     # 固定API地址
     api_url = "https://cz.younger-car.com/admin-panel/api_order_review.php"
@@ -37,6 +37,7 @@ def post_order_review(
     # 处理可选参数，默认设为空字典
     wd_yunfei = wd_yunfei if wd_yunfei is not None else {}
     ems_yunfei = ems_yunfei if ems_yunfei is not None else {}
+    review_remark = review_remark if review_remark is not None else ""
     
     # 构造请求体数据（对应curl中的-d参数）
     request_data = {
@@ -48,10 +49,10 @@ def post_order_review(
         "postal_code": postal_code,
         "wid": wid,
         "logistics_type_id": logistics_type_id,
-        "estimated_yunfei": estimated_yunfei,
-        "review_remark": review_remark,
+        "estimated_yunfei": estimated_yunfei,       
         "wd_yunfei": wd_yunfei,
-        "ems_yunfei": ems_yunfei
+        "ems_yunfei": ems_yunfei,
+        "review_remark": review_remark
     }
     
     # 构造请求头（对应curl中的-H参数）
@@ -89,12 +90,15 @@ response = post_order_review(
     postal_code="10001",
     wid=1,
     logistics_type_id=10,
-    estimated_yunfei="50.00",
+    estimated_yunfei="50.00",    
+    wd_yunfei={"US": "10.00"},
+    ems_yunfei={"US": "15.00"},
     review_remark="测试订单"
 )
 
 # 处理响应结果
 if response:
-    print(f"请求状态码：{response.status_code}")
-    print(f"响应内容（JSON格式）：{response.json()}")  # 若响应是JSON格式
-    # print(f"响应内容（原始文本）：{response.text}")  # 若响应是普通文本
+  
+    # 1. 先打印原始响应信息，用于调试（关键：先确认接口返回了什么）
+    print(f"响应状态码：{response.status_code}")
+    print(f"响应内容（原始文本）：{response.text}")

@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/includes/database.php';
 
 header('Content-Type: application/json; charset=utf-8');
@@ -56,7 +57,7 @@ try {
         exit;
     }
     
-    $sql = "INSERT INTO order_review (store_id, global_order_no, local_sku, receiver_country_code, city, postal_code, wd_yunfei, ems_yunfei, wid, logistics_type_id, estimated_yunfei,review_remark) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO order_review (store_id, global_order_no, local_sku, receiver_country_code, city, postal_code, wd_yunfei, ems_yunfei, wid, logistics_type_id, estimated_yunfei, review_remark) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $params = [
         $store_id,
         $global_order_no,
