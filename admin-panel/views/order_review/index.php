@@ -114,14 +114,18 @@
                                 <td><?php echo $review['create_at'] ?? ''; ?></td>
                                 <td>
                                     <div class="d-flex gap-1">
+                                         <a href="https://cz.younger-car.com/xlingxing/php/batch_review_order.php?global_order_no=<?php echo $review['global_order_no']; ?>" 
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="fa fa-shipping-fast"></i>发货
+                                        </a>
                                         <a href="<?php echo ADMIN_PANEL_URL; ?>/order_review.php?action=edit&id=<?php echo $review['id']; ?>" 
                                            class="btn btn-sm btn-outline-primary">
-                                            <i class="fa fa-pencil"></i>
+                                            <i class="fa fa-pencil"></i>改
                                         </a>
                                         <a href="<?php echo ADMIN_PANEL_URL; ?>/order_review.php?action=delete&id=<?php echo $review['id']; ?>" 
                                            class="btn btn-sm btn-outline-danger" 
                                            onclick="return confirm('确定要删除这条记录吗？');">
-                                            <i class="fa fa-trash"></i>
+                                            <i class="fa fa-trash"></i>删
                                         </a>
                                     </div>
                                 </td>
