@@ -85,8 +85,14 @@ class BatchReviewGUI:
         # 停止按钮
         self.stop_button = ttk.Button(self.control_frame, text="停止处理", command=self.stop_process, state=tk.DISABLED)
         self.stop_button.pack(side=tk.LEFT, padx=5)
+        
+        # 每小时处理一次按钮
+        self.hourly_process_var = tk.StringVar(value="每小时处理一次")
+        self.hourly_button = ttk.Button(self.control_frame, textvariable=self.hourly_process_var, command=self.toggle_hourly_process)
+        self.hourly_button.pack(side=tk.LEFT, padx=5)
+        self.hourly_running = False
+        self.hourly_timer = None
 
-       
         
         # 状态标签
         self.status_var = tk.StringVar(value="就绪")
@@ -224,6 +230,61 @@ class BatchReviewGUI:
         """
         self.stop_event.set()
         self.status_var.set("停止中...")
+    
+    def toggle_hourly_process(self):
+        """
+        切换每小时自动处理状态
+        """
+        if self.hourly_running:
+            self.stop_hourly_process()
+        else:
+            self.start_hourly_process()
+    
+    def start_hourly_process(self):
+        """
+        开始每小时自动处理
+        """
+        self.hourly_running = True
+        self.hourly_process_var.set("停止每小时处理")
+        self.status_var.set("每小时处理模式已启动")
+        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 每小时自动处理模式已启动")
+        
+        def hourly_task():
+            while self.hourly_running:
+                try:
+                    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 开始执行每小时自动处理...")
+                    self.start_process()
+                    
+                    # 等待当前处理完成
+                    if hasattr(self, 'process_thread') and self.process_thread.is_alive():
+                        self.process_thread.join()
+                    
+                    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 本次处理完成，等待下一次处理...")
+                    
+                    # 等待1小时（3600秒）
+                    for _ in range(360):
+                        if not self.hourly_running:
+                            break
+                        time.sleep(10)
+                    
+                except Exception as e:
+                    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 每小时处理出错: {str(e)}")
+                    time.sleep(60)
+        
+        self.hourly_timer = threading.Thread(target=hourly_task, daemon=True)
+        self.hourly_timer.start()
+    
+    def stop_hourly_process(self):
+        """
+        停止每小时自动处理
+        """
+        self.hourly_running = False
+        self.hourly_process_var.set("每小时处理一次")
+        self.status_var.set("每小时处理模式已停止")
+        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 每小时自动处理模式已停止")
+        
+        if hasattr(self, 'process_thread') and self.process_thread.is_alive():
+            self.stop_process()
     
     def process_orders(self):
         """
@@ -672,6 +733,19 @@ def main():
     """
     root = tk.Tk()
     app = BatchReviewGUI(root)
+    
+    def on_closing():
+        """
+        窗口关闭事件处理
+        """
+        if app.hourly_running:
+            if messagebox.askokcancel("退出", "每小时处理正在运行，确定要退出吗？"):
+                app.stop_hourly_process()
+                root.destroy()
+        else:
+            root.destroy()
+    
+    root.protocol("WM_DELETE_WINDOW", on_closing)
     root.mainloop()
 
 if __name__ == "__main__":
