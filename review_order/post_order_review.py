@@ -32,7 +32,7 @@ def post_order_review(
     :param review_remark: 审核备注，如"测试订单"
     """
     # 固定API地址
-    api_url = "https://cz.younger-car.com/admin-panel/api_order_review.php"
+    api_url = "https://cz.younger-car.com/admin-panel/api/api_order_review.php"
     
     # 处理可选参数，默认设为空字典
     wd_yunfei = wd_yunfei if wd_yunfei is not None else {}
