@@ -47,8 +47,9 @@ class OrderReview {
     
     // 创建订单审核记录
     public function create($data) {
-        $sql = "INSERT INTO order_review (global_order_no, local_sku, receiver_country_code, city, postal_code, wd_yunfei, ems_yunfei, wid, logistics_type_id, estimated_yunfei, review_status, review_time, review_remark) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO order_review (store_id, global_order_no, local_sku, receiver_country_code, city, postal_code, wd_yunfei, ems_yunfei, wid, logistics_type_id, estimated_yunfei, review_status, review_time, review_remark) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $params = [
+            $data['store_id'] ?? null,
             $data['global_order_no'],
             $data['local_sku'],
             $data['receiver_country_code'],
@@ -69,8 +70,9 @@ class OrderReview {
     
     // 更新订单审核记录
     public function update($id, $data) {
-        $sql = "UPDATE order_review SET global_order_no = ?, local_sku = ?, receiver_country_code = ?, city = ?, postal_code = ?, wd_yunfei = ?, ems_yunfei = ?, wid = ?, logistics_type_id = ?, estimated_yunfei = ?, review_status = ?, review_time = ?, review_remark = ? WHERE id = ?";
+        $sql = "UPDATE order_review SET store_id = ?, global_order_no = ?, local_sku = ?, receiver_country_code = ?, city = ?, postal_code = ?, wd_yunfei = ?, ems_yunfei = ?, wid = ?, logistics_type_id = ?, estimated_yunfei = ?, review_status = ?, review_time = ?, review_remark = ? WHERE id = ?";
         $params = [
+            $data['store_id'] ?? null,
             $data['global_order_no'],
             $data['local_sku'],
             $data['receiver_country_code'],
@@ -204,11 +206,12 @@ class OrderReview {
     public function batchInsert($data) {
         if (empty($data)) return true;
         
-        $sql = "INSERT INTO order_review (global_order_no, local_sku, receiver_country_code, city, postal_code, wd_yunfei, ems_yunfei, wid, logistics_type_id, estimated_yunfei, review_status, review_time, review_remark) VALUES ";
+        $sql = "INSERT INTO order_review (store_id, global_order_no, local_sku, receiver_country_code, city, postal_code, wd_yunfei, ems_yunfei, wid, logistics_type_id, estimated_yunfei, review_status, review_time, review_remark) VALUES ";
         $params = [];
         
         foreach ($data as $item) {
-            $sql .= "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?),";
+            $sql .= "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?),";
+            $params[] = $item['store_id'] ?? null;
             $params[] = $item['global_order_no'] ?? '';
             $params[] = $item['local_sku'] ?? '';
             $params[] = $item['receiver_country_code'] ?? '';

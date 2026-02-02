@@ -18,6 +18,10 @@
             
             <!-- 基本信息 -->
             <div class="col-md-6">
+                <label for="store_id" class="form-label">店铺ID</label>
+                <input type="text" name="store_id" class="form-control" value="<?php echo $orderReview['store_id'] ?? ''; ?>">
+            </div>
+            <div class="col-md-6">
                 <label for="global_order_no" class="form-label">订单号 <span class="text-danger">*</span></label>
                 <input type="text" name="global_order_no" class="form-control" value="<?php echo $orderReview['global_order_no']; ?>" required>
             </div>

@@ -95,6 +95,7 @@ class OrderReviewController {
         $emsYunfei = !empty($_POST['ems_yunfei']) ? json_encode($_POST['ems_yunfei']) : null;
         
         $data = [
+            'store_id' => $_POST['store_id'] ?? null,
             'global_order_no' => $_POST['global_order_no'],
             'local_sku' => $_POST['local_sku'],
             'receiver_country_code' => $_POST['receiver_country_code'],
@@ -196,6 +197,7 @@ class OrderReviewController {
         $emsYunfei = !empty($_POST['ems_yunfei']) ? json_encode($_POST['ems_yunfei']) : null;
         
         $data = [
+            'store_id' => $_POST['store_id'] ?? null,
             'global_order_no' => $_POST['global_order_no'],
             'local_sku' => $_POST['local_sku'],
             'receiver_country_code' => $_POST['receiver_country_code'],
@@ -354,26 +356,26 @@ class OrderReviewController {
     // 处理导入的单行数据
     private function processImportRow($row, &$data, &$rowCount, &$successCount, &$errorCount, &$errors) {
         // 验证必填字段
-        if (empty($row[0]) || trim($row[0]) === '') {
+        if (empty($row[1]) || trim($row[1]) === '') {
             $errors[] = "第 {$rowCount} 行：订单号不能为空";
             $errorCount++;
             return;
         }
         
-        if (empty($row[1]) || trim($row[1]) === '') {
+        if (empty($row[2]) || trim($row[2]) === '') {
             $errors[] = "第 {$rowCount} 行：本地SKU不能为空";
             $errorCount++;
             return;
         }
         
-        if (empty($row[2]) || trim($row[2]) === '') {
+        if (empty($row[3]) || trim($row[3]) === '') {
             $errors[] = "第 {$rowCount} 行：国家不能为空";
             $errorCount++;
             return;
         }
         
         // 检查记录是否已存在
-        $existingOrder = $this->orderReviewModel->getByOrderNo(trim($row[0]));
+        $existingOrder = $this->orderReviewModel->getByOrderNo(trim($row[1]));
         if ($existingOrder) {
             $errors[] = "第 {$rowCount} 行：该订单号的审核记录已存在";
             $errorCount++;
@@ -381,17 +383,18 @@ class OrderReviewController {
         }
         
         $importData = [
-            'global_order_no' => trim($row[0]),
-            'local_sku' => trim($row[1]),
-            'receiver_country_code' => trim($row[2]),
-            'city' => isset($row[3]) ? trim($row[3]) : '',
-            'postal_code' => isset($row[4]) ? trim($row[4]) : '',
-            'wid' => isset($row[7]) && !empty(trim($row[7])) ? trim($row[7]) : null,
-            'logistics_type_id' => isset($row[8]) && !empty(trim($row[8])) ? trim($row[8]) : null,
-            'estimated_yunfei' => isset($row[9]) ? trim($row[9]) : null,
-            'review_status' => isset($row[10]) ? trim($row[10]) : null,
-            'review_time' => isset($row[11]) && !empty(trim($row[11])) ? trim($row[11]) : null,
-            'review_remark' => isset($row[12]) ? trim($row[12]) : null
+            'store_id' => isset($row[0]) ? trim($row[0]) : null,
+            'global_order_no' => trim($row[1]),
+            'local_sku' => trim($row[2]),
+            'receiver_country_code' => trim($row[3]),
+            'city' => isset($row[4]) ? trim($row[4]) : '',
+            'postal_code' => isset($row[5]) ? trim($row[5]) : '',
+            'wid' => isset($row[6]) && !empty(trim($row[6])) ? trim($row[6]) : null,
+            'logistics_type_id' => isset($row[7]) && !empty(trim($row[7])) ? trim($row[7]) : null,
+            'estimated_yunfei' => isset($row[8]) ? trim($row[8]) : null,
+            'review_status' => isset($row[9]) ? trim($row[9]) : null,
+            'review_time' => isset($row[10]) && !empty(trim($row[10])) ? trim($row[10]) : null,
+            'review_remark' => isset($row[11]) ? trim($row[11]) : null
         ];
         
         $data[] = $importData;
@@ -428,6 +431,7 @@ class OrderReviewController {
         
         // 写入CSV表头
         $header = [
+            '店铺ID',
             '订单号',
             '本地SKU',
             '国家',
@@ -445,6 +449,7 @@ class OrderReviewController {
         // 写入数据行
         foreach ($orderReviews as $orderReview) {
             $row = [
+                $orderReview['store_id'] ?? '',
                 $orderReview['global_order_no'],
                 $orderReview['local_sku'],
                 $orderReview['receiver_country_code'],

@@ -82,12 +82,13 @@
                         <th>邮编</th>
                         <th>运德运费-试算</th>
                         <th>中邮运费-试算</th>
-
                         <th>仓库ID</th>
                         <th>物流方式ID</th>
                         <th>预估邮费</th>
                         <th>审单状态</th>
                         <th>审单时间</th>
+                        <th>审单备注</th>
+                        <th>创建时间</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -109,6 +110,8 @@
                                 <td><?php echo $review['estimated_yunfei'] ?? ''; ?></td>
                                 <td><?php echo $review['review_status'] ?? ''; ?></td>
                                 <td><?php echo $review['review_time'] ?? ''; ?></td>
+                                <td><?php echo $review['review_remark'] ?? ''; ?></td>
+                                <td><?php echo $review['create_at'] ?? ''; ?></td>
                                 <td>
                                     <div class="d-flex gap-1">
                                         <a href="<?php echo ADMIN_PANEL_URL; ?>/order_review.php?action=edit&id=<?php echo $review['id']; ?>" 

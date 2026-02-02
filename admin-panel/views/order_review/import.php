@@ -31,7 +31,7 @@
                 <li>支持CSV格式文件导入</li>
                 <li>支持直接粘贴CSV内容导入</li>
                 <li>必填字段：订单号、本地SKU、国家</li>
-                <li>CSV格式：订单号,本地SKU,国家,城市,邮编,仓库ID,物流方式ID,预估邮费,审单状态,审单时间,审单备注</li>
+                <li>CSV格式：店铺ID,订单号,本地SKU,国家,城市,邮编,仓库ID,物流方式ID,预估邮费,审单状态,审单时间,审单备注</li>
                 <li>单次最多导入1000条记录</li>
             </ul>
         </div>
@@ -46,7 +46,7 @@
             <!-- 粘贴导入 -->
             <div class="mb-4">
                 <label for="csv_content" class="form-label">或粘贴CSV内容</label>
-                <textarea name="csv_content" class="form-control" rows="10" placeholder="订单号,本地SKU,国家,城市,邮编,仓库ID,物流方式ID,预估邮费,审单状态,审单时间,审单备注"></textarea>
+                <textarea name="csv_content" class="form-control" rows="10" placeholder="店铺ID,订单号,本地SKU,国家,城市,邮编,仓库ID,物流方式ID,预估邮费,审单状态,审单时间,审单备注"></textarea>
             </div>
             
             <button type="submit" class="btn btn-primary">开始导入</button>

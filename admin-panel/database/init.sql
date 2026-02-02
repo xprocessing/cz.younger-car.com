@@ -801,12 +801,16 @@ CREATE TABLE IF NOT EXISTS `order_review` (
     `ems_yunfei` JSON DEFAULT NULL COMMENT '中邮运费（试算数据）',
     `wid` INT DEFAULT NULL COMMENT '仓库wid',
     `logistics_type_id` INT DEFAULT NULL COMMENT '物流方式id',
-    `estimated_yunfei` VARCHAR(20) DEFAULT NULL COMMENT '预估邮费(带美元/人民币符号)',
-	`review_status` VARCHAR(20) DEFAULT NULL COMMENT '审单状态（null/自动审核/人工审核）',
+    `estimated_yunfei` VARCHAR(20) DEFAULT NULL COMMENT '预估邮费(已转人民币)',
+	`review_status` VARCHAR(20) DEFAULT NULL COMMENT '审单状态（待审核/已审核）',
 	`review_time` DATETIME COMMENT '审单时间',	
 	`review_remark` VARCHAR(255) COMMENT '审单备注',
+    `create_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单审核';
 
+
+
+# 
 
 

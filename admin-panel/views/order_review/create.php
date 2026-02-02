@@ -16,6 +16,10 @@
         <form method="POST" action="<?php echo ADMIN_PANEL_URL; ?>/order_review.php?action=createPost" class="row g-3">
             <!-- 基本信息 -->
             <div class="col-md-6">
+                <label for="store_id" class="form-label">店铺ID</label>
+                <input type="text" name="store_id" class="form-control">
+            </div>
+            <div class="col-md-6">
                 <label for="global_order_no" class="form-label">订单号 <span class="text-danger">*</span></label>
                 <input type="text" name="global_order_no" class="form-control" required>
             </div>
