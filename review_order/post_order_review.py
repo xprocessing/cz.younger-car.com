@@ -47,11 +47,11 @@ def post_order_review(
         "receiver_country_code": receiver_country_code,
         "city": city,
         "postal_code": postal_code,
-        "wid": wid,
-        "logistics_type_id": logistics_type_id,
-        "estimated_yunfei": estimated_yunfei,       
         "wd_yunfei": wd_yunfei,
         "ems_yunfei": ems_yunfei,
+        "wid": wid,
+        "logistics_type_id": logistics_type_id,
+        "estimated_yunfei": estimated_yunfei,
         "review_remark": review_remark
     }
     
@@ -88,11 +88,11 @@ response = post_order_review(
     receiver_country_code="US",
     city="New York",
     postal_code="10001",
-    wid=1,
-    logistics_type_id=10,
-    estimated_yunfei="50.00",    
     wd_yunfei={"US": "10.00"},
     ems_yunfei={"US": "15.00"},
+    wid=1,
+    logistics_type_id=10,
+    estimated_yunfei="50.00",
     review_remark="测试订单"
 )
 
