@@ -1,3 +1,45 @@
+<style>
+.truncate-text {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    position: relative;
+}
+
+.truncate-text:hover {
+    background-color: #f8f9fa;
+}
+
+.tooltip-custom {
+    position: absolute;
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    max-width: 400px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.tooltip-custom::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 10px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #333;
+}
+</style>
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4><?php echo $title; ?></h4>
     <div>
@@ -103,8 +145,20 @@
                                 <td><?php echo $review['receiver_country_code']; ?></td>
                                 <td><?php echo $review['city'] ?? ''; ?></td>
                                 <td><?php echo $review['postal_code'] ?? ''; ?></td>
-                                <td><?php echo $review['wd_yunfei'] ?? ''; ?></td>
-                                <td><?php echo $review['ems_yunfei'] ?? ''; ?></td>
+                                <td>
+                                    <div class="truncate-text" 
+                                         data-full="<?php echo htmlspecialchars($review['wd_yunfei'] ?? '', ENT_QUOTES); ?>"
+                                         title="<?php echo htmlspecialchars($review['wd_yunfei'] ?? '', ENT_QUOTES); ?>">
+                                        <?php echo mb_substr($review['wd_yunfei'] ?? '', 0, 5); ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="truncate-text" 
+                                         data-full="<?php echo htmlspecialchars($review['ems_yunfei'] ?? '', ENT_QUOTES); ?>"
+                                         title="<?php echo htmlspecialchars($review['ems_yunfei'] ?? '', ENT_QUOTES); ?>">
+                                        <?php echo mb_substr($review['ems_yunfei'] ?? '', 0, 5); ?>
+                                    </div>
+                                </td>
                                 <td><?php echo $review['wid'] ?? ''; ?></td>
                                 <td><?php echo $review['logistics_type_id'] ?? ''; ?></td>
                                 <td><?php echo $review['estimated_yunfei'] ?? ''; ?></td>
@@ -193,3 +247,60 @@
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const truncateTexts = document.querySelectorAll('.truncate-text');
+    
+    truncateTexts.forEach(function(element) {
+        element.addEventListener('mouseenter', function(e) {
+            const fullText = this.getAttribute('data-full');
+            if (!fullText || fullText === '') return;
+            
+            let tooltip = document.createElement('div');
+            tooltip.className = 'tooltip-custom';
+            
+            try {
+                const jsonData = JSON.parse(fullText);
+                if (Array.isArray(jsonData)) {
+                    let html = '<strong>运费列表：</strong><br>';
+                    jsonData.forEach(function(item, index) {
+                        html += `<br><strong>${index + 1}.</strong> `;
+                        if (item.channel_code) {
+                            html += `渠道: ${item.channel_code} | `;
+                        }
+                        if (item.currency && item.totalFee) {
+                            html += `费用: ${item.currency} ${item.totalFee}`;
+                        } else if (item.totalFee) {
+                            html += `费用: ${item.totalFee}`;
+                        }
+                        if (item.currency === null || item.totalFee === null) {
+                            html += ' (无报价)';
+                        }
+                    });
+                    tooltip.innerHTML = html;
+                } else {
+                    tooltip.textContent = fullText;
+                }
+            } catch (e) {
+                tooltip.textContent = fullText;
+            }
+            
+            document.body.appendChild(tooltip);
+            
+            const rect = this.getBoundingClientRect();
+            tooltip.style.left = rect.left + 'px';
+            tooltip.style.top = (rect.bottom + 5) + 'px';
+            
+            this._tooltip = tooltip;
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            if (this._tooltip) {
+                document.body.removeChild(this._tooltip);
+                this._tooltip = null;
+            }
+        });
+    });
+});
+</script>
