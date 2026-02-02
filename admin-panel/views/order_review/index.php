@@ -148,8 +148,8 @@
                                 <td>
                                     <div class="truncate-text" 
                                          data-full="<?php echo htmlspecialchars($review['wd_yunfei'] ?? '', ENT_QUOTES); ?>"
-                                         title="<?php echo htmlspecialchars($review['wd_yunfei'] ?? '', ENT_QUOTES); ?>">
-                                        <?php echo mb_substr($review['wd_yunfei'] ?? '', 0, 5); ?>
+                                         >
+                                        <?php echo mb_substr($review['wd_yunfei'] ?? '', 0, 10); ?>
                                     </div>
                                 </td>
                                 <td>
