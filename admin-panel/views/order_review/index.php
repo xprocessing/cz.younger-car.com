@@ -142,8 +142,7 @@
                         <?php foreach ($orderReviews as $review): ?>
                             <tr>
                                 <td><?php echo $review['id']; ?></td>
-                                <td> <?php echo mb_substr($review['store_id'] ?? '', 0, 3); ?>
-                            </td>
+                                <td> <?php echo mb_substr($review['store_id'] ?? '', 0, 3); ?>...</td>
                                 <td>
                                     <?php 
                                     $platform_name = $review['platform_name'] ?? '';
