@@ -340,6 +340,19 @@ document.addEventListener('DOMContentLoaded', function() {
             tooltip.style.top = tooltipTop + 'px';
             
             this._tooltip = tooltip;
+            
+            tooltip.addEventListener('mouseenter', function() {
+                clearTimeout(hideTimeout);
+            });
+            
+            tooltip.addEventListener('mouseleave', function() {
+                hideTimeout = setTimeout(function() {
+                    if (tooltip && tooltip.parentNode) {
+                        document.body.removeChild(tooltip);
+                        tooltip = null;
+                    }
+                }, 300);
+            });
         });
         
         element.addEventListener('mouseleave', function() {

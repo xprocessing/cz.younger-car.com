@@ -631,7 +631,7 @@ class BatchReviewGUI:
         matched_logistics = []
         for logistics in logistics_list:
             logistics_provider = logistics.get("logistics_provider_name", "")
-            if ("Amazon" in platform_name and ("亚马逊" in logistics_provider or "公共" in logistics_provider)) or \
+            if ("Amazon" in platform_name and "亚马逊" in logistics_provider) or \
                ("eBay" in platform_name and ("eBay" in logistics_provider or "公共" in logistics_provider)) or \
                ("Walmart" in platform_name and ("eBay" in logistics_provider or "公共" in logistics_provider)) or \
                ("Shopify" in platform_name and ("独立站" in logistics_provider or "公共" in logistics_provider)):               
