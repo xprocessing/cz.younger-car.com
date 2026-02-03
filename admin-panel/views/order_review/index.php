@@ -176,7 +176,7 @@
                                     </div>
                                 </td>
                                 <td><?php echo $review['wid'] ?? ''; ?></td>
-                                <td><?php echo htmlspecialchars($review['wp_name'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($review['name'] ?? ''); ?></td>
                                 <td><?php echo $review['logistics_type_id'] ?? ''; ?></td>
 
 
