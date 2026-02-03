@@ -24,7 +24,7 @@ class OrderReview {
     
     // 获取所有订单审核记录，支持分页
     public function getAll($limit = null, $offset = 0) {
-        $sql = "SELECT orr.*, s.platform_name, s.store_name, w.wp_name, l.code 
+        $sql = "SELECT orr.*, s.platform_name, s.store_name, w.name, l.code 
                 FROM order_review orr 
                 LEFT JOIN store s ON orr.store_id = s.store_id COLLATE utf8mb4_unicode_ci 
                 LEFT JOIN warehouses w ON orr.wid = w.wid 
