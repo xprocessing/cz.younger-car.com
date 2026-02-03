@@ -277,11 +277,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const truncateTexts = document.querySelectorAll('.truncate-text');
     
     truncateTexts.forEach(function(element) {
+        let tooltip = null;
+        let hideTimeout = null;
+        
         element.addEventListener('mouseenter', function(e) {
+            clearTimeout(hideTimeout);
+            
             const fullText = this.getAttribute('data-full');
             if (!fullText || fullText === '') return;
             
-            let tooltip = document.createElement('div');
+            tooltip = document.createElement('div');
             tooltip.className = 'tooltip-custom';
             
             try {
@@ -338,10 +343,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         element.addEventListener('mouseleave', function() {
-            if (this._tooltip) {
-                document.body.removeChild(this._tooltip);
-                this._tooltip = null;
-            }
+            hideTimeout = setTimeout(function() {
+                if (tooltip && tooltip.parentNode) {
+                    document.body.removeChild(tooltip);
+                    tooltip = null;
+                }
+            }, 300);
+        });
+        
+        element.addEventListener('mouseenter', function() {
+            clearTimeout(hideTimeout);
         });
     });
 });
