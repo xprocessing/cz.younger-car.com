@@ -175,7 +175,7 @@
                                 </td>
                                 <td><?php echo $review['wid'] ?? ''; ?></td>
                                 <td><?php echo $review['logistics_type_id'] ?? ''; ?></td>
-                                <td><?php echo $review['estimated_yunfei'] ?? ''; ?></td>
+                                <td><?php echo number_format($review['estimated_yunfei'], 2) ?? ''; ?></td>
                                 <td><?php echo $review['review_status'] ?? ''; ?></td>
                                 <td><?php echo $review['review_time'] ?? ''; ?></td>
                                 <td><?php echo $review['review_remark'] ?? ''; ?></td>
