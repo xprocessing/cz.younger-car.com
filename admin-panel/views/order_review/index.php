@@ -125,8 +125,10 @@
                         <th>邮编</th>
                         <th>运德运费-试算</th>
                         <th>中邮运费-试算</th>
-                        <th>仓库ID</th>
-                        <th>物流方式ID</th>
+                        <th>仓库ID（已设置）</th>
+                        <th>仓库名称</th>
+                        <th>物流方式ID（已设置）</th>
+                        <th>物流渠道编码</th>
                         <th>预估邮费</th>
                         <th>审单状态</th>
                         <th>审单时间</th>
@@ -163,18 +165,21 @@
                                     <div class="truncate-text" 
                                          data-full="<?php echo htmlspecialchars($review['wd_yunfei'] ?? '', ENT_QUOTES); ?>"
                                          >
-                                        邮费列表<?php echo mb_substr($review['wd_yunfei'] ?? '', 0, 10); ?>
+                                        运德运费<?php echo mb_substr($review['wd_yunfei'] ?? '', 0, 10); ?>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="truncate-text" 
                                          data-full="<?php echo htmlspecialchars($review['ems_yunfei'] ?? '', ENT_QUOTES); ?>"
                                          title="<?php echo htmlspecialchars($review['ems_yunfei'] ?? '', ENT_QUOTES); ?>">
-                                        <?php echo mb_substr($review['ems_yunfei'] ?? '', 0, 10); ?>
+                                        中邮运费<?php echo mb_substr($review['ems_yunfei'] ?? '', 0, 10); ?>
                                     </div>
                                 </td>
                                 <td><?php echo $review['wid'] ?? ''; ?></td>
-                                <td><?php echo $review['logistics_type_id'] ?? ''; ?></td>
+                                <td><?php echo htmlspecialchars($review['wp_name'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($review['code'] ?? ''); ?></td>
+
+
                                 <td><?php echo number_format($review['estimated_yunfei'], 2) ?? ''; ?></td>
                                 <td><?php echo $review['review_status'] ?? ''; ?></td>
                                 <td><?php echo $review['review_time'] ?? ''; ?></td>

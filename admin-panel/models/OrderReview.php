@@ -24,9 +24,11 @@ class OrderReview {
     
     // 获取所有订单审核记录，支持分页
     public function getAll($limit = null, $offset = 0) {
-        $sql = "SELECT orr.*, s.platform_name, s.store_name 
+        $sql = "SELECT orr.*, s.platform_name, s.store_name, w.wp_name, l.code 
                 FROM order_review orr 
                 LEFT JOIN store s ON orr.store_id = s.store_id COLLATE utf8mb4_unicode_ci 
+                LEFT JOIN warehouses w ON orr.wid = w.wid 
+                LEFT JOIN logistics l ON orr.logistics_type_id = l.type_id 
                 ORDER BY orr.id DESC";
         $params = [];
         
@@ -103,14 +105,18 @@ class OrderReview {
     
     // 根据筛选条件搜索订单审核记录
     public function searchWithFilters($keyword, $reviewStatus, $startDate, $endDate, $limit, $offset) {
-        $sql = "SELECT orr.*, s.platform_name, s.store_name 
+        $sql = "SELECT orr.*, s.platform_name, s.store_name, w.wp_name, l.code 
                 FROM order_review orr 
                 LEFT JOIN store s ON orr.store_id = s.store_id COLLATE utf8mb4_unicode_ci 
+                LEFT JOIN warehouses w ON orr.wid = w.wid 
+                LEFT JOIN logistics l ON orr.logistics_type_id = l.type_id 
                 WHERE 1=1";
         $params = [];
         
         if (!empty($keyword)) {
-            $sql .= " AND (orr.global_order_no LIKE ? OR orr.local_sku LIKE ? OR orr.receiver_country_code LIKE ? OR s.platform_name LIKE ? OR s.store_name LIKE ?)";
+            $sql .= " AND (orr.global_order_no LIKE ? OR orr.local_sku LIKE ? OR orr.receiver_country_code LIKE ? OR s.platform_name LIKE ? OR s.store_name LIKE ? OR w.wp_name LIKE ? OR l.code LIKE ?)";
+            $params[] = '%' . $keyword . '%';
+            $params[] = '%' . $keyword . '%';
             $params[] = '%' . $keyword . '%';
             $params[] = '%' . $keyword . '%';
             $params[] = '%' . $keyword . '%';
