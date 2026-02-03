@@ -163,14 +163,14 @@
                                     <div class="truncate-text" 
                                          data-full="<?php echo htmlspecialchars($review['wd_yunfei'] ?? '', ENT_QUOTES); ?>"
                                          >
-                                        <?php echo mb_substr($review['wd_yunfei'] ?? '', 0, 10); ?>
+                                        邮费列表<?php echo mb_substr($review['wd_yunfei'] ?? '', 0, 10); ?>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="truncate-text" 
                                          data-full="<?php echo htmlspecialchars($review['ems_yunfei'] ?? '', ENT_QUOTES); ?>"
                                          title="<?php echo htmlspecialchars($review['ems_yunfei'] ?? '', ENT_QUOTES); ?>">
-                                        <?php echo mb_substr($review['ems_yunfei'] ?? '', 0, 5); ?>
+                                        <?php echo mb_substr($review['ems_yunfei'] ?? '', 0, 10); ?>
                                     </div>
                                 </td>
                                 <td><?php echo $review['wid'] ?? ''; ?></td>
