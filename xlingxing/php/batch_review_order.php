@@ -28,4 +28,12 @@ try {
 
 
 //测试链接 https://cz.younger-car.com/xlingxing/php/batch_review_order.php?global_order_no=103662673459556100   
+
+//更新数据表 order_status 为 已审核
+$updateParams = [
+    'global_order_no' =>  [$global_order_no], //array类型
+    'order_status' => '已审核'
+];
+///更新数据库
+
 ?>

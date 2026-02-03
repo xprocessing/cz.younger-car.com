@@ -596,7 +596,7 @@ class BatchReviewGUI:
             wid=final_choice.get("wid"),
             logistics_type_id=final_choice.get("type_id"),
             estimated_yunfei=str(min_compare["fee_cny"]),
-            review_remark="自动选择最优运费"
+            review_remark="已选最优运费"
         )
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 订单数据存储结果：{post_result.text}")
 
@@ -631,8 +631,9 @@ class BatchReviewGUI:
         matched_logistics = []
         for logistics in logistics_list:
             logistics_provider = logistics.get("logistics_provider_name", "")
-            if ("Amazon" in platform_name and "亚马逊" in logistics_provider) or \
-               ("eBay" in platform_name and "eBay" in logistics_provider) or \
+            if ("Amazon" in platform_name and ("亚马逊" in logistics_provider or "公共" in logistics_provider)) or \
+               ("eBay" in platform_name and ("eBay" in logistics_provider or "公共" in logistics_provider)) or \
+               ("Walmart" in platform_name and ("eBay" in logistics_provider or "公共" in logistics_provider)) or \
                ("Shopify" in platform_name and ("独立站" in logistics_provider or "公共" in logistics_provider)):               
                 matched_logistics.append(logistics)
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 平台{platform_name}匹配物流渠道数：{len(matched_logistics)}")

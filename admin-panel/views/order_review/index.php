@@ -183,7 +183,7 @@
                                 <td>
                                     <div class="d-flex gap-1">
                                          <a href="https://cz.younger-car.com/xlingxing/php/batch_review_order.php?global_order_no=<?php echo $review['global_order_no']; ?>" 
-                                           class="btn btn-sm btn-outline-primary">
+                                           class="btn btn-sm btn-outline-primary" target="_blank">
                                             <i class="fa fa-shipping-fast"></i>发货
                                         </a>
                                         <a href="<?php echo ADMIN_PANEL_URL; ?>/order_review.php?action=edit&id=<?php echo $review['id']; ?>" 
@@ -303,8 +303,26 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.appendChild(tooltip);
             
             const rect = this.getBoundingClientRect();
-            tooltip.style.left = rect.left + 'px';
-            tooltip.style.top = (rect.bottom + 5) + 'px';
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+            const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+            
+            let tooltipLeft = rect.left + scrollLeft;
+            let tooltipTop = rect.bottom + scrollTop + 5;
+            
+            const tooltipRect = tooltip.getBoundingClientRect();
+            
+            if (tooltipLeft + tooltipRect.width > viewportWidth) {
+                tooltipLeft = rect.right + scrollLeft - tooltipRect.width;
+            }
+            
+            if (tooltipTop + tooltipRect.height > viewportHeight + scrollTop) {
+                tooltipTop = rect.top + scrollTop - tooltipRect.height - 5;
+            }
+            
+            tooltip.style.left = tooltipLeft + 'px';
+            tooltip.style.top = tooltipTop + 'px';
             
             this._tooltip = tooltip;
         });
