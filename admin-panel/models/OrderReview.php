@@ -28,7 +28,7 @@ class OrderReview {
                 FROM order_review orr 
                 LEFT JOIN store s ON orr.store_id = s.store_id COLLATE utf8mb4_unicode_ci 
                 LEFT JOIN warehouses w ON orr.wid = w.wid 
-                LEFT JOIN logistics l ON orr.logistics_type_id = l.type_id 
+                LEFT JOIN logistics l ON orr.logistics_type_id = l.type_id COLLATE utf8mb4_unicode_ci 
                 ORDER BY orr.id DESC";
         $params = [];
         
@@ -109,7 +109,7 @@ class OrderReview {
                 FROM order_review orr 
                 LEFT JOIN store s ON orr.store_id = s.store_id COLLATE utf8mb4_unicode_ci 
                 LEFT JOIN warehouses w ON orr.wid = w.wid 
-                LEFT JOIN logistics l ON orr.logistics_type_id = l.type_id 
+                LEFT JOIN logistics l ON orr.logistics_type_id = l.type_id COLLATE utf8mb4_unicode_ci 
                 WHERE 1=1";
         $params = [];
         
