@@ -105,7 +105,7 @@ class OrderReview {
     
     // 根据筛选条件搜索订单审核记录
     public function searchWithFilters($keyword, $reviewStatus, $startDate, $endDate, $limit, $offset) {
-        $sql = "SELECT orr.*, s.platform_name, s.store_name, w.wp_name, l.code 
+        $sql = "SELECT orr.*, s.platform_name, s.store_name, w.name, l.code 
                 FROM order_review orr 
                 LEFT JOIN store s ON orr.store_id = s.store_id COLLATE utf8mb4_unicode_ci 
                 LEFT JOIN warehouses w ON orr.wid = w.wid 
@@ -114,7 +114,7 @@ class OrderReview {
         $params = [];
         
         if (!empty($keyword)) {
-            $sql .= " AND (orr.global_order_no LIKE ? OR orr.local_sku LIKE ? OR orr.receiver_country_code LIKE ? OR s.platform_name LIKE ? OR s.store_name LIKE ? OR w.wp_name LIKE ? OR l.code LIKE ?)";
+            $sql .= " AND (orr.global_order_no LIKE ? OR orr.local_sku LIKE ? OR orr.receiver_country_code LIKE ? OR s.platform_name LIKE ? OR s.store_name LIKE ? OR w.name LIKE ? OR l.code LIKE ?)";
             $params[] = '%' . $keyword . '%';
             $params[] = '%' . $keyword . '%';
             $params[] = '%' . $keyword . '%';
