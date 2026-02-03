@@ -141,10 +141,7 @@
                     <?php if (!empty($orderReviews)): ?>
                         <?php foreach ($orderReviews as $review): ?>
                             <tr>
-                                <td>
-                                   
-                            <?php echo mb_substr($review['id'] ?? '', 0, 3); ?>
-                            </td>
+                                <td><?php echo mb_substr($review['id'] ?? '', 0, 3); ?></td>
                                 <td><?php echo $review['store_id']; ?></td>
                                 <td>
                                     <?php 
