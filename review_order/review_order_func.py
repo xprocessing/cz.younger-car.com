@@ -110,6 +110,12 @@ def get_orders_list():
                 local_sku = ""
                 if order.get("item_info") and len(order["item_info"]) > 0:
                     local_sku = order["item_info"][0].get("local_sku", "")
+                    
+                    
+                #local_sku不能为空，否则跳过该订单
+                if not local_sku:
+                    #print(f"订单 {order.get('global_order_no', '')} 商品SKU为空，跳过")
+                    continue
                 
                 # 提取订单总金额（transaction_info是数组，取第一个元素的order_total_amount）
                 order_total_amount = ""
