@@ -596,7 +596,7 @@ class BatchReviewGUI:
             wid=final_choice.get("wid"),
             logistics_type_id=final_choice.get("type_id"),
             estimated_yunfei=str(min_compare["fee_cny"]),
-            review_remark="已选最优运费"
+            review_remark="已选最低运费"
         )
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 订单数据存储结果：{post_result.text}")
 
