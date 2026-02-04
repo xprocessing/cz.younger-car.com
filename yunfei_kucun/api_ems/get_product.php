@@ -126,8 +126,8 @@ switch ($platform_name) {
         $productSku = preg_replace('/^[^-]+/', 'A', $productSku);
         break;
     case 'eBay':       
-        //$productSku = preg_replace('/^[^-]+/', 'E', $productSku);
-        $productSku = $productSku;
+        $productSku = preg_replace('/^[^-]+/', 'E', $productSku);
+        //$productSku = $productSku;
 
         break;
     case 'Shopify':       
