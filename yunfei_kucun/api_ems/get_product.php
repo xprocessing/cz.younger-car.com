@@ -177,7 +177,7 @@ $result = [
     'data' => $response
 ];
 
-echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+//echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 // 首先进行数据提取和整理
 $sku_data = [];
