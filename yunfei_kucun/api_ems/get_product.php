@@ -132,7 +132,7 @@ switch ($platform_name) {
         $productSku = preg_replace('/^[^-]+/', 'D', $productSku);
         break;
     default:
-       
+        $productSku = $productSku;
         break;
 }
 
