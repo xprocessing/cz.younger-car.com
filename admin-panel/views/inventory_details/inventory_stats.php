@@ -62,8 +62,8 @@
                         <?php foreach ($inventoryStats as $index => $item): ?>
                             <tr>
                                 <td><?php echo $index + 1; ?></td>
-                                <td><?php echo htmlspecialchars($item['wid']); ?></td>
-                                <td><?php echo htmlspecialchars($item['warehouse_name']); ?></td>
+                                <td><?php echo htmlspecialchars($item['wid'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($item['warehouse_name'] ?? ''); ?></td>
                                 <td>
                                     <span class="badge bg-success"><?php echo number_format($item['total_valid']); ?></span>
                                 </td>
