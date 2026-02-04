@@ -7,6 +7,10 @@
         <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=overaged_stats" class="btn btn-warning me-2">
             <i class="fa fa-clock-o"></i> 库龄统计
         </a>
+        <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=inventory_stats" class="btn btn-success me-2">
+            <i class="fa fa-bar-chart"></i> 库存统计
+        </a>
+        
         <a href="<?php echo ADMIN_PANEL_URL; ?>/inventory_details.php?action=create" class="btn btn-primary">
             <i class="fa fa-plus"></i> 新增库存明细
         </a>

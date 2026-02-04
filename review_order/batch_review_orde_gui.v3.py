@@ -463,6 +463,10 @@ class BatchReviewGUI:
             ems_channel_codes = [log.get("channel_code") for log in ems_logistics if log.get("channel_code")]
             if ems_channel_codes:
                 ems_spec = review_order.get_ems_product_spec(local_sku, platform_name)
+                #如果ems_spec 为空，就执行review_order.get_ems_product_spec(local_sku)2026-02-04
+                if not ems_spec:
+                    ems_spec = review_order.get_ems_product_spec(local_sku,platform_name="")
+
                 print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 中邮产品规格：{ems_spec}")
                 if ems_spec and all([ems_spec.get("weight"), ems_spec.get("length"), ems_spec.get("width"), ems_spec.get("height")]):
                     try:
@@ -470,6 +474,10 @@ class BatchReviewGUI:
                         length = float(ems_spec.get("length"))
                         width = float(ems_spec.get("width"))
                         height = float(ems_spec.get("height"))
+                        #中邮海外仓，长度超过120cm，重量按18kg。
+                        if length > 120:
+                            weight = 18
+                            print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 中邮海外仓，长度超过120cm，重量按18kg。")
                         
                         ems_spec_str = f"{weight}kg,{length}x{width}x{height}cm"
                         result["ems_product_spec"] = ems_spec_str
@@ -504,6 +512,10 @@ class BatchReviewGUI:
             wd_channel_codes = [log.get("channel_code") for log in wd_logistics if log.get("channel_code")]
             if wd_channel_codes:
                 wd_spec = review_order.get_wd_product_spec(local_sku, platform_name)
+                #如果wd_spec 为空，就执行review_order.get_wd_product_spec(local_sku)2026-02-04
+                if not wd_spec:
+                    wd_spec = review_order.get_wd_product_spec(local_sku,platform_name="")
+
                 print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 运德产品规格：{wd_spec}")
                 if wd_spec and all([wd_spec.get("weight"), wd_spec.get("length"), wd_spec.get("width"), wd_spec.get("height")]):
                     try:

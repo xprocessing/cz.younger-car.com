@@ -178,6 +178,10 @@ $result = [
 ];
 
 //echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+//如果 $result['data']['data']为空 就用默认的sku 请求公共仓
+if (empty($result['data']['data'])) {
+   //
+}
 // 首先进行数据提取和整理
 $sku_data = [];
 

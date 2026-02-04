@@ -423,4 +423,18 @@ class InventoryDetails {
         $stmt = $this->db->query($sql, $params);
         return $stmt->fetchAll();
     }
+    
+    public function getInventoryByWarehouse() {
+        $sql = "SELECT i.wid, w.name as warehouse_name,
+                       SUM(i.product_valid_num) as total_valid,
+                       SUM(i.product_onway) as total_onway,
+                       SUM(CAST(i.quantity_receive AS UNSIGNED)) as total_receive
+                FROM inventory_details i
+                LEFT JOIN warehouses w ON i.wid = w.wid
+                GROUP BY i.wid, w.name
+                ORDER BY w.name";
+        
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll();
+    }
 }

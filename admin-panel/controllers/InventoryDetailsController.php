@@ -224,6 +224,21 @@ class InventoryDetailsController {
         include VIEWS_DIR . '/layouts/footer.php';
     }
     
+    public function inventoryStats() {
+        if (!hasPermission('inventory_details.view')) {
+            showError('您没有权限访问此页面');
+            redirect(ADMIN_PANEL_URL . '/dashboard.php');
+        }
+        
+        $inventoryStats = $this->inventoryDetailsModel->getInventoryByWarehouse();
+        
+        $title = '仓库库存统计';
+        
+        include VIEWS_DIR . '/layouts/header.php';
+        include VIEWS_DIR . '/inventory_details/inventory_stats.php';
+        include VIEWS_DIR . '/layouts/footer.php';
+    }
+    
     public function inventoryAlert() {
         if (!hasPermission('inventory_details.view')) {
             showError('您没有权限访问此页面');
