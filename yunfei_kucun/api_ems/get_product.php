@@ -122,15 +122,15 @@ $productSku = trim($_GET['sku'] ?? '');
 $productSkuArr = !empty($_GET['sku_arr']) ? explode(',', trim($_GET['sku_arr'])) : [];
 $platform_name = $_GET['platform_name'];
 switch ($platform_name) {
-    case 'Amazon':      
+    case 'Amazon':
         $productSku = preg_replace('/^[^-]+/', 'A', $productSku);
         break;
-    case 'eBay':       
+    case 'eBay':
         $productSku = preg_replace('/^[^-]+/', 'E', $productSku);
         //$productSku = $productSku;
 
         break;
-    case 'Shopify':       
+    case 'Shopify':
         $productSku = preg_replace('/^[^-]+/', 'D', $productSku);
         break;
     default:
@@ -177,7 +177,7 @@ $result = [
     'data' => $response
 ];
 
-//echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 // 首先进行数据提取和整理
 $sku_data = [];
@@ -199,6 +199,8 @@ if (isset($result['data']['data'][0]['product_warehouse_attribute'][0])) {
 
 // 输出整理后的结果（可选）
 echo json_encode($sku_data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
+
 # 基础调用（第1页，每页10条）
 //http://cz.younger-car.com/yunfei_kucun/api_ems/get_product.php?platform_name=
 

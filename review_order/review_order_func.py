@@ -196,7 +196,7 @@ def get_inventory_details(sku):
     
     return inventory_details
 # 5.获取中邮产品规格
-def get_ems_product_spec(sku,platform_name="公共仓"):
+def get_ems_product_spec(sku,platform_name):
     """
     根据传入的sku获取产品规格信息
     
@@ -246,7 +246,7 @@ def get_ems_product_spec(sku,platform_name="公共仓"):
         return {}
 
 # 6.获取运德产品规格
-def get_wd_product_spec(sku,platform_name="公共仓"):
+def get_wd_product_spec(sku,platform_name="公共"):
     """
     根据传入的sku从新的API地址获取产品规格信息
     
