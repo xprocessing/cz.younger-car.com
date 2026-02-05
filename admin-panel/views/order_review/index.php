@@ -293,6 +293,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const jsonData = JSON.parse(fullText);
                 if (Array.isArray(jsonData)) {
                     let html = '<strong>运费列表：</strong><br>';
+                    jsonData.sort(function(a, b) {
+                        const feeA = parseFloat(a.totalFee) || 0;
+                        const feeB = parseFloat(b.totalFee) || 0;
+                        return feeA - feeB;
+                    });
                     jsonData.forEach(function(item, index) {
                         html += `<br><strong>${index + 1}.</strong> `;
                         if (item.channel_code) {
