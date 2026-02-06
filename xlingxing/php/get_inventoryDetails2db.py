@@ -2,7 +2,10 @@ import asyncio
 import aiohttp
 from all_skus_data import all_skus_list
 #需要定期更新sku数据
-# 并发请求数量
+#需要定期更新sku数据
+#需要定期更新sku数据
+#需要定期更新sku数据 
+#并发请求数量
 CONCURRENT_NUM = 10
 # 每批请求间隔时间(秒)
 INTERVAL = 3
